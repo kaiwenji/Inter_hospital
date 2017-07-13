@@ -7,6 +7,7 @@
 </template>
 
 <script>
+  import urlHistory from "./lib/urlHistory"
   export default {
     name: 'app',
     data(){
@@ -15,6 +16,8 @@
       }
     },
     created(){
+      this.urlObj = new urlHistory();
+      this.urlObj.history = this.$route.fullPath;
     },
     methods: {
       beforeEnter(el){
@@ -29,7 +32,7 @@
           this.slide = "left";
         }
         this.$router.isback = false;
-        //console.log(this.$router,from, to);
+        console.log(from, to);
       }
     }
 
