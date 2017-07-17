@@ -25,7 +25,7 @@ if (/micromessenger/.test(UA)) {
  * */
 if (window.device == "iphone" || window.device == "android") {
   let w = window.innerWidth;
-  document.querySelector('html').style.fontSize = (w / 20) + "px";
+  document.querySelector('html').style.fontSize = `${W / 20}px`;
 }
 /* eslint-disable no-new */
 new Vue({
