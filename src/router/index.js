@@ -9,7 +9,6 @@ import confrimPhone from "../pages/myCenter/confrimPhone.vue";
 import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
 import changePassword from "../pages/myCenter/changePassword.vue";
 import modificationPassword from "../pages/myCenter/modificationPassword.vue";
->>>>>>> 8d7158c2243748a60822791efe96276b248ab89d
 Router.prototype.goBack = function () {
   this.isback = true;
   history.go(-1);
