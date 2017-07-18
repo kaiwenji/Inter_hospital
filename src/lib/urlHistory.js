@@ -21,7 +21,12 @@ export default class {
     arr.push(value);
     sessionStorage.setItem("url_history", JSON.stringify(arr));
   }
-
+  get back(){
+    let arr = this.history;
+    arr.pop();
+    sessionStorage.setItem('url_history',JSON.stringify(arr));
+    return arr;
+  }
   get last() {
     let arr = this.history;
     return arr[arr.length - 1];

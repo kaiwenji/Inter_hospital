@@ -3,7 +3,10 @@
 import Vue from "vue";
 import App from "./App";
 import router from "./router";
-import weui from "weui";
+import "weui/dist/style/weui.min.css";
+import store from './store/index'
+import weui from './lib/wejs'
+Vue.use(weui)
 
 Vue.config.productionTip = false
 let UA = window.navigator.userAgent.toLocaleLowerCase();
@@ -26,12 +29,13 @@ if (/micromessenger/.test(UA)) {
  * */
 if (window.device == "iphone" || window.device == "android") {
   let w = window.innerWidth;
-  document.querySelector('html').style.fontSize = `${w / 20}px`;
+  document.querySelector('html').style.fontSize = `${w/ 20}px`;
 }
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {App}
 })
