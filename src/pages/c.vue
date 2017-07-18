@@ -1,12 +1,10 @@
 <template>
   <div class="">
-      
+      helloworld
   </div>
 </template>
 
 <script>
-    import Player from "./player";
-    import Bubble from "./bubble";
   export default {
     data() {
       return {
@@ -15,8 +13,6 @@
     computed: {
     },
     components: {
-        bubble:Bubble,
-        player:Player
     },
     mounted() {
 
