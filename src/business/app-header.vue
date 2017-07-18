@@ -6,9 +6,9 @@
 
     </slot>
     <slot style="flex:1 1 auto"></slot>
-    <slot name="right" >
-      <div class="right"></div>
-    </slot>
+      <div class="right">
+          <slot name="right"></slot>
+    </div>
   </header>
 </template>
 
@@ -73,6 +73,7 @@ flex: none;
   }
     .left{
         padding-left:1rem;
+        width:3rem;
     }
 
 </style>

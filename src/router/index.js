@@ -30,6 +30,8 @@ export default new Router({
     {
       path: '/c',
       component: C
+    },
+      {
       path: '/changePhone',
       name:'changePhone',
       component: changePhone
