@@ -7,6 +7,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+
   import urlHistory from "./lib/urlHistory"
   export default {
     name: 'app',
@@ -70,7 +71,8 @@
   }
 </script>
 
-<style>
+<style  lang="scss">
+  @import './common/public.scss';
   #app {
     position: absolute;
     left: 0;
@@ -78,6 +80,8 @@
     top: 0;
     bottom: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .left-enter-active, .left-leave-active, .right-enter-active, .right-leave-active {
