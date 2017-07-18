@@ -3,9 +3,11 @@
 import Vue from "vue";
 import App from "./App";
 import router from "./router";
-import "weui/dist/style/weui.min.css";
+import "weui";
 import store from './store/index'
 import weui from './lib/wejs'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 Vue.use(weui)
 
 Vue.config.productionTip = false
