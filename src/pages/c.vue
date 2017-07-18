@@ -1,6 +1,6 @@
 <template>
   <div class="">
-      <player src="../../static/music/test.mp3"></player>
+      
   </div>
 </template>
 
