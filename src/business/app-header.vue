@@ -47,7 +47,7 @@
     font-family: 'iconfont';
     font-size: 18px;
   }
-  $w:4rem;
+  $w:4.5rem;
   header{
     position: relative;
     height: 45px;

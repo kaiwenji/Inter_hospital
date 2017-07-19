@@ -9,6 +9,8 @@ import confrimPhone from "../pages/myCenter/confrimPhone.vue";
 import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
 import changePassword from "../pages/myCenter/changePassword.vue";
 import modificationPassword from "../pages/myCenter/modificationPassword.vue";
+import DocTalk from "../pages/DocCard/docTalk.vue";
+import HZBD from "../pages/DocCard/hzbd.vue";
 Router.prototype.goBack = function () {
   this.isback = true;
   history.go(-1);
@@ -30,6 +32,15 @@ export default new Router({
     {
       path: '/c',
       component: C
+    },
+      {
+      path: '/docTalk',
+      component: DocTalk
+    },
+      
+        {
+      path: '/hzbd',
+      component: HZBD
     },
       {
       path: '/changePhone',
