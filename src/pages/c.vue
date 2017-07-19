@@ -2,7 +2,7 @@
   <div class="app" ref="wrap">
       
       <app-header class="test" ref="header" id="header"> 
-          <p style="text-align:center; flex:1 1 auto">{{title}}</p>
+          <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
           <p slot="right" style="flex: 0 0 auto">关注</p>
     </app-header>
       <div>
@@ -35,7 +35,7 @@
     </div>
           <div class="docAudio" >
               <div class="title">
-                  <p>医生说</p>
+                  <p class="l">医生说</p>
                   <div></div>
     </div>
               <div class="audioItem"v-for="item in audioList">
@@ -43,8 +43,8 @@
                       <img src="../../static/img/docProfile.png">
     </div>
                   <div class="bd">
-                      <p>{{item.name}}</p>
-                      <p class="font-hide">{{item.desc}}</p>
+                      <p class="l">{{item.name}}</p>
+                      <p class="font-hide m">{{item.desc}}</p>
                       <bubble src="../../static/music/test.mp3"></bubble>
                       <div class="ft">
                           <p class="s">2017-06-01</p>
