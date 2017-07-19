@@ -7,7 +7,12 @@
     </app-header>
       <div>
           <div class="info">
-              <p>金凯文</p>
+              <div>
+                  <img src="../../static/img/docProfile.png">
+                  <p class="l">李时珍</p>
+                  <p class="m">眼科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主任医生</p>
+                  <p>浙二医院</p>
+    </div>
     </div>
           <div class="tab" ref="tab">
               <div class="tab_contain">
@@ -29,13 +34,32 @@
     </div>
     </div>
           <div class="docAudio" >
-              <div>
+              <div class="title">
+                  <p>医生说</p>
+                  <div></div>
     </div>
               <div class="audioItem"v-for="item in audioList">
-                  <p>{{item.name}}</p>
-                  <p>{{item.desc}}</p>
+                  <div class="hd">
+                      <img src="../../static/img/docProfile.png">
+    </div>
+                  <div class="bd">
+                      <p>{{item.name}}</p>
+                      <p class="font-hide">{{item.desc}}</p>
+                      <bubble src="../../static/music/test.mp3"></bubble>
+                      <div class="ft">
+                          <p class="s">2017-06-01</p>
+                          <p class="right s">2000人听过</p>
+                          <p class="right s"><a @click="setColor"><img class="icon" src="../../static/img/rec_off.png"></a>200</p>
+    </div>
+    </div>
     </div>
               
+    </div>
+          <div class="QR">
+              <div>
+                <p>扫一扫二维码，关注我</p>
+                <img src="../../static/img/qr.png">
+    </div>
     </div>
           <div>
     </div>
@@ -45,23 +69,30 @@
 
 <script>
     import AppHeader from "../business/app-header.vue";
+    import Bubble from "../base/bubble.vue";
+    
   export default {
     data() {
       return {
           example:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。",
           title:"我的名片",
           list:[{title:"医生擅长",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{title:"医生介绍",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"}],
-          audioList:[{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"}]
+          audioList:[{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"}],
+          rem:16
       };
     },
     computed: {
     },
     components: {
-        AppHeader
+        AppHeader,
+        bubble:Bubble
     },
     mounted() {
+        this.rem=window.screen.width/20;
         this.$refs.wrap.onscroll=()=>{
-            var top=this.$refs.wrap.scrollTop
+            
+            var top=this.$refs.wrap.scrollTop;
+            console.log(top);
             this.setHeaderColor(top);
             this.setTabClass(top);
         }
@@ -70,10 +101,13 @@
 
     },
     methods: {
+        setColor(){
+            alert("setColor");
+        },
         setHeaderColor(top){
-            
-            var opacity=top-35>0?top-35:0;
-            opacity/=35;
+            var limit=5*this.rem;
+            var opacity=top-limit>0?top-limit:0;
+            opacity/=limit;
             document.getElementById("header").style.backgroundColor="rgba(255,255,255,"+opacity+")";
             if(opacity>=0.8){
                 this.title="金凯文";
@@ -85,7 +119,7 @@
             }
         },
         setTabClass(top){
-            if(top>115){
+            if(top>14*this.rem-45){
                 if(this.$refs.tab.className!="tab tab_fixed"){
                     this.$refs.tab.className+=" tab_fixed";
                     this.$refs.supplement.style.height="4.2rem";
@@ -101,6 +135,8 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../common/var.scss";
+    $small:rgb(204,204,204);
     $orangeRed:rgb(247,94,35);
     $lightGreen:rgb(42,182,179);
     $lightBlue:rgb(22,151,219);
@@ -128,12 +164,17 @@
         overflow:auto;
     }
     .info{
-        height:10rem;
+        height:14rem;
         background-color:deepskyblue;
-        p{
-            width:20rem;
+        div{
+            padding-top:45px;
             text-align:center;
-            padding-top:5rem;
+            img{
+                width:4rem;
+            }
+            p{
+                color:white;
+            }
         }
     }
         .tab{
@@ -169,11 +210,12 @@
             &.tab_fixed{
             position:fixed;
             top:45px;
-            width:20rem;    
+            width:20rem; 
+                z-index:30;
             }
         }
     .speciality{
-        height:5.86rem;
+/*        height:5.86rem;*/
         width:20rem;
         background-color:white;
         display:flex;
@@ -190,13 +232,71 @@
         }
     }
     .docAudio{
-        height:60rem;
         flex:1 1 auto;
+        background-color:white;
+        .title{
+            display:flex;
+            flex-direction:row;
+            div{
+                flex:1 1 auto;
+            }
+            p{
+                flex: 0 0 auto;
+                padding:0.8rem;
+                
+            }
+            
+            
+        }
         .audioItem{
+            border:1px solid lightgrey;
+            display:flex;
+            flex-direction:row;
             padding:1rem;
             background-color:white;
+            .hd{
+                width:3rem;
+                flex:0 0 auto;
+                img{
+                    width:80%;
+                    margin:0 auto;
+                }
+                
+            }
+            .bd{
+                .ft{
+                    display:flex;
+                    flex-direction:row;
+                    p{
+                        flex:1 0 auto;
+                    }
+                    .icon{
+                        height:1rem;
+                        position:relative;
+                        left:-0.2rem;
+                        top:0rem;
+                    }
+        
+                }
+                
+            }
         }
         
+    }
+    .QR{
+        background-color:white;
+        div{
+            text-align:center;
+            p{
+                padding:0.7rem;
+                font-size:0.77rem;
+                color:$small;
+            }
+            img{
+                width:8.5rem;
+            }
+        }
+
     }
     .supplement{
         height:0;

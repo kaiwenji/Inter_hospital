@@ -68,13 +68,14 @@
 
 <style scoped lang="scss">
     .bubble{
+        margin:1rem 0;
         background-image:url(../../static/img/bubble_off.png);
         &.on{
             background-image:url(../../static/img/bubble_on.png);
         }
         background-size:contain;
-        height:100px;
-        width:100%;
+        height:2rem;
+        width:8rem;
         background-repeat:no-repeat;
         display:flex;
         flex-direction:row-reverse;
