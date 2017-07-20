@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6c002f5-1246-44d8-aa76-2670b7ec10ee" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/home.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/home_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/my.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/my_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/app-footer.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/DocCard/router.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/DocRadio/index.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/DocRadio/router.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/base/popup.vue" afterPath="$PROJECT_DIR$/src/base/popup.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/app-header.vue" afterPath="$PROJECT_DIR$/src/business/app-header.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/common/var.scss" afterPath="$PROJECT_DIR$/src/common/var.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/DocCard/hzbd.vue" afterPath="$PROJECT_DIR$/src/pages/DocCard/hzbd.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/DocCard/jhsq.vue" afterPath="$PROJECT_DIR$/src/pages/DocCard/jhsq.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/router/index.js" afterPath="$PROJECT_DIR$/src/router/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
     </list>
     <ignored path="ykwx.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="20" column="29" lean-forward="false" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+            <state relative-caret-position="379">
+              <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -84,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/router/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="39" column="6" lean-forward="true" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+            <state relative-caret-position="300">
+              <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -144,9 +131,9 @@
         <option value="$PROJECT_DIR$/src/pages/myCenter/changePassword.vue" />
         <option value="$PROJECT_DIR$/src/pages/myCenter/modificationPassword.vue" />
         <option value="$PROJECT_DIR$/src/main.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/router/index.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -340,12 +327,12 @@
       <workItem from="1500338577647" duration="1401000" />
       <workItem from="1500340111843" duration="14903000" />
       <workItem from="1500536700424" duration="607000" />
-      <workItem from="1500537329703" duration="1721000" />
+      <workItem from="1500537329703" duration="1889000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20666000" />
+    <option name="totallyTimeSpent" value="20834000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="688" y="17" width="1791" height="999" extended-state="0" />
@@ -728,18 +715,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/src/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="20" column="29" lean-forward="false" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+        <state relative-caret-position="300">
+          <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/router/index.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="39" column="6" lean-forward="true" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+        <state relative-caret-position="379">
+          <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
           <folding />
         </state>
       </provider>
