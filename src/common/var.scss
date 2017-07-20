@@ -1,0 +1,25 @@
+$bgColor: #f5f5f5;
+//$mainColor: #FFFFFF;
+$rem: 37.5;
+$bigSize: 32;
+$bigColor:#333333;
+$middleSize: 28;
+$grayColor:#999999;
+$smallSize: 22;
+$fontFamily:'PingFangSC';
+.mainColor{
+ background: #FFFFFF;
+}
+.bf{
+  font-size: 32rem/$rem;
+}
+.mfc{
+  font-size: 28rem/$rem;
+  color: #999999;
+}
+.mf{
+  font-size: 28rem/$rem;
+}
+.lf{
+  font-size: 22rem/$rem;
+}
