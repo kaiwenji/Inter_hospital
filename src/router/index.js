@@ -99,8 +99,6 @@ export default new Router({
       component: JHSQ
     },
       {
-=======
->>>>>>> 9509e1009b04bab90b357b2e997ecb17ae3dc253
       path: '/changePhone',
       name:'changePhone',
       component: changePhone
