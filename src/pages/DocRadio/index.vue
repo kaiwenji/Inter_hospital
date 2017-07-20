@@ -5,10 +5,10 @@
     </app-header>
       <div class="wrap">
           <div v-for="item in audioList">
-          <doc-panel :item="item"></doc-panel>
+          <doc-panel :item="item" @activate="go(item)"></doc-panel>
     </div>
     </div>
-      <app-footer></app-footer>
+      <app-footer index="2"></app-footer>
   </div>
 </template>
 
@@ -34,7 +34,11 @@
     beforeDestroy() {
 
     },
-    methods: {}
+    methods: {
+        go(item){
+            this.$router.push("/docRadio/detail/");
+        }
+    }
   };
 </script>
 
