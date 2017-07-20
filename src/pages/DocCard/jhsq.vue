@@ -1,8 +1,8 @@
 <template>
 <div class="app">
     <app-header>
-        <p class="headerTitle">患者报到</p>
-        <p slot="right" class="headerWord">提交</p>
+        <p class="headerTitle">加号申请</p>
+        <p slot="right" class="headerWord">申请加号</p>
     </app-header>
     <div class="wrap">
     <div class="notice inter">
@@ -22,7 +22,7 @@
     <div class="sub">
         <div>
         <p class="l">就诊人信息</p>
-        <p style="color:#0fbdff" class="right l">切换就诊人></p>
+        <p style="color:#0fbdff" class="right l" @click="setPat()">切换就诊人></p>
     </div>
         
     </div>
@@ -36,12 +36,6 @@
     </div>
     </div>
     <div class="sub">
-        <p class="l">就诊日期</p>
-    </div>
-    <div class="dateChoose inter" @click="setDate">
-        <p class="xl light">{{date}}</p>
-    </div>
-    <div class="sub">
         <p class="l">复诊需求复述</p>
     </div>
     <div class="request inter">
@@ -49,22 +43,39 @@
     </div>
     <div class="picture"></div>
     </div>
+    <my-popup :show="showPat" @activate="showPat=false">
+        <div slot="contain">
+        <div class="title">
+            <p class="m light">请选择就诊人</p>
+    </div>
+        <div class="main">
+        <div v-for="item in patList" @click="check(item)">
+            <p>{{item}}</p>
+    </div>
+    </div>
+        <div class="ft">
+            <p>添加就诊人</p>
+    </div>
+    </div>
+    </my-popup>
     </div>
 </template>
 <script>
     import AppHeader from "../../business/app-header.vue";
-    import MySelect from "../../base/select.vue";
+    import MyPopup from "../../base/popup.vue";
   export default {
     data() {
       return {
           name:"李董良",
-          date:"请选择你的就诊日期>"
+          date:"请选择你的就诊日期>",
+          showPat:false,
+          patList:["大周","小毛","老白"]
       };
     },
     computed: {},
     components: {
         AppHeader,
-        MySelect
+        MyPopup
     },
     mounted() {
 
@@ -73,21 +84,10 @@
 
     },
     methods: {
-        setDate(){
-            var _this=this;
-           weui.datePicker({
-                start: new Date(),
-                end: 2030,
-                defaultValue: [new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()],
-                onConfirm: function(result){
-                    _this.date=result[0].label+result[1].label+result[2].label;
-                },
-               onChange:function(result){
-                   console.log(result);
-               },
-                id: 'ma_expect_date',
-                className: 'ma_expect_date_picker'
-            }); 
+        setPat(){
+            this.showPat=true;
+        },
+        check(item){
         }
     }
   };
@@ -151,12 +151,6 @@
             line-height:1rem;
         }
     }
-    .dateChoose{
-        p{
-            @include letter;
-            color:#999999;
-        }
-    }
     .docInfo{
         height:5.4rem;
         display:flex;
@@ -191,6 +185,19 @@
         &::-webkit-input-placeholder {
             @include letter;
             font-size:0.85rem;
+        }
+    }
+    .options{
+        display:flex;
+        flex-direction:column;
+        div{
+            flex:0 0 auto;
+            text-align:center;
+            padding:0 auto;
+            &.main{
+                flex: 1 1 auto;
+                overflow:auto;
+            }
         }
     }
 </style>
