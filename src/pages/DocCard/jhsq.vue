@@ -44,17 +44,17 @@
     <div class="picture"></div>
     </div>
     <my-popup :show="showPat" @activate="showPat=false">
-        <div slot="contain">
+        <div slot="contain" class="contain">
         <div class="title">
             <p class="m light">请选择就诊人</p>
     </div>
         <div class="main">
         <div v-for="item in patList" @click="check(item)">
-            <p>{{item}}</p>
+            <p class="dark">{{item}}</p>
     </div>
     </div>
         <div class="ft">
-            <p>添加就诊人</p>
+            <p class="dark">添加就诊人</p>
     </div>
     </div>
     </my-popup>
@@ -69,7 +69,7 @@
           name:"李董良",
           date:"请选择你的就诊日期>",
           showPat:false,
-          patList:["大周","小毛","老白"]
+          patList:["大周","小毛","老白","老邢","小郭"]
       };
     },
     computed: {},
@@ -95,24 +95,12 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
-    .darker{
-        color:#333333;
-    }
-    .dark{
-        color:#666666;
-    }
-    .light{
-        color:#999999;
-    }
-    .lighter{
-        color:#CCCCCC;
-    }
+
     .headerWord{
         color:#0fbdff;
     }
     @mixin letter{
         padding: 0.5rem 0.7rem;
-        color:#cccccc;
     }
     .right{
         text-align:right;
@@ -182,18 +170,24 @@
         background:rgb(238,250,254);
         width:100%;
         border:none;
+        color:#cccccc;
         &::-webkit-input-placeholder {
             @include letter;
             font-size:0.85rem;
         }
     }
-    .options{
+    .contain{
         display:flex;
         flex-direction:column;
+        flex:1 1 auto;
         div{
+            p{
+                @include letter;
+            }
             flex:0 0 auto;
             text-align:center;
             padding:0 auto;
+            border-bottom:1px solid grey;
             &.main{
                 flex: 1 1 auto;
                 overflow:auto;

@@ -64,6 +64,8 @@
     left:0;
     right:0;
     height:15rem;
+    display:flex;
+    flex-direction:column;
 }
         
     .fade-enter-active,.fade-leave-active{

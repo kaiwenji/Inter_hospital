@@ -95,24 +95,11 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
-    .darker{
-        color:#333333;
-    }
-    .dark{
-        color:#666666;
-    }
-    .light{
-        color:#999999;
-    }
-    .lighter{
-        color:#CCCCCC;
-    }
     .headerWord{
         color:#0fbdff;
     }
     @mixin letter{
         padding: 0.5rem 0.7rem;
-        color:#cccccc;
     }
     .right{
         text-align:right;
@@ -188,6 +175,7 @@
         background:rgb(238,250,254);
         width:100%;
         border:none;
+        color:#cccccc;
         &::-webkit-input-placeholder {
             @include letter;
             font-size:0.85rem;

@@ -72,8 +72,9 @@ flex: none;
           text-align:center;
   }
     .left{
-        padding-left:1rem;
-        width:3rem;
+        span{
+            padding-left:1rem;
+        }
     }
 
 </style>
