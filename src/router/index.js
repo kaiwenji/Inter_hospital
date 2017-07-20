@@ -87,18 +87,6 @@ export default new Router({
       component:recordDetail,
     },
       {
-      path: '/docTalk',
-      component: DocTalk
-    },
-        {
-      path: '/hzbd',
-      component: HZBD
-    },
-        {
-      path: '/jhsq',
-      component: JHSQ
-    },
-      {
       path: '/changePhone',
       name:'changePhone',
       component: changePhone
@@ -113,7 +101,7 @@ export default new Router({
     },{
       path: '/',
       name:'changePassword',
-      component: changePassword
+      component: C
     },{
       path: '/modificationPassword',
       name:'modificationPassword',

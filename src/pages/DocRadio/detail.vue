@@ -17,7 +17,9 @@
     </div>
     </my-panel>
       <div class="main">
+          <div>
           <p class="dark m">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大</p>
+    </div>
           <my-player src="../../../static/music/test.mp3"></my-player>
     </div>
   </div>
@@ -78,9 +80,14 @@
         margin-top:1rem;
         flex:1 1 auto;
         background-color:white;
+        div{
+            padding:0 auto;
+        }
+/*
         p{
-/*            margin:0 auto;*/
+            margin:0 auto;
             padding:1rem;
         }
+*/
     }
 </style>
