@@ -12,6 +12,16 @@ import myAddRefuse from '../pages/myDoctorMyAdd/myAddRefuse'
 import myAddApply from '../pages/myDoctorMyAdd/myAddApply'
 import healthFile from '../pages/file/healthFile'
 import recordDetail from '../pages/file/recordDetail'
+import C from "../pages/c.vue";
+import accountAbout from "../pages/myCenter/accountAbout.vue";
+import changePhone from "../pages/myCenter/changePhone.vue";
+import confrimPhone from "../pages/myCenter/confrimPhone.vue";
+import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
+import changePassword from "../pages/myCenter/changePassword.vue";
+import modificationPassword from "../pages/myCenter/modificationPassword.vue";
+import DocTalk from "../pages/DocCard/docTalk.vue";
+import HZBD from "../pages/DocCard/hzbd.vue";
+import JHSQ from "../pages/DocCard/jhsq.vue";
 Router.prototype.goBack = function () {
   this.isback = true;
   history.go(-1);
@@ -23,7 +33,7 @@ export default new Router({
   routes: [
     {
       path: '/a',
-      component: A
+      component: A,
     },
     {
       path: '/b',
@@ -71,7 +81,41 @@ export default new Router({
     },
     {
       path:'/recordDetail',
-      component:recordDetail
+      component:recordDetail,
+    },
+      {
+      path: '/docTalk',
+      component: DocTalk
+    },
+
+        {
+      path: '/hzbd',
+      component: HZBD
+    },
+        {
+      path: '/jhsq',
+      component: JHSQ
+    },
+      {
+      path: '/changePhone',
+      name:'changePhone',
+      component: changePhone
+    },{
+      path: '/confrimPhone',
+      name:'confrimPhone',
+      component: confrimPhone
+    },{
+      path: '/changePhoneSucc',
+      name:'changePhoneSucc',
+      component: changePhoneSucc
+    },{
+      path: '/',
+      name:'changePassword',
+      component: changePassword
+    },{
+      path: '/modificationPassword',
+      name:'modificationPassword',
+      component: modificationPassword
     }
   ]
 })

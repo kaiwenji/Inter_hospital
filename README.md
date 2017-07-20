@@ -26,3 +26,13 @@ npm run e2e
 # run all tests
 npm test
 ```
+## 适配
+> $rem为变量值，直接按照设计图尺寸除于变量值;   <br>
+> 例如：设计图某一图片的width为50px，css值为50/$rem即为适配值;
+## 字体大小
+>设置了三种字体，分别为$bigFont:32px;$middleFont:28px;$smallSize:22px;使用时都需除以$rem;   <br>
+>例如：$bigFont/$rem;
+## 字体
+>字体统一为：“PingFangSC”
+
+
