@@ -65,6 +65,7 @@
         goNext(){
           this.$router.push('/succeed')
         },
+
         editPassword(){
           if(this.$v.patPassword.$invalid){
             this.$set(this.$data,'showPatPassWord',true)
@@ -100,7 +101,6 @@
   .weui-btn_primary{
     background: #0aace9;
   }
-
     .form-group__message{
       color: red;
       box-sizing: border-box;
@@ -110,6 +110,7 @@
   .weui-cells{
     margin-top: 0px;
   }
+
   .weui-label{
     width: 80px;
   }

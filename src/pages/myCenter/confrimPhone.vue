@@ -131,7 +131,9 @@
     color:  #0aace9;
     padding: 0 .5rem 0 .6rem;
   }
+
   .weui-label{
     width: 70px;
   }
+
 </style>

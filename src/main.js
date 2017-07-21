@@ -7,8 +7,8 @@ import "weui";
 import store from './store/index'
 import weui from './lib/wejs'
 import Vuelidate from 'vuelidate'
-import Swiper from 'vue-swiper'
-Vue.use(Swiper)
+
+
 Vue.use(Vuelidate)
 Vue.use(weui)
 

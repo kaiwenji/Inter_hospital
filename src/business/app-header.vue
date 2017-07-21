@@ -7,7 +7,6 @@
       <div class="right">
         <slot name="right"></slot>
       </div>
-
   </header>
 </template>
 
@@ -46,7 +45,9 @@
     font-family: 'iconfont';
     font-size: 18px;
   }
-  $w:4rem;
+
+  $w:4.5rem;
+
   header{
     position: relative;
     height: 45px;
@@ -54,29 +55,13 @@
     background-color: white;
     width: 100%;
     text-align: center;
-    /*display: flex;*/
-/*flex: none;*/
+
    z-index:888;
-    /*>.left,.right{*/
-        /*flex:0 0 auto;*/
-      /*!*width: $w;*!*/
-    /*}*/
-    /*div:nth-child(2){*/
-      /*flex:1;*/
-      /*text-align: center;*/
-    /*}*/
   }
 
 
 
-  /*.right{*/
-    /*padding-right: 5px;*/
-    /*color: #0aace9;*/
-          /*text-align:center;*/
-  /*}*/
-    /*.left{*/
-        /*padding-left:1rem;*/
-    /*}*/
+
 .left{
   position: absolute;
   top:0px;
@@ -93,4 +78,5 @@
     line-height: 45px;
     z-index: 911;
   }
+
 </style>

@@ -6,6 +6,7 @@
   </div>
 </template>
 
+
 <script type="text/ecmascript-6">
 
   import urlHistory from "./lib/urlHistory"
@@ -18,16 +19,13 @@
     },
     created(){
       this.urlObj = new urlHistory();
-
-      console.log(123132)
-      this.urlObj.history = this.$route.fullPath;
     },
-
 
     methods: {
       beforeEnter(el){
         console.log('beforeenter');
       }
+
     },
     watch: {
       $route(to, from){
@@ -37,6 +35,26 @@
           this.slide = "left";
         }
         this.$router.isback = false;
+
+
+//    watch: {
+//      $route(to, from){
+//        if (this.$router.isback) {
+//          this.slide = "right";
+//        } else {
+//          this.slide = "left";
+//        }
+//        this.$router.isback = false;
+//        console.log(from, to);
+//      }
+//
+////        if (this.$router.isback) {
+////          this.slide = "right";
+////        } else {
+////          this.slide = "left";
+////        }
+////        this.$router.isback = false;
+////       console.log(from, to);
 //        console.log(this.urlObj.history)
 //        let routeLength = this.urlObj.history.length;
 //        console.log(routeLength,'一开始的空')
@@ -66,14 +84,18 @@
 //             this.slide = 'left'
 //            }
 //          }
+
         }
     }
 
   }
 </script>
 
-<style  lang="scss">
+
+<style scoped  lang="scss">
   @import './common/public.scss';
+
+
   #app {
     position: absolute;
     left: 0;
@@ -81,6 +103,14 @@
     top: 0;
     bottom: 0;
     overflow: hidden;
+
+      display:flex;
+      flex-direction:column;
+  }
+
+  .left-enter-active, .left-leave-active, .right-enter-active, .right-leave-active {
+    transition: all 0.3s ease;
+
     display: flex;
     flex-direction: column;
   }

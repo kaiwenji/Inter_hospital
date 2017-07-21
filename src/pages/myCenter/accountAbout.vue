@@ -47,7 +47,7 @@
         },
         changePassword(){
           this.$router.push({
-            name:'modificationPassword',
+            name:'forgetPassword',
             params:{
               msg:'修改密码'
             }
