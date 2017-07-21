@@ -1,7 +1,12 @@
 <template>
   <div class="app">
-      <app-header>
+      <app-header id="header">
+          <div slot="left" id="metalBox"></div>
           <p class="headerTitle">名医知道</p>
+          <div slot="right" style="position:relative">
+              <img src="../../../static/img/envelop.png" class="envelop">
+              <span class="weui-badge badge">8</span>
+    </div>
     </app-header>
       <div class="wrap">
           <div v-for="item in audioList">
@@ -29,7 +34,10 @@
         AppFooter
     },
     mounted() {
-
+        document.getElementById("metalBox").addEventListener("click",(e)=>{
+            e.stopPropagation();
+            console.log("click");
+        });
     },
     beforeDestroy() {
 
@@ -58,6 +66,24 @@
     .wrap{
         @include flex;
         overflow:auto;
+    }
+    .badge{
+        position:absolute;
+        font-size:0.5rem;
+        right:0.5rem;
+        top:.5rem;
+        
+    }
+    .envelop{
+        position:absolute;
+        display:block;
+        width:1.1rem;
+        right:1rem;
+        top:15px;
+    }
+    #metalBox{
+        width:100%;
+        height:100%
     }
     
 </style>

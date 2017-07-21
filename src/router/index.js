@@ -21,6 +21,8 @@ import changePassword from "../pages/myCenter/changePassword.vue";
 import modificationPassword from "../pages/myCenter/modificationPassword.vue";
 import DocCard from "../pages/DocCard/router.js";
 import DocRadio from "../pages/DocRadio/router.js";
+import Consult from "../pages/Consult/router.js";
+import test from "../pages/DocRadio/index.vue";
 Router.prototype.goBack = function () {
   this.isback = true;
   history.go(-1);
@@ -101,13 +103,14 @@ export default new Router({
     },{
       path: '/',
       name:'changePassword',
-      component: C
+      component: test
     },{
       path: '/modificationPassword',
       name:'modificationPassword',
       component: modificationPassword
     },
       ...DocCard,
-      ...DocRadio
+      ...DocRadio,
+      ...Consult
   ]
 })

@@ -9,6 +9,9 @@ $lightBlue:rgb(22,151,219);
 $smallSize: 22px;
 $fontFamily:'PingFangSC';
 $heartRed:rgb(255,134,134);
+.xxl{
+    font-size:0.96rem;
+}
     .xl{
         font-size:0.85rem;
         }
@@ -43,4 +46,34 @@ $heartRed:rgb(255,134,134);
     }
     .lighter{
         color:#CCCCCC;
+    }
+.lightBlue{
+    color:$lightBlue;
+}
+
+.app{
+    flex:1 1 auto;
+    background-color:$bgColor;
+    font-family:$fontFamily;
+}
+
+    @mixin vertical{
+        display:flex;
+        flex-direction:column;
+    }
+    @mixin horizontal{
+        display:flex;
+    }
+    @mixin wrap{
+        overflow:auto;
+        flex:1 1 auto;
+    }
+    .vertical{
+        @include vertical;
+    }
+    .horizontal{
+        @include horizontal;
+    }
+    .wrap{
+        @include wrap;
     }

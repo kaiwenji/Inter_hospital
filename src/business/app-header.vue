@@ -1,10 +1,12 @@
 <template>
   <header style="display:flex;flex-direction:row">
-    <slot name="left" >
 
-      <div class="left" @click="back"><font><span>&#xe600;</span></font></div>
-
+      <div class="left" @click="back">
+          <slot name="left">
+          <font><span>&#xe600;</span></font>
     </slot>
+    </div>
+
     <slot style="flex:1 1 auto"></slot>
       <div class="right">
           <slot name="right"></slot>
