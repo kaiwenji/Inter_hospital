@@ -7,39 +7,39 @@
         <div class="wrap">
           <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
-              <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
+              <div class="weui-cell__hd"><label class="weui-label bf">姓名</label></div>
               <div class="weui-cell__bd" :class="{ 'form-group--error':$v.patName.$error }">
                 <input  @blur="$v.patName.$touch()" class="weui-input" type="text" v-model="patName"  placeholder="请输入姓名"/>
               </div>
             </div>
-            <span class="form-group__message" v-if="!$v.patName.minLength&&showNameError">姓名至少2位</span>
-            <span class="form-group__message" v-if="!$v.patName.maxLength&&showNameError">姓名至多15位</span>
+            <span class="form-group__message bf" v-if="!$v.patName.minLength&&showNameError">姓名至少2位</span>
+            <span class="form-group__message bf" v-if="!$v.patName.maxLength&&showNameError">姓名至多15位</span>
             <div class="weui-cell">
-              <div class="weui-cell__hd"><label class="weui-label" >身份证号</label></div>
+              <div class="weui-cell__hd"><label class="weui-label bf" >身份证号</label></div>
               <div class="weui-cell__bd" :class="{ 'form-group--error':$v.patIdcard.$error }">
                 <input  @input="$v.patIdcard.$touch()"   class="weui-input" type="number" v-model="patIdcard" placeholder="请输入身份证号"/>
               </div>
             </div>
           </div>
-          <span class="form-group__message" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
+          <span class="form-group__message bf" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
 
           <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
-              <div class="weui-cell__hd"><label class="weui-label">手机号</label></div>
+              <div class="weui-cell__hd"><label class="weui-label bf">手机号</label></div>
               <div class="weui-cell__bd" v-bind:class="{ 'form-group--error': $v.mobile.$error }">
                 <input  @blur="$v.mobile.$touch()" class="weui-input" type="number" v-model="mobile" placeholder="请输入手机号"/>
               </div>
             </div>
-            <span class="form-group__message" v-show="!$v.mobile.cd&&showPhoneError">请输入正确的手机号</span>
+            <span class="form-group__message bf" v-show="!$v.mobile.cd&&showPhoneError">请输入正确的手机号</span>
             <div class="weui-cell weui-cell_vcode">
               <div class="weui-cell__hd">
-                <label class="weui-label">验证码</label>
+                <label class="weui-label bf">验证码</label>
               </div>
               <div class="weui-cell__bd">
                 <input class="weui-input" type="tel" v-model="captcha" placeholder="请输入验证码"/>
               </div>
               <div class="weui-cell__ft">
-                <button class="weui-vcode-btn" @click="getCode">获取验证码</button>
+                <button class="weui-vcode-btn bf" @click="getCode">获取验证码</button>
               </div>
             </div>
           </div>
@@ -140,7 +140,6 @@
       font-size: 12px;
     }
     .add{
-      padding-right: 15px;
       color: #0FBDFF;
     }
     .weui-cells{

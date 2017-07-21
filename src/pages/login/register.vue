@@ -74,6 +74,7 @@
       color: white;
       border: none;
       padding: 5px 3px;
+      margin-left: 0;
     }
     .weui-cell__ft{
       background: #30cfd0;

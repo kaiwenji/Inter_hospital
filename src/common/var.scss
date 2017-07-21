@@ -71,4 +71,11 @@ $heartRed:rgb(255,134,134);
     .lighter{
         color:#CCCCCC;
     }
+::-webkit-input-placeholder { /* WebKit browsers */
+  font-size:28rem/$rem;
+}
+.weui-cells__title{
+  color: black;
+  padding-bottom: 10rem/$rem;
+}
 

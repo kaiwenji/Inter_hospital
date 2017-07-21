@@ -2,7 +2,6 @@
     <div>
         <top>
             <div class="middle big">登录</div>
-            <span slot="right" class="step"></span>
         </top>
       <div>
         <div class="weui-cells__title">请输入手机号</div>

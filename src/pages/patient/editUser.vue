@@ -7,24 +7,24 @@
       <div class="wrap">
         <div class="weui-cells weui-cells_form">
           <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label></div>
+            <div class="weui-cell__hd"><label class="weui-label bf">姓 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label></div>
             <div class="weui-cell__bd" :class="{ 'form-group--error':$v.patName.$error }">
               <input  @blur="$v.patName.$touch()" class="weui-input" type="text" v-model="patName"  placeholder="请输入姓名"/>
             </div>
           </div>
-          <span class="form-group__message" v-if="!$v.patName.minLength&&showNameError">姓名至少2位</span>
-          <span class="form-group__message" v-if="!$v.patName.maxLength&&showNameError">姓名至多15位</span>
+          <span class="form-group__message bf" v-if="!$v.patName.minLength&&showNameError">姓名至少2位</span>
+          <span class="form-group__message bf" v-if="!$v.patName.maxLength&&showNameError">姓名至多15位</span>
           <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label" >身份证号</label></div>
+            <div class="weui-cell__hd"><label class="weui-label bf" >身份证号</label></div>
             <div class="weui-cell__bd" :class="{ 'form-group--error':$v.patIdcard.$error }">
               <input @blur="getAge"  @input="$v.patIdcard.$touch()"   class="weui-input" type="number" v-model="patIdcard" placeholder="请输入身份证号"/>
             </div>
           </div>
         </div>
-        <span class="form-group__message" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
+        <span class="form-group__message bf" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
         <div class="weui-cells weui-cells_form">
           <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">手机号</label></div>
+            <div class="weui-cell__hd"><label class="weui-label bf">手机号</label></div>
             <div class="weui-cell__bd">
               {{mobile}}
             </div>
@@ -34,18 +34,18 @@
           </div>
           <div class="weui-cell weui-cell_select weui-cell_select-after">
             <div class="weui-cell__hd">
-              <label for="" class="weui-label">性&nbsp;&nbsp;&nbsp;别</label>
+              <label  class="weui-label bf">性&nbsp;&nbsp;&nbsp;别</label>
             </div>
             <div class="weui-cell__bd">
-              <select class="weui-select" name="select2">
+              <select class="weui-select bf" name="select2">
                 <option value="1">男</option>
                 <option value="2">女</option>
               </select>
             </div>
           </div>
           <div class="weui-cell">
-            <div class="weui-cell__hd"><label class="weui-label">年&nbsp;&nbsp;&nbsp;龄</label></div>
-            <div class="weui-cell__bd">
+            <div class="weui-cell__hd"><label class="weui-label bf">年&nbsp;&nbsp;&nbsp;龄</label></div>
+            <div class="weui-cell__bd bf">
               {{age}}
             </div>
           </div>
@@ -151,7 +151,6 @@
 <style scoped lang="scss">
   @import '../../common/public.scss';
   .add{
-    padding-right: 15px;
     color: #0FBDFF;
   }
   .form-group__message{

@@ -2,10 +2,16 @@
   <div class="container">
       <div class="list">
         <ul>
-          <li v-for="(item,index) in list">
+          <li v-for="item,index of list">
                 <span>
-                    {{item.content}}
-                    <i @click="del(item.content,index)">删除</i>
+                  <slot name="item"
+                  :add="item.name"
+                  :age="item.age"
+                  :identity="item.identity"
+                  :phone="item.phone"
+                  ></slot>
+                    <i @click="del(item,index)"><img src="../../static/img/bdelete.png" alt=""></i>
+                   <div class="arrow"><img src="../../static/img/arrow.png" alt=""></div>
                 </span>
           </li>
         </ul>
@@ -55,6 +61,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import "../common/public.scss";
   .container{
     height: 400px;
   }
@@ -63,6 +70,7 @@
     padding:0;
   }
   .list{
+
     overflow:hidden;
     margin-top:.2rem;
     padding-left:.3rem;
@@ -74,19 +82,39 @@
       list-style:none;
       span{
         display:block;
-        height:.88rem;
-        line-height:.88rem;
+        /*height:.88rem;*/
+        /*line-height:.88rem;*/
         -webkit-transition:all 0.3s;
         transition:all 0.3s;
         color:#393939;
         text-decoration:none;
+        overflow: hidden;
+      }
+      .arrow{
+        float:right;
+        width:15%;
+        text-align:center;
+        color:#fff;
+        height: 190rem/$rem;
+        line-height: 190rem/$rem;
+          img{
+            width: 17rem/$rem;
+            height: 30rem/$rem;
+          }
       }
       i{
+        display: block;
         float:right;
         width:15%;
         text-align:center;
         background:#E2421B;
         color:#fff;
+       height: 190rem/$rem;
+        line-height: 190rem/$rem;
+        img{
+          width: 46rem/$rem;
+          height: 46rem/$rem;
+        }
       }
     }
   }
