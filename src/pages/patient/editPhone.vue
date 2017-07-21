@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <top>
-      <div class="middle big">修改密码</div>
+      <div class="middle big">修改手机号</div>
     </top>
     <div >
       <div class="weui-cells weui-cells_form">
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="btn">
-        <a href="javascript:;" style="background: #0aace9" class="weui-btn weui-btn_primary" @click="goNext">下一步</a>
+        <a href="javascript:;" class="weui-btn weui-btn_primary" @click="goNext">确认修改</a>
       </div>
     </div>
   </div>
@@ -57,7 +57,7 @@
     },
     methods:{
       goNext(){
-        this.$router.push('./modificationPassword')
+        this.$router.push('./confrimPhone')
 //        if(this.mobile.length!=11){
 //          alert('请输入手机号')
 //        }else {
@@ -118,7 +118,13 @@
     font-size: 12px;
   }
   .weui-vcode-btn{
-    color:  #0aace9;
+    background:#0fbdff;
+    color: white;
+    width: 90%;
     padding: 0 .5rem 0 .6rem;
   }
+  .weui-label{
+     width: 70px;
+  }
+
 </style>
