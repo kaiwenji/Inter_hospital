@@ -32,6 +32,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../common/public.scss';
   .top_bar{
     background-color: white;
     height: 50px;
@@ -68,6 +69,10 @@
     }
     .nav{
       flex:1;
+      .rightWord{
+        font-size: 32rem/$rem;
+        color: #0FBDFF;
+      }
     }
   }
 </style>

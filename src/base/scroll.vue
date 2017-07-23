@@ -1,5 +1,5 @@
 <template>
-  <div ref="wrapper">
+  <div ref="wrapper" @touchstart.prevent="makeBlur">
     <slot></slot>
   </div>
 </template>
@@ -25,9 +25,15 @@
         type: Array,
         default: null
       },
+      data1:{
+        type:Boolean,
+      },
       pullup: {
         type: Boolean,
         default: false
+      },
+      height:{
+        type:Number,
       },
       beforeScroll: {
         type: Boolean,
@@ -52,7 +58,6 @@
           probeType: this.probeType,
           click: this.click
         })
-
         if (this.listenScroll) {
           let me = this
           this.scroll.on('scroll', (pos) => {
@@ -74,6 +79,9 @@
           })
         }
       },
+      makeBlur(e){
+        this.$emit("make-blur")
+      },
       disable() {
         this.scroll && this.scroll.disable()
       },
@@ -84,7 +92,7 @@
         this.scroll && this.scroll.refresh()
       },
       scrollTo() {
-        this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+        this.scroll && this.scroll.scrollTo.apply(this.scroll,arguments)
       },
       scrollToElement() {
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
@@ -95,7 +103,12 @@
         setTimeout(() => {
           this.refresh()
         }, this.refreshDelay)
-      }
+      },
+      data1(){
+        setTimeout(() => {
+          this.refresh()
+        }, 201)
+      },
     }
   }
 </script>

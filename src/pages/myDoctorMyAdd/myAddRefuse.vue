@@ -26,7 +26,7 @@
               <div class="cancelIntro">
                 <div class="introTitle">
                   <span class="subTitle">王小仙</span>
-                  <span class="myDoctor">我的医生</span>
+                  <span class="myDoctor">主任医生</span>
                   <p>浙江大学附属第二人民医院</p>
                   <p>急诊外科 副主任医生</p>
                 </div>
@@ -96,6 +96,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
   .successContent{
     width:100%;
     position: fixed;
@@ -107,8 +108,8 @@
     overflow: hidden;
     background-color: white;
     .doctorInfoTitle,.patientInfoTitle,.repeatTitle{
-      width: 345px;
-      margin:15px auto;
+      width: 690rem/$rem;
+      margin: 30rem/$rem auto;
       font-size: 16px;
       display: flex;
       justify-content: space-between;
@@ -153,13 +154,13 @@
       ul{
         padding:0;
         margin:0 auto;
-        width: 345px;
-        height: 102px;
-        border-radius: 10px;
+        width: 690rem/$rem;
+        height: 204rem/$rem;
+        border-radius: 12px;
         background-color: rgb(245,251,251);
         li{
           list-style-type: none;
-          height: 102px;
+          height: 204rem/$rem;
           display: flex;
           .cancelImg{
             width: 100px;
@@ -179,10 +180,10 @@
                 color: #333333;
               }
               .myDoctor{
-                width: 60px;
-                height: 18px;
+                width: 120rem/$rem;
+                height: 36rem/$rem;
                 display: inline-block;
-                font-size: 14px;
+                font-size: 28rem/$rem;
                 /*line-height: 18px;*/
                 color: #666666;
                 text-align: center;
@@ -208,7 +209,7 @@
       }
     }
     .patientInfo{
-      width: 345px;
+      width: 690rem/$rem;
       border-radius: 10px;
       margin:0 auto;
       background-color: rgb(245,251,251);
@@ -233,13 +234,13 @@
       }
     }
     .repeat{
-      width: 345px;
-      height: 115px;
+      width: 690rem/$rem;
+      height: 230rem/$rem;
       border-radius: 10px;
       margin:0 auto;
       background-color: rgb(245,251,251);
       textarea{
-        width: 345px;
+        width: 690rem/$rem;
         border:none;
         resize: none;
         outline: medium;
@@ -249,16 +250,16 @@
       }
     }
     .upload{
-      width: 345px;
-      height: 115px;
+      width: 690rem/$rem;
+      height: 230rem/$rem;
       border-radius: 10px;
       margin: 15px auto;
       display: flex;
       .addPicture{
         margin-right: 10px;
         img{
-          width: 70px;
-          height: 70px;
+          width: 140rem/$rem;
+          height:140rem/$rem;
         }
       }
       .wordFor{

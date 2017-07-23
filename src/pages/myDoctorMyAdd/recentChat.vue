@@ -9,7 +9,7 @@
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span>
+                  <span class="chatDoctor">李冰</span>
                   <div class="badgeDoc">
                     <span class="myDoctor">我的医生</span>
                   </div>
@@ -18,20 +18,20 @@
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
+                  <span class="year">2017/4/29</span>
                   <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
           </ul>
-          <ul>
+          <ul @click="goChat">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span>
+                  <span class="chatDoctor">李冰</span>
                   <div class="badgeDoc">
                     <span class="myDoctor">我的医生</span>
                   </div>
@@ -40,20 +40,20 @@
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
+                  <span class="year">2017/4/29</span>
                   <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
           </ul>
-          <ul>
+          <ul @click="goChat">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span>
+                  <span class="chatDoctor">李冰</span>
                   <div class="badgeDoc">
                     <span class="myDoctor">我的医生</span>
                   </div>
@@ -62,103 +62,118 @@
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
+                  <span class="year">2017/4/29</span>
                   <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
           </ul>
-          <ul>
+          <ul @click="goChat">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
+                  <span class="chatDoctor">李冰</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">我的医生</span>
+                  </div>
                   <p>您的全科分诊已经开始，点击进入</p>
                 </div>
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">4</span></p>
+                  <span class="year">2017/4/29</span>
+                  <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
           </ul>
-          <ul>
+          <ul @click="goChat">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
+                  <span class="chatDoctor">李冰</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">我的医生</span>
+                  </div>
                   <p>您的全科分诊已经开始，点击进入</p>
                 </div>
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">5</span></p>
+                  <span class="year">2017/4/29</span>
+                  <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
           </ul>
-          <ul>
+          <ul @click="goChat">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
+                  <span class="chatDoctor">李冰</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">我的医生</span>
+                  </div>
                   <p>您的全科分诊已经开始，点击进入</p>
                 </div>
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">6</span></p>
+                  <span class="year">2017/4/29</span>
+                  <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
           </ul>
-          <ul>
+          <ul @click="goChat">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
+                  <span class="chatDoctor">李冰</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">我的医生</span>
+                  </div>
                   <p>您的全科分诊已经开始，点击进入</p>
                 </div>
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">7</span></p>
+                  <span class="year">2017/4/29</span>
+                  <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
           </ul>
-          <ul>
+          <ul @click="goChat">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
+                  <span class="chatDoctor">李冰</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">我的医生</span>
+                  </div>
                   <p>您的全科分诊已经开始，点击进入</p>
                 </div>
               </div>
               <div class="cancelTime">
                 <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">8</span></p>
+                  <span class="year">2017/4/29</span>
+                  <p class="time"><span class="badge">1</span></p>
                 </div>
               </div>
             </li>
@@ -278,13 +293,23 @@
             </li>
           </ul>
         </div>
-
+        <div class="loading-container">
+           <loading></loading>
+        </div>
+        <v-mask :showList="showList"></v-mask>
       </div>
     </div>
 </template>
 <script>
   import BScroll from 'better-scroll'
+  import Loading from '../../base/loading/loading'
+  import VMask from '../../base/mask'
   export default{
+      data(){
+        return{
+          showList:true
+        }
+      },
       mounted(){
         this.$nextTick(()=>{
           this._initRecentChat()
@@ -297,12 +322,18 @@
             })
           },
           goChat(){
-              this.$router.push('chat')
+              this.$router.push('/chat')
           }
+      },
+      components:{
+          Loading,
+          "VMask":VMask,
       }
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
+  @import '../../common/var.scss';
 .recentChat{
   width:100%;
   position: fixed;
@@ -323,11 +354,11 @@
   ul{
     padding:0;
     margin:0;
-    height: 70px;
+    height: 140rem/$rem;
     border-top: 1px solid rgb(205,205,205);
     li{
       list-style-type: none;
-      height: 70px;
+      height: 140rem/$rem;
       display: flex;
       .cancelImg{
         width: 70px;
@@ -339,41 +370,48 @@
         flex:2;
         display: flex;
         align-items: center;
-        line-height: 30px;
+        line-height: 40rem/$rem;
         .badgeDoc{
           display: inline-block;
           padding-top: -5px;
           .myDoctor{
-            width: 60px;
-            height: 18px;
+            width: 120rem/$rem;
+            height: 36rem/$rem;
             background-color: darkturquoise;
             border-radius:5px;
             display: inline-block;
             font-size: 10px;
             color: white;
-            line-height: 18px;
+            line-height: 40rem/$rem;
             text-align: center;
           }
         }
         p{
           margin:0;
+          color: #999999;
           font-size: 14px;
         }
-        span{
-
+        span.chatDoctor{
+          font-size: 16px;
         }
       }
       .cancelTime{
         flex:1;
         display: flex;
+        justify-content: flex-end;
         align-items: center;
+        padding-right: 20rem/$rem;
+        span.year{
+          font-size: 14px;
+          color: #999999;
+        }
         p{
           margin:0;
           text-align: right;
           span.badge{
             display: inline-block;
-            width: 15px;
-            height: 15px;
+            width: 30rem/$rem;
+            height: 30rem/$rem;
             border-radius: 50%;
             background-color: red;
             color: white;
@@ -384,11 +422,19 @@
         }
       }
       img{
-        width: 40px;
-        height: 40px;
+        width: 80rem/$rem;
+        height: 80rem/$rem;
         border-radius: 50%;
       }
     }
+  }
+  .loading-container{
+    position: absolute;
+    /*background-color: #E64340;*/
+    width:100%;
+    top:50%;
+    z-index:100;
+    transform: translateY(-50%)
   }
 }
 </style>

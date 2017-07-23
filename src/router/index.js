@@ -2,16 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import A from "../pages/a.vue";
 import B from "../pages/b.vue";
-import myDoctorChat from '../pages/myDoctorMyAdd/myDoctorChat'
-import recentChat from '../pages/myDoctorMyAdd/recentChat'
-import followDoctor from '../pages/myDoctorMyAdd/followDoctor'
 import chat from '../pages/myDoctorMyAdd/chat'
-import myAddList from '../pages/myDoctorMyAdd/myAddList'
-import myAddSuccess from '../pages/myDoctorMyAdd/myAddSuccess'
-import myAddRefuse from '../pages/myDoctorMyAdd/myAddRefuse'
-import myAddApply from '../pages/myDoctorMyAdd/myAddApply'
-import healthFile from '../pages/file/healthFile'
-import recordDetail from '../pages/file/recordDetail'
 import C from "../pages/c.vue";
 import accountAbout from "../pages/myCenter/accountAbout.vue";
 import changePhone from "../pages/myCenter/changePhone.vue";
@@ -20,7 +11,12 @@ import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
 import changePassword from "../pages/myCenter/changePassword.vue";
 import modificationPassword from "../pages/myCenter/modificationPassword.vue";
 import DocCard from "../pages/DocCard/router.js";
+import DocTalk from "../pages/DocCard/docTalk"
+import HZBD from "../pages/DocCard/hzbd"
+import JHSQ from "../pages/DocCard/jhsq"
 import DocRadio from "../pages/DocRadio/router.js";
+import file from '../pages/file/router'
+import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
 Router.prototype.goBack = function () {
   this.isback = true;
   history.go(-1);
@@ -43,48 +39,8 @@ export default new Router({
       component: C
     },
     {
-      path:'/myDoctorChat',
-      component:myDoctorChat,
-      children:[
-        {
-          path:'recentChat',
-          component:recentChat,
-        },
-        {
-          path:'followDoctor',
-          component:followDoctor
-        },
-        {
-          path:'chat',
-          component:chat
-        }
-      ]
-    },
-    {
-      path:'/myAddList',
-      component:myAddList,
-      children:[
-        {
-          path:'myAddSuccess',
-          component:myAddSuccess,
-        },
-        {
-          path:'myAddRefuse',
-          component:myAddRefuse,
-        },
-        {
-          path:'myAddApply',
-          component:myAddApply,
-        }
-      ]
-    },
-    {
-      path:'/healthFile',
-      component:healthFile
-    },
-    {
-      path:'/recordDetail',
-      component:recordDetail,
+      path:'/chat',
+      component:chat
     },
       {
       path: '/docTalk',
@@ -120,6 +76,8 @@ export default new Router({
       component: modificationPassword
     },
       ...DocCard,
-      ...DocRadio
+      ...DocRadio,
+      ...myDoctorMyAdd,
+      ...file
   ]
 })
