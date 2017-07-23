@@ -1,16 +1,19 @@
 <template>
-      <div class="audioItem">
+      <div class="audioItem" @click="activate">
           <div class="hd">
               <img src="../../static/img/docProfile.png">
     </div>
-          <div class="bd">
+          <div class="bd" ref="bd">
               <p class="l">{{item.name}}</p>
               <p class="font-hide m">{{item.desc}}</p>
-              <bubble src="../../static/music/test.mp3"></bubble>
+              <div class="bubble">
+              <bubble ref="bubble" id="bubble"src="../../static/music/test.mp3"></bubble>
+                  <div class="supplement"></div>
+    </div>
               <div class="ft">
                   <p class="s">2017-06-01</p>
                   <p class="right s">2000人听过</p>
-                  <p class="right s"><a @click="setColor"><img class="icon" src="../../static/img/rec_off.png"></a>200</p>
+                  <p class="right s" id="thumb"@click="setColor"><img class="icon" src="../../static/img/rec_off.png">200</p>
     </div>
     </div>
     </div>
@@ -40,7 +43,18 @@
 
     },
     mounted() {
-
+        document.getElementById("bubble").addEventListener("click",(e)=>{
+            e._flag=true;
+        },false);
+        document.getElementById("thumb").addEventListener("click",(e)=>{
+            e._flag=true;
+        },false);
+        this.$refs.bd.addEventListener("click",(e)=>{
+            console.log(e._flag);
+            if(e._flag){
+                e.stopPropagation();
+            }
+        },false)
     },
     beforeDestroy() {
 
@@ -48,6 +62,10 @@
     methods: {
         setColor(){
             this.$emit("recommend")
+        },
+        activate(){
+            console.log("activate")
+            this.$emit("activate");
         }
     }
   };
@@ -88,4 +106,14 @@
                 
             }
         }
+    .bubble{
+        display:flex;
+        flex-direction:row;
+        div{
+            flex:0 0 auto;
+            &.supplement{
+                flex:1 1 auto;
+            }
+        }
+    }
 </style>

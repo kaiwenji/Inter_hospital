@@ -1,3 +1,30 @@
+
+$bgColor: #f5f5f5;
+
+$rem: 37.5;
+$bigSize: 32;
+$bigColor:#333333;
+$middleSize: 28;
+$grayColor:#999999;
+$smallSize: 22;
+$fontFamily:'PingFangSC';
+.mainColor{
+ background: #FFFFFF;
+}
+.bf{
+  font-size: 32rem/$rem;
+}
+.mfc{
+  font-size: 28rem/$rem;
+  color: #999999;
+}
+.mf{
+  font-size: 28rem/$rem;
+}
+.lf{
+  font-size: 22rem/$rem;
+}
+
 $bgColor: #F5F5F5;
 $mainColor: #FFFFFF;
 $rem: 37.5;
@@ -44,3 +71,11 @@ $heartRed:rgb(255,134,134);
     .lighter{
         color:#CCCCCC;
     }
+::-webkit-input-placeholder { /* WebKit browsers */
+  font-size:28rem/$rem;
+}
+.weui-cells__title{
+  color: black;
+  padding-bottom: 10rem/$rem;
+}
+

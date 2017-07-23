@@ -10,13 +10,17 @@ import confrimPhone from "../pages/myCenter/confrimPhone.vue";
 import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
 import changePassword from "../pages/myCenter/changePassword.vue";
 import modificationPassword from "../pages/myCenter/modificationPassword.vue";
-import DocCard from "../pages/DocCard/router.js";
+
+import DocCard from "../pages/DocCard/router";
 import DocTalk from "../pages/DocCard/docTalk"
 import HZBD from "../pages/DocCard/hzbd"
 import JHSQ from "../pages/DocCard/jhsq"
-import DocRadio from "../pages/DocRadio/router.js";
+import DocRadio from "../pages/DocRadio/router";
+
 import file from '../pages/file/router'
 import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
+
+import Home from '../pages/login/router'
 Router.prototype.goBack = function () {
   this.isback = true;
   history.go(-1);
@@ -27,16 +31,12 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/a',
-      component: A,
+      path:'/healthFile',
+      component:healthFile
     },
     {
-      path: '/b',
-      component: B
-    },
-    {
-      path: '/c',
-      component: C
+      path:'/recordDetail',
+      component:recordDetail,
     },
     {
       path:'/chat',
@@ -75,6 +75,8 @@ export default new Router({
       name:'modificationPassword',
       component: modificationPassword
     },
+
+      ...Home,
       ...DocCard,
       ...DocRadio,
       ...myDoctorMyAdd,

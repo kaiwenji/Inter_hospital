@@ -1,14 +1,12 @@
 <template>
-  <header style="display:flex;flex-direction:row">
-    <slot name="left" >
-
+  <header >
+    <slot name="left">
       <div class="left" @click="back"><font><span>&#xe600;</span></font></div>
-
     </slot>
-    <slot style="flex:1 1 auto"></slot>
-      <div class="right">
-          <slot name="right"></slot>
-    </div>
+    <slot class="bf"> </slot>
+      <div class="right bf">
+        <slot name="right"></slot>
+      </div>
   </header>
 </template>
 
@@ -39,6 +37,7 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../common/public.scss";
   @font-face {
     font-family: 'iconfont';
     src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
@@ -47,34 +46,38 @@
     font-family: 'iconfont';
     font-size: 18px;
   }
+
   $w:4.5rem;
+
   header{
     position: relative;
     height: 45px;
     line-height: 45px;
     background-color: white;
-    display: flex;
-flex: none;
-   z-index:999;
-    >.left,.right{
-        flex:0 0 auto;
-      width: $w;
-    }
-    div:nth-child(2){
-      flex:1;
-      text-align: center;
-    }
+    width: 100%;
+    text-align: center;
+    border-bottom:1px solid gainsboro;
+   z-index:888;
   }
 
+
+
+
+.left{
+  position: absolute;
+  top:0px;
+  left: 10px;
+  height: 45px;
+  line-height: 45px;
+  z-index: 911;
+}
   .right{
-    padding-right: 5px;
-    color: #3CC51F;
-          text-align:center;
+    position: absolute;
+    top: 0px;
+    right: 15px;
+    height: 45px;
+    line-height: 45px;
+    z-index: 911;
   }
-    .left{
-        span{
-            padding-left:1rem;
-        }
-    }
 
 </style>

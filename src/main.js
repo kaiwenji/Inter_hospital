@@ -7,6 +7,8 @@ import "weui";
 import store from './store/index'
 import weui from './lib/wejs'
 import Vuelidate from 'vuelidate'
+
+
 Vue.use(Vuelidate)
 Vue.use(weui)
 

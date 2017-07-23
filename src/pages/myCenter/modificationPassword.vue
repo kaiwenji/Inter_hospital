@@ -22,7 +22,7 @@
         <span class="form-group__message" v-show="equal">俩次密码不一致</span>
       </div>
       <div class="btn">
-        <a href="javascript:;" class="weui-btn weui-btn_primary" @click="goNext">下一步</a>
+        <a style="background: #0aace9" href="javascript:;" class="weui-btn weui-btn_primary" @click="goNext">下一步</a>
       </div>
     </div>
 
@@ -62,6 +62,10 @@
         }
       },
       methods:{
+        goNext(){
+          this.$router.push('/succeed')
+        },
+
         editPassword(){
           if(this.$v.patPassword.$invalid){
             this.$set(this.$data,'showPatPassWord',true)
@@ -105,5 +109,9 @@
     }
   .weui-cells{
     margin-top: 0px;
+  }
+
+  .weui-label{
+    width: 80px;
   }
 </style>
