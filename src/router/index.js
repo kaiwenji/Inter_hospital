@@ -66,11 +66,8 @@ export default new Router({
       ...Home,
       ...DocCard,
       ...DocRadio,
-<<<<<<< HEAD
       ...Consult
-=======
       ...myDoctorMyAdd,
       ...file
->>>>>>> 882d81cf529267cab389d3714e692215d90fc439
   ]
 })
