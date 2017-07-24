@@ -8,7 +8,6 @@ import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
 import changePassword from "../pages/myCenter/changePassword.vue";
 import modificationPassword from "../pages/myCenter/modificationPassword.vue";
 
-<<<<<<< HEAD
 import DocCard from "../pages/DocCard/router.js";
 import DocRadio from "../pages/DocRadio/router.js";
 import Consult from "../pages/Consult/router.js";
