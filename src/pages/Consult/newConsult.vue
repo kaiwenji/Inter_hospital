@@ -23,18 +23,18 @@
     </div>
     <div class="patInfo inter">
         <div>
-        <p class="xl dark">姓名：<span class="darker">王小李</span></p>
-        <p class="xl dark">身份证号：<span class="darker">330702199406076039</span></p>
-        <p class="xl dark">电话号码：<span class="darker">15558689977</span></p>
-        <p class="xl dark">年龄：<span class="darker">24</span></p>
-        <p class="xl dark">性别：<span class="darker">男</span></p>
+        <p class="xl dark">姓名：<span class="darker">{{patInfo.commpatName}}</span></p>
+        <p class="xl dark">身份证号：<span class="darker">{{patInfo.commpatIdcard}}</span></p>
+        <p class="xl dark">电话号码：<span class="darker">{{patInfo.commpatMobile}}</span></p>
+        <p class="xl dark">年龄：<span class="darker">{{patInfo.commpatIdcard|getAge}}</span></p>
+        <p class="xl dark">性别：<span class="darker">{{patInfo.commpatGender|getGender}}</span></p>
     </div>
     </div>
     <div class="sub">
         <p class="l">复诊需求复述</p>
     </div>
     <div class="request inter">
-        <textarea placeholder="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"></textarea>
+        <textarea v-model="content" @focus="text_fade"></textarea>
     </div>
     <div class="picture"></div>
     </div>
@@ -70,31 +70,57 @@
     </div>
 </template>
 <script>
+    import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
     import MyPopup from "../../base/popup.vue";
+    import {getAge,getGender} from "../../lib/filter.js";
   export default {
     data() {
       return {
-          name:"李董良",
-          date:"请选择你的就诊日期>",
           showPat:false,
           patList:["大周","小毛","老白","老邢","小郭"],
           showLoading:false,
-          showSuccess:false
+          showSuccess:false,
+          chosedIndex:0,
+          content:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"
       };
     },
-    computed: {},
+    computed: {
+        patInfo(){
+            return this.patList[this.chosedIndex];
+        }
+    },
+      filters:{
+          getAge,
+          getGender
+      },
     components: {
         AppHeader,
         MyPopup
     },
     mounted() {
-
+        Api("smarthos.user.commpat.list",{
+            token:window.localStorage['token']
+        })
+        .then((val)=>{
+            console.log(val.list);
+            this.patList=val.list;
+        })
     },
     beforeDestroy() {
 
     },
     methods: {
+        text_fade(){
+            if(this.content=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
+                this.content="";
+            }
+        },
+        text_show(){
+            if(this.content.length==0){
+                this.content="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。";
+            }
+        },
         setPat(){
             this.showPat=true;
         },
@@ -102,6 +128,16 @@
         },
         addNew(){
             this.showLoading=true;
+            Api("smarthos.consult.pic.issue",{
+                consulterName:this.patInfo.commpatName,
+                consulterMobile:this.patInfo.commpatMobile,
+                consulterIdcard:this.patInfo.commpatIdcard,
+                consultContent:this.content,
+                token:window.localStorage['token']
+            })
+            .then((val)=>{
+                console.log(val);
+            })
             setTimeout(()=>{
                 this.showLoading=false;
                 this.addSuccess();
@@ -199,15 +235,13 @@
         overflow:auto;
     }
     textarea{
-        height:6rem;
+        height:5rem;
         background:rgb(238,250,254);
-        width:100%;
+        width:16.8rem;
         border:none;
-        color:#cccccc;
-        &::-webkit-input-placeholder {
-            @include letter;
-            font-size:0.85rem;
-        }
+        color:#999999;
+        font-size:0.8rem;
+        padding:0.8rem;
     }
     .contain{
         display:flex;

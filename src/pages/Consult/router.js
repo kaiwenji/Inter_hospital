@@ -14,6 +14,6 @@ export default[
     ,
     {
         component:ConsultDetail,
-        path:"/Consult/ConsultDetail"
+        path:"/Consult/ConsultDetail/:id"
     }
 ]

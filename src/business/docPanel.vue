@@ -1,25 +1,26 @@
 <template>
       <div class="audioItem" @click="activate">
           <div class="hd">
-              <img src="../../static/img/docProfile.png">
+              <img :src="item.docAvatar">
     </div>
           <div class="bd" ref="bd">
-              <p class="l">{{item.name}}</p>
-              <p class="font-hide m">{{item.desc}}</p>
+              <p class="l">{{item.docName}}</p>
+              <p class="font-hide m">{{item.snsKnowledge.description}}</p>
               <div class="Bubble">
-              <bubble ref="bubble" src="../../static/music/test.mp3"></bubble>
+              <bubble ref="bubble" :src="item.snsKnowledge.knowUrl"></bubble>
                   <div class="supplement"></div>
     </div>
               <div class="ft">
-                  <p class="s light">2017-06-01</p>
-                  <p class="right s light">2000人听过</p>
-                  <p class="s last light" ref="thumb" @click="setColor"><img class="icon" src="../../static/img/rec_off.png">200</p>
+                  <p class="s light">{{item.snsKnowledge.createTime | getMyDay}}</p>
+                  <p class="right s light">{{item.snsKnowledge.readNum}}人听过</p>
+                  <p class="s last light" ref="thumb" @click="setColor"><img class="icon" src="../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
     </div>
     </div>
     </div>
 </template>
 
 <script>
+    import {getMyDay} from "../lib/filter.js";
     import Bubble from "../base/bubble.vue"; 
   export default {
       props:{
@@ -42,6 +43,9 @@
         bubble:Bubble
 
     },
+      filters:{
+          getMyDay
+      },
     mounted() {
         this.$refs.bubble.$el.addEventListener("click",(e)=>{
                 console.log(e.target);
@@ -87,6 +91,7 @@
                 img{
                     width:80%;
                     margin:0 auto;
+                    border-radius:2rem;
                 }
                 
             }
@@ -104,7 +109,7 @@
                     .icon{
                         height:0.8rem;
                         position:absolute;
-                        left:0.3rem;
+                        left:0rem;
                         top:0rem;
                     }
         

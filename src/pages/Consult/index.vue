@@ -4,13 +4,13 @@
         <p class="headerTitle">问医生</p>
     </app-header>
     <div class="main">
-        <div class="nothing" v-if="testList.length==0">
+        <div class="nothing" v-if="consultList.length==0">
             <p class="xxl darker" >你还没有回答任何问题</p>
             <p class="m lightBlue">去回答</p>
     </div>
         <div v-else>
-          <div class="panel" v-for="item in testList" @click="check">
-              <p class="font-hide m">11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p>
+          <div class="panel" v-for="item in consultList" @click="getDetail(item)">
+              <p class="font-hide m content">{{ item.consultInfo.consultContent}}</p>
               <div class="horizontal">
                   <img src="../../../static/img/qr.png">
                   <img src="../../../static/img/qr.png">
@@ -18,10 +18,11 @@
                   <img class="last" src="../../../static/img/qr.png">
     </div>
               <div class="ft">
-                  <img src="../../../static/img/docProfile.png" class="icon">
-                  <p class="lightBlue m">李逵<span class="light m">回答</span></p>
-                  <p class="middle m light">1小时前创建</p>
-                  <p class="right m light">28条评论</p>
+                  <p v-if="!item.userDocVo" class="light m">暂无医生回答</p>
+                  <img :src="item.userDocVo&&item.userDocVo.docAvatar" class="icon" v-if="item.userDocVo">
+                  <p class="lightBlue m" v-if="item.userDocVo">{{item.userDocVo&&item.userDocVo.docName}}<span class="light m">回答</span></p>
+                  <p class="middle m light">{{item.consultInfo.createTime | goodTime}}</p>
+                  <p class="right m light">{{item.consultInfo.replyCount||0}}条评论</p>
                   
     </div>
     </div>
@@ -33,11 +34,16 @@
 </template>
 
 <script>
+    import {goodTime} from "../../lib/filter.js";
+    import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
   export default {
     data() {
       return {
-          testList:[1,1,1,1,1,1,1,1,1,1]
+          consultList:[],
+          testList:[1,1,1,1,1,1,1,1,1,1],
+          page:1,
+          noReply:false
       };
     },
     computed: {},
@@ -45,13 +51,26 @@
         AppHeader
     },
     mounted() {
-
+        Api("smarthos.consult.pic.list.page",{
+            pageSize:10,
+            pageNum:1,
+            token:window.localStorage['token']
+        })
+        .then((val)=>{
+            console.log(val.list);
+            this.consultList=val.list;
+        })
     },
     beforeDestroy() {
 
     },
+      filters:{
+          goodTime
+      },
     methods: {
-        check(){
+        getDetail(item){
+//            console.log(item);
+            this.$router.push("/Consult/ConsultDetail/"+item.consultInfo.id);
         },
         addConsult(){
             this.$router.push("/Consult/newConsult");
@@ -85,13 +104,16 @@
         }
     }
     .panel{
+        .content{
+            min-height:2rem;
+        }
         padding:0.8rem;
         margin-bottom:0.5rem;
         margin-left:0.8rem;
         margin-right:0.8rem;
         background-color:#FFFFFF;
         border-radius:10px;
-        height:8rem;
+/*        height:8rem;*/
         img{
             padding-top:0.8rem;
             padding-bottom:0.8rem;
@@ -106,6 +128,7 @@
         .ft{
             @include horizontal;
             .icon{
+                border-radius:1rem;
                 flex:0 0 auto;
                 display:block;
                 height:0.8rem;

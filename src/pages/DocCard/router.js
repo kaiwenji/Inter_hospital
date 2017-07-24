@@ -5,16 +5,16 @@ import JHSQ from "./jhsq.vue";
 
 export default [
       {
-      path: '/docTalk',
+      path: '/docTalk/:id',
       component: DocTalk
     },
       
         {
-      path: '/hzbd',
+      path: '/hzbd/:id',
       component: HZBD
     },
         {
-      path: '/jhsq',
+      path: '/jhsq/:id',
       component: JHSQ
     }
 ]

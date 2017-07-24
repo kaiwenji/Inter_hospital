@@ -1,7 +1,7 @@
 <template>
   <div class="app" ref="wrap">
       
-      <app-header class="test" ref="header" id="header"> 
+      <app-header style="border:1px solid transparent"class="test" ref="header" id="header"> 
           <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
           <div slot="right" ref="followButton" style="flex:0 0 auto" class="followButton" @click="follow">
 
@@ -11,10 +11,10 @@
       <div>
           <div class="info">
               <div>
-                  <img src="../../static/img/docProfile.png">
-                  <p class="l">李时珍</p>
-                  <p class="m">眼科&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;主任医生</p>
-                  <p>浙二医院</p>
+                  <img :src="docInfo.docAvatar">
+                  <p class="l">{{docInfo.docName}}</p>
+                  <p class="m">{{docInfo.deptName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{docInfo.docTitle}}</p>
+                  <p>{{docInfo.hosName}}</p>
     </div>
     </div>
           <div class="tab" ref="tab">
@@ -27,19 +27,21 @@
     </div>
     </div>
           <div class="supplement" ref="supplement"></div>
-          <div class="speciality" v-for="item in list">
+          <div class="speciality" v-for="item,index in list">
               <div>
                       <p class="title">{{item.title}}</p>
-              <p class="font-hide" :id="item.title">{{item.desc}}</p>
+              <p class="font-hide":id="item.title">{{item.desc}}</p>
     </div>
-              <div style="display:flex;flex-direction:column" @click="getDetail(item,this)">
+              <div class="button" style="display:flex;flex-direction:column" @click="getDetail(item,this,index)">
+                  <div>
                   <img src="../../static/img/pullDown.png" class=""style="padding:2.6rem 1rem;width:1rem;">
+    </div>
     </div>
     </div>
           <div class="docAudio" >
               <div class="title">
                   <p class="l">医生说</p>
-                  <div><p @click="getMoreAudio()">更多</p></div>
+                  <div><p @click="getMoreAudio()" v-show="!nothingMore">更多</p></div>
     </div>
               <div v-for="item in audioList">
               <doc-panel :item="item" @recommend="setColor"></doc-panel>
@@ -49,7 +51,7 @@
           <div class="QR">
               <div>
                 <p>扫一扫二维码，关注我</p>
-                <img src="../../static/img/qr.png">
+                <img :src="docInfo.docQrcode">
     </div>
     </div>
           <div>
@@ -62,16 +64,18 @@
     import DocPanel from "../business/docPanel.vue";
     import AppHeader from "../business/app-header.vue";
     import Bubble from "../base/bubble.vue";
-    
+    import Api from "../lib/api.js";
   export default {
     data() {
       return {
-          example:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。",
+          docId:"595d05b0f19b9c898a58cc00",
+          docInfo:{},
           title:"我的名片",
-          list:[{title:"医生擅长",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{title:"医生介绍",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"}],
-          audioList:[{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"},{name:"华佗",desc:"报道称，朝鲜发行的两款邮票面额分别是30和50朝元，邮票顶端都写有朝鲜战争爆发日期－6月25日至7月27日。环球网记者查询发现，该套邮票在中国电子商务网站上也有销售。"}],
+          list:[{title:"医生擅长",desc:""},{title:"医生介绍",desc:""}],
+          audioList:[],
           rem:16,
-          isFollow:false
+          isFollow:false,
+          nothingMore:false
       };
     },
     computed: {
@@ -92,25 +96,51 @@
             this.setHeaderColor(top);
             this.setTabClass(top);
         }
+
+        Api("smarthos.user.doc.card.get",{"docId":this.docId})
+        .then((val)=>{
+            this.docInfo=val.obj.doc;
+            this.list[0].desc=this.docInfo.docSkill;
+            this.list[1].desc=this.docInfo.docResume;
+            console.log(this.docInfo);
+            
+        })
+        Api("smarthos.sns.knowledge.page",{
+            docId:this.docId,
+            pageNum:1,
+            pageSize:3,
+            
+        })
+        .then((val)=>{
+            console.log(val);
+            this.audioList=val.list;
+            if (val.page.total==1){
+                this.nothingMore=true;
+            }
+        })
     },
     beforeDestroy() {
 
     },
     methods: {
         To(path){
-            this.$router.push("/"+path);
+            this.$router.push("/"+path+"/"+this.docId);
         },
-        getDetail(item,event){
+        getDetail(item,event,index){
+            console.log(index);
             var article=document.getElementById(item.title);
             var picture=event.event.target;
             console.log(picture);
             picture.className=picture.className=="rotate"?"":"rotate"; 
             article.className=article.className==''?"font-hide":"";
+//            if(index==1&&article.className=='font-hide'){
+//                article.className+=' addOneLine';
+//            }
             
             
         },
         getMoreAudio(){
-            this.$router.push("/docTalk");
+            this.$router.push("/docTalk/"+this.docId);
         },
         
         follow(){
@@ -134,7 +164,7 @@
             opacity/=limit;
             document.getElementById("header").style.backgroundColor="rgba(255,255,255,"+opacity+")";
             if(opacity>=0.8){
-                this.title="李时珍";
+                this.title=this.docInfo.docName;
                 document.getElementById("header").style.color="black";
             }
             if(opacity<0.8){
@@ -179,6 +209,9 @@
             color:$lightBlue;
         }
     }
+    header{
+        border:none;
+    }
     .test{
         position:fixed;
         width:20rem;
@@ -199,6 +232,7 @@
             text-align:center;
             img{
                 width:4rem;
+                border-radius:2rem;
             }
             p{
                 color:white;
@@ -250,6 +284,12 @@
         flex-direction:row;
         margin-bottom:1rem;
         div{
+            &.button{
+                flex:0 0 auto;
+                div{
+                    margin:auto 0;
+                }
+            }
             flex:1 1 auto;
 
             p{
@@ -327,5 +367,8 @@
             left:-1.5rem;
             top:0.8rem;
         }
+    }
+    .addOneLine{
+        -webkit-line-clamp:3;
     }
 </style>

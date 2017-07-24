@@ -6,11 +6,11 @@
               <p slot="right"class="m lightBlue" v-show="!isEnded">结束咨询</p>
           </app-header>
           <div class="patInfo">
-              <p class="xl dark">患者资料 李逵 男 29岁</p>
+              <p class="xl dark">患者资料 {{consultInfo.consulterName}} {{consultInfo.consulterGender|getGender}} {{consultInfo.consulterIdcard|getAge}}岁</p>
     </div>
       <div class="symptom">
           <div class="panel">
-              <p class="font-hide m">11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p>
+              <p class="font-hide m">{{consultInfo.consultContent}}</p>
               <div class="horizontal">
                   <img src="../../../static/img/qr.png">
                   <img src="../../../static/img/qr.png">
@@ -18,21 +18,20 @@
                   <img class="last" src="../../../static/img/qr.png">
     </div>
               <div class="ft">
-                  <img src="../../../static/img/docProfile.png" class="icon">
-                  <p class="lightBlue m">李逵<span class="light m">回答</span></p>
-                  <p class="middle m light">1小时前创建</p>
-                  <p class="right m light">28条评论</p>
+                  <p class="lightBlue m"><img src="../../../static/img/docProfile.png" class="icon">李逵<span class="light m">回答</span></p>
+                  <p class="middle m light">{{consultInfo.createTime|goodTime}}创建</p>
+                  <p class="right m light">{{consultInfo.replyCount|0}}条评论</p>
     </div>
     </div>
     </div>
       <div class="wrap">
-          <div class="answer" v-for="item in testList">
+          <div class="answer" v-for="item in replyList">
               <div class="img"><img src="../../../static/img/docProfile.png"></div>
               <div class="word">
-                  <p class="xl darker">武松<span class="m light"> &nbsp;&nbsp;浙江医科大学附属第二医院 &nbsp;&nbsp;|&nbsp;&nbsp; 眼科</span></p>
-                  <p class="m light">1小时前</p>
+                  <p class="xl darker">{{item.userDocVo&&item.userDocVo.docName}}<span class="m light"> &nbsp;&nbsp;{{item.userDocVo&&item.userDocVo.hosName}} &nbsp;&nbsp;|&nbsp;&nbsp; {{item.userDocVo&&item.userDocVo.deptName}}</span></p>
+                  <p class="m light">{{item.userDocVo&&item.userDocVo.createTime|goodTime}}</p>
 <!--                  <bubble src="../../../static/music/test.mp3" class="bubble"></bubble>-->
-                  <p class="bubble font-hide m light">11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</p>
+                  <p class="bubble font-hide m light">{{item.consultMessage&&item.consultMessage.replyContent}}</p>
                   
     </div>
     </div>
@@ -46,13 +45,17 @@
 </template>
 
 <script>
+    import {getAge,getGender,goodTime} from "../../lib/filter.js";
+    import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
     import Bubble from "../../base/bubble.vue";
   export default {
     data() {
       return {
           testList:[1,1,1,1,1,1],
-          isEnded:true
+          isEnded:true,
+          consultInfo:{},
+          replyList:[]
       };
     },
     computed: {},
@@ -61,11 +64,25 @@
         bubble:Bubble
     },
     mounted() {
+        Api("smarthos.consult.pic.details",{
+            consultId:this.$route.params.id,
+            token:window.localStorage['token']
+        })
+        .then((val)=>{
+            this.consultInfo=val.obj.consultInfo;
+            this.replyList=val.obj.consultMessage;
+            console.log(this.replyList[0]);
+        })
 
     },
     beforeDestroy() {
 
     },
+      filters:{
+          getAge,
+          getGender,
+          goodTime
+      },
     methods: {}
   };
 </script>
@@ -108,15 +125,19 @@
         }
         .ft{
             @include horizontal;
+            position:relative;
             .icon{
+                position:absolute;
                 flex:0 0 auto;
                 display:block;
                 height:0.8rem;
                 width:0.8rem;
-                padding:0;
-                padding-top:0.2rem;
+                left:-0.2rem;
+                top:-0.5rem;
             }
             p{
+                padding-top:0.13rem;
+                padding-left:0.5rem;
                 flex:0 0 auto;
                 &.middle{
                     padding-top:0.1rem;
@@ -124,7 +145,6 @@
                     text-align:right;
                 }
                 &.right{
-                    padding-left:0.5rem;
                     padding-top:0.1rem;
                 }
             }
