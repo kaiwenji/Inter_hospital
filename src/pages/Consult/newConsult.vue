@@ -11,7 +11,7 @@
     </div>
         <div class="word">
         <p class="s light">加号已拒绝</p>
-        <p class="s light">拒绝理由：医生近期停诊，请留意时间后再申请加号</p>
+        <p class="s light" >拒绝理由：医生近期停诊，请留意时间后再申请加号</p>
     </div>
     </div>
     <div class="sub">
@@ -111,6 +111,7 @@
             this.showSuccess=true;
             setTimeout(()=>{
                 this.showSuccess=false;
+                this.$router.push("/Consult/ConsultDetail");
             },1000)
         }
     }
@@ -167,7 +168,7 @@
         .word{
             padding:0.56rem 0;
             p{
-                line-height:15px;
+                line-height:1.3;
             }
         }
     }

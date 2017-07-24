@@ -58,6 +58,11 @@ $heartRed:rgb(255,134,134);
         -webkit-line-clamp:2;
         -webkit-box-orient:vertical;
     }
+.font-hidee{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+}
 .headerTitle{
     flex:1 1 auto;
     text-align:center;
@@ -103,4 +108,5 @@ $heartRed:rgb(255,134,134);
     }
     .wrap{
         @include wrap;
+        -webkit-overflow-scrolling:touch;
     }

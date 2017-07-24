@@ -39,7 +39,7 @@
         <p class="l">复诊需求复述</p>
     </div>
     <div class="request inter">
-        <textarea placeholder="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"></textarea>
+        <textarea class="xl"v-model="description" @focus="text_fade" @blur="text_show"></textarea>
     </div>
     <div class="picture"></div>
     </div>
@@ -69,7 +69,8 @@
           name:"李董良",
           date:"请选择你的就诊日期>",
           showPat:false,
-          patList:["大周","小毛","老白","老邢","小郭"]
+          patList:["大周","小毛","老白","老邢","小郭"],
+          description:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"
       };
     },
     computed: {},
@@ -84,6 +85,16 @@
 
     },
     methods: {
+        text_fade(){
+            if(this.description=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
+                this.description="";
+            }
+        },
+        text_show(){
+            if(this.description==""){
+                this.description="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。";
+            }
+        },
         setPat(){
             this.showPat=true;
         },
@@ -166,15 +177,12 @@
         overflow:auto;
     }
     textarea{
-        height:6rem;
+        height:5rem;
         background:rgb(238,250,254);
-        width:100%;
+        width:16.4rem;
         border:none;
-        color:#cccccc;
-        &::-webkit-input-placeholder {
-            @include letter;
-            font-size:0.85rem;
-        }
+        color:#999999;
+        padding:1rem;
     }
     .contain{
         display:flex;

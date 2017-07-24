@@ -5,7 +5,7 @@
           <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
           <div slot="right" ref="followButton" style="flex:0 0 auto" class="followButton" @click="follow">
 
-              <p  class="l"><img ref="heart"src="../../static/img/follow.png">{{followWord}}</p>
+              <p  class="l ft" ><img ref="heart"src="../../static/img/follow.png">{{followWord}}</p>
     </div>
     </app-header>
       <div>
@@ -184,6 +184,7 @@
         width:20rem;
         background-color:rgba(255,255,255,0);
         color:white;
+
     }
     .app{
         flex:1 1 auto;
@@ -315,14 +316,16 @@
         &.followed{
             color:$heartRed;
         }
+        position:relative;
         color:white;
         display:flex;
         flex-direction:row-reverse;
         img{
             width:1rem;
             height:1rem;
-            padding-top:0.5rem;
-            padding-right:0.5rem;
+            position:absolute;
+            left:-1.5rem;
+            top:0.8rem;
         }
     }
 </style>

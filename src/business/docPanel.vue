@@ -6,14 +6,14 @@
           <div class="bd" ref="bd">
               <p class="l">{{item.name}}</p>
               <p class="font-hide m">{{item.desc}}</p>
-              <div class="bubble">
-              <bubble ref="bubble" id="bubble"src="../../static/music/test.mp3"></bubble>
+              <div class="Bubble">
+              <bubble ref="bubble" src="../../static/music/test.mp3"></bubble>
                   <div class="supplement"></div>
     </div>
               <div class="ft">
-                  <p class="s">2017-06-01</p>
-                  <p class="right s">2000人听过</p>
-                  <p class="right s" id="thumb"@click="setColor"><img class="icon" src="../../static/img/rec_off.png">200</p>
+                  <p class="s light">2017-06-01</p>
+                  <p class="right s light">2000人听过</p>
+                  <p class="s last light" ref="thumb" @click="setColor"><img class="icon" src="../../static/img/rec_off.png">200</p>
     </div>
     </div>
     </div>
@@ -43,10 +43,12 @@
 
     },
     mounted() {
-        document.getElementById("bubble").addEventListener("click",(e)=>{
-            e._flag=true;
-        },false);
-        document.getElementById("thumb").addEventListener("click",(e)=>{
+        this.$refs.bubble.$el.addEventListener("click",(e)=>{
+                console.log(e.target);
+                e._flag=true;
+            })
+        
+        this.$refs.thumb.addEventListener("click",(e)=>{
             e._flag=true;
         },false);
         this.$refs.bd.addEventListener("click",(e)=>{
@@ -94,11 +96,15 @@
                     flex-direction:row;
                     p{
                         flex:1 0 auto;
+                        &.last{
+                            position:relative;
+                            text-align:center;
+                        }
                     }
                     .icon{
-                        height:1rem;
-                        position:relative;
-                        left:-0.2rem;
+                        height:0.8rem;
+                        position:absolute;
+                        left:0.3rem;
                         top:0rem;
                     }
         
@@ -106,7 +112,7 @@
                 
             }
         }
-    .bubble{
+    .Bubble{
         display:flex;
         flex-direction:row;
         div{
