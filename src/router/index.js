@@ -13,18 +13,14 @@ import DocCard from "../pages/DocCard/router.js";
 import DocRadio from "../pages/DocRadio/router.js";
 import Consult from "../pages/Consult/router.js";
 import test from "../pages/DocRadio/index.vue";
-=======
-import DocCard from "../pages/DocCard/router";
 import DocTalk from "../pages/DocCard/docTalk"
 import HZBD from "../pages/DocCard/hzbd"
 import JHSQ from "../pages/DocCard/jhsq"
-import DocRadio from "../pages/DocRadio/router";
 
 import file from '../pages/file/router'
 import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
 
 import Home from '../pages/login/router'
->>>>>>> 882d81cf529267cab389d3714e692215d90fc439
 Router.prototype.goBack = function () {
   this.isback = true;
   history.go(-1);
