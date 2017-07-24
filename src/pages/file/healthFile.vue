@@ -71,6 +71,11 @@
                  </div>
                </div>
              </div>
+             <div class="addFile">
+               <div class="button">
+                 <button>+ 添加诊疗记录</button>
+               </div>
+             </div>
            </div>
 
          </div>
@@ -106,6 +111,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
   .healthFile{
     width:100%;
     position: fixed;
@@ -117,20 +123,20 @@
     ul{
       padding:0;
       margin:0 auto;
-      width: 345px;
-      height: 102px;
+      width: 690rem/$rem;
+      height: 204rem/$rem;
       border-radius: 10px;
       /*background-color: rgb(245,251,251);*/
       li{
         list-style-type: none;
-        height: 102px;
+        height: 204rem/$rem;
         display: flex;
         .cancelImg{
-          width: 67px;
+          width: 134rem/$rem;
           display: flex;
           justify-content: center;
           align-items: center;
-          margin-right: 15px;
+          margin-right: 30rem/$rem;
         }
         .cancelIntro{
           flex:2;
@@ -139,46 +145,46 @@
           /*line-height: 10px;*/
           .introTitle{
             .subTitle{
-              font-size: 16px;
+              font-size: 32rem/$rem;
               color: #333333;
             }
             .myDoctor{
-              width: 60px;
-              height: 18px;
+              width: 120rem/$rem;
+              height: 36rem/$rem;
               display: inline-block;
-              font-size: 14px;
+              font-size: 28rem/$rem;
               /*line-height: 18px;*/
               color: #666666;
               text-align: center;
             }
             p{
               margin:5px 0 5px 0;
-              font-size: 13px;
+              font-size: 26rem/$rem;
               color: #999999;
             }
           }
         }
         img{
-          width: 67px;
-          height: 67px;
+          width: 134rem/$rem;
+          height: 134rem/$rem;
 
         }
       }
     }
     .basic,.illness,.history,.family,.alergic,.record{
       width: 100%;
-      height: 45px;
+      height: 90rem/$rem;
       border-top: 1px solid rgb(205,205,205);
       >div{
-        width: 345px;
-        height: 45px;
+        width: 690rem/$rem;
+        height: 90rem/$rem;
         margin:0 auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
         >div{
           span{
-            font-size: 16px;
+            font-size: 32rem/$rem;
             display: inline-block;
             margin-right: 10px;
           }
@@ -195,26 +201,49 @@
       width:100%;
       border-bottom: 1px solid rgb(205,205,205);
       .wrapList{
-        width: 345px;
+        width: 690rem/$rem;
         margin:0 auto;
         .listTime{
-          font-size:16px;
+          font-size: 32rem $rem;
           color: #666666;
-          margin-top: 15px;
-          margin-bottom: 10px;
+          margin-top: 30rem/$rem;
+          margin-bottom: 20rem/$rem;
         }
         .listContent{
-          font-size: 14px;
+          font-size: 28rem/$rem;
           line-height: 20px;
           color: #666666;
         }
         .recordImg{
-          width: 150px;
-          height: 150px;
+          width: 300rem/$rem;
+          height: 300rem/$rem;
           img{
-            width: 150px;
-            height: 150px;
+            width: 300rem/$rem;
+            height: 300rem/$rem;
           }
+        }
+      }
+    }
+    .addFile{
+      width:100%;
+      height: 100px;
+      margin-top: 100px;
+      margin-bottom: 50px;
+      /*background-color: #0FBDFF;*/
+      display: flex;
+      justify-content: center;
+      div.button{
+        width: 690rem/$rem;
+        height: 94rem/$rem;
+        /*background-color: #E64340;*/
+        button{
+          width: 690rem/$rem;
+          height: 94rem/$rem;
+          border:none;
+          outline: medium;
+          border-radius: 10px;
+          color: white;
+          background-color: #0FBDFF;
         }
       }
     }

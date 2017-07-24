@@ -1,18 +1,22 @@
 import Vue from "vue";
 import Router from "vue-router";
-import myDoctorChat from '../pages/myDoctorMyAdd/myDoctorChat'
-import recentChat from '../pages/myDoctorMyAdd/recentChat'
-import followDoctor from '../pages/myDoctorMyAdd/followDoctor'
 import chat from '../pages/myDoctorMyAdd/chat'
-import myAddList from '../pages/myDoctorMyAdd/myAddList'
-import myAddSuccess from '../pages/myDoctorMyAdd/myAddSuccess'
-import myAddRefuse from '../pages/myDoctorMyAdd/myAddRefuse'
-import myAddApply from '../pages/myDoctorMyAdd/myAddApply'
-import healthFile from '../pages/file/healthFile'
-import recordDetail from '../pages/file/recordDetail'
+import accountAbout from "../pages/myCenter/accountAbout.vue";
+import changePhone from "../pages/myCenter/changePhone.vue";
+import confrimPhone from "../pages/myCenter/confrimPhone.vue";
+import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
+import changePassword from "../pages/myCenter/changePassword.vue";
+import modificationPassword from "../pages/myCenter/modificationPassword.vue";
 
-import DocCard from "../pages/DocCard/router.js";
-import DocRadio from "../pages/DocRadio/router.js";
+import DocCard from "../pages/DocCard/router";
+import DocTalk from "../pages/DocCard/docTalk"
+import HZBD from "../pages/DocCard/hzbd"
+import JHSQ from "../pages/DocCard/jhsq"
+import DocRadio from "../pages/DocRadio/router";
+
+import file from '../pages/file/router'
+import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
+
 import Home from '../pages/login/router'
 Router.prototype.goBack = function () {
   this.isback = true;
@@ -23,52 +27,44 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path:'/healthFile',
-      component:healthFile
+      {
+      path: '/docTalk',
+      component: DocTalk
     },
-    {
-      path:'/recordDetail',
-      component:recordDetail,
+        {
+      path: '/hzbd',
+      component: HZBD
     },
-    {
-      path:'/myDoctorChat',
-      component:myDoctorChat,
-      children:[
         {
-          path:'recentChat',
-          component:recentChat,
-        },
-        {
-          path:'followDoctor',
-          component:followDoctor
-        },
-        {
-          path:'chat',
-          component:chat
-        }
-      ]
+      path: '/jhsq',
+      component: JHSQ
     },
-    {
-      path:'/myAddList',
-      component:myAddList,
-      children:[
-        {
-          path:'myAddSuccess',
-          component:myAddSuccess,
-        },
-        {
-          path:'myAddRefuse',
-          component:myAddRefuse,
-        },
-        {
-          path:'myAddApply',
-          component:myAddApply,
-        }
-      ]
+      {
+      path: '/changePhone',
+      name:'changePhone',
+      component: changePhone
+    },{
+      path: '/confrimPhone',
+      name:'confrimPhone',
+      component: confrimPhone
+    },{
+      path: '/changePhoneSucc',
+      name:'changePhoneSucc',
+      component: changePhoneSucc
+    },{
+      path: '/',
+      name:'changePassword',
+      component: changePassword
+    },{
+      path: '/modificationPassword',
+      name:'modificationPassword',
+      component: modificationPassword
     },
+
       ...Home,
       ...DocCard,
-      ...DocRadio
+      ...DocRadio,
+      ...myDoctorMyAdd,
+      ...file
   ]
 })

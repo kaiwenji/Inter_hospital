@@ -96,6 +96,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
   .successContent{
     width:100%;
     position: fixed;
@@ -107,13 +108,13 @@
     overflow: hidden;
     background-color: white;
     .doctorInfoTitle,.patientInfoTitle,.repeatTitle{
-      width: 345px;
-      margin:15px auto;
-      font-size: 16px;
+      width: 690rem/$rem;
+      margin: 30rem/$rem auto;
+      font-size: 32rem/$rem;
       display: flex;
       justify-content: space-between;
       span{
-        font-size: 14px;
+        font-size: 28rem/$rem;
         color: #0FBDFF;
       }
     }
@@ -153,13 +154,13 @@
       ul{
         padding:0;
         margin:0 auto;
-        width: 345px;
-        height: 102px;
+        width: 690rem/$rem;
+        height: 204rem/$rem;
         border-radius: 10px;
         background-color: rgb(245,251,251);
         li{
           list-style-type: none;
-          height: 102px;
+          height: 204rem/$rem;
           display: flex;
           .cancelImg{
             width: 100px;
@@ -179,17 +180,17 @@
                 color: #333333;
               }
               .myDoctor{
-                width: 60px;
-                height: 18px;
+                width: 120rem/$rem;
+                height: 36rem/$rem;
                 display: inline-block;
-                font-size: 14px;
+                font-size: 28rem/$rem;
                 /*line-height: 18px;*/
                 color: #666666;
                 text-align: center;
               }
               p{
                 margin:0;
-                font-size: 14px;
+                font-size: 28rem/$rem;
                 color: #999999;
               }
             }
@@ -200,15 +201,15 @@
             }
           }
           img{
-            width: 40px;
-            height: 40px;
+            width: 80rem/$rem;
+            height: 80rem/$rem;
 
           }
         }
       }
     }
     .patientInfo{
-      width: 345px;
+      width: 690rem/$rem;
       border-radius: 10px;
       margin:0 auto;
       background-color: rgb(245,251,251);
@@ -219,7 +220,7 @@
         flex-direction: column;
         align-items: center;
         span{
-          font-size: 14px;
+          font-size: 28rem/$rem;
           color: #999999;
         }
       }
@@ -227,48 +228,48 @@
         display: flex;
         flex-direction: column;
         span{
-          font-size: 14px;
+          font-size: 28rem/$rem;
           color: #333333;
         }
       }
     }
     .repeat{
-      width: 345px;
-      height: 115px;
+      width: 690rem/$rem;
+      height: 230rem/$rem;
       border-radius: 10px;
       margin:0 auto;
       background-color: rgb(245,251,251);
       textarea{
-        width: 345px;
+        width: 690rem/$rem;
         border:none;
         resize: none;
         outline: medium;
-        font-size: 16px;
+        font-size: 32rem/$rem;
         color: #cccccc;
         background-color: rgb(245,251,251);
       }
     }
     .upload{
-      width: 345px;
-      height: 115px;
+      width: 690rem/$rem;
+      height: 230rem/$rem;
       border-radius: 10px;
-      margin: 15px auto;
+      margin: 30rem/$rem auto;
       display: flex;
       .addPicture{
         margin-right: 10px;
         img{
-          width: 70px;
-          height: 70px;
+          width: 140rem/$rem;
+          height: 140rem/$rem;
         }
       }
       .wordFor{
         span:first-child{
-          font-size: 16px;
+          font-size: 32rem/$rem;
           color: #333333;
           display: block;
         }
         span:last-child{
-          font-size: 14px;
+          font-size: 28rem/$rem;
           display: block;
           margin-top: 14.5px;
           color: #999999;
