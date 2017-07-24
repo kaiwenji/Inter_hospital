@@ -73,13 +73,13 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
-  import rdSwipe from '../../../node_modules/vue-slide/vue-slide.vue'
+//  import rdSwipe from '../../../node_modules/vue-slide/vue-slide.vue'
   import lunbo from '../../business/lunbo.vue'
     import top from '../../business/app-header.vue'
     export default{
         components: {
             top,
-          lunbo
+            lunbo
         },
         data(){
             return {

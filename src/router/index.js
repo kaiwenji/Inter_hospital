@@ -1,9 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import A from "../pages/a.vue";
-import B from "../pages/b.vue";
 import chat from '../pages/myDoctorMyAdd/chat'
-import C from "../pages/c.vue";
 import accountAbout from "../pages/myCenter/accountAbout.vue";
 import changePhone from "../pages/myCenter/changePhone.vue";
 import confrimPhone from "../pages/myCenter/confrimPhone.vue";
@@ -30,18 +27,6 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path:'/healthFile',
-      component:healthFile
-    },
-    {
-      path:'/recordDetail',
-      component:recordDetail,
-    },
-    {
-      path:'/chat',
-      component:chat
-    },
       {
       path: '/docTalk',
       component: DocTalk

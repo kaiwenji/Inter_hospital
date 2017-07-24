@@ -2,76 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6c002f5-1246-44d8-aa76-2670b7ec10ee" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/about.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/account.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/addImg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/arrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/bdelete.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/btn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/dbtn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/delete.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/email.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/eye.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/guahao.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/jiahao.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/jiankang.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/jiuzhen.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/more.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/msg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/myDoc.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/new.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/nv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/psb.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/sao.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/succ.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/img/test.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/base/panel.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/lunbo.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/business/upload.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/lib/transform.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/DocRadio/detail.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/eye/eyeIllness.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/eye/orderDetail.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/healthRecord/addCase.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/healthRecord/caseDetail.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/healthRecord/healthRecord.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/homePage/index.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/login/forgetPassword.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/login/index.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/login/myDetail.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/login/password.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/login/register.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/login/router.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/my/index.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/myCenter/succeed.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/patient/addUser.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/patient/editPhone.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/patient/editUser.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pages/patient/users.vue" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pages/a.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pages/b.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pages/c.vue" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/base/leftSwipe.vue" afterPath="$PROJECT_DIR$/src/base/leftSwipe.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/app-header.vue" afterPath="$PROJECT_DIR$/src/business/app-header.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/business/docPanel.vue" afterPath="$PROJECT_DIR$/src/business/docPanel.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/common/var.scss" afterPath="$PROJECT_DIR$/src/common/var.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib/urlHistory.js" afterPath="$PROJECT_DIR$/src/lib/urlHistory.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.js" afterPath="$PROJECT_DIR$/src/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/DocRadio/index.vue" afterPath="$PROJECT_DIR$/src/pages/DocRadio/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/DocRadio/router.js" afterPath="$PROJECT_DIR$/src/pages/DocRadio/router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myCenter/changePassword.vue" afterPath="$PROJECT_DIR$/src/pages/myCenter/changePassword.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myCenter/changePhone.vue" afterPath="$PROJECT_DIR$/src/pages/myCenter/changePhone.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myCenter/confrimPhone.vue" afterPath="$PROJECT_DIR$/src/pages/myCenter/confrimPhone.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myCenter/modificationPassword.vue" afterPath="$PROJECT_DIR$/src/pages/myCenter/modificationPassword.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/homePage/index.vue" afterPath="$PROJECT_DIR$/src/pages/homePage/index.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/router/index.js" afterPath="$PROJECT_DIR$/src/router/index.js" />
     </list>
     <ignored path="ykwx.iws" />
@@ -91,12 +23,12 @@
     <favorites_list name="ykwx" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#svg#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -104,13 +36,60 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/router/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+            <state relative-caret-position="180">
+              <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="router.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pages/file/router.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="3" lean-forward="true" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
+              <folding>
+                <element signature="e#50#87#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#140#162#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/homePage/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="76" column="27" lean-forward="false" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="router.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/DocCard/router.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+              <folding>
+                <element signature="e#1#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -148,7 +127,6 @@
         <option value="$PROJECT_DIR$/src/pages/patient/editPhone.vue" />
         <option value="$PROJECT_DIR$/src/lib/transform.js" />
         <option value="$PROJECT_DIR$/src/business/lunbo.vue" />
-        <option value="$PROJECT_DIR$/src/pages/homePage/index.vue" />
         <option value="$PROJECT_DIR$/src/pages/login/password.vue" />
         <option value="$PROJECT_DIR$/src/pages/login/myDetail.vue" />
         <option value="$PROJECT_DIR$/src/pages/eye/eyeIllness.vue" />
@@ -180,6 +158,8 @@
         <option value="$PROJECT_DIR$/src/pages/login/register.vue" />
         <option value="$PROJECT_DIR$/src/pages/healthRecord/healthRecord.vue" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/pages/homePage/index.vue" />
+        <option value="$PROJECT_DIR$/src/pages/file/router.js" />
         <option value="$PROJECT_DIR$/src/router/index.js" />
       </list>
     </option>
@@ -196,9 +176,10 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-5" />
+    <option name="x" value="621" />
+    <option name="y" value="165" />
     <option name="width" value="1827" />
-    <option name="height" value="1040" />
+    <option name="height" value="907" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -232,8 +213,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -296,8 +275,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zeyk-master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zeyk-master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="file" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -412,27 +415,28 @@
       <workItem from="1500424144656" duration="26783000" />
       <workItem from="1500511392469" duration="23484000" />
       <workItem from="1500599845496" duration="20076000" />
-      <workItem from="1500790410034" duration="759000" />
+      <workItem from="1500790410034" duration="1452000" />
+      <workItem from="1500856687228" duration="1344000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102339000" />
+    <option name="totallyTimeSpent" value="104376000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-5" y="0" width="1827" height="1040" extended-state="0" />
+    <frame x="621" y="165" width="1827" height="907" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17607602" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1241535" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27453142" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.063307494" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -473,10 +477,79 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="4" lean-forward="false" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
+        <state relative-caret-position="300">
+          <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/DocCard/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="e#1#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#svg#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/DocCard/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
+          <folding>
+            <element signature="e#1#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/homePage/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="76" column="27" lean-forward="false" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#140#162#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="33" column="9" lean-forward="true" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/file/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="3" lean-forward="true" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
+          <folding>
+            <element signature="e#50#87#0" expanded="true" />
           </folding>
         </state>
       </provider>
