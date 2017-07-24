@@ -32,6 +32,7 @@
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
+    import api from '../../lib/api'
     export default{
         components: {
             top
@@ -40,7 +41,13 @@
             return {}
         },
         mounted(){
-
+          api("smarthos.system.stddept.list",{
+            "hasDept": true,
+            "hasDoc": true,
+            "deptLevel": 1
+          }).then(res=>{
+            console.log(res)
+          })
         },
       methods:{
         forgetPassword(){
