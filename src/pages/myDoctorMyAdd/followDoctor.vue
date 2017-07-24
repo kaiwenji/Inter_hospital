@@ -9,7 +9,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span class="followName">王小仙</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">我的医生</span>
                 </div>
@@ -361,6 +361,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
   .recentChat{
     width:100%;
     position: fixed;
@@ -381,14 +382,14 @@
     ul{
       padding:0;
       margin:0;
-      height: 100px;
+      height: 200rem/$rem;
       border-top: 1px solid rgb(205,205,205);
       li{
         list-style-type: none;
-        height: 100px;
+        height: 200rem/$rem;
         display: flex;
         .cancelImg{
-          width: 100px;
+          width: 80px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -398,6 +399,9 @@
           display: flex;
           align-items: center;
           line-height: 25px;
+          .followName{
+            font-size: 16px;
+          }
           .badgeDoc{
             display: inline-block;
             padding-top: -5px;
@@ -415,6 +419,7 @@
           }
           p{
             margin:0;
+            color: #999999;
             font-size: 14px;
           }
           span{
@@ -425,7 +430,7 @@
           flex:1;
           .forArrow{
             display: flex;
-            height: 100px;
+            height: 200rem/$rem;
             align-items: center;
             justify-content: flex-end;
             margin-right: 12px;

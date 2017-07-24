@@ -1,14 +1,13 @@
 <template>
     <div class="chat">
       <v-header :title="title" :rightTitle="rightTitle"></v-header>
-      <section :class="seeMore?'conversationUp':'conversation'" ref="list" @click="inputHide">
-
-          <section class="conversationList" ref="slideList">
+      <scroll :class="seeMore ? 'conversationUp':'conversation'" @make-blur="inputHide()" ref="list"  :data="chatText" :data1="seeMore">
+          <section class="conversationList" ref="slideList" >
             <ul>
-              <li v-for="(item,index) in chats">
+              <li v-for="(item,index) in chatText">
+                <div :class="{timeLog:chatTime[index] != ''}" ref="myLog">{{chatTime[index]}}</div>
                 <div class="other">
-                  <div class="say-time"></div>
-                  <img src="../../../static/img/医生男.png" alt="">
+                  <img src="../../../static/img/chatOrigin.jpg" alt="">
                   <div class="whatsay">
                     <div class="whatsay_svg">
                       <svg>
@@ -16,7 +15,7 @@
                       </svg>
                     </div>
                     <div class="whatsay_text">
-                      {{chats[index]}}
+                      {{item}}
                     </div>
                   </div>
                 </div>
@@ -25,14 +24,14 @@
           </section>
 
 
-      </section>
-      <footer :class="{footshow:seeMore}">
+      </scroll>
+      <footer :class="{footshow:seeMore}" ref="footer">
         <section class="foot_top">
-          <div class="chatInput">
-            <input type="text"  maxlength="100" @input="whatInput" v-model="inputInfo" @click="inputHide" :class="{greenBorder:light}" @keyup.enter="enterThing">
+          <div class="chatInput" @touchstart.prevent="forceFocused()">
+            <input type="text" @focus="focused" @blur="blured" maxlength="100" @input="whatInput" v-model="inputInfo"  :class="{greenBorder:light}" @keyup.enter="enterThing" ref="inputFocus">
           </div>
           <div class="chatSend">
-            <div class="send" @click="send()" v-if="light">
+            <div class="send" @touchstart.prevent="send()" v-if="light">
               <span>发送</span>
             </div>
             <div v-else @click="upMore" class="addmore">
@@ -55,8 +54,9 @@
 </template>
 <script>
   import header from '../../base/header'
-//  import Scroll from '../../base/scroll'
+  import scroll from '../../base/scroll'
   import BScroll from 'better-scroll'
+  import {getCurrentTime} from '../../utils/format.js'
   export default{
       data(){
         return{
@@ -65,90 +65,72 @@
           seeMore:false,
           light:false,
           inputInfo:'',
-          chats:[]
-        }
-      },
-      watch:{
-        chats(){
-          this.$nextTick(()=>{
-            if(!this.conversationScroll){
-              this._initConversation()
-            }else{
-              this.conversationScroll.refresh();
-            }
-            if(this.$refs.slideList.offsetHeight > 577)
-            this.conversationScroll.scrollTo(0,-(this.$refs.slideList.offsetHeight-557))
+          time:[],
+          chatText:['您好，我想咨询下', '您好，我可以继续咨询下吗'],
+          chatTime: ['2017-7-18','2017-7-21']
 
-          })
-        },
-        seeMore(){
-          this.$nextTick(()=>{
-             console.log("ewfrewgrewgtyg")
-            if(!this.conversationScroll){
-              this._initConversation()
-            }else{
-              this.conversationScroll.refresh();
-            }
-          })
         }
       },
       mounted(){
-        if(this.seeMore == false){
-          this.$nextTick(()=>{
-
-            if(!this.conversationScroll){
-              this._initConversation()
-            }else{
-              this.conversationScroll.refresh();
-            }
-          })
-        }else{
-            return
-        }
-
+//          this.$refs.inputFocus.focus()
       },
       methods:{
-        _initConversation(){
-            this.conversationScroll = new BScroll(this.$refs.list,{
-              click:true
-            })
-            console.log(this.conversationScroll)
-        },
         upMore(){
-            this.seeMore = true
-          this.$nextTick(()=>{
-            this.$refs.slideList.style.wrapperHeight= 417 + 'px'
-
-          })
-            console.log("gfsdglkfddsgdsgsdgdgdsgdsgdsg")
-            this.$nextTick(()=>{
-              console.log(this.conversationScroll.wrapperHeight)
-            if(this.conversationScroll.wrapperHeight == 577){
-                console.log("324321")
-              this.conversationScroll.refresh();
+            if(this.$refs.footer.style.bottom != 0 + 'px'){
+              this.$refs.footer.style.bottom=0 + 'px'
             }else{
-              console.log("此时为577");
+              this.$refs.footer.style.bottom=-160 + 'px'
             }
 
-          })
-
+            this.seeMore = !this.seeMore
         },
-        inputHide(){
-            this.seeMore = false
+        inputHide(e){
+          this.seeMore = false
+          this.$refs.inputFocus.blur()
+          this.$refs.footer.style.bottom=-160 + 'px'
         },
         enterThing(){
           if(this.light){
               this.send()
           }
         },
-        send(){
-            this.chats.push(this.inputInfo)
-            console.log( this.chats)
-             this.inputInfo=''
-             this.light=false
-             console.log(window.innerHeight)
-             console.log(this.$refs.slideList.offsetHeight)
-
+        blured(){
+//          this.$refs.footer.style.bottom=-160 + 'px'
+        },
+        forceFocused(){
+          this.$refs.inputFocus.focus()
+        },
+        focused(){
+          this.seeMore = false
+          this.$refs.footer.style.bottom=-160 + 'px'
+        },
+        send(e){
+            this.chatText.push(this.inputInfo)
+            this.inputInfo=''
+            this.light=false
+            this.$refs.inputFocus.focus()
+//            alert(document.hasFocus())  //true
+             let dtCur = new Date();
+             let sCur = dtCur.getSeconds();
+             this.time.push(sCur)
+             let position = this.time.indexOf(sCur)
+//             console.log(this.$refs.slideList.style.height)
+             if((this.time[position] - this.time[position-1])<5){
+               this.chatTime.push("")
+             }else{
+               let now = getCurrentTime()
+               this.nowTime = now
+               this.chatTime.push(now)
+             }
+//             console.log(this.$refs.slideList.offsetHeight)
+              var o = document.getElementById("app");
+              var h = o.offsetHeight;  //高度
+              var content = (h-200)
+              if(this.$refs.slideList.offsetHeight>content){
+                setTimeout(()=>{
+                  this.$refs.list.scrollTo(0,-this.$refs.slideList.offsetHeight+content)
+                },20)
+              }
         },
         whatInput(){
             if(this.inputInfo.replace(/\s+/g,"") == ''){
@@ -159,31 +141,39 @@
         }
       },
       components:{
-          'VHeader':header
+          'VHeader':header,
+           scroll
       },
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
+  @import '../../common/mixin.scss';
 .chat{
   width:100%;
-  position: fixed;
-  top:0;
-  bottom:0;
+
+  position: relative;
   z-index:12;
-  background-color: rgb(249,249,249);
+  background-color: white;
   /*background-color: rgb(255,255,255);*/
   .conversationList{
+    width:100%;
+    /*position: relative;*/
     li{
       .other{
         width:100%;
         display: flex;
         justify-content: flex-start;
-        margin-bottom: 10px;
+        /*padding-top: 25px;*/
+        margin-bottom: 25px;
         /*align-items: top;*/
         position: relative;
         img{
-          width: 40px;
-          height: 40px;
+          width: 80rem/$rem;
+          height: 80rem/$rem;
+          border-radius: 50%;
+          display: inline-block;
+          margin-left: 30rem/$rem;
         }
         .whatsay{
           position: relative;
@@ -193,7 +183,7 @@
             height: 0.64rem;
             position: absolute;
             top:.5546667rem;
-            left:.26rem;
+            left:.23rem;
             z-index:2;
             svg{
               display:block;
@@ -203,11 +193,13 @@
           }
           .whatsay_text{
             margin-left: 12px;
-            max-width: 245px;
+            max-width: 490rem/$rem;
             background:#F5F5F5;
             padding:0.42rem 0.384rem;
             border-radius:10px;
-            line-height: 19px;
+            font-size: 28rem $rem;
+            line-height: 48rem/$rem;
+            color: #333333;
             word-break: break-all;
           }
         }
@@ -216,10 +208,15 @@
   }
   .conversation{
     width:100%;
+    /*padding-top: 50px;*/
+    /*overflow: auto;*/
+    /*height: 500px;*/
     position: fixed;
     top: 50px;
-    bottom: 40px;
+    bottom: 50px;
     overflow: hidden;
+    /*-webkit-overflow-scrolling: touch;*/
+    /*overflow: auto;*/
     /*background-color: green;*/
     ul{
       padding:0;
@@ -239,6 +236,15 @@
       margin:0;
     }
   }
+  .timeLog{
+    margin:0 auto;
+    width: 690rem/$rem;
+    height: 90rem/$rem;
+    display: flex;
+    align-items: center;
+    color: #999999;
+    justify-content: center;
+  }
 }
 footer{
   width:100%;
@@ -249,14 +255,14 @@ footer{
   .foot_top{
     display: flex;
     .chatInput{
-      width: 283px;
-      margin-left: 20px;
+      width: 566rem/$rem;
+      margin-left: 30rem/$rem;
       text-align: center;
       input{
-        width: 283px;
-        height: 32px;
+        width: 566rem/$rem;
+        height: 64rem/$rem;
         border:none;
-        font-size: 20px;
+        font-size: 32rem/$rem;
         outline: medium;
         border-radius:7px;
         background-color: rgb(243,243,243);
@@ -268,14 +274,14 @@ footer{
       }
     }
     .chatSend{
-      width: 55px;
-      height: 35px;
-      margin-left: 10px;
+      width: 110rem/$rem;
+      height: 70rem/$rem;
+      margin-left: 20rem/$rem;
       /*background-color: dodgerblue;*/
       text-align: center;
       .send{
-        width: 55px;
-        height: 35px;
+        width: 110rem/$rem;
+        height: 70rem/$rem;
         background:#16af17;
         border-radius:5px;
         display: flex;
@@ -288,8 +294,8 @@ footer{
       }
       .addmore{
         img{
-          width: 29px;
-          height: 29px;
+          width: 58rem/$rem;
+          height: 58rem/$rem;
         }
       }
     }

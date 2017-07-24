@@ -20,9 +20,10 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../common/public.scss';
   .nav-bar{
     width:100%;
-    height: 40px;
+    height: 80rem/$rem;
     position: fixed;
     top: 50px;
     z-index:10;
@@ -35,7 +36,7 @@
       li{
         flex:1;
         display: flex;
-        height: 40px;
+        height: 80rem/$rem;
         align-items: center;
         justify-content: center;
         list-style-type: none;
@@ -44,8 +45,8 @@
           color: #333333;
         }
         .router-link-active{
-          height: 40px;
-          line-height: 40px;
+          height: 80rem/$rem;
+          line-height: 80rem/$rem;
           border-bottom: 2px solid #0AACE9;
         }
       }

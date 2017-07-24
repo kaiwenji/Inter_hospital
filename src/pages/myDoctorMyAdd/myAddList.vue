@@ -10,7 +10,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span class="addName">武松</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">主任医生</span>
                 </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span>武松</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">我的医生</span>
                 </div>
@@ -56,7 +56,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span>武松</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">我的医生</span>
                 </div>
@@ -79,7 +79,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span>武松</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">我的医生</span>
                 </div>
@@ -103,7 +103,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span>武松</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">我的医生</span>
                 </div>
@@ -127,7 +127,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span>武松</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">我的医生</span>
                 </div>
@@ -151,7 +151,7 @@
             </div>
             <div class="cancelIntro">
               <div>
-                <span>王小仙</span>
+                <span>武松</span>
                 <div class="badgeDoc">
                   <span class="myDoctor">我的医生</span>
                 </div>
@@ -379,6 +379,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
   .recentChat{
     width:100%;
     position: fixed;
@@ -399,11 +400,11 @@
     ul{
       padding:0;
       margin:0;
-      height: 100px;
+      height: 174rem/$rem;
       border-top: 1px solid rgb(205,205,205);
       li{
         list-style-type: none;
-        height: 100px;
+        height: 174rem/$rem;
         display: flex;
         .cancelImg{
           width: 100px;
@@ -420,9 +421,9 @@
             display: inline-block;
             padding-top: -5px;
             .myDoctor{
-              width: 60px;
-              height: 18px;
-              background-color: darkturquoise;
+              width: 120rem/$rem;
+              height: 36rem/$rem;
+              background-color: #F8985C;
               border-radius:5px;
               display: inline-block;
               font-size: 10px;
@@ -433,10 +434,11 @@
           }
           p{
             margin:0;
+            color: #666666;
             font-size: 14px;
           }
-          span{
-
+          span.addName{
+            color: #000;
           }
         }
         .cancelTime{
@@ -450,18 +452,19 @@
             span{
               display: inline-block;
               text-align: right;
-              font-size: 14px;
-              color: red;
+              font-size: 12px;
+              color: #4BCEC8;
               img{
                 width: 8px;
                 height: 12px;
+                margin-left: 20rem/$rem;
               }
             }
           }
         }
         img{
-          width: 40px;
-          height: 40px;
+          width: 104rem/$rem;
+          height: 104rem/$rem;
           border-radius: 50%;
         }
       }

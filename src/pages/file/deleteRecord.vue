@@ -27,6 +27,14 @@
                 <img src="" alt="">
               </div>
           </div>
+          <div class="logPeople">
+              <p>2016/7/19 由陈丽英添加</p>
+          </div>
+          <div class="addFile">
+            <div class="button">
+              <button>删除</button>
+            </div>
+          </div>
         </div>
     </div>
 </template>
@@ -45,6 +53,7 @@
   }
 </script>
 <style scoped lang="scss">
+  @import '../../common/public.scss';
 .recordDetail{
   width:100%;
   position: fixed;
@@ -55,55 +64,57 @@
   /*background-color: green;*/
   .wrapTime{
     width:100%;
-    height: 45px;
+    height: 90rem/$rem;
     border-bottom: 1px solid rgb(205,205,205);
     .timeCenter{
-      width: 345px;
-      height: 45px;
+      width: 690rem/$rem;
+      height: 90rem/$rem;
       margin:0 auto;
       display: flex;
       align-items:center;
+      font-size: 32rem/$rem;
+      color: #333333;
       justify-content: space-between;
       >div{
-        font-size: 16px;
+        font-size: 32rem/$rem;
         color: #333333;
         img{
-          width: 7.5px;
+          width: 15rem/$rem;
           display: inline-block;
-          margin-left: 10px;
+          margin-left: 20rem/$rem;
         }
       }
     }
   }
   .wrapInput{
     width:100%;
-    height:45px;
+    height: 90rem $rem;
     border-bottom: 1px solid rgb(205,205,205);
     .inputTitle{
-      width: 345px;
-      height: 45px;
-      line-height: 45px;
+      width: 690rem/$rem;
+      height: 90rem/$rem;
+      line-height: 90rem/$rem;
       margin:0 auto;
-      font-size: 16px;
+      font-size: 32rem/$rem;
       color: #333333;
     }
   }
   .wrapText{
     width:100%;
-    height: 150px;
+    height: 300rem/$rem;
     border-bottom: 1px solid rgb(205,205,205);
     >div{
-      width: 345px;
+      width: 690rem/$rem;
       margin:0 auto;
       textarea{
-        width: 345px;
-        height: 150px;
+        width: 690rem/$rem;
+        height: 300rem/$rem;
         resize: none;
         border:none;
         outline:medium;
-        padding-top: 15px;
-        font-size: 14px;
-        line-height: 21px;
+        padding-top: 30rem/$rem;
+        font-size: 28rem/$rem;
+        line-height: 42rem/$rem;
         color: #999999;
         box-sizing: border-box;
       }
@@ -112,14 +123,54 @@
   .wrapImg{
     width:100%;
     >div{
-      width:345px;
+      width: 690rem/$rem;
       margin: 0 auto;
       img{
-        width: 70px;
-        height: 70px;
+        width: 140rem/$rem;
+        height: 140rem/$rem;
         display: inline-block;
-        margin-top: 15px;
-        margin-right: 12px;
+        margin-top: 30rem/$rem;
+        margin-right: 24rem/$rem;
+      }
+    }
+  }
+  .logPeople{
+    width:100%;
+    height: 80px;
+    /*background-color: #E64340;*/
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 180rem/$rem;
+    p{
+      color: #999999;
+      font-size: 28rem/$rem;
+    }
+  }
+  .addFile{
+    width:100%;
+    height: 100px;
+    position: fixed;
+    bottom: 30rem/$rem;
+    /*margin-top: 100px;*/
+    /*margin-bottom: 50px;*/
+    /*background-color: #0FBDFF;*/
+    display: flex;
+    justify-content: center;
+    div.button{
+      width: 690rem/$rem;
+      height: 94rem/$rem;
+      /*background-color: #E64340;*/
+      button{
+        width: 690rem/$rem;
+        height: 94rem/$rem;
+        border:none;
+        outline: medium;
+        border-radius: 10px;
+        color: #FDFDFD;
+        font-size:36rem/$rem;
+        background-color: #FF8588;
       }
     }
   }

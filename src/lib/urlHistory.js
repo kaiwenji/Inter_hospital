@@ -5,7 +5,6 @@ export default class {
   constructor() {
 
   }
-
   get history() {
     let arr = sessionStorage.getItem("url_history");
     if (!arr || arr === "null") {

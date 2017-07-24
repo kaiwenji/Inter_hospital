@@ -67,7 +67,7 @@
       </div>
       <div class="btn">
         <div class="btnImg" @click="goAddCase">
-          <img  src="../../../static/img/btn.png" alt="">
+          <!--<img  src="../../../static/img/btn.png" alt="">-->
         </div>
       </div>
     </div>
@@ -170,10 +170,16 @@
       right: 30rem/$rem;
     }
   .btnImg{
-    img{
-      width: 110rem/$rem;
-      height: 110rem/$rem;
-    }
-
+    width: 110rem/$rem;
+    height: 110rem/$rem;
+    background-image: url(../../../static/img/btn.png);
+    repeat:no-repeat;
+    background-size:110rem/$rem;
   }
+  .btnImg:active{
+    background-image: url(../../../static/img/dbtn.png);
+    repeat:no-repeat;
+    background-size:110rem/$rem;
+  }
+
 </style>

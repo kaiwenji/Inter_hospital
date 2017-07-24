@@ -1,8 +1,8 @@
 <template>
   <header >
         <div class="left" @click="back"><slot name="left"><font><span>&#xe600;</span></font></slot></div>
-    <slot> </slot>
-      <div class="right">
+    <slot class="bf"> </slot>
+      <div class="right bf">
         <slot name="right"></slot>
       </div>
   </header>
@@ -35,6 +35,7 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../common/public.scss";
   @font-face {
     font-family: 'iconfont';
     src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
@@ -53,7 +54,7 @@
     background-color: white;
     width: 100%;
     text-align: center;
-
+    border-bottom:1px solid gainsboro;
    z-index:888;
   }
 
@@ -71,7 +72,7 @@
   .right{
     position: absolute;
     top: 0px;
-    right: 10px;
+    right: 15px;
     height: 45px;
     line-height: 45px;
     z-index: 911;
