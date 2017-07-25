@@ -48,6 +48,9 @@ const getMyDay = (time)=>{
     return Number(year)+"-"+Number(month)+"-"+Number(day);
 }
 var goodTime = function(unixTime){
+    if(!unixTime){
+        return "";
+    }
   let str = parseInt( unixTime )
   var now = new Date().getTime(),
     oldTime = new Date(str).getTime(),

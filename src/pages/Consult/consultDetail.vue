@@ -11,16 +11,16 @@
       <div class="symptom">
           <div class="panel">
               <p class="font-hide m">{{consultInfo.consultContent}}</p>
-              <div class="horizontal">
+              <div class="horizontal" v-show="hasPhoto">
                   <img src="../../../static/img/qr.png">
                   <img src="../../../static/img/qr.png">
                   <img src="../../../static/img/qr.png">
                   <img class="last" src="../../../static/img/qr.png">
     </div>
               <div class="ft">
-                  <p class="lightBlue m"><img src="../../../static/img/docProfile.png" class="icon">李逵<span class="light m">回答</span></p>
+                  <p class="lightBlue l"><img src="../../../static/img/docProfile.png" class="icon">李逵<span class="l light">回答</span></p>
                   <p class="middle m light">{{consultInfo.createTime|goodTime}}创建</p>
-                  <p class="right m light">{{consultInfo.replyCount|0}}条评论</p>
+                  <p class="right m light">{{consultInfo.replyCount||0}}条评论</p>
     </div>
     </div>
     </div>
@@ -55,7 +55,8 @@
           testList:[1,1,1,1,1,1],
           isEnded:true,
           consultInfo:{},
-          replyList:[]
+          replyList:[],
+          hasPhoto:false
       };
     },
     computed: {},
@@ -69,9 +70,10 @@
             token:window.localStorage['token']
         })
         .then((val)=>{
+            console.log(val);
             this.consultInfo=val.obj.consultInfo;
             this.replyList=val.obj.consultMessage;
-            console.log(this.replyList[0]);
+            
         })
 
     },
@@ -106,12 +108,12 @@
     
    .panel{
         padding:0.8rem;
+       padding-bottom:0;
         margin-bottom:0.8rem;
         margin-left:0.8rem;
         margin-right:0.8rem;
         background-color:#FFFFFF;
         border-radius:10px;
-        height:8rem;
         img{
             padding-top:0.8rem;
             padding-bottom:0.8rem;
@@ -127,6 +129,7 @@
             @include horizontal;
             position:relative;
             .icon{
+/*                display:none;*/
                 position:absolute;
                 flex:0 0 auto;
                 display:block;

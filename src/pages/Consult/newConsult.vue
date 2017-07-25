@@ -137,17 +137,15 @@
             })
             .then((val)=>{
                 console.log(val);
-            })
-            setTimeout(()=>{
                 this.showLoading=false;
-                this.addSuccess();
-            },1000)
+                this.addSuccess(val.obj.id);
+            })
         },
-        addSuccess(){
+        addSuccess(id){
             this.showSuccess=true;
             setTimeout(()=>{
                 this.showSuccess=false;
-                this.$router.push("/Consult/ConsultDetail");
+                this.$router.push("/Consult/ConsultDetail/"+id);
             },1000)
         }
     }

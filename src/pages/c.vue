@@ -33,9 +33,7 @@
               <p class="font-hide":id="item.title">{{item.desc}}</p>
     </div>
               <div class="button" style="display:flex;flex-direction:column" @click="getDetail(item,this,index)">
-                  <div>
                   <img src="../../static/img/pullDown.png" class=""style="padding:2.6rem 1rem;width:1rem;">
-    </div>
     </div>
     </div>
           <div class="docAudio" >
@@ -68,7 +66,7 @@
   export default {
     data() {
       return {
-          docId:"595d05b0f19b9c898a58cc00",
+          docId:"",
           docInfo:{},
           title:"我的名片",
           list:[{title:"医生擅长",desc:""},{title:"医生介绍",desc:""}],
@@ -89,6 +87,7 @@
         DocPanel
     },
     mounted() {
+        this.docId=this.$route.params.id;
         this.rem=window.screen.width/20;
         this.$refs.wrap.onscroll=()=>{
             
@@ -132,10 +131,7 @@
             var picture=event.event.target;
             console.log(picture);
             picture.className=picture.className=="rotate"?"":"rotate"; 
-            article.className=article.className==''?"font-hide":"";
-//            if(index==1&&article.className=='font-hide'){
-//                article.className+=' addOneLine';
-//            }
+            article.className=article.className=='font-show'?"font-hide":"font-show";
             
             
         },
@@ -282,6 +278,7 @@
         background-color:white;
         display:flex;
         flex-direction:row;
+        align-items:center; 
         margin-bottom:1rem;
         div{
             &.button{
@@ -368,7 +365,7 @@
             top:0.8rem;
         }
     }
-    .addOneLine{
-        -webkit-line-clamp:3;
+    .font-show{
+        padding-bottom:1rem;
     }
 </style>

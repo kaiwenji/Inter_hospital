@@ -3,24 +3,24 @@
       <app-header>
           <p class="headerTitle">名医知道</p>
     </app-header>
-      <my-panel>
+      <my-panel @activate="goDoc">
           <div slot="picture">
-              <img src="../../../static/img/docProfile.png" class="figure">
+              <img :src="docInfo.docAvatar" class="figure">
     </div>
           <div slot="article" class="article">
               <div class="horiFlex">
-                  <p class="xl darker">李时珍</p>
-                  <p class="l dark">主任医生</p>
+                  <p class="xl darker">{{docInfo.docName}}</p>
+                  <p class="l dark">{{docInfo.docTitle}}</p>
     </div>
-              <p class="m light">浙江大学附属第二医院</p>
-              <p class="m light">眼科</p>
+              <p class="m light">{{docInfo.docHosName}}</p>
+              <p class="m light">{{docInfo.docDeptName}}</p>
     </div>
     </my-panel>
       <div class="main">
           <div>
           <p class="dark m">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大</p>
     </div>
-          <my-player src="../../../static/music/test.mp3"></my-player>
+          <my-player src="../../../static/music/test.mp3" :docInfo="docInfo"></my-player>
     </div>
   </div>
 </template>
@@ -29,9 +29,12 @@
     import MyPanel from "../../base/panel.vue";
     import AppHeader from "../../business/app-header.vue";
     import MyPlayer from "../../base/player.vue";
+    import Api from "../../lib/api.js";
   export default {
     data() {
-      return {};
+      return {
+          docInfo:{}
+      };
     },
     computed: {},
     components: {
@@ -40,12 +43,22 @@
         MyPanel
     },
     mounted() {
-
+        Api("smarthos.sns.knowledge.info",{
+            id:this.$route.params.id
+        })
+        .then((val)=>{
+            console.log(val);
+            this.docInfo=val.obj;
+        })
     },
     beforeDestroy() {
 
     },
-    methods: {}
+    methods: {
+        goDoc(){
+            this.$router.push("/c/"+this.docInfo.snsKnowledge.docId);
+        }
+    }
   };
 </script>
 
@@ -72,6 +85,7 @@
     }
     .figure{
         height:3.7rem;
+        border-radius:2rem;
     }
     .article{
         padding-left:0.8rem;

@@ -48,7 +48,6 @@
       },
     mounted() {
         this.$refs.bubble.$el.addEventListener("click",(e)=>{
-                console.log(e.target);
                 e._flag=true;
             })
         
@@ -56,7 +55,6 @@
             e._flag=true;
         },false);
         this.$refs.bd.addEventListener("click",(e)=>{
-            console.log(e._flag);
             if(e._flag){
                 e.stopPropagation();
             }
@@ -118,6 +116,7 @@
             }
         }
     .Bubble{
+        margin:0.8rem 0;
         display:flex;
         flex-direction:row;
         div{

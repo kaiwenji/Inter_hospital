@@ -30,7 +30,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
       {
-         path:"/c",
+         path:"/c/:id",
           component:C
       },
       {
