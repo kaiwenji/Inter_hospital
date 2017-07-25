@@ -12,7 +12,7 @@
           <div class="info">
               <div>
                   <img :src="docInfo.docAvatar">
-                  <p class="l">{{docInfo.docName}}</p>
+                  <p class="l docName">{{docInfo.docName}}<span v-show="docInfo.famous" class="icon s">名医</span></p>
                   <p class="m">{{docInfo.deptName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{docInfo.docTitle}}</p>
                   <p>{{docInfo.hosName}}</p>
     </div>
@@ -36,13 +36,13 @@
                   <img src="../../static/img/pullDown.png" class=""style="padding:2.6rem 1rem;width:1rem;">
     </div>
     </div>
-          <div class="docAudio" >
+          <div class="docAudio"v-show="showDocTalk" >
               <div class="title">
                   <p class="l">医生说</p>
                   <div><p @click="getMoreAudio()" v-show="!nothingMore">更多</p></div>
     </div>
               <div v-for="item in audioList">
-              <doc-panel :item="item" @recommend="setColor"></doc-panel>
+              <doc-panel :item="item" @recommend="setColor(item)"></doc-panel>
     </div>
               
     </div>
@@ -72,11 +72,14 @@
           list:[{title:"医生擅长",desc:""},{title:"医生介绍",desc:""}],
           audioList:[],
           rem:16,
-          isFollow:false,
-          nothingMore:false
+          nothingMore:false,
+          showDocTalk:false
       };
     },
     computed: {
+        isFollow(){
+            return this.docInfo.hasFollow?this.docInfo.hasFollow:false
+        },
         followWord(){
             return this.isFollow?"已关注":"关注";
         }
@@ -103,19 +106,35 @@
             this.list[1].desc=this.docInfo.docResume;
             console.log(this.docInfo);
             
-        })
+        },
+                      ()=>{
+                    this.$weui.alert("网络错误");
+                })
         Api("smarthos.sns.knowledge.page",{
             docId:this.docId,
             pageNum:1,
             pageSize:3,
             
-        })
+        },     
+            ()=>{
+                    this.$weui.alert("网络错误");
+                })
         .then((val)=>{
+            if(!val.succ||!val.list||val.list.length==0){
+                this.showDocTalk=false;
+            }
+            else{
+                this.showDocTalk=true;
+            }
+            
             console.log(val);
             this.audioList=val.list;
             if (val.page.total==1){
                 this.nothingMore=true;
             }
+        },
+             ()=>{
+            this.$weui.alert("网络错误");
         })
     },
     beforeDestroy() {
@@ -141,18 +160,76 @@
         
         follow(){
             if (this.isFollow){
-                this.isFollow=false;
-                this.$refs.followButton.className="followButton";
-                this.$refs.heart.src="../../static/img/follow.png";
+                Api("smarthos.follow.cancel",{
+                    docId:this.docInfo.id,
+                    token:window.localStorage['token']
+                })
+                .then((val)=>{
+                    if(val.succ){
+                        this.isFollow=false;
+                        this.$refs.followButton.className="followButton";
+                        this.$refs.heart.src="../../static/img/follow.png";   
+                    }
+                    else{
+                        this.$weui.alert(val.msg);
+                    }
+                },
+                      ()=>{
+                    this.$weui.alert("网络错误");
+                }
+                      )
                 
             }
             else{
-                this.isFollow=true; this.$refs.followButton.className+=" followed";
-                this.$refs.heart.src="../../static/img/followed.png";
+                Api("smarthos.follow.docpat.add",{
+                    docId:this.docInfo.id,
+                    token:window.localStorage['token']
+                })
+                .then((val)=>{
+                    if(val.succ){
+                        this.isFollow=true;
+                        this.$refs.followButton.className+=" followed";
+                        this.$refs.heart.src="../../static/img/followed.png";   
+                    }
+                    else{
+                        this.$weui.alert(val.msg);
+                    }
+                },
+                     ()=>{
+                    this.$weui.alert("网络错误");
+                })
             }
         },
-        setColor(){
-            alert("setColor");
+        
+        
+        /*点赞函数*/
+        setColor(item){ 
+            Api("smarthos.sns.knowledge.likes",{
+                knowledgeId:item.snsKnowledge.id,
+                token:window.localStorage['token']          
+            })
+            .then((val)=>{
+                console.log(val);
+                if(val.succ){
+                    Api("smarthos.sns.knowledge.info",{
+                        id:item.snsKnowledge.id,
+                        token:window.localStorage['token']     
+                    })
+                    .then((val)=>{
+                        console.log(val);
+                        item.snsKnowledge=val.obj.snsKnowledge;
+                    },
+                         ()=>{
+                        this.$weui.alert("网络错误");
+                    })
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
         },
         setHeaderColor(top){
             var limit=5*this.rem;
@@ -367,5 +444,21 @@
     }
     .font-show{
         padding-bottom:1rem;
+    }
+    
+/*    名医标签*/
+    .icon{
+        background:rgb(242,198,19);
+        color:white;
+        position:absolute;
+        border-radius:0.3rem;
+        padding:0 .3rem;
+        left:11.5rem;
+        top:.1rem;   
+    }
+    
+/*    医生姓名*/
+    .docName{
+        position:relative;
     }
 </style>
