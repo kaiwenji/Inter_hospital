@@ -8,7 +8,7 @@
               <p  class="l ft" ><img ref="heart"src="../../static/img/follow.png">{{followWord}}</p>
     </div>
     </app-header>
-      <div>
+      <div v-show="Got">
           <div class="info">
               <div>
                   <img :src="docInfo.docAvatar">
@@ -55,10 +55,12 @@
           <div>
     </div>
     </div>
+      <my-loading v-show="!Got"></my-loading>
   </div>
 </template>
 
 <script>
+    import MyLoading from "../base/loading/loading.vue";
     import DocPanel from "../business/docPanel.vue";
     import AppHeader from "../business/app-header.vue";
     import Bubble from "../base/bubble.vue";
@@ -73,7 +75,8 @@
           audioList:[],
           rem:16,
           nothingMore:false,
-          showDocTalk:false
+          showDocTalk:false,
+          Got:false
       };
     },
     computed: {
@@ -87,7 +90,8 @@
     components: {
         AppHeader,
         bubble:Bubble,
-        DocPanel
+        DocPanel,
+        MyLoading
     },
     mounted() {
         this.docId=this.$route.params.id;
@@ -105,6 +109,7 @@
             this.list[0].desc=this.docInfo.docSkill;
             this.list[1].desc=this.docInfo.docResume;
             console.log(this.docInfo);
+            this.Got=true;
             
         },
                       ()=>{

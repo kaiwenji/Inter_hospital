@@ -36,7 +36,9 @@
     <div class="request inter">
         <textarea v-model="content" @focus="text_fade"></textarea>
     </div>
-    <div class="picture"></div>
+    <div class="picture">
+        <my-upload></my-upload>
+    </div>
     </div>
     <my-popup :show="showPat" @activate="showPat=false">
         <div slot="contain" class="contain">
@@ -74,11 +76,12 @@
     import AppHeader from "../../business/app-header.vue";
     import MyPopup from "../../base/popup.vue";
     import {getAge,getGender} from "../../lib/filter.js";
+    import MyUpload from "../../business/upload.vue";
   export default {
     data() {
       return {
           showPat:false,
-          patList:["大周","小毛","老白","老邢","小郭"],
+          patList:[],
           showLoading:false,
           showSuccess:false,
           chosedIndex:0,
@@ -87,7 +90,12 @@
     },
     computed: {
         patInfo(){
-            return this.patList[this.chosedIndex];
+            if(this.patList.length>0){
+                return this.patList[this.chosedIndex];
+            }
+            else{
+                return {}
+            }
         }
     },
       filters:{
@@ -96,7 +104,8 @@
       },
     components: {
         AppHeader,
-        MyPopup
+        MyPopup,
+        MyUpload
     },
     mounted() {
         Api("smarthos.user.commpat.list",{
@@ -258,5 +267,8 @@
                 overflow:auto;
             }
         }
+    }
+    .picture{
+        padding-left:0.8rem;
     }
 </style>
