@@ -42,7 +42,7 @@
         <textarea class="xl"v-model="description" @focus="text_fade" @blur="text_show"></textarea>
     </div>
     <div class="picture">
-        <my-upload></my-upload></div>
+        <my-upload @getAttaIdsList="getAttaIdsList"></my-upload></div>
     </div>
     <my-popup :show="showPat" @activate="showPat=false">
         <div slot="contain" class="contain">
@@ -83,7 +83,8 @@
           showLoading:false,
           showSuccess:false,
           patGot:false,
-          docGot:false
+          docGot:false,
+          attaList:[]
       };
     },
     computed: {
@@ -125,30 +126,33 @@
         **/
         Api("smarthos.user.doc.card.get",{docId:this.$route.params.id})
         .then((val)=>{
+            this.docGot=true;
             if(val.succ){
 //                console.log(val);
                 this.docInfo=val.obj.doc;
-                this.docGot=true;
             }
             else{
                 this.$weui.alert(val.msg);
             }
         },
              ()=>{
+            this.docGot=true;
             this.$weui.alert("网络错误");
         })
         /*获取病人列表*/
         Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
         .then((val)=>{
+            this.patGot=true;
             if(val.succ){
                 this.patList=val.list;
-                this.patGot=true;
+                
             }
             else{
                 this.$weui.alert(val.msg);
             }
         },
         ()=>{
+            this.patGot=true;
             this.$weui.alert("网络错误");
         })
 
@@ -157,21 +161,28 @@
 
     },
     methods: {
+
+        getAttaIdsList(item){
+            this.attaList=item;
+        },
         /**提交预约**/
         appoint(){
-            console.log(this.docInfo);
+            let desc=this.isBlank(this.description);
+            console.log(desc);
             this.showLoading=true;
             Api("smarthos.appiontment.add",{
                 patId:this.patInfo.patId,
                 docId:this.docInfo.id,
                 compatId:this.patInfo.id,
-                description:this.isBlank(this.description),
-                token:window.localStorage['token']
+                description:desc,
+                token:window.localStorage['token'],
+                attaList:this.attaList
             })
             .then((val)=>{
+                this.showLoading=false;
                 console.log(val);
                 if(val.succ){
-                    this.showLoading=false;
+                    
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
@@ -182,16 +193,20 @@
                 }
             },
                  ()=>{
+                this.showLoading=false;
                     this.$weui.alert("网络错误");
                      this.$router.push("/")
                      })
             
-        },         
+        },       
         /*检查textarea是否为默认值*/
           isBlank(str){
               if(str=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
                   return "";
-              } 
+              }
+              else{
+                  return str;
+              }
           },
         text_fade(){
             if(this.description=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){

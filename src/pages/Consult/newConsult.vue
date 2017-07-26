@@ -39,7 +39,7 @@
         <textarea v-model="content" @focus="text_fade"></textarea>
     </div>
     <div class="picture">
-        <my-upload></my-upload>
+        <my-upload @getAttaIdsList="getAttaIdsList"></my-upload>
     </div>
     </div>
     <my-popup :show="showPat" @activate="showPat=false">
@@ -91,7 +91,8 @@
           showSuccess:false,
           chosedIndex:0,
           content:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。",
-          Got:false
+          Got:false,
+          attaList:[]
       };
     },
     computed: {
@@ -136,6 +137,9 @@
 
     },
     methods: {
+        getAttaIdsList(item){
+            this.attaList=item;
+        },
         text_fade(){
             if(this.content=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
                 this.content="";
@@ -158,12 +162,13 @@
                 consulterMobile:this.patInfo.commpatMobile,
                 consulterIdcard:this.patInfo.commpatIdcard,
                 consultContent:this.content,
-                token:window.localStorage['token']
+                token:window.localStorage['token'],
+                attaIdList:this.attaList
             })
             .then((val)=>{
                 console.log(val);
                 this.showLoading=false;
-                this.addSuccess(val.obj.id);
+                this.addSuccess(val.obj.consultInfo.id);
             })
         },
         addSuccess(id){

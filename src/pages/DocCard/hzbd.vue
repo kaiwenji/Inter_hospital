@@ -133,30 +133,33 @@
         **/
         Api("smarthos.user.doc.card.get",{docId:this.$route.params.id})
         .then((val)=>{
+            this.docGot=true;
             if(val.succ){
 //                console.log(val);
                 this.docInfo=val.obj.doc;
-                this.docGot=true;
             }
             else{
                 this.$weui.alert(val.msg);
             }
         },
              ()=>{
+            this.docGot=true;
             this.$weui.alert("网络错误");
         })
         /*获取病人列表*/
         Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
         .then((val)=>{
+            this.patGot=true;
             if(val.succ){
                 this.patList=val.list;
-                this.patGot=true;
+                
             }
             else{
                 this.$weui.alert(val.msg);
             }
         },
         ()=>{
+            this.patGot=true;
             this.$weui.alert("网络错误");
         })
 
@@ -177,9 +180,10 @@
                 token:window.localStorage['token']
             })
             .then((val)=>{
+                this.showLoading=false;
                 console.log(val);
                 if(val.succ){
-                    this.showLoading=false;
+                    
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
@@ -190,6 +194,7 @@
                 }
             },
                  ()=>{
+                this.showLoading=false;
                     this.$weui.alert("网络错误");
                      this.$router.push("/")
                      })
@@ -200,6 +205,9 @@
               if(str=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
                   return "";
               } 
+              else{
+                  return str;
+              }
           },
         
         /*textarea控制函数*/

@@ -67,6 +67,7 @@
             if(val.succ){
                 this.info=val.obj;
                 this.consultInfo=val.obj.consultInfo;
+                console.log(this.info);
                 this.replyList=val.obj.consultMessage;
             }
             else{
