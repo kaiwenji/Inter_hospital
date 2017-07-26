@@ -1,12 +1,12 @@
 <template>
-  <div class="top_bar main_head ">
+  <div class="top_bar main_head border-1px">
     <section class="goBack" @click="back()">
        <img src="../../static/img/返回.png" alt="">
     </section>
     <section class="title">
       <span class="word">{{title}}</span>
     </section>
-    <section class="nav">
+    <section class="nav"  @click="apply()">
       <span class="rightWord">{{rightTitle}}</span>
     </section>
   </div>
@@ -24,6 +24,9 @@
     methods:{
       back(){
         this.$router.back(-1)
+      },
+      apply(){
+          this.$emit("on-apply")
       }
     },
     watch:{
@@ -33,6 +36,7 @@
 </script>
 <style scoped lang="scss">
   @import '../common/public.scss';
+  @import '../common/mixin.scss';
   .top_bar{
     background-color: white;
     height: 50px;
@@ -42,7 +46,6 @@
     position: fixed;
     display: flex;
     z-index:10;
-    border-bottom: 1px solid rgb(205,205,205);
     section{
       text-align: center;
       .word{

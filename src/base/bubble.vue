@@ -13,7 +13,8 @@
   export default {
     data() {
       return {
-          duration:""
+          duration:"",
+          intervalId:""
       };
     },
     props:{
@@ -33,27 +34,23 @@
         }, false);
     },
     beforeDestroy() {
+        clearInterval(this.intervalId);
 
     },
     methods: {
         on(){
             if(this.$refs.music.paused){
                 this.$refs.bubble.className+=" on";
-//            document.getElementById("music").play();
                 this.$refs.music.play();
-//                if(this.$refs.music){
-//                    this.duration=this.setTimeFormat(this.$refs.music.currentTime);
-//                    setInterval(this.getCurrentTime,100,false);
-//                }
-            }
-            else{
-                this.$refs.bubble.className="bubble";
-                this.$refs.music.pause();
-//                clearInterval(this.getCurrentTime,100,false);
+                this.intervalId=setInterval(this.checkIfEnd,100);
             }
         },
-        getCurrentTime(){
-            this.duration=this.setTimeFormat(this.$refs.music.currentTime);
+        checkIfEnd(){
+          if(this.$refs.music.ended){
+              console.log("end");
+              this.$refs.bubble.className="bubble";
+              clearInterval(this.intervalId);
+          }  
         },
         setTimeFormat(item){
             var hour = Math.floor (item / 3600);
@@ -68,7 +65,6 @@
 
 <style scoped lang="scss">
     .bubble{
-        margin:1rem 0;
         background-image:url(../../static/img/bubble_off.png);
         &.on{
             background-image:url(../../static/img/bubble_on.png);

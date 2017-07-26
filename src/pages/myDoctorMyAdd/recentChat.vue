@@ -2,7 +2,7 @@
     <div class="recentChat">
       <div class="myDoctorList" ref="contactList">
         <div>
-          <ul @click="goChat">
+          <ul @click="goChat" class="border-1px">
             <li>
               <div class="cancelImg">
                 <img src="../../assets/logo.png" alt="">
@@ -20,299 +20,40 @@
                 <div >
                   <span class="year">2017/4/29</span>
                   <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul @click="goChat">
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">李冰</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
-                  </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul @click="goChat">
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">李冰</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
-                  </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul @click="goChat">
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">李冰</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
-                  </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul @click="goChat">
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">李冰</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
-                  </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul @click="goChat">
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">李冰</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
-                  </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul @click="goChat">
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">李冰</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
-                  </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul @click="goChat">
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">李冰</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
-                  </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">9</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">10</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span>2017/4/29</span>
-                  <p class="time"><span class="badge">11</span></p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div>
-                  <span>2017/4/29</span>
-                  <p>1</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div>
-                  <span>2017/4/29</span>
-                  <p>1</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span>李冰</span><span class="myDoctor">我的医生</span>
-                  <p>您的全科分诊已经开始，点击进入</p>
-                </div>
-              </div>
-              <div class="cancelTime">
-                <div>
-                  <span>2017/4/29</span>
-                  <p>1</p>
                 </div>
               </div>
             </li>
           </ul>
         </div>
-        <div class="loading-container">
+        <div class="loading-container" v-show="chatList.length != 0">
            <loading></loading>
         </div>
-        <v-mask :showList="showList"></v-mask>
+        <v-mask  v-show="chatList.length != 0"></v-mask>
       </div>
     </div>
 </template>
 <script>
   import BScroll from 'better-scroll'
+  import api from '../../lib/api'
   import Loading from '../../base/loading/loading'
   import VMask from '../../base/mask'
   export default{
       data(){
         return{
-          showList:true
+          showList:true,
+          chatList:[]
         }
       },
       mounted(){
         this.$nextTick(()=>{
           this._initRecentChat()
+        })
+      },
+      created(){
+        api("smarthos.follow.message.last.list",{
+          token:"18297912203",
+        }).then((data)=>{
+            console.log(data)
         })
       },
       methods:{
@@ -334,6 +75,7 @@
 <style scoped lang="scss">
   @import '../../common/public.scss';
   @import '../../common/var.scss';
+  @import '../../common/mixin.scss';
 .recentChat{
   width:100%;
   position: fixed;

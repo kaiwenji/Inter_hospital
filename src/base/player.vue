@@ -4,13 +4,14 @@
           <div class="player_bd">
               <a @click="on()"><img class="button" ref="button" src="../../static/img/on.png"></a>
               <div class="info">
-                  <p class="title">眼底病紧急自救</p>
-                  <p>李时珍</p>
+                  <div class="wrap" ref="shiftBlock">
+                  <p class="title">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.knowTitle}}</p>
+    </div>
+                  <p>{{docInfo.docName}}</p>
                   
                   <div class="weui-slider-box">
 
                             <div class="weui-slider">
-                                
                                     <p class="right">{{currentTime}}/{{duration}}</p>
                                 <div class="weui-slider__inner" ref="slider">
                                     <div style="width: 0;" class="weui-slider__track" id="track" ref='track'>
@@ -27,34 +28,48 @@
     </div>
     </div>
           <div class="player_ft">
-              <p>2017-06-01</p>
-              <p class="right">2000人听过</p>
-              <p class="right"><img class="icon" src="../../static/img/thumb.png">200</p>
+              <p>{{docInfo.snsKnowledge&&docInfo.snsKnowledge.createTime|getMyDay}}</p>
+              <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}}人听过</p>
+              <p class="right"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
     </div>
-          <audio ref="music" id="music">
-              <source :src="src">
+          <audio ref="music" id="music" :src="src">
         </audio>
     </div>
- 
   </div>
 </template>
 
 <script>
+    import {getMyDay} from "../lib/filter.js"
   export default {
     data() {
       return {
           duration:"",
-          currentTime:""
+          currentTime:"",
+          intervalId:'',
+          direction:"right",
+          target:-1
       };
     },
+      filters:{
+          getMyDay
+      },
     props:{
-        src:{
-            default:"",
-            type:String,
+        docInfo:{
+            default:{},
+            type:Object,
             required:true
         }
     },
     computed: {
+        src(){
+            if(this.docInfo.snsKnowledge){
+                return this.docInfo.snsKnowledge.knowUrl;
+                setTimeout(this.$refs.music.load(),100);
+            }
+            else{
+                return "";
+            }
+        }
     },
     components: {},
     mounted() {
@@ -67,6 +82,7 @@
 
     },
     beforeDestroy() {
+        clearInterval(this.intervalId);
 
     },
     methods: {
@@ -95,26 +111,49 @@
                 });
         },
         on(){
-            if(this.$refs.music.paused){
+            if(this.$refs.music.paused&&!this.$refs.music.ended){
                 this.$refs.button.src="../../static/img/pause.png";
                 this.$refs.music.play();
                 if(this.$refs.music){
                     this.currentTime=this.setTimeFormat(this.$refs.music.currentTime);
-                    setInterval(this.getCurrentTime,100,false);
+                    this.intervalId=setInterval(this.getCurrentTime,100,false);
                 }
             }
             else{
                 this.$refs.music.pause();
-                clearInterval(this.getCurrentTime,100,false);
+                clearInterval(this.intervalId);
                 this.$refs.button.src="../../static/img/on.png";    
             }
         },
         getCurrentTime(){
+            var newVal;
+            if(this.$refs.music.ended){
+                this.on();
+                this.$refs.music.load();
+                newVal=0;
+            }
+            else{
+                newVal=(this.$refs.music.currentTime/this.$refs.music.duration)*100;
+            }
+            if(this.target==-1){
+                this.target=this.$refs.shiftBlock.scrollWidth-this.$refs.shiftBlock.offsetWidth;
+            }
             this.currentTime=this.setTimeFormat(this.$refs.music.currentTime);
-            var newVal=(this.$refs.music.currentTime/this.$refs.music.duration)*100;
-            console.log(newVal);
             this.$refs.track.style.width=newVal+"%";
             this.$refs.handler.style.left=newVal+ "%";
+            if(this.direction=="left"){
+                this.$refs.shiftBlock.scrollLeft-=1;
+                if(this.$refs.shiftBlock.scrollLeft==0){
+                    this.direction="right";
+                }
+            }
+            else{
+                this.$refs.shiftBlock.scrollLeft+=1;
+                if(this.$refs.shiftBlock.scrollLeft==this.target){
+                    this.direction="left";
+                }
+            }
+            
         },
         setTimeFormat(item){
             var res="";
@@ -133,6 +172,7 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../common/var.scss"; 
     $transparent:rgb(140,222,255);
     p{
         color:$transparent;
@@ -143,6 +183,7 @@
         &.title{
             color:white;
             font-size:0.875rem;
+            white-space:nowrap;
         }
     }
     .player{

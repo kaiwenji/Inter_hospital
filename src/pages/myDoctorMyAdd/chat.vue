@@ -56,6 +56,7 @@
   import header from '../../base/header'
   import scroll from '../../base/scroll'
   import BScroll from 'better-scroll'
+  import api from '../../lib/api'
   import {getCurrentTime} from '../../utils/format.js'
   export default{
       data(){
@@ -64,12 +65,31 @@
           rightTitle:'',
           seeMore:false,
           light:false,
-          inputInfo:'',
+          inputInfo:'qw',
           time:[],
           chatText:['您好，我想咨询下', '您好，我可以继续咨询下吗'],
           chatTime: ['2017-7-18','2017-7-21']
 
         }
+      },
+      created(){
+        let that = this
+//        api("smarthos.follow.message.add",{
+//          token:"18297912203",
+//          followId:"595cba8c002f8226eca85847",
+//          msgType:"TEXT",
+//          msgContent:"哈哈"
+//        }).then((data)=>{
+//          console.log(data)
+//        })
+        api("smarthos.follow.message.detail.list",{
+          token:"18958020256",
+          followId:"59642babcc9d0b4f87691a6a",
+          pageNum:"1",
+          pageSize:"10"
+        }).then((data)=>{
+            console.log(data)
+        })
       },
       mounted(){
 //          this.$refs.inputFocus.focus()
@@ -105,7 +125,8 @@
           this.$refs.footer.style.bottom=-160 + 'px'
         },
         send(e){
-            this.chatText.push(this.inputInfo)
+//            this.chatText.push(this.inputInfo)
+
             this.inputInfo=''
             this.light=false
             this.$refs.inputFocus.focus()

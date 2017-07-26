@@ -36,6 +36,9 @@ $lightBlue:rgb(22,151,219);
 $smallSize: 22px;
 $fontFamily:'PingFangSC';
 $heartRed:rgb(255,134,134);
+.xxl{
+    font-size:0.96rem;
+}
     .xl{
         font-size:0.85rem;
         }
@@ -55,6 +58,11 @@ $heartRed:rgb(255,134,134);
         -webkit-line-clamp:2;
         -webkit-box-orient:vertical;
     }
+.font-hidee{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+}
 .headerTitle{
     flex:1 1 auto;
     text-align:center;
@@ -71,11 +79,41 @@ $heartRed:rgb(255,134,134);
     .lighter{
         color:#CCCCCC;
     }
+.lightBlue{
+    color:$lightBlue;
+}
+
+.app{
+    flex:1 1 auto;
+    background-color:$bgColor;
+    font-family:$fontFamily;
 ::-webkit-input-placeholder { /* WebKit browsers */
   font-size:28rem/$rem;
+}
 }
 .weui-cells__title{
   color: black;
   padding-bottom: 10rem/$rem;
 }
 
+    @mixin vertical{
+        display:flex;
+        flex-direction:column;
+    }
+    @mixin horizontal{
+        display:flex;
+    }
+    @mixin wrap{
+        overflow:auto;
+        flex:1 1 auto;
+    }
+    .vertical{
+        @include vertical;
+    }
+    .horizontal{
+        @include horizontal;
+    }
+    .wrap{
+        @include wrap;
+        -webkit-overflow-scrolling:touch;
+    }

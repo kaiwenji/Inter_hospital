@@ -1,26 +1,30 @@
 <template>
       <div class="audioItem" @click="activate">
           <div class="hd">
-              <img src="../../static/img/docProfile.png">
+              <img :src="item.docAvatar">
     </div>
           <div class="bd" ref="bd">
-              <p class="l">{{item.name}}</p>
-              <p class="font-hide m">{{item.desc}}</p>
-              <div class="bubble">
-              <bubble ref="bubble" id="bubble"src="../../static/music/test.mp3"></bubble>
+              <p class="l">{{item.docName}}</p>
+              <p class="font-hide m">{{item.snsKnowledge.description}}</p>
+              <div class="Bubble">
+              <bubble ref="bubble" :src="item.snsKnowledge.knowUrl"></bubble>
                   <div class="supplement"></div>
     </div>
               <div class="ft">
-                  <p class="s">2017-06-01</p>
-                  <p class="right s">2000人听过</p>
-                  <p class="right s" id="thumb"@click="setColor"><img class="icon" src="../../static/img/rec_off.png">200</p>
+                  <p class="s light">{{item.snsKnowledge.createTime | getMyDay}}</p>
+                  <p class="right s light">{{item.snsKnowledge.readNum}}人听过</p>
+                  <p class="s last light" ref="thumb" @click="setColor"><img class="icon" src="../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
     </div>
     </div>
     </div>
 </template>
 
+
 <script type="text/ecmascript-6">
+
+    import {getMyDay} from "../lib/filter.js";
     import Bubble from "../base/bubble.vue";
+
   export default {
       props:{
           item:{
@@ -42,15 +46,18 @@
         bubble:Bubble
 
     },
+      filters:{
+          getMyDay
+      },
     mounted() {
-        document.getElementById("bubble").addEventListener("click",(e)=>{
-            e._flag=true;
-        },false);
-        document.getElementById("thumb").addEventListener("click",(e)=>{
+        this.$refs.bubble.$el.addEventListener("click",(e)=>{
+                e._flag=true;
+            })
+
+        this.$refs.thumb.addEventListener("click",(e)=>{
             e._flag=true;
         },false);
         this.$refs.bd.addEventListener("click",(e)=>{
-            console.log(e._flag);
             if(e._flag){
                 e.stopPropagation();
             }
@@ -85,6 +92,7 @@
                 img{
                     width:80%;
                     margin:0 auto;
+                    border-radius:2rem;
                 }
 
             }
@@ -94,11 +102,15 @@
                     flex-direction:row;
                     p{
                         flex:1 0 auto;
+                        &.last{
+                            position:relative;
+                            text-align:center;
+                        }
                     }
                     .icon{
-                        height:1rem;
-                        position:relative;
-                        left:-0.2rem;
+                        height:0.8rem;
+                        position:absolute;
+                        left:0rem;
                         top:0rem;
                     }
 
@@ -106,7 +118,8 @@
 
             }
         }
-    .bubble{
+    .Bubble{
+        margin:0.8rem 0;
         display:flex;
         flex-direction:row;
         div{

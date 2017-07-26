@@ -11,7 +11,7 @@
             <div class="wrapWord">
               <div>
                 <span>加号已拒绝</span>
-                <span>拒绝理由:医生近期停诊，请留意时间后再申请加号</span>
+                <span>拒绝理由:{{ refuseReason }}</span>
               </div>
             </div>
           </div>
@@ -72,12 +72,29 @@
 <script>
   import header from '../../base/header'
   import BScroll from 'better-scroll'
+  import api from '../../lib/api'
   export default{
     data(){
       return{
         title:'我的加号',
-        rightTitle:''
+        rightTitle:'',
+        refuseReason:""
       }
+    },
+    created(){
+        let that = this
+      api("smarthos.system.dictionary.list",{
+        dicName:"加号拒绝理由"
+      }).then((data)=>{
+          that.refuseReason = data.list[1].dicValue
+      })
+      api("smarthos.appointment.refused.modify",{
+          id:"595eff4ad2a45e3faa575a2a",
+          refuseReason:"that.refuseReason",
+          token:"18297912203"
+      }).then((data)=>{
+            console.log(data)
+      })
     },
     mounted(){
       this._initSuccessScroll()

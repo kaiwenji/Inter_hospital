@@ -3,18 +3,30 @@
     <v-header :title="title" :rightTitle="rightTitle"></v-header>
     <div class="successContent" ref="success">
       <div>
-        <div class="reasonWrap">
+        <div class="reasonWrap" :class="applyDetail.numStatus">
           <div class="refuseReason">
-            <div class="wrapImg">
-              <img src="../../../static/img/聊天界面-添加.png" alt="">
+            <div class="wrapImg" v-if="applyDetail.numStatus == 'APPLYING'">
+              <img src="../../../static/img/applying.png" alt="">
+            </div>
+            <div class="wrapImg" v-if="applyDetail.numStatus == 'REFUSED'">
+              <img src="../../../static/img/addRefuse.png" alt="">
+            </div>
+            <div class="wrapImg" v-if="applyDetail.numStatus == 'AGREED'">
+              <img src="../../../static/img/addSuccess.png" alt="">
             </div>
             <div class="wrapWord">
               <div>
-                <span>申请中</span>
-                <span>请耐心等待医生处理</span>
+                <span v-if="applyDetail.numStatus == 'APPLYING'">申请中</span>
+                <span v-if="applyDetail.numStatus == 'REFUSED'">加号已拒绝</span>
+                <span v-if="applyDetail.numStatus == 'AGREED'">加号已成功</span>
+                <span>{{ applyDetail.resultDescription }}</span>
               </div>
             </div>
           </div>
+        </div>
+        <p class="remark" v-if="applyDetail.numStatus == 'AGREED'">备注</p>
+        <div class="repeat" v-if="applyDetail.numStatus == 'AGREED'">
+          <textarea></textarea>
         </div>
         <p class="doctorInfoTitle">医生信息</p>
         <div class="doctorInfo">
@@ -25,10 +37,10 @@
               </div>
               <div class="cancelIntro">
                 <div class="introTitle">
-                  <span class="subTitle">王小仙</span>
+                  <span class="subTitle">{{ applyDetail.docName }}</span>
                   <span class="myDoctor">我的医生</span>
-                  <p>浙江大学附属第二人民医院</p>
-                  <p>急诊外科 副主任医生</p>
+                  <p>{{ applyDetail.hosName }}</p>
+                  <p>{{ applyDetail.deptName }} {{ applyDetail.docTitle }}</p>
                 </div>
               </div>
             </li>
@@ -44,25 +56,26 @@
             <span>性&nbsp;&nbsp;别:</span>
           </div>
           <div class="rightMatch">
-            <span>王小李</span>
-            <span>6583265742960754-053476</span>
-            <span>3416536423857</span>
-            <span>28</span>
-            <span>男</span>
+            <span>{{ applyDetail.compatName }}</span>
+            <span>{{ applyDetail.compatIdcard }}</span>
+            <span>{{ applyDetail.compatMobile }}</span>
+            <span>{{ applyDetail.compatAge }}</span>
+            <span  v-if="applyDetail.compatGender == 'M'">男</span>
+            <span  v-else>女</span>
           </div>
         </div>
         <p class="repeatTitle">复诊需求描述</p>
         <div class="repeat">
-          <textarea placeholder="请务必填写您的病史、主诉、症状、指标、治疗经过,相关的检查报告请拍照上传"></textarea>
+          {{ applyDetail.description }}
         </div>
         <div class="upload">
-          <div class="addPicture">
-            <img src="../../../static/img/添加图片.png" alt="">
+          <div class="addPicture" v-for="item in applyDetail.attaList">
+            <img :src="item.attaFileUrl" alt="">
           </div>
-          <div class="wordFor">
-            <span>添加图片</span>
-            <span>请上传患处图片,让医生更了解您的病情</span>
-          </div>
+          <!--<div class="wordFor">-->
+            <!--<span>添加图片</span>-->
+            <!--<span>请上传患处图片,让医生更了解您的病情</span>-->
+          <!--</div>-->
         </div>
       </div>
 
@@ -72,12 +85,30 @@
 <script>
   import header from '../../base/header'
   import BScroll from 'better-scroll'
+  import api from '../../lib/api'
+  import {mapGetters} from 'vuex'
   export default{
     data(){
       return{
         title:'我的加号',
-        rightTitle:''
+        rightTitle:'',
+        applyDetail:{}
       }
+    },
+    computed:{
+      ...mapGetters([
+          "applyId"
+      ])
+    },
+    created(){
+      let that = this
+      console.log(that.applyId)
+      api("smarthos.appointment.detail",{
+        token:"18268256860",
+        id:that.applyId
+      }).then((data)=>{
+          that.applyDetail = data.obj
+      })
     },
     mounted(){
       this._initSuccessScroll()
@@ -97,6 +128,14 @@
 </script>
 <style scoped lang="scss">
   @import '../../common/public.scss';
+  .success{
+    width:100%;
+    height:100%;
+    top:0;
+    bottom:0;
+    z-index:100;
+    position: fixed;
+  }
   .successContent{
     width:100%;
     position: fixed;
@@ -107,7 +146,7 @@
     z-index:10;
     overflow: hidden;
     background-color: white;
-    .doctorInfoTitle,.patientInfoTitle,.repeatTitle{
+    .remark,.doctorInfoTitle,.patientInfoTitle,.repeatTitle{
       width: 690rem/$rem;
       margin: 30rem/$rem auto;
       font-size: 32rem/$rem;
@@ -118,7 +157,7 @@
         color: #0FBDFF;
       }
     }
-    .reasonWrap{
+    .APPLYING{
       display: flex;
       align-items:center;
       .refuseReason{
@@ -146,6 +185,70 @@
             display: block;
             font-size: 12px;
             color: #0AACE9;
+          }
+        }
+      }
+    }
+    .REFUSED{
+      display: flex;
+      align-items:center;
+      .refuseReason{
+        width:100%;
+        height: 50px;
+        display: flex;
+        background-color: rgb(238,238,238);
+        .wrapImg{
+          height: 50px;
+          width: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin-right: 15px;
+          img{
+            width: 30px;
+            height: 30px;
+          }
+        }
+        .wrapWord{
+          height: 50px;
+          display: flex;
+          align-items: center;
+          span{
+            display: block;
+            font-size: 12px;
+            color: #999999;
+          }
+        }
+      }
+    }
+    .AGREED{
+      display: flex;
+      align-items:center;
+      .refuseReason{
+        width:100%;
+        height: 50px;
+        display: flex;
+        background-color: rgb(238,250,254);
+        .wrapImg{
+          height: 50px;
+          width: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin-right: 15px;
+          img{
+            width: 30px;
+            height: 30px;
+          }
+        }
+        .wrapWord{
+          height: 50px;
+          display: flex;
+          align-items: center;
+          span{
+            display: block;
+            font-size: 12px;
+            color: #4BCEC8;
           }
         }
       }
@@ -238,14 +341,14 @@
       height: 230rem/$rem;
       border-radius: 10px;
       margin:0 auto;
+      font-size: 32rem/$rem;
+      color: #cccccc;
       background-color: rgb(245,251,251);
       textarea{
         width: 690rem/$rem;
         border:none;
         resize: none;
         outline: medium;
-        font-size: 32rem/$rem;
-        color: #cccccc;
         background-color: rgb(245,251,251);
       }
     }

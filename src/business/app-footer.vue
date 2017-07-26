@@ -60,6 +60,10 @@
         color:#999999;
     }
   footer{
+      position:fixed;
+      bottom:0;
+      left:0;
+      width:20rem;
       border-top:1px solid rgb(204,204,204);
     height:2.5rem;
     background-color: white;

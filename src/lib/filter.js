@@ -13,10 +13,11 @@ const Todate = (time)=> {
 	if(hh < 10) clock += "0"
 	clock += hh + ":"
 	if (ii < 10) clock += "0"
-	clock += ii 
+	clock += ii
   	return  clock
   }
   //time为datetime格式，如"2017-02-03 00:00:00"
+
 const Getdate = (time)=> {
 	let now = new Date(time)
 	let mm = now.getMonth() + 1     //月
@@ -31,10 +32,11 @@ const Getdate = (time)=> {
 	// if(hh < 10) clock += "0"
 	// clock += hh + ":"
 	// if (ii < 10) clock += "0"
-	// clock += ii 
+	// clock += ii
   	return  clock
   }
   //time为datetime格式，如"2017-02-03 00:00:00"
+
 const getWeek = (time)=>{
 	time = new Date(time)
   	let year = time.getFullYear()
@@ -57,8 +59,10 @@ const getDay = (time)=>{
   	let day = time.getDate()
   	return year + '年' + month + '月' + day + '日'
 }
+
 const getMyDay = (oldTime)=>{
     var time = oldTime.replace(/\-/g, "/");
+
     let date=new Date(time);
     let month= ("0" + (date.getMonth() + 1)).slice(-2);
     let day=("0" + (date.getDate())).slice(-2);
@@ -66,6 +70,11 @@ const getMyDay = (oldTime)=>{
     return Number(year)+"-"+Number(month)+"-"+Number(day);
 }
 var goodTime = function(unixTime){
+
+    if(!unixTime){
+        return "";
+    }
+
   let str = parseInt( unixTime )
   var now = new Date().getTime(),
     oldTime = new Date(str).getTime(),
@@ -94,4 +103,28 @@ var goodTime = function(unixTime){
   return result;
 }
 
-export {Todate,getWeek,getDay,goodTime,getMyDay,Getdate}
+
+
+const  getAge=function(id){
+      if(!id){
+          return "";
+      }
+    let year=parseInt(id.substring(6,10));
+    var date=new Date();
+    return date.getFullYear()-year;
+  }
+
+const getGender=function(str){
+    if(!str){
+        return "";
+    }
+    if(str.toLowerCase()=='m'){
+        return '男';
+    }
+    else{
+        return "女";
+    }
+}
+
+export {Todate,getWeek,getDay,goodTime,getMyDay,getAge,getGender,Getdate}
+
