@@ -1,22 +1,17 @@
 <template>
 <div class="app">
     <app-header>
-        <p class="headerTitle">加号申请</p>
-        <p slot="right" class="headerWord" @click="appoint">申请加号</p>
+        <p class="headerTitle">问医生</p>
+        <p slot="right" class="lightBlue" @click="addNew">立即提问</p>
     </app-header>
     <div class="wrap">
     <div class="notice inter">
-        <p class="s">温馨提示：请确认您曾在{{name}}医生处就诊过，否则医生将不通过您的请求</p>
+        <div class="img">
+            <img src="../../../static/img/docProfile.png">
     </div>
-    <div class="sub">
-        <p class="l">医生信息</p>
-    </div>
-    <div class="inter docInfo">
-        <img src="../../../static/img/docProfile.png">
-        <div>
-            <p class="xl darker title" >{{docInfo.docName}}&nbsp;&nbsp;&nbsp;<span class="l dark">{{docInfo.docTitle}}</span></p>
-            <p class="m light">{{docInfo.hosName}}</p>
-            <p class="m light">{{docInfo.deptName}}</p>
+        <div class="word">
+        <p class="s light">加号已拒绝</p>
+        <p class="s light" >拒绝理由：医生近期停诊，请留意时间后再申请加号</p>
     </div>
     </div>
     <div class="sub">
@@ -31,15 +26,15 @@
         <p class="xl dark">姓名：<span class="darker">{{patInfo.commpatName}}</span></p>
         <p class="xl dark">身份证号：<span class="darker">{{patInfo.commpatIdcard}}</span></p>
         <p class="xl dark">电话号码：<span class="darker">{{patInfo.commpatMobile}}</span></p>
-        <p class="xl dark">年龄：<span class="darker">{{patInfo.commpatIdcard | getAge}}</span></p>
-        <p class="xl dark">性别：<span class="darker">男</span></p>
+        <p class="xl dark">年龄：<span class="darker">{{patInfo.commpatIdcard|getAge}}</span></p>
+        <p class="xl dark">性别：<span class="darker">{{patInfo.commpatGender|getGender}}</span></p>
     </div>
     </div>
     <div class="sub">
         <p class="l">复诊需求复述</p>
     </div>
     <div class="request inter">
-        <textarea class="xl"v-model="description" @focus="text_fade" @blur="text_show"></textarea>
+        <textarea v-model="content" @focus="text_fade"></textarea>
     </div>
     <div class="picture"></div>
     </div>
@@ -49,8 +44,8 @@
             <p class="m light">请选择就诊人</p>
     </div>
         <div class="main">
-        <div v-for="item,index in patList" @click="check(index)">
-            <p class="dark">{{item.commpatName}}</p>
+        <div v-for="item in patList" @click="check(item)">
+            <p class="dark">{{item}}</p>
     </div>
     </div>
         <div class="ft">
@@ -58,112 +53,100 @@
     </div>
     </div>
     </my-popup>
-    <my-toast :start="showLoading" :success="showSuccess"></my-toast>
+    <div v-show="showSuccess">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+            <p class="weui-toast__content">已完成</p>
+        </div>
+    </div>
+    <div v-show="showLoading">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">加载中</p>
+        </div>
+    </div>
     </div>
 </template>
 <script>
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
     import MyPopup from "../../base/popup.vue";
-    import MyToast from "../../base/toast.vue";
+    import {getAge,getGender} from "../../lib/filter.js";
   export default {
     data() {
       return {
-          docInfo:{},
-          name:"李董良",
-          date:"请选择你的就诊日期>",
           showPat:false,
-          patList:[],
-          chosedIndex:0,
-          description:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。",
+          patList:["大周","小毛","老白","老邢","小郭"],
           showLoading:false,
-          showSuccess:false
+          showSuccess:false,
+          chosedIndex:0,
+          content:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"
       };
     },
     computed: {
         patInfo(){
-            if(this.patList.length==0){
-                return {};
-            }
             return this.patList[this.chosedIndex];
         }
     },
       filters:{
-          getAge(id){
-              if(!id){
-                  return "";
-              }
-            let year=parseInt(id.substring(6,10));
-            var date=new Date();
-            return date.getFullYear()-year; 
-          },
-          isBlank(str){
-              if(str=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
-                  return "";
-              }
-          }
+          getAge,
+          getGender
       },
     components: {
         AppHeader,
-        MyPopup,
-        MyToast
+        MyPopup
     },
     mounted() {
-        Api("smarthos.user.doc.card.get",{docId:this.$route.params.id})
-        .then((val)=>{
-//            console.log(val);
-            this.docInfo=val.obj.doc;
+        Api("smarthos.user.commpat.list",{
+            token:window.localStorage['token']
         })
-        Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
         .then((val)=>{
-            console.log(val);
+            console.log(val.list);
             this.patList=val.list;
         })
-
     },
     beforeDestroy() {
 
     },
     methods: {
-        appoint(){
-            console.log(this.docInfo);
-            this.showLoading=true;
-            Api("smarthos.appiontment.add",{
-                patId:this.patInfo.patId,
-                docId:this.docInfo.id,
-                compatId:this.patInfo.id,
-                description:this.description,
-                token:window.localStorage['token']
-            })
-            .then((val)=>{
-                console.log(val);
-                if(val.succ){
-                    this.showLoading=false;
-                    this.showSuccess=true;
-                    setTimeout(()=>{
-                        this.showSuccess=false;
-                    },1000)
-                }
-            })
-            
-        },
         text_fade(){
-            if(this.description=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
-                this.description="";
+            if(this.content=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
+                this.content="";
             }
         },
         text_show(){
-            if(this.description==""){
-                this.description="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。";
+            if(this.content.length==0){
+                this.content="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。";
             }
         },
         setPat(){
             this.showPat=true;
         },
         check(item){
-            this.showPat=false;
-            this.chosedIndex=item;
-            
+        },
+        addNew(){
+            this.showLoading=true;
+            Api("smarthos.consult.pic.issue",{
+                consulterName:this.patInfo.commpatName,
+                consulterMobile:this.patInfo.commpatMobile,
+                consulterIdcard:this.patInfo.commpatIdcard,
+                consultContent:this.content,
+                token:window.localStorage['token']
+            })
+            .then((val)=>{
+                console.log(val);
+                this.showLoading=false;
+                this.addSuccess(val.obj.id);
+            })
+        },
+        addSuccess(id){
+            this.showSuccess=true;
+            setTimeout(()=>{
+                this.showSuccess=false;
+                this.$router.push("/Consult/ConsultDetail/"+id);
+            },1000)
         }
     }
   };
@@ -208,11 +191,19 @@
         }
     }
     .notice{
+        background:#e5e5e5;
+        width:20rem;
         height:2.7rem;
-        p{
-            padding:0.5rem 0.7rem;
-            color:#0AACE9;
-            line-height:1rem;
+        @include horizontal;
+        img{
+            width:1.5rem;
+            padding:0.58rem 0.8rem;
+        }
+        .word{
+            padding:0.56rem 0;
+            p{
+                line-height:1.3;
+            }
         }
     }
     .docInfo{
@@ -244,10 +235,11 @@
     textarea{
         height:5rem;
         background:rgb(238,250,254);
-        width:16.4rem;
+        width:16.8rem;
         border:none;
         color:#999999;
-        padding:1rem;
+        font-size:0.8rem;
+        padding:0.8rem;
     }
     .contain{
         display:flex;

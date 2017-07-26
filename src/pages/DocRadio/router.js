@@ -8,6 +8,6 @@ export default [
     },
     {
         component:Detail,
-        path:"/docRadio/detail"
+        path:"/docRadio/detail/:id"
     }
 ]

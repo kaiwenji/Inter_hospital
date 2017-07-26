@@ -1,8 +1,6 @@
 <template>
   <header >
-    <slot name="left">
-      <div class="left" @click="back"><font><span>&#xe600;</span></font></div>
-    </slot>
+        <div class="left" @click="back"><slot name="left"><font><span>&#xe600;</span></font></slot></div>
     <slot class="bf"> </slot>
       <div class="right bf">
         <slot name="right"></slot>
