@@ -19,30 +19,30 @@
             <div class="msg mf">
               就诊人信息
             </div>
-            <div class="toggle" @click="toggle">
-              切换就诊人
-            </div>
+            <!--<div class="toggle" @click="toggle">-->
+              <!--切换就诊人-->
+            <!--</div>-->
           </div>
           <div class="patDetail">
             <p>
               <span class="bfc">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
-              <span class="bf">李康飞</span>
+              <span class="bf">{{orderDetail.compatName}}</span>
             </p>
             <p>
               <span class="bfc">身份证号：</span>
-              <span class="bf">410425199212183539</span>
+              <span class="bf">{{orderDetail.compatIdcard}}</span>
             </p>
             <p>
               <span class="bfc">电话号码：</span>
-              <span class="bf">13522365145</span>
+              <span class="bf">{{orderDetail.compatMobile}}</span>
             </p>
             <p>
-              <span class="bfc">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>
-              <span class="bf">18</span>
+              <span class="bfc">年龄：</span>
+              <span class="bf">{{orderDetail.compatAge}}</span>
             </p>
             <p>
-              <span class="bfc">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
-              <span class="bf">男</span>
+              <span class="bfc">性别：</span>
+              <span class="bf">{{orderDetail.compatGender=='M'?'男':'女'}}</span>
             </p>
           </div>
           <div class="date">
@@ -50,7 +50,7 @@
             <div class="weui-cells" >
               <a class="weui-cell weui-cell_access" href="javascript:;">
                 <div class="weui-cell__bd">
-                  <p class="mfc">2016-12-25</p>
+                  <p class="mfc">{{orderDetail.createTime | Todate}}</p>
                 </div>
               </a>
             </div>
@@ -108,17 +108,37 @@
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
+    var token = localStorage.getItem('token');
+    import api from '../../lib/api'
+    import {Todate} from '../../lib/filter'
     export default{
         components: {
             top
         },
+      filters:{
+        Todate
+      },
         data(){
-            return {}
+            return {
+              orderDetail:{}
+            }
         },
         mounted(){
-
+          this.getData()
         },
       methods:{
+        getData(){
+          api("smarthos.appointment.oculartrauma.detail",{
+            token:token
+          }).then(res=>{
+            console.log(res,66666);
+            if(res.succ){
+              this.$set(this.$data,'orderDetail',res.obj)
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+        },
         again(){
           this.$weui.dialog({
             title: '重新申请',

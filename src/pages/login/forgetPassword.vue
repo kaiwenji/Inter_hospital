@@ -1,52 +1,109 @@
 <template>
     <div>
         <top>
-            <div class="middle big">忘记密码</div>
+            <div class="middle big">{{msg}}</div>
         </top>
       <div>
         <div class="weui-cells__title">请输入手机号</div>
         <div class="weui-cells">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
+              <input @blur="$v.mobile.$touch()" class="weui-input" type="number" v-model="mobile" placeholder="请输入"/>
             </div>
           </div>
         </div>
+        <span class="form-group__message" v-show="!$v.mobile.phone&&showError">请输入正确的手机号</span>
         <div class="weui-cells__title">请输入短信验证码</div>
         <div class="weui-cells">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
+              <input class="weui-input" type="number" v-model="captcha" placeholder="请输入"/>
             </div>
             <div class="weui-cell__ft">
-              <button class="weui-vcode-btn">获取验证</button>
+              <button class="weui-vcode-btn" @click="getCode">获取验证</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="btn" @click="password">
-        <a style="background: #30cfd0" href="javascript:;" class="weui-btn weui-btn_primary">下一步</a>
+      <div class="btn">
+        <a @click="goNext" style="background: #30cfd0" href="javascript:;" class="weui-btn weui-btn_primary">下一步</a>
       </div>
     </div>
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
+    import { required, between, minLength, maxLength,alphaNum} from 'vuelidate/lib/validators'
+    import phone from '../../lib/regex'
+    import api from '../../lib/api'
     export default{
         components: {
             top
         },
         data(){
-            return {}
+            return {
+              mobile:'',
+              captcha:'',
+              showError:false,
+              cid:'',
+              msg:''
+            }
         },
+      validations: {
+        mobile: {
+          required,
+          phone:phone(1)
+        },
+//        patPassword: {
+//          required,
+//          alphaNum,
+//          minLength:minLength(6)
+//        }
+      },
         mounted(){
-
+            this.$set(this.$data,'msg',this.$route.params.msg)
         },
       methods:{
-        password(){
-          this.$router.push({
-            name:'password'
+//        password(){
+//          this.$router.push({
+//            name:'password'
+//          })
+//        },
+        goNext(){
+          api("smarthos.captcha.check",{
+            "cid": this.cid,
+            "captcha": this.captcha
+          }).then(res=>{
+            if(res.succ){
+              localStorage.setItem('captcha',this.captcha)
+              this.$router.push({
+                name:'password',
+                params:{
+                  msg:this.msg
+                }
+              })
+            }else {
+              this.$weui.alert(res.msg)
+            }
           })
-        }
+        },
+        getCode(){
+          if(this.$v.mobile.$invalid){
+            this.$set(this.$data,'showError',true)
+          }else {
+            api("smarthos.captcha.pat.password.reset",{
+              mobile:this.mobile
+            }).then(res=>{
+              console.log(res,11111);
+              if(res.succ){
+                this.$set(this.$data,'cid',res.obj.cid);
+                localStorage.setItem('cid',res.obj.cid)
+              }else {
+                this.$weui.alert('获取失败');
+              }
+            })
+          }
+
+        },
       }
     }
 </script>
@@ -68,5 +125,11 @@
       width: 100%;
       box-sizing: border-box;
       padding: 80rem/$rem 30rem/$rem 40rem/$rem 30rem/$rem;
+    }
+    .form-group__message{
+      color: red;
+      box-sizing: border-box;
+      padding-left: 15px;
+      font-size: 12px;
     }
 </style>

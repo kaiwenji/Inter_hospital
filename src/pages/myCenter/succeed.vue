@@ -14,7 +14,7 @@
         修改成功
       </div>
       <div class="btn">
-        <a style="background: #0aace9" href="javascript:;" class="weui-btn weui-btn_primary" @click="goNext">立即登录</a>
+        <a style="background: rgb(48, 207, 208)" href="javascript:;" class="weui-btn weui-btn_primary" @click="login">立即登录</a>
       </div>
 
     </div>
@@ -66,6 +66,6 @@
     font-size: 280rem/$rem;
   }
   .weui-icon-success{
-    color: #0aace9;
+    color:rgb(48, 207, 208)
   }
 </style>

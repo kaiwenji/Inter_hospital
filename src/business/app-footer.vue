@@ -38,8 +38,8 @@
     },
     methods: {
         go(index){
-            var indexList=["/","/","/docRadio","/"];
-        this.$router.push(indexList[index]);    
+            var indexList=["/index","/","/docRadio","/my"];
+        this.$router.push(indexList[index]);
         },
         setCurrentPage(index){
             let i = parseInt(index);

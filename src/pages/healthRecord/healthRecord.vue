@@ -9,33 +9,33 @@
             <img src="../../../static/img/psb.jpg" alt="">
           </div>
           <div class="patDetail">
-            <p class="bf">刘琦</p>
-            <p class="mfc">姓名：&nbsp; 无名氏</p>
-            <p class="mfc">男 &nbsp;&nbsp;&nbsp;23</p>
+            <p class="bf">{{commpat.commpatName}}</p>
+            <p class="mfc">姓名：&nbsp; {{commpat.commpatName}}</p>
+            <p class="mfc">{{commpat.commpatGender=='M'?'男':'女'}} &nbsp;&nbsp;&nbsp;23</p>
           </div>
         </div>
         <div class="basic">
           <div class="weui-cells__title title">基本情况</div>
           <div class="weui-cells bf">
-            <a @click="goCaseDetail" class="weui-cell weui-cell_access" href="javascript:;">
+            <a  class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>所患疾病</p>
               </div>
               <div class="weui-cell__ft mfc">未填写</div>
             </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;">
+            <a @click="pastHistory" class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>既往史</p>
               </div>
               <div class="weui-cell__ft mfc">无</div>
             </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;">
+            <a @click="familyHistory" class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>家族史</p>
               </div>
               <div class="weui-cell__ft mfc">无</div>
             </a>
-            <a class="weui-cell weui-cell_access" href="javascript:;">
+            <a @click="allergyHistory" class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>过敏史</p>
               </div>
@@ -45,19 +45,14 @@
         </div>
         <div class="record">
           <div class="weui-cells__title title">诊疗记录</div>
-          <div class="recordDetail" v-for="item of 5">
+          <div class="recordDetail" v-for="item of list" @click="goCaseDetail(item)">
             <div class="recordDate" >
-              <span class="mf">6/28 </span>
+              <span class="mf">{{item.medicalHistory.createTime | Getdate}} </span>
             </div>
             <div class="recordContain">
-              <span class="mf">今天去验光了一下，小护士长得还不错，人也很热心，就是不怎爱说话，不过最后给我微信了</span>
-              <p class="recordImg">
-                <img src="../../../static/img/psb.jpg" alt="">
-                <img src="../../../static/img/psb.jpg" alt="">
-                <img src="../../../static/img/psb.jpg" alt="">
-                <img src="../../../static/img/psb.jpg" alt="">
-                <img src="../../../static/img/psb.jpg" alt="">
-                <img src="../../../static/img/psb.jpg" alt="">
+              <span class="mf">{{item.medicalHistory.medContent}}</span>
+              <p class="recordImg" >
+                <img :src="imgSrc.attaFileUrl" alt="" v-for="imgSrc of item.attaList">
               </p>
             </div>
           </div>
@@ -74,25 +69,78 @@
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
+    import api from '../../lib/api'
+    import {Getdate} from '../../lib/filter'
+    var token = localStorage.getItem('token')
+    var commpat = JSON.parse(localStorage.getItem('commpat'))
     export default{
         components: {
             top
         },
         data(){
-            return {}
+            return {
+              commpat:commpat,
+              list:[]
+            }
         },
+      filters:{
+        Getdate
+      },
         mounted(){
-
+        this.getData();
+        this.record()
         },
       methods:{
+        record(){
+          api("smarthos.medicalhistory.list.page",{
+            token:token
+          }).then(res=>{
+            console.log(res,888888)
+            if(res.succ){
+              this.$set(this.$data,'list',res.list)
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+        },
+        pastHistory(){
+          this.$router.push({
+            name:'pastHistory'
+          })
+        },
+        allergyHistory(){
+          this.$router.push({
+            name:'allergyHistory'
+          })
+        },
+        familyHistory(){
+          this.$router.push({
+            name:'familyHistory'
+          })
+        },
+        getData(){
+          api('smarthos.medicalinfo.detail',{
+            token:token
+          }).then(res=>{
+            console.log(res,6666)
+            if(res.succ){
+
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+        },
         goAddCase(){
           this.$router.push({
             name:'addCase'
           })
         },
-        goCaseDetail(){
+        goCaseDetail(item){
           this.$router.push({
-            name:'caseDetail'
+            name:'caseDetail',
+            params:{
+              caseObj:item
+            }
           })
         }
       }
@@ -145,9 +193,12 @@
      padding: 30rem/$rem;
      background: white;
      display: flex;
+     box-sizing: border-box;
+     border-bottom: 1px solid gainsboro;
    }
   .recordDate{
     padding-right: 20rem/$rem;
+    flex: 0 0 auto;
   }
   .circle{
     display: inline-block;
@@ -157,11 +208,15 @@
     border-radius: 10rem/$rem;
   }
   .recordImg{
+    flex: 1 1 auto;
     box-sizing: border-box;
     padding-top: 20rem/$rem;
+    padding-right: 10rem/$rem;
+
     img{
       width: 140rem/$rem;
       height: 140rem/$rem;
+      padding-right: 5rem/$rem;
     }
   }
     .btn{

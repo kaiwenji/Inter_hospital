@@ -2,7 +2,7 @@
     <div>
         <top>
             <div class="middle big">添加病例</div>
-            <span slot="right" class="step">保存</span>
+            <span slot="right" class="step" @click="save">保存</span>
         </top>
       <div class="wrap">
         <div class="weui-cells">
@@ -10,7 +10,7 @@
             <div class="weui-cell__bd">
               <p class="bf">日期</p>
             </div>
-            <div class="weui-cell__ft bf">2016-03-26</div>
+            <div class="weui-cell__ft bf">{{date}}</div>
           </a>
         </div>
         <div class="weui-cells">
@@ -23,12 +23,12 @@
         <div class="weui-cells weui-cells_form">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <textarea class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
+              <textarea class="weui-textarea" v-model="caseDetail" placeholder="请输入文本" rows="3"></textarea>
             </div>
           </div>
         </div>
         <div class="addImg">
-          <upload></upload>
+          <upload v-on:getAttaIdsList="getAttaIdsList"></upload>
         </div>
 
       </div>
@@ -37,31 +37,59 @@
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import upload from '../../business/upload.vue'
+    var token = localStorage.getItem('token')
+    import api from '../../lib/api'
     export default{
         components: {
             top,
           upload
         },
         data(){
-            return {}
+            return {
+              date:'',
+              caseDetail:'',
+              imgList:[]
+            }
         },
         mounted(){
 
         },
       methods:{
+        getAttaIdsList(value){
+          console.log(value,3333);
+          this.$set(this.$data,'imgList',value)
+        },
         selectDate(){
+          this.$set(this.$data,'date','');
+          var $this = this;
           this.$weui.datePicker({
-            start: 2000,
+            start: 2010,
             end: 2020,
-            defaultValue: [2017, 7, 20],
-            onChange: function(result){
-              console.log(result);
-            },
             onConfirm: function(result){
-              console.log(result);
-            },
-            id: 'datePicker'
+              console.log(result,6666);
+              for(var i=0;i<result.length;i++){
+                $this.date+=result[i].value+'-'
+              }
+              var s =  $this.date
+              console.log( s.substring(0,s.length-1));
+              $this.$set($this.$data,'date', s.substring(0,s.length-1))
+            }
           });
+        },
+        save(){
+          api('smarthos.medicalhistory.add',{
+            "medicalTime":this.date,
+            "medContent":this.caseDetail,
+            "token":token,
+            "attaList":this.imgList
+          }).then(res=>{
+            console.log(res,6666)
+            if(res.succ){
+
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
         }
       }
     }

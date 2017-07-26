@@ -8,14 +8,14 @@
           <div class="weui-cells">
             <a class="weui-cell weui-cell_access" href="javascript:;" @click="goChangePhone">
               <div class="weui-cell__bd">
-                <p>修改绑定手机号</p>
+                <p class="bf">修改绑定手机号</p>
               </div>
               <div class="weui-cell__ft">
               </div>
             </a>
             <a class="weui-cell weui-cell_access" href="javascript:;" @click="changePassword">
               <div class="weui-cell__bd">
-                <p>修改密码</p>
+                <p class="bf">修改密码</p>
               </div>
               <div class="weui-cell__ft">
               </div>
@@ -24,13 +24,15 @@
           </div>
         </div>
         <div class="btn" @click="quit">
-          <a href="javascript:;" class="weui-btn weui-btn_primary">退出登录</a>
+          <a style="background: rgb(48, 207, 208);" href="javascript:;" class="weui-btn weui-btn_primary">退出登录</a>
         </div>
       </div>
     </div>
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
+    import api from '../../lib/api'
+    var token = localStorage.getItem('token')
     export default{
         components: {
             top
@@ -53,19 +55,19 @@
             }
           })
         },
-//        quit(){
-//          Api('nethos.pat.logout',{
-//            token:token
-//          }).then(req=>{
-//            if(req.succ){
-//              console.log(req);
-//              this.$router.push('login')
-//            }else {
-//              alert(req.msg)
-//            }
-//
-//          })
-//        }
+        quit(){
+          api('smarthos.user.pat.exit',{
+            token:token
+          }).then(req=>{
+            if(req.succ){
+              console.log(req);
+              this.$router.push('/')
+            }else {
+              this.$weui.alert(req.msg)
+            }
+
+          })
+        }
       }
     }
 </script>

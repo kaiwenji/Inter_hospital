@@ -19,8 +19,8 @@
     </div>
 </template>
 
-<script>
-    import Bubble from "../base/bubble.vue"; 
+<script type="text/ecmascript-6">
+    import Bubble from "../base/bubble.vue";
   export default {
       props:{
           item:{
@@ -80,13 +80,13 @@
             padding:1rem;
             background-color:white;
             .hd{
-                width:3rem;
+                width:5rem;
                 flex:0 0 auto;
                 img{
                     width:80%;
                     margin:0 auto;
                 }
-                
+
             }
             .bd{
                 .ft{
@@ -101,9 +101,9 @@
                         left:-0.2rem;
                         top:0rem;
                     }
-        
+
                 }
-                
+
             }
         }
     .bubble{

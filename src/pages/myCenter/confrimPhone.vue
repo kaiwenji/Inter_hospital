@@ -6,7 +6,7 @@
     <div>
       <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
-          <div class="weui-cell__hd"><label class="weui-label">新手机号</label></div>
+          <div class="weui-cell__hd"><label class="weui-label bf">新手机号</label></div>
           <div class="weui-cell__bd" v-bind:class="{ 'form-group--error': $v.mobile.$error }">
             <input  @blur="$v.mobile.$touch()" class="weui-input" type="number" v-model="mobile" placeholder="请输入手机号"/>
           </div>
@@ -14,7 +14,7 @@
         <span class="form-group__message" v-show="!$v.mobile.phone&&showError">请输入正确的手机号</span>
         <div class="weui-cell weui-cell_vcode">
           <div class="weui-cell__hd">
-            <label class="weui-label">验证码</label>
+            <label class="weui-label bf">验证码</label>
           </div>
           <div class="weui-cell__bd">
             <input class="weui-input" type="tel" v-model="newCaptcha" placeholder="请输入验证码"/>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="btn">
-        <a style="background: #0aace9" href="javascript:;" class="weui-btn weui-btn_primary" @click="goNext">下一步</a>
+        <a style="background: rgb(48, 207, 208)" href="javascript:;" class="weui-btn weui-btn_primary" @click="goNext">下一步</a>
       </div>
     </div>
   </div>
@@ -34,6 +34,8 @@
   import { required, between, minLength, maxLength} from 'vuelidate/lib/validators'
   import phone from '../../lib/regex'
   import top from '../../business/app-header.vue'
+  import api from '../../lib/api'
+  var token = localStorage.getItem('token')
   export default{
     components:{
       top
@@ -61,39 +63,42 @@
     },
     methods:{
       goNext(){
-        this.$router.push('/changePhoneSucc')
-//          Api('nethos.pat.mobile.modify',{
-//            captcha:this.captcha,
-//            cid:this.cid,
-//            newCid:this.newCid,
-//            newCaptcha:this.newCaptcha,
-//            token:token
-//          }).then(req=>{
-//            console.log(req,3363663)
-//            if(req.succ){
-//              this.$router.push({
-//                name:'succeed',
-//                params:{
-//                  msg:'成功修改绑定手机号'
-//                }
-//              })
-//            }else {
-//              alert(req.msg)
-//            }
-//          })
+//        this.$router.push('/changePhoneSucc')
+          api("smarthos.user.pat.mobile.modify",{
+            captcha:this.captcha,
+            cid:this.cid,
+            newCid:this.newCid,
+            newCaptcha:this.newCaptcha,
+            token:token,
+            patMobile:this.mobile
+          }).then(res=>{
+            console.log(res,3363663)
+            if(res.succ){
+              this.$router.push({
+                name:'succeed',
+                params:{
+                  msg:'成功修改绑定手机号'
+                }
+              })
+            }else {
+              alert(res.msg)
+            }
+          })
       },
       getCode(){
-        console.log(this.$v.$invalid);
         if(this.$v.$invalid){
           this.$set(this.$data,'showError',true)
         }else {
-          console.log(898989)
-          Api('nethos.system.captcha.generate',{
-            captchaType:'SMS',
+          api('smarthos.captcha.pat.mobile.modify',{
+            token:token,
             mobile:this.mobile
-          }).then(req=>{
-            this.$set(this.$data,'newCid',req.obj)
-            console.log(this.newCid,3333)
+          }).then(res=>{
+            console.log(res,3333)
+            if(res.succ){
+              this.$set(this.$data,'newCid',res.obj.cid)
+            }else {
+              this.$weui.alert(res.msg)
+            }
           })
         }
 
@@ -128,7 +133,7 @@
     margin-top: 0px;
   }
   .weui-vcode-btn{
-    color:  #0aace9;
+    color: rgb(48, 207, 208);
     padding: 0 .5rem 0 .6rem;
   }
 

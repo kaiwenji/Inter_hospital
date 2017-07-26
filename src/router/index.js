@@ -39,27 +39,27 @@ export default new Router({
       path: '/jhsq',
       component: JHSQ
     },
-      {
-      path: '/changePhone',
-      name:'changePhone',
-      component: changePhone
-    },{
-      path: '/confrimPhone',
-      name:'confrimPhone',
-      component: confrimPhone
-    },{
-      path: '/changePhoneSucc',
-      name:'changePhoneSucc',
-      component: changePhoneSucc
-    },{
-      path: '/',
-      name:'changePassword',
-      component: changePassword
-    },{
-      path: '/modificationPassword',
-      name:'modificationPassword',
-      component: modificationPassword
-    },
+    //   {
+    //   path: '/changePhone',
+    //   name:'changePhone',
+    //   component: changePhone
+    // },{
+    //   path: '/confrimPhone',
+    //   name:'confrimPhone',
+    //   component: confrimPhone
+    // },{
+    //   path: '/changePhoneSucc',
+    //   name:'changePhoneSucc',
+    //   component: changePhoneSucc
+    // },{
+    //   path: '/changePassword',
+    //   name:'changePassword',
+    //   component: changePassword
+    // },{
+    //   path: '/modificationPassword',
+    //   name:'modificationPassword',
+    //   component: modificationPassword
+    // },
 
       ...Home,
       ...DocCard,

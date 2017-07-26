@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="btn">
-        <a href="javascript:;" class="weui-btn weui-btn_primary" @click="goNext">确认修改</a>
+        <a href="javascript:;" class="weui-btn weui-btn_primary" @click="confirm">确认修改</a>
       </div>
     </div>
   </div>
@@ -34,6 +34,8 @@
   import { required, between, minLength, maxLength} from 'vuelidate/lib/validators'
   import phone from '../../lib/regex'
   import top from '../../business/app-header.vue'
+  import api from '../../lib/api'
+  var token = localStorage.getItem('token')
   export default{
     components:{
       top
@@ -44,6 +46,7 @@
         captcha:'',
         cid:'',
         showError:false,
+        commpatId:''
       }
     },
     validations: {
@@ -53,36 +56,51 @@
       }
     },
     mounted(){
-
+      this.$set(this.$data,'commpatId',this.$route.params.compatId)
+      console.log(this.$route.params,222221111)
     },
     methods:{
-      goNext(){
-        this.$router.push('./confrimPhone')
-//        if(this.mobile.length!=11){
-//          alert('请输入手机号')
-//        }else {
-//          this.$router.push({
-//            name:'confrimPhone',
-//            params:{
-//              captcha:this.captcha,
-//              cid:this.cid
-//            }
-//          })
-//        }
+      confirm(){
+//        this.$router.push('./confrimPhone')
+        if(this.mobile.length!=11){
+          alert('请输入手机号')
+        }else {
+          api("smarthos.user.commpat.mobile.modify",{
+            "token": token,
+            "commpatId":this.commpatId,
+            "cid": this.cid,
+            "captcha": this.captcha
+          }).then(res=>{
+            console.log(res);
+            if(res.succ){
+              this.$weui.alert('修改成功')
+              this.$router.push({
+                name:'users'
+              })
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+
+        }
 
       },
       getCode(){
-        console.log(this.$v.$invalid);
         if(this.$v.$invalid){
           this.$set(this.$data,'showError',true)
         }else {
-          console.log(898989)
-          Api('nethos.system.captcha.generate',{
-            captchaType:'SMS',
-            mobile:this.mobile
-          }).then(req=>{
-            this.$set(this.$data,'cid',req.obj)
-            console.log(this.cid,3333)
+          api("smarthos.captcha.commpat.mobile.modify",{
+            token:token,
+            mobile:this.mobile,
+            commpatId:this.commpatId
+          }).then(res=>{
+            console.log(res,3333)
+            if(res.succ){
+              this.$set(this.$data,'cid',res.obj.cid)
+            }else {
+              this.$weui.alert(res.msg)
+            }
+
           })
         }
 

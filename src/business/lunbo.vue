@@ -4,12 +4,12 @@
         <ul id="list">
           <li v-for="item of imgList">
             <a href="javascript:viod(0)">
-              <img :src="item" />
+              <img :src="item.adUrl" />
             </a>
           </li>
         </ul>
 
-        <nav id="nav">
+        <nav id="nav" style="display: none">
           <span class="active"></span>
           <span></span>
           <span></span>
@@ -32,7 +32,17 @@ import cssTransform from '../lib/transform'
 
             }
         },
+      watch:{
+        imgList:function () {
+          this.getData()
+        }
+      },
         mounted(){
+
+
+        },
+      methods:{
+        getData(){
           setTimeout(()=>{
             document.addEventListener(
               "touchstart",
@@ -127,20 +137,21 @@ import cssTransform from '../lib/transform'
                     now++;
                     autoMove();
                   },30)
-                },2000);
+                },3000);
             }
 
             function autoMove(){
               list.style.transition = "1s";
               cssTransform(list,"translateX",-now * wrap.offsetWidth);
-            for(var i = 0 ; i < nav.length; i++) {
-            nav[i].className = "";
+              for(var i = 0 ; i < nav.length; i++) {
+                nav[i].className = "";
+              }
+              nav[now%nav.length].className = "active";
             }
-           nav[now%nav.length].className = "active";
-            }
-          },30)
-
+          },1)
         }
+      }
+
     }
 </script>
 <style scoped lang='scss'>
