@@ -27,6 +27,7 @@ import caseDetail from "../healthRecord/caseDetail.vue";
 import allergyHistory from "../healthRecord/allergyHistory.vue";
 import familyHistory from "../healthRecord/familyHistory.vue";
 import pastHistory from "../healthRecord/pastHistory.vue";
+import presentingComplaint from "../healthRecord/presentingComplaint.vue";
 
 export default[
 
@@ -135,5 +136,9 @@ export default[
     path: '/pastHistory',
     name:'pastHistory',
     component: pastHistory
+  },{
+    path: '/presentingComplaint',
+    name:'presentingComplaint',
+    component: presentingComplaint
   },
 ]

@@ -157,7 +157,7 @@ import cssTransform from '../lib/transform'
 <style scoped lang='scss'>
     @import '../common/public.scss';
     #wapper {
-      position: relative;/*供nav绝对定位使用*/
+      /*position: relative;!*供nav绝对定位使用*!*/
     }
     #list{
       position: absolute;/*子元素浮动,父元素为绝对定位,则父元素不用清除浮动*/

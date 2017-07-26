@@ -85,7 +85,9 @@
           }).then(res=>{
             console.log(res,6666)
             if(res.succ){
-
+              this.$router.push({
+                name:'healthRecord'
+              })
             }else {
               this.$weui.alert(res.msg)
             }
