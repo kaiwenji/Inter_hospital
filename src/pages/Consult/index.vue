@@ -3,14 +3,14 @@
     <app-header>
         <p class="headerTitle">问医生</p>
     </app-header>
-    <pull-up @pullUp="getMore">
+    <pull-up @pullUp="getMore" :flag="flag" v-show="Got">
     <div class="main">
         <div class="nothing" v-if="consultList.length==0">
             <p class="xxl darker" >你还没有回答任何问题</p>
             <p class="m lightBlue">去回答</p>
     </div>
         <div v-else>
-            <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)"></my-post>
+            <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)":key="item.consultInfo.id"></my-post>
     
     </div>
     
@@ -24,6 +24,7 @@
             <p class="weui-toast__content">无更多内容</p>
         </div>
     </div>
+    <my-loading class="myLoading" v-show="!Got"></my-loading>
     </div>
 </template>
 
@@ -33,6 +34,7 @@
     import {goodTime} from "../../lib/filter.js";
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
+    import MyLoading from "../../base/loading/loading.vue";
   export default {
     data() {
       return {
@@ -40,14 +42,17 @@
           testList:[1,1,1,1,1,1,1,1,1,1],
           page:1,
           noReply:false,
-          nothingMore:false
+          nothingMore:false,
+          flag:true,
+          Got:false
       };
     },
     computed: {},
     components: {
         AppHeader,
         MyPost,
-        PullUp
+        PullUp,
+        MyLoading
     },
     mounted() {
         this.getMore();
@@ -78,7 +83,9 @@
                 token:window.localStorage['token']
             })
             .then((val)=>{
+                this.Got=true;
                 if(val.succ){
+                    this.flag=!this.flag;
                     console.log(val);
                     this.consultList.push(...val.list);
                     if(this.page==val.page.total){
@@ -88,7 +95,13 @@
                         this.page++;
                     }
                 }
+                else{
+                    this.$weui.alert(val.msg);
+                }
                 
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
             })
         }
     }

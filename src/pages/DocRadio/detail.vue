@@ -3,7 +3,7 @@
       <app-header>
           <p class="headerTitle">名医知道</p>
     </app-header>
-      <my-panel @activate="goDoc">
+      <my-panel @activate="goDoc" v-show="Got">
           <div slot="picture">
               <img :src="docInfo.docAvatar" class="figure">
     </div>
@@ -16,16 +16,18 @@
               <p class="m light">{{docInfo.docDeptName}}</p>
     </div>
     </my-panel>
-      <div class="main">
+      <div class="main" v-show="Got">
           <div>
           <p class="dark m">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大</p>
     </div>
           <my-player src="../../../static/music/test.mp3" :docInfo="docInfo"></my-player>
     </div>
+      <my-loading class="myLoading"v-show="!Got"></my-loading>
   </div>
 </template>
 
 <script>
+    import MyLoading from "../../base/loading/loading.vue";
     import MyPanel from "../../base/panel.vue";
     import AppHeader from "../../business/app-header.vue";
     import MyPlayer from "../../base/player.vue";
@@ -33,22 +35,32 @@
   export default {
     data() {
       return {
-          docInfo:{}
+          docInfo:{},
+          Got:false
       };
     },
     computed: {},
     components: {
         AppHeader,
         MyPlayer,
-        MyPanel
+        MyPanel,
+        MyLoading
     },
     mounted() {
         Api("smarthos.sns.knowledge.info",{
             id:this.$route.params.id
         })
         .then((val)=>{
-            console.log(val);
-            this.docInfo=val.obj;
+            this.Got=true;
+            if(val.succ){
+                this.docInfo=val.obj;
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+             ()=>{
+            this.$weui.alert("网络错误");
         })
     },
     beforeDestroy() {
@@ -56,7 +68,7 @@
     },
     methods: {
         goDoc(){
-            this.$router.push("/c/"+this.docInfo.snsKnowledge.docId);
+            this.$router.push("/doctor/"+this.docInfo.snsKnowledge.docId);
         }
     }
   };

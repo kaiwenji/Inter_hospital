@@ -117,3 +117,12 @@ $heartRed:rgb(255,134,134);
         @include wrap;
         -webkit-overflow-scrolling:touch;
     }
+
+.myLoading{
+        position:fixed;
+        top:10rem;
+        left:6.5rem;
+}
+.profile{
+    border-radius:50%;
+}

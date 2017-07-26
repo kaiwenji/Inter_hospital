@@ -5,13 +5,13 @@
           
               <p slot="right"class="m lightBlue" v-show="!isEnded">结束咨询</p>
           </app-header>
-          <div class="patInfo">
+          <div class="patInfo" v-show='Got'>
               <p class="xl dark">患者资料 {{consultInfo.consulterName}} {{consultInfo.consulterGender|getGender}} {{consultInfo.consulterIdcard|getAge}}岁</p>
     </div>
       <div class="symptom">
-          <my-post :info="info"></my-post>
+          <my-post :info="info" v-show="Got"></my-post>
     </div>
-      <div class="wrap">
+      <div class="wrap" v-show="Got">
           <div class="answer" v-for="item in replyList">
               <div class="img"><img src="../../../static/img/docProfile.png"></div>
               <div class="word">
@@ -23,6 +23,7 @@
     </div>
     </div>
     </div>
+      <my-loading v-show="!Got" class="myLoading"></my-loading>
           <div class="ft" v-show="isEnded">
               <p class="m light">该咨询已经结束</p>
               <p class="m lightBlue">申请成为TA的患者</p>
@@ -37,6 +38,7 @@
     import AppHeader from "../../business/app-header.vue";
     import Bubble from "../../base/bubble.vue";
     import MyPost from "../../business/post.vue";
+    import MyLoading from "../../base/loading/loading.vue";
   export default {
     data() {
       return {
@@ -45,7 +47,8 @@
           consultInfo:{},
           replyList:[],
           hasPhoto:false,
-          info:{}
+          info:{},
+          Got:false
       };
     },
     computed: {},
@@ -60,11 +63,19 @@
             token:window.localStorage['token']
         })
         .then((val)=>{
-            console.log(val);
-            this.info=val.obj;
-            this.consultInfo=val.obj.consultInfo;
-            this.replyList=val.obj.consultMessage;
-            
+            this.Got=true;
+            if(val.succ){
+                this.info=val.obj;
+                this.consultInfo=val.obj.consultInfo;
+                this.replyList=val.obj.consultMessage;
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+             ()=>{
+            this.Got=true;
+            this.$weui.alert("网络错误");
         })
 
     },

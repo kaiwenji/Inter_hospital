@@ -55,6 +55,7 @@
     bottom:0;
     background:grey;
     z-index:1000;
+    opacity:50%
 }
 .options{
     z-index:1001;

@@ -11,7 +11,7 @@
       <div v-show="Got">
           <div class="info">
               <div>
-                  <img :src="docInfo.docAvatar">
+                  <img :src="docInfo.docAvatar" onerror="getDefaultProfile(docInfo.docGender,this)">
                   <p class="l docName">{{docInfo.docName}}<span v-show="docInfo.famous" class="icon s">名医</span></p>
                   <p class="m">{{docInfo.deptName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{docInfo.docTitle}}</p>
                   <p>{{docInfo.hosName}}</p>
@@ -42,7 +42,7 @@
                   <div><p @click="getMoreAudio()" v-show="!nothingMore">更多</p></div>
     </div>
               <div v-for="item in audioList">
-              <doc-panel :item="item" @recommend="setColor(item)"></doc-panel>
+              <doc-panel :item="item"></doc-panel>
     </div>
               
     </div>
@@ -55,7 +55,7 @@
           <div>
     </div>
     </div>
-      <my-loading v-show="!Got"></my-loading>
+      <my-loading class='myLoading'v-show="!Got"></my-loading>
   </div>
 </template>
 
@@ -65,6 +65,7 @@
     import AppHeader from "../business/app-header.vue";
     import Bubble from "../base/bubble.vue";
     import Api from "../lib/api.js";
+    import {getDefaultProfile} from "../lib/public.js";
   export default {
     data() {
       return {
@@ -206,36 +207,7 @@
             }
         },
         
-        
-        /*点赞函数*/
-        setColor(item){ 
-            Api("smarthos.sns.knowledge.likes",{
-                knowledgeId:item.snsKnowledge.id,
-                token:window.localStorage['token']          
-            })
-            .then((val)=>{
-                console.log(val);
-                if(val.succ){
-                    Api("smarthos.sns.knowledge.info",{
-                        id:item.snsKnowledge.id,
-                        token:window.localStorage['token']     
-                    })
-                    .then((val)=>{
-                        console.log(val);
-                        item.snsKnowledge=val.obj.snsKnowledge;
-                    },
-                         ()=>{
-                        this.$weui.alert("网络错误");
-                    })
-                }
-                else{
-                    this.$weui.alert(val.msg);
-                }
-            },
-                 ()=>{
-                this.$weui.alert("网络错误");
-            })
-        },
+    
         setHeaderColor(top){
             var limit=5*this.rem;
             var opacity=top-limit>0?top-limit:0;

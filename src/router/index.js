@@ -7,7 +7,7 @@ import confrimPhone from "../pages/myCenter/confrimPhone.vue";
 import changePhoneSucc from "../pages/myCenter/changePhoneSucc.vue";
 import changePassword from "../pages/myCenter/changePassword.vue";
 import modificationPassword from "../pages/myCenter/modificationPassword.vue";
-import C from "../pages/c.vue";
+import doctor from "../pages/doctor.vue";
 import DocCard from "../pages/DocCard/router.js";
 import DocRadio from "../pages/DocRadio/router.js";
 import Consult from "../pages/Consult/router.js";
@@ -30,8 +30,8 @@ Vue.use(Router)
 export default new Router({
   routes: [
       {
-         path:"/c/:id",
-          component:C
+         path:"/doctor/:id",
+          component:doctor
       },
       {
       path: '/docTalk',

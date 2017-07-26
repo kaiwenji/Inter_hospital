@@ -4,6 +4,8 @@
         <p class="headerTitle">问医生</p>
         <p slot="right" class="lightBlue" @click="addNew">立即提问</p>
     </app-header>
+    <div class="app" v-show="Got">
+
     <div class="wrap">
     <div class="notice inter">
         <div class="img">
@@ -70,6 +72,8 @@
         </div>
     </div>
     </div>
+    <my-loading class="myLoading" v-show="!Got"></my-loading>
+    </div>
 </template>
 <script>
     import Api from "../../lib/api.js";
@@ -77,6 +81,7 @@
     import MyPopup from "../../base/popup.vue";
     import {getAge,getGender} from "../../lib/filter.js";
     import MyUpload from "../../business/upload.vue";
+    import MyLoading from "../../base/loading/loading.vue";
   export default {
     data() {
       return {
@@ -85,7 +90,8 @@
           showLoading:false,
           showSuccess:false,
           chosedIndex:0,
-          content:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"
+          content:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。",
+          Got:false
       };
     },
     computed: {
@@ -105,15 +111,25 @@
     components: {
         AppHeader,
         MyPopup,
-        MyUpload
+        MyUpload,
+        MyLoading
     },
     mounted() {
         Api("smarthos.user.commpat.list",{
             token:window.localStorage['token']
         })
         .then((val)=>{
-            console.log(val.list);
-            this.patList=val.list;
+            this.Got=true;
+            if(val.succ){
+                console.log(val.list);
+                this.patList=val.list;
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+             ()=>{
+            this.$weui.alert("网络错误");
         })
     },
     beforeDestroy() {

@@ -57,7 +57,11 @@
             var other = item % 3600;
             var minute = Math.floor (other / 60);
             var second = (other % 60).toFixed (0);
-            return hour + '\'' + minute + '\'' + second + '\"';
+            var res=minute + '\'' + second + '\"';
+            if(hour!=0){
+                res=hour + '\'' +res;
+            }
+            return  res;
         }
     }
   };

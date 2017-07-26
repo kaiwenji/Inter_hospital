@@ -9,12 +9,13 @@
     </div>
     </app-header>
       <div class="wrap">
-          <pull-up @pullUp="loadingMore">
-          <div v-for="item in audioList">
+          <pull-up @pullUp="loadingMore" :flag="flag">
+          <div v-for="item in audioList" :key="item.snsKnowledge.id">
           <doc-panel :item="item" @activate="go(item)"></doc-panel>
     </div>
     </pull-up>
     </div>
+      <my-loading v-show="!Got"class="myLoading"></my-loading>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
@@ -30,6 +31,7 @@
     import AppHeader from "../../business/app-header.vue";
     import DocPanel from "../../business/docPanel.vue";
     import AppFooter from '../../business/app-footer.vue';
+    import MyLoading from "../../base/loading/loading.vue";
     import Api from "../../lib/api.js";
   export default {
     data() {
@@ -37,7 +39,9 @@
           audioList:[],
           page:1,
           nothingMore:false,
-          docId:"595d05b0f19b9c898a58cc00"
+          docId:"595d05b0f19b9c898a58cc00",
+          flag:true,
+          Got:false
       };
     },
     computed: {},
@@ -45,7 +49,8 @@
         AppHeader,
         DocPanel,
         AppFooter,
-        PullUp
+        PullUp,
+        MyLoading
     },
     mounted() {
         document.getElementById("metalBox").addEventListener("click",(e)=>{
@@ -65,15 +70,23 @@
                 docId:this.$route.params.id
             })
             .then((val)=>{
-                console.log(val);
-                this.audioList.push(...val.list);
-                if(this.page==val.page.total){
-                    this.page=-1;
+                if(val.succ)
+                {
+                    this.Got=true;
+                    this.flag=!this.flag;
+                    console.log(val);
+                    this.audioList.push(...val.list);
+                    if(this.page==val.page.total){
+                        this.page=-1;
+                    }
+                    else{
+                        this.page++;
+                    }
+                    console.log(this.page);
                 }
                 else{
-                    this.page++;
+                    this.$weui.alert(val.msg);
                 }
-                console.log(this.page);
                 
             })
         },
@@ -139,4 +152,5 @@
             top:3em;
         }
     }
+
 </style>
