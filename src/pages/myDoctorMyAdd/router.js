@@ -8,6 +8,7 @@ import myAddApply from './myAddApply'
 import myDoctorChat from './myDoctorChat'
 import recentChat from './recentChat'
 import followDoctor from './followDoctor'
+import chat from "./chat"
 export default [
   {
     path:'/myDoctorChat',
@@ -22,6 +23,10 @@ export default [
         component:followDoctor
       },
     ]
+  },
+  {
+    path:'/chat',
+    component:chat
   },
   {
     path:'/myAddList',

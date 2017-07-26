@@ -16,6 +16,7 @@ import DocRadio from "../pages/DocRadio/router";
 
 import file from '../pages/file/router'
 import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
+import repeatConsultAdd from '../pages/repeatConsultAdd/router'
 
 import Home from '../pages/login/router'
 Router.prototype.goBack = function () {
@@ -65,6 +66,7 @@ export default new Router({
       ...DocCard,
       ...DocRadio,
       ...myDoctorMyAdd,
+      ...repeatConsultAdd,
       ...file
   ]
 })
