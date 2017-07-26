@@ -1,366 +1,97 @@
 <template>
   <div class="recentChat">
     <v-header :title="title" :rightTitle="rightTitle"></v-header>
-    <div class="myDoctorList" ref="contactList">
+    <scroll class="myDoctorList" ref="contactList" :data="addList.list">
       <div>
-        <ul @click="goSuccess">
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span class="addName">武松</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">主任医生</span>
+        <ul  v-for="(item,index) in addList.list" class="border-1px">
+
+            <router-link tag="div" :to="pathMap[index]">
+              <li>
+              <div class="cancelImg">
+                <img :src="item.docAvatar" alt="">
+              </div>
+              <div class="cancelIntro">
+                <div>
+                  <span class="addName">{{ item.docName }}</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">主任医生</span>
+                  </div>
+                  <p>发起时间:{{ item.createTime }}</p>
                 </div>
-                <p>发起时间:2017-06-08 9:13</p>
               </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   已同意<img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul @click="goRefuse">
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>武松</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>发起时间:2017-06-08 9:13</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   已拒绝<img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul @click="goApply">
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>武松</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>发起时间:2017-06-08 9:13</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
+              <div class="cancelTime">
+                <div class="forArrow">
+                <span v-if="item.numStatus =='APPLYING'" class="applying">
                    申请中<img src="../../../static/img/查看更多.png" alt="">
                 </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>武松</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
+                  <span v-else-if="item.numStatus =='AGREED'" class="agreed">
+                   已同意<img src="../../../static/img/查看更多.png" alt="">
                 </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>武松</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
+                  <span v-else="item.numStatus =='REFUSED'" class="refused">
+                   已拒绝<img src="../../../static/img/查看更多.png" alt="">
                 </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>武松</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
                 </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
               </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
+              </li>
+            </router-link>
+
+
         </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>武松</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>王小仙</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>王小仙</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>王小仙</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>王小仙</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>王小仙</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>王小仙</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <div class="cancelImg">
-              <img src="../../assets/logo.png" alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span>王小仙</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>浙江大学附属第二人民医院</p>
-                <p>急诊外科 副主任医生</p>
-              </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
-                <span>
-                   <img src="../../../static/img/查看更多.png" alt="">
-                </span>
-              </div>
-            </div>
-          </li>
-        </ul>
+
       </div>
 
-    </div>
+    </scroll>
     <router-view></router-view>
   </div>
 </template>
 <script>
-  import BScroll from 'better-scroll'
+//  import BScroll from 'better-scroll'
+  import Scroll from  '../../base/scroll'
+  import api from '../../lib/api'
   import header from '../../base/header'
+  import { formatDate } from '../../utils/formatTimeStamp.js'
   export default{
     data(){
         return{
            title:'我的加号',
-           rightTitle:''
+           rightTitle:'',
+           addList:[],
+           pathMap:[],
+           thisDestination:""
         }
+    },
+    created(){
+      let that = this
+      api("smarthos.appointment.list",{
+          token:"18268256860",
+          numStatus:""
+      }).then((data)=>{
+           that.addList = data
+          var pathArray = new Array()
+           for(var i=0;i<data.list.length;i++){
+           var d = new Array()
+           d[i] = formatDate (new Date(data.list[i].createTime))
+           data.list[i].createTime = d[i]
+
+             var destination
+           if(data.list[i].numStatus == "APPLYING"){
+               pathArray.push("/myAddList/myAddApply")
+           }else if(data.list[i].numStatus == "AGREED"){
+             pathArray.push("/myAddList/myAddSuccess")
+           }else{
+             pathArray.push("/myAddList/myAddRefuse")
+           }
+
+         }
+        that.pathMap = pathArray
+      })
     },
     mounted(){
       this.$nextTick(()=>{
-        this._initRecentChat()
+//        this._initRecentChat()
       })
     },
     methods:{
-      goSuccess(){
-        this.$router.push('/myAddList/myAddSuccess')
-      },
       goRefuse(){
         this.$router.push('/myAddList/myAddRefuse')
       },
@@ -374,12 +105,14 @@
       }
     },
     components:{
-        'VHeader':header
+        'VHeader':header,
+         Scroll
     }
   }
 </script>
 <style scoped lang="scss">
   @import '../../common/public.scss';
+  @import '../../common/mixin.scss';
   .recentChat{
     width:100%;
     position: fixed;
@@ -396,12 +129,12 @@
     left:0;
     right:0;
     z-index:1;
-    /*background-color: green;*/
+    background-color: white;
     ul{
       padding:0;
       margin:0;
       height: 174rem/$rem;
-      border-top: 1px solid rgb(205,205,205);
+      /*border-top: 1px solid rgb(205,205,205);*/
       li{
         list-style-type: none;
         height: 174rem/$rem;
@@ -449,6 +182,15 @@
             align-items: center;
             justify-content: flex-end;
             margin-right: 12px;
+            .applying{
+              color: #FF8686;
+            }
+            .agreed{
+              color: #4BCEC8;
+            }
+            .refused{
+              color: #b6b6b6;
+            }
             span{
               display: inline-block;
               text-align: right;

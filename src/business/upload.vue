@@ -1,45 +1,166 @@
 <template>
     <div>
-      <div class="upLoad">
-        <div class="addImg">
-          <img src="../../static/img/addImg.png" alt="">
-        </div>
-        <div class="hint">
-          <p class="bf">添加图片</p>
-          <p class="mfc">请上传患处图片，让医生更了解您</p>
+      <!--<div class="upLoad">-->
+        <!--<div class="addImg">-->
+          <!--<img src="../../static/img/addImg.png" alt="">-->
+        <!--</div>-->
+        <!--<div class="hint">-->
+          <!--<p class="bf">添加图片</p>-->
+          <!--<p class="mfc">请上传患处图片，让医生更了解您</p>-->
+        <!--</div>-->
+      <!--</div>-->
+
+
+      <div class="weui-cells weui-cells_form" id="uploader">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <div class="weui-uploader">
+              <slot name="title">
+                <div class="weui-uploader__hd">
+                  <p class="weui-uploader__title bf">图片上传</p>
+                </div>
+              </slot>
+
+              <div class="weui-uploader__bd">
+                <ul class="weui-uploader__files" id="uploaderFiles">
+                  <li class="weui-uploader__file" v-for="item of srcList">
+                    <img :src="item" alt="" class="uploadImg" @click="deleteImg(item)"><br>
+                    <!--<span>{{num+'%'}}</span>-->
+                  </li>
+                </ul>
+                <!--<span class="bf">添加图片</span>-->
+                <div class="weui-uploader__input-box uploadImg">
+                  <input @change="upLoad" id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple/>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
 </template>
 <script type="text/ecmascript-6">
-
+import ajax from '../lib/ajax'
     export default{
         components: {
 
         },
         data(){
-            return {}
+            return {
+              index:0,
+              srcList:[],
+              num:0,
+              attaIdList:[],
+              index:0
+            }
         },
         mounted(){
 
+        },
+      methods:{
+        upLoad(e){
+          var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+          for (var i = 0, len = files.length; i < len; ++i) {
+            var file = files[i];
+            if (url) {
+              src = url.createObjectURL(file);
+              var arr = this.srcList;
+              arr.push(src)
+              this.$set(this.$data,'srcList',arr);
+
+            } else {
+              src = e.target.result;
+              var arr = this.srcList;
+              arr.push(src)
+              this.$set(this.$data,'srcList',arr);
+            }
+          }
+          var file = e.target.files[0];
+          var $this = this
+          console.log(file,99999)
+          ajax(file,{
+            progress:function (evt) {
+              if (evt.lengthComputable) {
+                var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                $this.$set($this.$data,'num',percentComplete)
+                console.log('上传中'+this.num+"%",88888)
+              }else {
+                console.log('无法计算')
+              }
+            }
+          },'PAT','IMAGE').then(data=>{
+            console.log(data,66666)
+            if(data.succ){
+              this.attaIdList[this.index] = data.obj.id;
+              this.index++
+              console.log(this.attaIdList,798798798)
+              this.$set(this.$data,'attaList',data.obj.attaId);
+              this.$emit('getAttaIdsList',this.attaIdList)
+              this.$weui.alert('上传成功')
+            }else {
+              alert('上传失败')
+            }
+          })
+
+
+
+        },
+        deleteImg(url){
+          var $this = this;
+          var gallery = weui.gallery(url, {
+            onDelete: function(){
+              console.log($this.srcList.indexOf(url),55555);
+              var flag = $this.srcList.indexOf(url)
+              $this.srcList.splice(flag,1)
+              $this.attaIdList.splice(flag,1)
+              $this.$emit('getAttaIdsList',$this.attaIdList)
+              if(confirm('确定删除该图片？')){ console.log('删除'); }
+              gallery.hide(function() {
+                console.log('`gallery` has been hidden');
+              });
+            }
+          });
         }
+      }
     }
 </script>
 <style scoped lang='scss'>
     @import '../common/public.scss';
-    .upLoad{
-      box-sizing: border-box;
-      padding: 30rem/$rem 0;
-      display: flex;
-      align-items: center;
-    img{
+    /*.upLoad{*/
+      /*box-sizing: border-box;*/
+      /*padding: 30rem/$rem 0;*/
+      /*display: flex;*/
+      /*align-items: center;*/
+    /*img{*/
+      /*width: 140rem/$rem;*/
+      /*height: 140rem/$rem;*/
+    /*}*/
+
+
+    .uploadImg{
       width: 140rem/$rem;
       height: 140rem/$rem;
+      margin: 3px;
     }
 
+    #uploaderInput{
+      width: 140rem/$rem;
+      height: 140rem/$rem;
+      display: inline-block;
     }
     .hint{
       padding-left: 30rem/$rem;
       box-sizing: border-box;
     }
+    .weui-uploader__file{
+      display: inline-block;
+      margin: 0px;
+      width: 140rem/$rem;
+      height: 140rem/$rem;
+      margin-right: 5px;
+      margin-bottom: 5px;
+
+    }
+
 </style>

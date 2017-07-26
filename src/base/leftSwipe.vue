@@ -2,15 +2,16 @@
   <div class="container">
       <div class="list">
         <ul>
-          <li v-for="item,index of list">
-                <span>
+          <li v-for="item,index of list" >
+                <span @click="goEditUser(item.id,item)">
                   <slot name="item"
-                  :add="item.name"
+                  :add="item.commpatName"
                   :age="item.age"
-                  :identity="item.identity"
-                  :phone="item.phone"
+                  :identity="item.commpatIdcard"
+                  :phone="item.commpatMobile"
+                  :commpatGender="item.commpatGender"
                   ></slot>
-                    <i @click="del(item,index)"><img src="../../static/img/bdelete.png" alt=""></i>
+                    <i @click.stop="del(item.id)"><img src="../../static/img/bdelete.png" alt=""></i>
                    <div class="arrow"><img src="../../static/img/arrow.png" alt=""></div>
                 </span>
           </li>
@@ -18,7 +19,9 @@
       </div>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
+  var token = localStorage.getItem('token');
+  import api from '../lib/api'
   export default{
       props:{
            list:{
@@ -26,36 +29,62 @@
               default:[]
           }
       },
+
      mounted(){
-       var $this=this;														//将$this保存 区分以下触发事件的this
-       var container = document.querySelectorAll('.list li span');
-       for(var i = 0; i < container.length; i++){                          //为每个特定DOM元素绑定touchstart touchmove时间监听 判断滑动方向
-         var x,  X;
-         container[i].addEventListener('touchstart', function(event) {   //记录初始触控点横坐标
-           x = event.changedTouches[0].pageX;
-         });
-         container[i].addEventListener('touchmove', function(event){
-           X = event.changedTouches[0].pageX;                          //记录当前触控点横坐标
-           if($this.expansion){                                       //判断是否展开，如果展开则收起
-             $this.expansion.className = "";
-           }
-           if(X - x > 10){                                             //右滑
-             this.className = "";                                    //右滑收起
-           }
-           if(x - X > 10){                                             //左滑
-             this.className = "swipeleft";                           //左滑展开
-             $this.expansion = this;
-           }
-         });
-       }
+       setTimeout(()=>{
+         var $this=this;														//将$this保存 区分以下触发事件的this
+         console.log(11)
+         var container = document.querySelectorAll('.list li span');
+         for(var i = 0; i < container.length; i++){                          //为每个特定DOM元素绑定touchstart touchmove时间监听 判断滑动方向
+           var x,  X;
+           container[i].addEventListener('touchstart', function(event) {   //记录初始触控点横坐标\
+             console.log(2222)
+             x = event.changedTouches[0].pageX;
+           });
+           container[i].addEventListener('touchmove', function(event){
+             X = event.changedTouches[0].pageX;                          //记录当前触控点横坐标
+             if($this.expansion){                                       //判断是否展开，如果展开则收起
+               $this.expansion.className = "";
+             }
+             if(X - x > 10){                                             //右滑
+               this.className = "";                                    //右滑收起
+             }
+             if(x - X > 10){                                             //左滑
+               this.className = "swipeleft";                           //左滑展开
+               $this.expansion = this;
+             }
+           });
+         }
+       },50)
      },
      methods:{
-       del(name,idx){
-         alert("确认删除"+name);
-         this.list.splice(idx,1);                                        //删除List这条数据 DOM随之更新渲染
-         var container = document.querySelector('.swipeleft');           //将展开的DOM归位 除掉样式类
-         container.className="";
-         this.expansion=null;
+       del(id){
+       api("smarthos.user.commpat.delete",{
+         "commpatId":id,
+         "token": token
+       }).then(res=>{
+         console.log(res);
+         if(res.succ){
+           this.$weui.alert('删除成功')
+           var container = document.querySelector('.swipeleft');           //将展开的DOM归位 除掉样式类
+           container.className="";
+           this.expansion=null;
+           this.$emit('getData')
+         }else {
+           this.$weui.alert(res.msg)
+         }
+
+       })
+
+       },
+       goEditUser(id,item){
+         this.$router.push({
+           name:'editUser',
+           params:{
+             id:id,
+             item:item
+           }
+         })
        }
      }
   }

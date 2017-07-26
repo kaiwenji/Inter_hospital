@@ -1,55 +1,59 @@
 <template>
   <div class="recentChat">
-    <div class="myDoctorList" ref="contactList">
+    <v-header :title="title" :rightTitle="rightTitle"></v-header>
+    <scroll class="myDoctorList" ref="contactList" :data="followList.list">
       <div>
-        <ul class="border-1px" v-for="item in followList.list">
-          <li>
-            <div class="cancelImg">
-              <img :src=" item.userDocVO.docAvatar " alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span class="followName">{{ item.userDocVO.docName }}</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>{{ item.userDocVO.hosName }}</p>
-                <p>{{ item.userDocVO.deptName }} {{ item.userDocVO.docTitle }}</p>
+        <ul class="border-1px" v-for="item in followList.list" :key="item.id">
+          <router-link tag="div" :to="{path:'/apply',query:{doctorId:item.id,docAvatar:item.docAvatar,docName:item.docName,hosName:item.hosName,deptName:item.deptName,docTitle:item.docTitle}}">
+            <li>
+              <div class="cancelImg">
+                <img :src=" item.docAvatar " alt="">
               </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
+              <div class="cancelIntro">
+                <div>
+                  <span class="followName">{{ item.docName }}</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">我的医生</span>
+                  </div>
+                  <p>{{ item.hosName }}</p>
+                  <p>{{ item.deptName }} {{ item.docTitle }}</p>
+                </div>
+              </div>
+              <div class="cancelTime">
+                <div class="forArrow">
                 <span>
                    <img src="../../../static/img/查看更多.png" alt="">
                 </span>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </router-link>
         </ul>
-
       </div>
 
-    </div>
+    </scroll>
   </div>
 </template>
 <script>
-  import BScroll from 'better-scroll'
+  import Scroll from '../../base/scroll'
+  import header from '../../base/header'
   import api from '../../lib/api'
   export default{
     data(){
-        return{
-          followList:[]
-        }
+      return{
+        followList:[],
+        title:"复诊加号",
+        rightTitle:"我的加号"
+      }
     },
     mounted(){
-      this.$nextTick(()=>{
-        this._initRecentChat()
-      })
+
     },
     created(){
       let that = this
-      api("smarthos.follow.docpat.list",{
-        token:"18268256860",
+      api("smarthos.user.doc.list",{
+        pageNum:"1",
+        pageSize:"10"
       }).then(function(data){
         console.log(data)
         that.followList = data
@@ -57,11 +61,11 @@
       })
     },
     methods:{
-      _initRecentChat(){
-        this.doctorListScroll = new BScroll(this.$refs.contactList,{
-          click:true
-        })
-      }
+
+    },
+    components:{
+        "VHeader":header,
+         Scroll
     }
   }
 </script>
@@ -71,7 +75,7 @@
   .recentChat{
     width:100%;
     position: fixed;
-    top: 90px;
+    top:0;
     bottom:0;
     left:0;
     right:0;
@@ -79,12 +83,12 @@
   .myDoctorList{
     width:100%;
     position: fixed;
-    top: 90px;
+    top: 50px;
     bottom:0;
     left:0;
     right:0;
     z-index:1;
-    /*background-color: green;*/
+    background-color: white;
     ul{
       padding:0;
       margin:0;
@@ -151,8 +155,8 @@
           }
         }
         img{
-          width: 40px;
-          height: 40px;
+          width: 104rem/$rem;
+          height: 104rem/$rem;
           border-radius: 50%;
         }
       }

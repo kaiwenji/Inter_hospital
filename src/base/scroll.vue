@@ -21,7 +21,7 @@
         type: Boolean,
         default: false
       },
-      data: {
+      data:{
         type: Array,
         default: null
       },
@@ -55,8 +55,8 @@
           return
         }
         this.scroll = new BScroll(this.$refs.wrapper, {
-          probeType: this.probeType,
-          click: this.click
+//          probeType: this.probeType,
+          click: true
         })
         if (this.listenScroll) {
           let me = this
@@ -109,6 +109,7 @@
           this.refresh()
         }, 201)
       },
+//      "$route":"this.refresh()"
     }
   }
 </script>

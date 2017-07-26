@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="mainColor ">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a @click="goUsers" class="weui-cell weui-cell_access" href="javascript:;">
           <div class="weui-cell__hd"><img src="../../../static/img/jiuzhen.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
           <div class="weui-cell__bd">
             <p class="bf">&nbsp;&nbsp;常用就诊人</p>
@@ -48,7 +48,7 @@
         </a>
       </div>
       <div class="weui-cells ">
-        <a class="weui-cell weui-cell_access" href="javascript:;">
+        <a @click="goAccountAbout" class="weui-cell weui-cell_access" href="javascript:;">
           <div class="weui-cell__hd"><img src="../../../static/img/account.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
           <div class="weui-cell__bd">
             <p class="bf">&nbsp;&nbsp;账户相关</p>
@@ -79,14 +79,22 @@
           </div>
       </div>
       </transition>
+      <div class="bottemFooter">
+        <footers></footers>
+      </div>
+
     </div>
 
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
+    import footers from '../../business/app-footer.vue'
+    var token  = localStorage.getItem('token')
+    import api from '../../lib/api'
     export default{
         components: {
-            top
+            top,
+          footers
         },
         data(){
             return {
@@ -94,9 +102,14 @@
             }
         },
         mounted(){
-
+//          this.getData()
         },
       methods:{
+        goUsers(){
+          this.$router.push({
+            name:'users'
+          })
+        },
         upLoad(){
         this.$set(this.$data,'showShaw',true)
         },
@@ -109,6 +122,11 @@
         goHealthRecord(){
           this.$router.push({
             name:'healthRecord'
+          })
+        },
+        goAccountAbout(){
+          this.$router.push({
+            name:'accountAbout'
           })
         }
       }
@@ -213,6 +231,12 @@
   .photo{
     font-size: 32rem/$rem;
     color: #0aace9;
+  }
+  .bottemFooter{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
   }
 
 </style>

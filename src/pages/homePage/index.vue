@@ -53,49 +53,78 @@
             <img src="../../../static/img/more.png" alt="">&nbsp;&nbsp;
           </div>
         </div>
-        <div class="detail" v-for="item of 5">
+        <div class="detail" v-for="item of knowledge">
+
           <div class="titleImg">
-            <img src="../../../static/img/psb.jpg" alt="">
+            <img :src="item.docAvatar" alt="">
           </div>
           <div class="docMsg">
-            <div><span class="bf">李康飞</span><span class="mfc">&nbsp;&nbsp;&nbsp;主任医师</span></div>
-            <div>
-              <span class="mfc">昨天 20:00</span>
-            </div>
+            <div><span class="bf">{{item.docName}}</span></div>
+            <!--<div>-->
+              <!--<span class="mfc">昨天 20:00</span>-->
+            <!--</div>-->
             <div>
               <span  class="mf">
-                今天天气好晴朗，处处好风光，好风光，花儿忙，鸟儿也忙,大家都忙......
+                {{item.snsKnowledge.description.substring(0,35)}}......
               </span>
+            </div>
+            <bubble ref="bubble" id="bubble" :src="item.snsKnowledge.knowUrl"></bubble>
+            <div class="ft">
+              <p class="s">{{item.snsKnowledge.createTime | Todate}}</p>
+              <p class="right s">{{item.snsKnowledge.readNum}}人听过</p>
+              <p class="right s" id="thumb"><img class="icon" src="../../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
             </div>
           </div>
         </div>
       </div>
+      <footers></footers>
     </div>
 </template>
 <script type="text/ecmascript-6">
 //  import rdSwipe from '../../../node_modules/vue-slide/vue-slide.vue'
-  import lunbo from '../../business/lunbo.vue'
+    import lunbo from '../../business/lunbo.vue'
     import top from '../../business/app-header.vue'
+    import footers from '../../business/app-footer.vue'
+    import api from '../../lib/api'
+   import Bubble from "../../base/bubble.vue";
+    import {Todate} from '../../lib/filter'
+    var token = localStorage.getItem('token')
     export default{
         components: {
             top,
-            lunbo
+            lunbo,
+          Bubble,
+          footers
         },
+      filters:{
+        Todate
+      },
         data(){
             return {
-              imgList:[
-                "http://covteam.u.qiniudn.com/test18.jpg",
-                "http://covteam.u.qiniudn.com/test19.jpg",
-                "http://covteam.u.qiniudn.com/test20.jpg",
-                "http://covteam.u.qiniudn.com/test20.jpg",
-                "http://covteam.u.qiniudn.com/test20.jpg",
-              ]
+              imgList:[],
+              obj:{},
+              knowledge:[]
             }
         },
         mounted(){
-
+          this.getData();
         },
       methods:{
+        getData(){
+          api('smarthos.user.pat.index',{
+            token:token
+          }).then(res=>{
+            console.log(res,6666)
+            if(res.succ){
+              this.$set(this.$data,'obj',res.obj)
+              this.$set(this.$data,'imgList',res.obj.adsettings)
+              this.$set(this.$data,'knowledge',res.obj.knowledge)
+            }else {
+              this.$weui.alert(res.msg)
+            }
+
+          })
+        },
         goMy(){
           this.$router.push({
             name:'my'
@@ -106,6 +135,20 @@
 </script>
 <style scoped lang='scss'>
     @import '../../common/public.scss';
+    .ft{
+      display:flex;
+      flex-direction:row;
+    p{
+      flex:1 0 auto;
+    }
+    .icon{
+      height:1rem;
+      position:relative;
+      left:-0.2rem;
+      top:0rem;
+    }
+
+    }
     .wrap{
       display: flex;
       flex-direction: column;
@@ -186,7 +229,7 @@
     overflow: auto;
     flex: 1;
     box-sizing: border-box;
-    margin-bottom: 100rem/$rem;
+    /*margin-bottom: 5rem/$rem;*/
     -webkit-overflow-scrolling: touch;
   }
   .header{
@@ -224,5 +267,8 @@
   }
   .docMsg{
     flex: 1;
+  }
+  #bubble{
+    margin: 0;
   }
 </style>

@@ -18,6 +18,7 @@ import JHSQ from "../pages/DocCard/jhsq"
 
 import file from '../pages/file/router'
 import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
+import repeatConsultAdd from '../pages/repeatConsultAdd/router'
 
 import Home from '../pages/login/router'
 Router.prototype.goBack = function () {
@@ -45,33 +46,34 @@ export default new Router({
       path: '/jhsq',
       component: JHSQ
     },
-      {
-      path: '/changePhone',
-      name:'changePhone',
-      component: changePhone
-    },{
-      path: '/confrimPhone',
-      name:'confrimPhone',
-      component: confrimPhone
-    },{
-      path: '/changePhoneSucc',
-      name:'changePhoneSucc',
-      component: changePhoneSucc
-    },{
-      path: '/',
-      name:'changePassword',
-      component: changePassword
-    },{
-      path: '/modificationPassword',
-      name:'modificationPassword',
-      component: modificationPassword
-    },
+    //   {
+    //   path: '/changePhone',
+    //   name:'changePhone',
+    //   component: changePhone
+    // },{
+    //   path: '/confrimPhone',
+    //   name:'confrimPhone',
+    //   component: confrimPhone
+    // },{
+    //   path: '/changePhoneSucc',
+    //   name:'changePhoneSucc',
+    //   component: changePhoneSucc
+    // },{
+    //   path: '/changePassword',
+    //   name:'changePassword',
+    //   component: changePassword
+    // },{
+    //   path: '/modificationPassword',
+    //   name:'modificationPassword',
+    //   component: modificationPassword
+    // },
 
       ...Home,
       ...DocCard,
       ...DocRadio,
       ...Consult,
       ...myDoctorMyAdd,
+      ...repeatConsultAdd,
       ...file
   ]
 })

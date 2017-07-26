@@ -24,10 +24,13 @@ import orderDetail from "../eye/orderDetail.vue";
 import healthRecord from "../healthRecord/healthRecord.vue";
 import addCase from "../healthRecord/addCase.vue";
 import caseDetail from "../healthRecord/caseDetail.vue";
+import allergyHistory from "../healthRecord/allergyHistory.vue";
+import familyHistory from "../healthRecord/familyHistory.vue";
+import pastHistory from "../healthRecord/pastHistory.vue";
 
 export default[
-  
- 
+
+
   {
     path: '/changePhone',
     name:'changePhone',
@@ -61,11 +64,11 @@ export default[
     name:'addUser',
     component: addUser
   },{
-    path: '/editUser',
+    path: '/editUser/:id',
     name:'editUser',
     component: editUser
   },{
-    path: '/editPhone',
+    path: '/editPhone/:compatId',
     name:'editPhone',
     component: editPhone
   },{
@@ -93,7 +96,7 @@ export default[
     name:'register',
     component: register
   },{
-    path: '/myDetail',
+    path: '/myDetail/:phone',
     name:'myDetail',
     component: myDetail
   },{
@@ -120,5 +123,17 @@ export default[
     path: '/accountAbout',
     name:'accountAbout',
     component: accountAbout
+  },{
+    path: '/allergyHistory',
+    name:'allergyHistory',
+    component: allergyHistory
+  },{
+    path: '/familyHistory',
+    name:'familyHistory',
+    component: familyHistory
+  },{
+    path: '/pastHistory',
+    name:'pastHistory',
+    component: pastHistory
   },
 ]

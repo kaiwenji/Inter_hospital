@@ -29,7 +29,7 @@
       height: 94rem/$rem;
     }
     .des{
-      margin-top: 40rem/$rem;
+      margin-top: 25rem/$rem;
       line-height: 20px;
       font-size: 32rem/$rem;
       color: #4BCEC8;

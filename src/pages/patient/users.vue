@@ -24,10 +24,10 @@
             <!--</a>-->
           <!--</div>-->
         <!--</div>-->
-        <left-swipe :list="list">
+        <left-swipe :list="list"  v-on:getData="getData">
           <template slot="item" scope="props">
-            <div class="swipe" @click="goEditUser">
-              <p class="bf">{{ props.add }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label class="bfc">男 &nbsp;&nbsp;&nbsp; {{props.age}}</label></p>
+            <div class="swipe" >
+              <p class="bf">{{ props.add }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label class="bfc">{{props.commpatGender=='M'?'男':'女'}} &nbsp;&nbsp;&nbsp; {{props.age}}</label></p>
               <p class="bf"> 身份证号： <label  class="bfc">{{ props.identity }} </label></p>
               <p class="bf"> 电话号码： <label  class="bfc">{{ props.phone }}</label></p>
             </div>
@@ -39,6 +39,8 @@
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import leftSwipe from '../../base/leftSwipe.vue'
+    import api from '../../lib/api'
+    var token = localStorage.getItem('token')
     export default{
         components: {
             top,
@@ -46,39 +48,32 @@
         },
         data(){
             return {
-              list:[
-                {
-                  name:'李康飞',
-                  age:'18',
-                  identity:'51461598236854566',
-                  phone:'13849862656',
-                }, {
-                  name:'李康飞',
-                  age:'18',
-                  identity:'51461598236854566',
-                  phone:'13849862656',
-                }, {
-                  name:'李康飞',
-                  age:'18',
-                  identity:'51461598236854566',
-                  phone:'13849862656',
-                },
-              ],
+              list:[],
               patId:""
             }
         },
         mounted(){
-
+          this.getData()
         },
       methods:{
+        getData(){
+          api('smarthos.user.commpat.list',{
+            token:token
+          }).then(res=>{
+            console.log(res,66666);
+            if(res.succ){
+              this.$set(this.$data,'list',res.list)
+            }else {
+              this.$weui.alert('获取失败')
+            }
+          })
+        },
         goAddUser(){
           this.$router.push({
             name:'addUser'
           })
         },
-        goEditUser(){
-          this.$router.push('/editUser')
-        }
+
       }
     }
 </script>
@@ -89,6 +84,7 @@
     overflow: auto;
     display: flex;
     flex-direction: column;
+    background: white;
   }
   .wrap{
     -webkit-overflow-scrolling: touch;

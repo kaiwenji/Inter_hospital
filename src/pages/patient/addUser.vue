@@ -50,6 +50,8 @@
     import top from '../../business/app-header.vue'
     import { required, minLength, alphaNum, maxLength} from 'vuelidate/lib/validators'
     import cd from '../../lib/regex'
+    import api from '../../lib/api'
+    var token = localStorage.getItem('token')
     export default{
         components: {
             top
@@ -77,31 +79,34 @@
               showPhoneError:false,
               mobile:'',
               captcha:'',
-              cid:'',
-              patId:''
+              cid:''
             }
         },
         mounted(){
-          this.$set(this.$data,'patId',this.$route.params.patId)
+
         },
       methods:{
         getCode(){
-          console.log(1111)
           if(this.$v.mobile.$invalid){
-            console.log(this.$v)
             this.$set(this.$data,'showPhoneError',true)
           }else {
             console.log(2222)
-            Api('nethos.system.captcha.generate',{
-              captchaType:'SMS',
+            api('smarthos.captcha.commpat.add',{
+              token:token,
               mobile:this.mobile
-            }).then(req=>{
-              this.$set(this.$data,'cid',req.obj)
-              console.log(this.cid,3333)
+            }).then(res=>{
+              console.log(res,3333);
+              if(res.succ){
+                this.$set(this.$data,'cid',res.obj.cid)
+              }else {
+                this.$weui.alert(res.msg)
+              }
+
+
             })
           }
         },
-        submit(){
+        goAddUser(){
           if(this.$v.patName.$invalid){
             this.$set(this.$data,'showNameError',true)
           }else if(this.$v.patIdcard.$invalid){
@@ -109,21 +114,21 @@
           }else if(this.captcha.length!=4){
             weui.alert('请输入正确的验证码')
           }else {
-            Api('nethos.pat.compat.add',{
+            api("smarthos.user.commpat.add",{
               token:token,
-              patId:this.patId,
-              compatName:this.patName,
-              compatMobile:this.mobile,
-              compatIdcard:this.patIdcard,
+              commpatName:this.patName,
+              commpatIdcard:this.patIdcard,
               cid:this.cid,
               captcha:this.captcha
-            }).then(req=>{
-              console.log(req,232323);
-              if(req.succ){
+            }).then(res=>{
+              console.log(res,232323);
+              if(res.succ){
                 alert('添加成功')
-                this.$router.push('users')
+               this.$router.push({
+                 name:'users'
+               })
               }else{
-                alert(req.msg)
+                alert(res.msg)
               }
             })
           }

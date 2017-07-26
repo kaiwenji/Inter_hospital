@@ -19,7 +19,9 @@
     </div>
 </template>
 
-<script>
+
+<script type="text/ecmascript-6">
+
     import {getMyDay} from "../lib/filter.js";
     import Bubble from "../base/bubble.vue"; 
     import Api from "../lib/api.js";
@@ -58,7 +60,7 @@
         this.$refs.bubble.$el.addEventListener("click",(e)=>{
                 e._flag=true;
             })
-        
+
         this.$refs.thumb.addEventListener("click",(e)=>{
             e._flag=true;
         },false);
@@ -116,14 +118,14 @@
             padding:1rem;
             background-color:white;
             .hd{
-                width:3rem;
+                width:5rem;
                 flex:0 0 auto;
                 img{
                     width:80%;
                     margin:0 auto;
                     border-radius:2rem;
                 }
-                
+
             }
             .bd{
                 .ft{
@@ -142,9 +144,9 @@
                         left:0rem;
                         top:0rem;
                     }
-        
+
                 }
-                
+
             }
         }
     .Bubble{

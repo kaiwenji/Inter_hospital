@@ -8,7 +8,7 @@
         <div class="weui-cells">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
+              <input v-model="patMobile" class="weui-input" type="number" placeholder="请输入"/>
             </div>
           </div>
         </div>
@@ -16,7 +16,7 @@
         <div class="weui-cells">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
+              <input v-model="patPassword" class="weui-input" type="password" placeholder="请输入"/>
             </div>
           </div>
         </div>
@@ -38,7 +38,10 @@
             top
         },
         data(){
-            return {}
+            return {
+              patMobile:'',
+              patPassword:''
+            }
         },
         mounted(){
           api("smarthos.system.stddept.list",{
@@ -52,7 +55,10 @@
       methods:{
         forgetPassword(){
           this.$router.push({
-            name:'forgetPassword'
+            name:'forgetPassword',
+            params:{
+              msg:'忘记密码'
+            }
           })
         },
         register(){
@@ -61,9 +67,28 @@
           })
         },
         login(){
-          this.$router.push({
-            name:'eyeIllness'
+          var passWord = sha512(hex_md5(this.patPassword) + this.patPassword );
+          api('smarthos.user.pat.login',{
+            "patMobile":this.patMobile,
+            "patPassword":passWord
+          }).then(res=>{
+            console.log(res,2222);
+            if(res.succ){
+              localStorage.setItem('token',res.token)
+              localStorage.setItem('commpat',JSON.stringify(res.obj.commpat))
+              this.$router.push({
+                name:'index'
+              })
+            }else {
+              this.$weui.alert(res.msg)
+            }
+
           })
+
+
+//          this.$router.push({
+//            name:'eyeIllness'
+//          })
         }
       }
     }

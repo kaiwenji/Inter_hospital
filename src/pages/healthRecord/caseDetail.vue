@@ -10,7 +10,7 @@
           <div class="weui-cell__bd">
             <p class="bf">日期</p>
           </div>
-          <div class="weui-cell__ft bf">2016-03-26</div>
+          <div class="weui-cell__ft bf">{{date | Getdate}}</div>
         </a>
       </div>
       <div class="weui-cells">
@@ -23,14 +23,17 @@
       <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入文本" rows="3"></textarea>
+            <textarea class="weui-textarea" v-model="caseText" placeholder="请输入文本" rows="3"></textarea>
           </div>
         </div>
       </div>
-      <div class="addImg">
-        <upload></upload>
-      </div>
 
+    </div>
+    <div class="addImg">
+      <img src="" alt="">
+      <upload>
+        <div slot="title"></div>
+      </upload>
     </div>
     <div class="btn">
       <div class="text mfc">2016/7/28由李康飞添加</div>
@@ -41,32 +44,50 @@
 <script type="text/ecmascript-6">
   import top from '../../business/app-header.vue'
   import upload from '../../business/upload.vue'
+  import {Getdate} from '../../lib/filter'
   export default{
     components: {
       top,
       upload
     },
+    filters:{
+      Getdate
+    },
     data(){
-      return {}
+      return {
+        caseObj:{},
+        date:'',
+        caseText:'',
+        imgList:[]
+      }
     },
     mounted(){
-
+      var caseObj = this.$route.params.caseObj;
+      console.log(caseObj,5555)
+      this.$set(this.$data,'caseObj',caseObj)
+      this.$set(this.$data,'date',caseObj.medicalHistory.createTime)
+      this.$set(this.$data,'caseText',caseObj.medicalHistory.medContent)
+      this.$set(this.$data,'imgList',caseObj.medicalHistory.attaList)
     },
     methods:{
       selectDate(){
+
+        var $this = this;
         this.$weui.datePicker({
-          start: 2000,
+          start: 2010,
           end: 2020,
-          defaultValue: [2017, 7, 20],
-          onChange: function(result){
-            console.log(result);
-          },
           onConfirm: function(result){
-            console.log(result);
-          },
-          id: 'datePicker'
+            $this.$set(this.$data,'date','');
+            console.log(result,6666);
+            for(var i=0;i<result.length;i++){
+              $this.date+=result[i].value+'-'
+            }
+            var s =  $this.date
+            console.log( s.substring(0,s.length-1));
+            $this.$set($this.$data,'date', s.substring(0,s.length-1))
+          }
         });
-      }
+      },
     }
   }
 </script>
@@ -84,7 +105,7 @@
   .addImg{
     box-sizing: border-box;
     background: white;
-    padding: 30rem/$rem;
+    /*padding:0 30rem/$rem;*/
   }
   .btn{
     position: fixed;
@@ -99,4 +120,10 @@
     box-sizing: border-box;
     padding-bottom: 20rem/$rem;
   }
+  .addImg img{
+    width: 140rem/$rem;
+    height: 140rem/$rem;
+    margin-right: 5px;
+  }
+
 </style>

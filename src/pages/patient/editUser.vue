@@ -17,13 +17,13 @@
           <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label bf" >身份证号</label></div>
             <div class="weui-cell__bd" :class="{ 'form-group--error':$v.patIdcard.$error }">
-              <input @blur="getAge"  @input="$v.patIdcard.$touch()"   class="weui-input" type="number" v-model="patIdcard" placeholder="请输入身份证号"/>
+              <input @blur="getAge"  @input="$v.patIdcard.$touch()"  class="weui-input" type="number" v-model="patIdcard" placeholder="请输入身份证号"/>
             </div>
           </div>
         </div>
         <span class="form-group__message bf" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
         <div class="weui-cells weui-cells_form">
-          <div class="weui-cell">
+          <div class="weui-cell" @click="editPhone">
             <div class="weui-cell__hd"><label class="weui-label bf">手机号</label></div>
             <div class="weui-cell__bd">
               {{mobile}}
@@ -57,6 +57,8 @@
   import top from '../../business/app-header.vue'
   import { required, minLength, alphaNum, maxLength} from 'vuelidate/lib/validators'
   import cd from '../../lib/regex'
+  import api from '../../lib/api'
+  var token  = localStorage.getItem('token')
   export default{
     components: {
       top
@@ -69,10 +71,6 @@
       },patIdcard:{
         required,
         cd:cd(15,18)
-      },
-      mobile: {
-        required,
-        cd:cd(1)
       }
     },
     data(){
@@ -89,26 +87,50 @@
       }
     },
     mounted(){
-      console.log(this.$route.params.patObj,565656)
-      this.$set(this.$data,'patName',this.$route.params.patObj.compatName);
-      this.$set(this.$data,'patIdcard',this.$route.params.patObj.compatIdcard);
-      this.$set(this.$data,'mobile',this.$route.params.patObj.compatMobile);
-      this.$set(this.$data,'age',this.$route.params.patObj.compatAge);
-      this.$set(this.$data,'compatId',this.$route.params.patObj.compatId);
-//      Api('nethos.pat.info.get',{
-//        token:token
-//      }).then(req=>{
-//        console.log(req)
-//      })
+      console.log(this.$route.params.item,565656)
+      this.$set(this.$data,'patName',this.$route.params.item.commpatName);
+      this.$set(this.$data,'patIdcard',this.$route.params.item.commpatIdcard);
+      this.$set(this.$data,'mobile',this.$route.params.item.commpatMobile);
+//      this.$set(this.$data,'age',this.$route.params.item.compatAge);
+      this.$set(this.$data,'compatId',this.$route.params.item.id);
     },
     methods:{
+      getAge(){
+        var date = new Date;
+        var year = date.getFullYear();
+        var num = this.patIdcard.substring(6,10);
+        var age = year-num;
+        return this.$set(this.$data,'age',age)
+      },
+      editPhone(){
+        this.$router.push({
+          name:'editPhone',
+          params:{
+            compatId:this.compatId
+          }
+        })
+      },
       saveEdit(){
         if(this.$v.patName.$invalid){
           this.$set(this.$data,'showNameError',true)
         }else if(this.$v.patIdcard.$invalid){
           this.$set(this.$data,'showCd',true)
         } else {
-          alert('成功');
+          api('smarthos.user.commpat.infomation.modify',{
+            "token": token,
+            "commpatId": this.compatId,
+            "commpatName": this.patName,
+            "commpatIdcard": this.patIdcard
+          }).then(res=>{
+            if(res.succ){
+              this.$weui.alert('修改成功')
+              this.$router.push({
+                name:'users'
+              })
+            }else {
+              this.$weui.alert('修改失败')
+            }
+          })
         }
       },
       getAge(){
