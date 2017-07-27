@@ -12,7 +12,8 @@
       return {
           topValue:0,
           interval:{},
-          nothingMore:false
+          nothingMore:false,
+          ban:false
       };
     },
     computed:{
@@ -46,12 +47,25 @@
                 var target=this.$refs.wrapper.scrollHeight-this.$refs.wrapper.offsetHeight-30;
                 clearInterval(this.interval);  
                 this.interval = null;  
-                if (this.topValue>target){
+                if (this.topValue>target&&!this.ban){
                     this.$emit("pullUp");
+                    this.ban=true;
                 }
             }  
         }
-    }
+    },
+      props:{
+          flag:{
+              type:Boolean,
+              default:true,
+              required:true
+          }
+      },
+      watch:{
+          flag(){
+              this.ban=false;
+          }
+      }
   };
 </script>
 

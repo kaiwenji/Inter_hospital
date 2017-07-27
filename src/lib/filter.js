@@ -61,12 +61,15 @@ const getDay = (time)=>{
 }
 
 const getMyDay = (oldTime)=>{
-    var time = oldTime.replace(/\-/g, "/");
-
+    var time=oldTime;
+    if(typeof(oldTime)=='string'){
+        time = oldTime.replace(/\-/g, "/");
+    }
     let date=new Date(time);
     let month= ("0" + (date.getMonth() + 1)).slice(-2);
     let day=("0" + (date.getDate())).slice(-2);
     let year=date.getFullYear();
+    console.log(year,month,day);
     return Number(year)+"-"+Number(month)+"-"+Number(day);
 }
 var goodTime = function(unixTime){

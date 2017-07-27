@@ -52,21 +52,10 @@
     </div>
 
     </div>
-    <my-popup :show="showPat" @activate="showPat=false">
-        <div slot="contain" class="contain">
-        <div class="title">
-            <p class="m light">请选择就诊人</p>
-    </div>
-        <div class="main">
-        <div v-for="item,index in patList" @click="check(index)">
-            <p class="dark">{{item.commpatName}}</p>
-    </div>
-    </div>
-        <div class="ft">
-            <p class="dark">添加就诊人</p>
-    </div>
-    </div>
-    </my-popup>
+    
+<!-- 切换就诊人模块   -->
+    <set-pat @activate="check" :patList="patList" :showPat="showPat"></set-pat>
+    
     <my-toast :start="showLoading" :success="showSuccess"></my-toast>
     <my-loading class="myLoading" v-show="!patGot||!docGot"></my-loading>
     </div>
@@ -74,7 +63,7 @@
 <script>
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
-    import MyPopup from "../../base/popup.vue";
+    import SetPat from "../../business/setPat.vue";
     import MyToast from "../../base/toast.vue";
     import MyUpload from "../../business/upload.vue";
     import MyLoading from "../../base/loading/loading.vue";
@@ -122,7 +111,7 @@
       },
     components: {
         AppHeader,
-        MyPopup,
+        SetPat,
         MyToast,
         MyUpload,
         MyLoading
@@ -133,30 +122,33 @@
         **/
         Api("smarthos.user.doc.card.get",{docId:this.$route.params.id})
         .then((val)=>{
+            this.docGot=true;
             if(val.succ){
 //                console.log(val);
                 this.docInfo=val.obj.doc;
-                this.docGot=true;
             }
             else{
                 this.$weui.alert(val.msg);
             }
         },
              ()=>{
+            this.docGot=true;
             this.$weui.alert("网络错误");
         })
         /*获取病人列表*/
         Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
         .then((val)=>{
+            this.patGot=true;
             if(val.succ){
                 this.patList=val.list;
-                this.patGot=true;
+                
             }
             else{
                 this.$weui.alert(val.msg);
             }
         },
         ()=>{
+            this.patGot=true;
             this.$weui.alert("网络错误");
         })
 
@@ -177,9 +169,10 @@
                 token:window.localStorage['token']
             })
             .then((val)=>{
+                this.showLoading=false;
                 console.log(val);
                 if(val.succ){
-                    this.showLoading=false;
+                    
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
@@ -190,6 +183,7 @@
                 }
             },
                  ()=>{
+                this.showLoading=false;
                     this.$weui.alert("网络错误");
                      this.$router.push("/")
                      })
@@ -200,6 +194,9 @@
               if(str=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
                   return "";
               } 
+              else{
+                  return str;
+              }
           },
         
         /*textarea控制函数*/
@@ -329,24 +326,7 @@
         color:#999999;
         padding:1rem;
     }
-    .contain{
-        display:flex;
-        flex-direction:column;
-        flex:1 1 auto;
-        div{
-            p{
-                @include letter;
-            }
-            flex:0 0 auto;
-            text-align:center;
-            padding:0 auto;
-            border-bottom:1px solid grey;
-            &.main{
-                flex: 1 1 auto;
-                overflow:auto;
-            }
-        }
-    }
+
     .dateChoose{
         p{
             padding:0.8rem;
@@ -356,4 +336,5 @@
     .picture{
         padding-left:0.8rem;
     }
+
 </style>

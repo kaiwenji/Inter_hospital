@@ -11,7 +11,7 @@
                   <div class="supplement"></div>
     </div>
               <div class="ft">
-                  <p class="s light">{{item.snsKnowledge.createTime | getMyDay}}</p>
+                  <p class="s light">{{item.snsKnowledge.createTime|getMyDay}}</p>
                   <p class="right s light">{{item.snsKnowledge.readNum}}人听过</p>
                   <p class="s last light" ref="thumb" @click="setColor(item)"><img class="icon" :src="recSrc" >{{item.snsKnowledge.likes}}</p>
     </div>
@@ -20,9 +20,9 @@
 </template>
 
 
-<script type="text/ecmascript-6">
+<script>
 
-    import {getMyDay} from "../lib/filter.js";
+    import {getMyDay,goodTime} from "../lib/filter.js";
     import Bubble from "../base/bubble.vue"; 
     import Api from "../lib/api.js";
   export default {
@@ -54,7 +54,8 @@
 
     },
       filters:{
-          getMyDay
+          getMyDay,
+          goodTime
       },
     mounted() {
         this.$refs.bubble.$el.addEventListener("click",(e)=>{
