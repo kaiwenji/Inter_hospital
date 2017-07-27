@@ -44,23 +44,7 @@
     </div>
         
 <!-- 切换就诊人模块-->
-    <my-popup :show="showPat" @activate="showPat=false">
-        <div slot="contain" class="contain">
-        <div class="title">
-            <p class="m light">请选择就诊人</p>
-    </div>
-        <div class="main">
-        <div v-for="item,index in patList" @click="check(index)">
-            <p class="dark">{{item.commpatName}}</p>
-            
-    </div>
-            <p class="lightBlue">添加就诊人<span><img src="../../../static/img/add.png"></span></p>
-    </div>
-        <div class="ft">
-            <p class="dark" @click="showPat=false">取消</p>
-    </div>
-    </div>
-    </my-popup>
+        <set-pat @activate="check" :patList="patList" :showPat="showPat"></set-pat>
     <div v-show="showSuccess">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
@@ -82,7 +66,7 @@
 <script>
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
-    import MyPopup from "../../base/popup.vue";
+    import SetPat from "../../business/setPat.vue";
     import {getAge,getGender} from "../../lib/filter.js";
     import MyUpload from "../../business/upload.vue";
     import MyLoading from "../../base/loading/loading.vue";
@@ -115,7 +99,7 @@
       },
     components: {
         AppHeader,
-        MyPopup,
+        SetPat,
         MyUpload,
         MyLoading
     },
@@ -158,6 +142,9 @@
             this.showPat=true;
         },
         check(item){
+            console.log(item);
+            this.showPat=false;
+            this.chosedIndex=item;            
         },
         addNew(){
             this.showLoading=true;
@@ -290,6 +277,9 @@
                 @include letter;
                 &:hover{
                     background-color:silver;
+                }
+                &:active{
+                    background:white;
                 }
                 img{
                     position:absolute;
