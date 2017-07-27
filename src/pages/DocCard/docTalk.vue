@@ -3,7 +3,7 @@
     <app-header>
         <p class="headerTitle">医生说</p>
     </app-header>
-    <pull-up @pullUp="loadingMore">
+    <pull-up @pullUp="loadingMore" :flag="flag">
     <div class="main">
     <div v-for="item in audioList">
     <doc-panel :item="item" @recommend="setColor"></doc-panel>
@@ -32,7 +32,8 @@
           audioList:[],
           page:1,
           nothingMore:false,
-          Got:false
+          Got:false,
+          flag:true
       };
     },
     computed: {},
@@ -59,6 +60,7 @@
             })
             .then((val)=>{
                 this.Got=true;
+                this.flag=!this.flag;
                 if(val.succ){
                     this.audioList=val.list;
                     if(this.page==val.page.total){

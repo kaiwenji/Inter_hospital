@@ -84,8 +84,8 @@
             })
             .then((val)=>{
                 this.Got=true;
+                this.flag=!this.flag;
                 if(val.succ){
-                    this.flag=!this.flag;
                     console.log(val);
                     this.consultList.push(...val.list);
                     if(this.page==val.page.total){

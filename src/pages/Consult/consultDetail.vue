@@ -55,7 +55,8 @@
     components: {
         AppHeader,
         bubble:Bubble,
-        MyPost
+        MyPost,
+        MyLoading
     },
     mounted() {
         Api("smarthos.consult.pic.details",{

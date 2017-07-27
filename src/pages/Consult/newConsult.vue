@@ -42,18 +42,22 @@
         <my-upload @getAttaIdsList="getAttaIdsList"></my-upload>
     </div>
     </div>
+        
+<!-- 切换就诊人模块-->
     <my-popup :show="showPat" @activate="showPat=false">
         <div slot="contain" class="contain">
         <div class="title">
             <p class="m light">请选择就诊人</p>
     </div>
         <div class="main">
-        <div v-for="item in patList" @click="check(item)">
-            <p class="dark">{{item}}</p>
+        <div v-for="item,index in patList" @click="check(index)">
+            <p class="dark">{{item.commpatName}}</p>
+            
     </div>
+            <p class="lightBlue">添加就诊人<span><img src="../../../static/img/add.png"></span></p>
     </div>
         <div class="ft">
-            <p class="dark">添加就诊人</p>
+            <p class="dark" @click="showPat=false">取消</p>
     </div>
     </div>
     </my-popup>
@@ -271,24 +275,49 @@
         font-size:0.8rem;
         padding:0.8rem;
     }
+    
+/* 选择就诊人模块css   */
     .contain{
+        background:rgb(238,238,238);
         display:flex;
         flex-direction:column;
         flex:1 1 auto;
         div{
+            background:white;
             p{
+                position:relative;
+                border-top:.5px solid silver;
                 @include letter;
+                &:hover{
+                    background-color:silver;
+                }
+                img{
+                    position:absolute;
+                    height:1rem;
+                    left:13rem;
+                    top:.8rem;
+                }
             }
             flex:0 0 auto;
             text-align:center;
             padding:0 auto;
-            border-bottom:1px solid grey;
+            &.title{
+                border-bottom:.5px solid silver;
+            }
             &.main{
+                
                 flex: 1 1 auto;
                 overflow:auto;
             }
+            &.ft{
+                margin-top:.5rem;
+            }
         }
     }
+    
+/*    */
+    
+    
     .picture{
         padding-left:0.8rem;
     }
