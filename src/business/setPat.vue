@@ -7,8 +7,8 @@
     </div>
         <div class="main">
         <div v-for="item,index in patList" @click="check(index)">
-            <p class="dark">{{item.commpatName}}</p>
-            
+            <p class="dark">{{item.date}}</p>
+
     </div>
             <p class="lightBlue" @click="addPat()">添加就诊人<span><img src="../../static/img/add.png"></span></p>
     </div>
@@ -20,6 +20,7 @@
 </template>
 <script>
     import MyPopup from "../base/popup.vue";
+
     export default({
         components:{
             MyPopup
@@ -38,7 +39,7 @@
         },
         methods:{
             check(index){
-                console.log(index); 
+                console.log(index);
                 this.$emit("activate",index);
             },
             addPat(){
@@ -80,7 +81,7 @@
                 border-bottom:.5px solid silver;
             }
             &.main{
-                
+
                 flex: 1 1 auto;
                 overflow:auto;
             }

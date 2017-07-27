@@ -1,7 +1,11 @@
 <template>
   <header >
-        <div class="left" @click="back"><slot name="left"><font><span>&#xe600;</span></font></slot></div>
-    <slot class="bf"> </slot>
+        <div class="left" @click="back">
+          <slot name="left">
+            <font><span>&#xe600;</span></font>
+          </slot>
+         </div>
+        <slot class="bf"> </slot>
       <div class="right bf">
         <slot name="right"></slot>
       </div>
@@ -49,8 +53,8 @@
 
   header{
     position: relative;
-    height: 45px;
-    line-height: 45px;
+    height:88rem/$rem;
+    line-height: 88rem/$rem;
     background-color: white;
     width: 100%;
     text-align: center;

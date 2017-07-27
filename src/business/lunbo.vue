@@ -57,7 +57,7 @@ import cssTransform from '../lib/transform'
             }
             var lis = document.querySelectorAll("#list li");
             var nav = document.querySelectorAll("#nav span");
-            wrap.style.height = lis[0].offsetHeight+'px';
+         wrap.style.height = lis[0].offsetHeight+'px';
             list.style.width = lis.length+'00%';
             for(var i=0;i<lis.length;i++){
               lis[i].style.width = 1/lis.length*100+'%';
@@ -148,7 +148,7 @@ import cssTransform from '../lib/transform'
               }
               nav[now%nav.length].className = "active";
             }
-          },1)
+          },30)
         }
       }
 
@@ -162,7 +162,7 @@ import cssTransform from '../lib/transform'
     #list{
       position: absolute;/*子元素浮动,父元素为绝对定位,则父元素不用清除浮动*/
       left: 0;
-      top: 0;
+      top: 88rem/$rem;
       /*overflow: hidden;清浮动*/
       list-style: none;
     }
@@ -171,7 +171,7 @@ import cssTransform from '../lib/transform'
     }
     #list li img { /*js写完之后再加*/
       width: 100%;
-      height: 340rem/$rem;
+      height: 210rem/$rem;
       display: block;/*解决img撑a标签空隙3px*/
     }
 
