@@ -17,29 +17,29 @@
         <div class="basic">
           <div class="weui-cells__title title">基本情况</div>
           <div class="weui-cells bf">
-            <a  class="weui-cell weui-cell_access" href="javascript:;">
+            <a @click="presentingComplaint" class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>所患疾病</p>
               </div>
-              <div class="weui-cell__ft mfc">未填写</div>
+              <div class="weui-cell__ft mfc">{{healthDetail.presentingComplaint?healthDetail.presentingComplaint.substring(0,8):'无'}}</div>
             </a>
             <a @click="pastHistory" class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>既往史</p>
               </div>
-              <div class="weui-cell__ft mfc">无</div>
+              <div class="weui-cell__ft mfc">{{healthDetail.pastHistory?healthDetail.pastHistory.substring(0,8):'无'}}</div>
             </a>
             <a @click="familyHistory" class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>家族史</p>
               </div>
-              <div class="weui-cell__ft mfc">无</div>
+              <div class="weui-cell__ft mfc">{{healthDetail.familyHistory?healthDetail.familyHistory.substring(0,8):'无'}}</div>
             </a>
             <a @click="allergyHistory" class="weui-cell weui-cell_access" href="javascript:;">
               <div class="weui-cell__bd">
                 <p>过敏史</p>
               </div>
-              <div class="weui-cell__ft mfc">无</div>
+              <div class="weui-cell__ft mfc">{{healthDetail.allergyHistory?healthDetail.allergyHistory.substring(0,8):'无'}}</div>
             </a>
           </div>
         </div>
@@ -80,7 +80,8 @@
         data(){
             return {
               commpat:commpat,
-              list:[]
+              list:[],
+              healthDetail:{}
             }
         },
       filters:{
@@ -105,17 +106,34 @@
         },
         pastHistory(){
           this.$router.push({
-            name:'pastHistory'
+            name:'pastHistory',
+            params:{
+              pastHistory:this.healthDetail.pastHistory?this.healthDetail.pastHistory:''
+            }
+          })
+        },
+        presentingComplaint(){
+          this.$router.push({
+            name:'presentingComplaint',
+            params:{
+              presentingComplaint:this.healthDetail.presentingComplaint?this.healthDetail.presentingComplaint:''
+            }
           })
         },
         allergyHistory(){
           this.$router.push({
-            name:'allergyHistory'
+            name:'allergyHistory',
+            params:{
+              allergyHistory:this.healthDetail.allergyHistory?this.healthDetail.allergyHistory:''
+            }
           })
         },
         familyHistory(){
           this.$router.push({
-            name:'familyHistory'
+            name:'familyHistory',
+            params:{
+              familyHistory:this.healthDetail.familyHistory?this.healthDetail.familyHistory:''
+            }
           })
         },
         getData(){
@@ -124,7 +142,7 @@
           }).then(res=>{
             console.log(res,6666)
             if(res.succ){
-
+              this.$set(this.$data,'healthDetail',res.obj)
             }else {
               this.$weui.alert(res.msg)
             }

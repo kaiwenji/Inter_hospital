@@ -63,16 +63,16 @@
             <!--<div>-->
               <!--<span class="mfc">昨天 20:00</span>-->
             <!--</div>-->
-            <div>
+            <div class="easyContain">
               <span  class="mf">
                 {{item.snsKnowledge.description.substring(0,35)}}......
               </span>
             </div>
             <bubble ref="bubble" id="bubble" :src="item.snsKnowledge.knowUrl"></bubble>
-            <div class="ft">
+            <div class="ft musicBottom">
               <p class="s">{{item.snsKnowledge.createTime | Todate}}</p>
               <p class="right s">{{item.snsKnowledge.readNum}}人听过</p>
-              <p class="right s" id="thumb"><img class="icon" src="../../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
+              <p class="right s" id="thumb" @click="setColor(item)"><img class="icon" src="../../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
             </div>
           </div>
         </div>
@@ -110,6 +110,23 @@
           this.getData();
         },
       methods:{
+        setColor(item){
+          api("smarthos.sns.knowledge.likes",{
+            knowledgeId:item.snsKnowledge.id,
+            token:token
+          })
+            .then((val)=>{
+                if(val.succ){
+                this.getData()
+                }
+                else{
+                  this.$weui.alert(val.msg);
+                }
+              },
+              ()=>{
+                this.$weui.alert("网络错误");
+              })
+        },
         getData(){
           api('smarthos.user.pat.index',{
             token:token
@@ -231,6 +248,7 @@
     box-sizing: border-box;
     /*margin-bottom: 5rem/$rem;*/
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 100rem/$rem;
   }
   .header{
     overflow: hidden;
@@ -270,5 +288,11 @@
   }
   #bubble{
     margin: 0;
+  }
+  .easyContain{
+    margin-bottom: 20rem/$rem;
+  }
+  .musicBottom{
+    margin-top: 20rem/$rem;
   }
 </style>
