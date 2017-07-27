@@ -69,7 +69,6 @@ const getMyDay = (oldTime)=>{
     let month= ("0" + (date.getMonth() + 1)).slice(-2);
     let day=("0" + (date.getDate())).slice(-2);
     let year=date.getFullYear();
-    console.log(year,month,day);
     return Number(year)+"-"+Number(month)+"-"+Number(day);
 }
 var goodTime = function(unixTime){

@@ -77,13 +77,11 @@
           rem:16,
           nothingMore:false,
           showDocTalk:false,
-          Got:false
+          Got:false,
+          isFollow:false
       };
     },
     computed: {
-        isFollow(){
-            return this.docInfo.hasFollow?this.docInfo.hasFollow:false
-        },
         followWord(){
             return this.isFollow?"已关注":"关注";
         }
@@ -93,6 +91,18 @@
         bubble:Bubble,
         DocPanel,
         MyLoading
+    },
+    watch:{
+        isFollow(){
+            if(!this.isFollow){
+                this.$refs.followButton.className="followButton";
+                this.$refs.heart.src="../../static/img/follow.png";  
+            }
+            else{
+                this.$refs.followButton.className+=" followed";
+                this.$refs.heart.src="../../static/img/followed.png";  
+            }
+        }
     },
     mounted() {
         this.docId=this.$route.params.id;
@@ -104,12 +114,16 @@
             this.setTabClass(top);
         }
 
-        Api("smarthos.user.doc.card.get",{"docId":this.docId})
+        Api("smarthos.user.doc.card.get",{
+            "docId":this.docId,
+            token:window.localStorage['token']
+        })
         .then((val)=>{
+            console.log(val);
             this.docInfo=val.obj.doc;
+            this.isFollow=val.obj.hasFollow||false;
             this.list[0].desc=this.docInfo.docSkill;
             this.list[1].desc=this.docInfo.docResume;
-            console.log(this.docInfo);
             this.Got=true;
             
         },
@@ -120,11 +134,9 @@
             docId:this.docId,
             pageNum:1,
             pageSize:3,
+            token:window.localStorage['token']
             
-        },     
-            ()=>{
-                    this.$weui.alert("网络错误");
-                })
+        })
         .then((val)=>{
             if(!val.succ||!val.list||val.list.length==0){
                 this.showDocTalk=false;
@@ -133,7 +145,6 @@
                 this.showDocTalk=true;
             }
             
-            console.log(val);
             this.audioList=val.list;
             if (val.page.total==1){
                 this.nothingMore=true;
@@ -142,7 +153,8 @@
              ()=>{
             this.$weui.alert("网络错误");
         })
-    },
+
+            },
     beforeDestroy() {
 
     },
@@ -151,10 +163,8 @@
             this.$router.push("/"+path+"/"+this.docId);
         },
         getDetail(item,event,index){
-            console.log(index);
             var article=document.getElementById(item.title);
             var picture=event.event.target;
-            console.log(picture);
             picture.className=picture.className=="rotate"?"":"rotate"; 
             article.className=article.className=='font-show'?"font-hide":"font-show";
             
@@ -163,18 +173,16 @@
         getMoreAudio(){
             this.$router.push("/docTalk/"+this.docId);
         },
-        
+        /* 关注按键函数*/
         follow(){
             if (this.isFollow){
-                Api("smarthos.follow.cancel",{
+                Api("smarthos.follow.docpat.delete",{
                     docId:this.docInfo.id,
                     token:window.localStorage['token']
                 })
                 .then((val)=>{
                     if(val.succ){
-                        this.isFollow=false;
-                        this.$refs.followButton.className="followButton";
-                        this.$refs.heart.src="../../static/img/follow.png";   
+                        this.isFollow=false; 
                     }
                     else{
                         this.$weui.alert(val.msg);
@@ -193,9 +201,7 @@
                 })
                 .then((val)=>{
                     if(val.succ){
-                        this.isFollow=true;
-                        this.$refs.followButton.className+=" followed";
-                        this.$refs.heart.src="../../static/img/followed.png";   
+                        this.isFollow=true; 
                     }
                     else{
                         this.$weui.alert(val.msg);
