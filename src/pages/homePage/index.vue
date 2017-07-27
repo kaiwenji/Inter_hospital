@@ -11,17 +11,17 @@
           <div class="bf">
              大眼预诊
           </div>
-          <div class="mfc">
+          <div class="mfc" >
             预诊快速响应
           </div>
         </div>
         <div class="rightContain">
-          <div class="topContain">
+          <div class="topContain" @click="eyeIllness">
             <div>
               <img src="../../../static/img/nv.png" alt="">
             </div>
             <div>
-              <p class="bf">眼底快速预约</p>
+              <p class="bf" >眼底快速预约</p>
               <p class="mfc">15分钟快速预约</p>
             </div>
           </div>
@@ -110,6 +110,26 @@
           this.getData();
         },
       methods:{
+        eyeIllness(){
+          api('smarthos.appointment.oculartrauma.detail',{
+            token:token
+          }).then(res=>{
+            if(res.succ){
+              if(res.obj){
+                this.$router.push({
+                  name:"orderDetail"
+                })
+              }else {
+                this.$router.push({
+                  name:"eyeIllness"
+                })
+              }
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+
+        },
         setColor(item){
           api("smarthos.sns.knowledge.likes",{
             knowledgeId:item.snsKnowledge.id,

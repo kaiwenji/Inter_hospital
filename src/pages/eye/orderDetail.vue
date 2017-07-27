@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <top>
-            <div class="middle big">眼底快速通道</div>
+            <!--<div class="middle big">眼底快速通道</div>-->
             <span slot="right" class="step" @click="again">重新申请</span>
         </top>
       <div class="wrap">
@@ -50,7 +50,7 @@
             <div class="weui-cells" >
               <a class="weui-cell weui-cell_access" href="javascript:;">
                 <div class="weui-cell__bd">
-                  <p class="mfc">{{orderDetail.createTime | Todate}}</p>
+                  <p class="mfc">{{orderDetail.injuredTime | Todate}}</p>
                 </div>
               </a>
             </div>
@@ -61,7 +61,7 @@
             <div class="weui-cells" >
               <a class="weui-cell weui-cell_access" href="javascript:;">
                 <div class="weui-cell__bd">
-                  <p class="mfc">2017-06-23</p>
+                  <p class="mfc">{{orderDetail.visitingTime | Todate}}</p>
                 </div>
               </a>
             </div>
@@ -72,7 +72,7 @@
             <div class="weui-cells" >
               <a class="weui-cell weui-cell_access" href="javascript:;">
                 <div class="weui-cell__bd">
-                  <p class="mfc">杭州市上城区</p>
+                  <p class="mfc">{{orderDetail.areaName}}</p>
                 </div>
               </a>
             </div>
@@ -83,7 +83,7 @@
             <div class="weui-cells weui-cells_form">
               <div class="weui-cell">
                 <div class="weui-cell__bd weui-textarea mf">
-                  请务必填写您的病史，主诉，症状，指标，治疗经过，相关的检查报告请拍照上传
+                  {{orderDetail.description}}
                   <!--<textarea class="weui-textarea" placeholder="请务必填写您的病史，主诉，症状，指标，治疗经过，相关的检查报告请拍照上传。" rows="3"></textarea>-->
                 </div>
               </div>
@@ -91,15 +91,7 @@
           </div>
           <div class="upLoad">
             <div class="addImg">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
-              <img src="../../../static/img/addImg.png" alt="">
+              <img @click="bigImg(item.attaFileUrl)" v-for="item of orderDetail.attaList" :src="item.attaFileUrl" alt="">
             </div>
           </div>
         </div>
@@ -120,13 +112,18 @@
       },
         data(){
             return {
-              orderDetail:{}
+              orderDetail:{},
+              id:''
             }
         },
         mounted(){
           this.getData()
         },
       methods:{
+        bigImg(url){
+          this.$weui.gallery(url, {
+          });
+        },
         getData(){
           api("smarthos.appointment.oculartrauma.detail",{
             token:token
@@ -134,56 +131,42 @@
             console.log(res,66666);
             if(res.succ){
               this.$set(this.$data,'orderDetail',res.obj)
+              this.$set(this.$data,'id',res.obj.id)
             }else {
               this.$weui.alert(res.msg)
             }
           })
         },
         again(){
+          var $this = this;
           this.$weui.dialog({
             title: '重新申请',
             content: '重新申请将放弃当前的预约，且就诊的资料不再保存',
             buttons: [{
               label: '取消',
               type: 'default',
-              onClick: function () { alert('取消') }
+              onClick: function () { console.log('取消')}
             }, {
               label: '重新申请',
               type: 'primary',
-              onClick: function () { alert('确定') }
+              onClick: function () {
+                api("smarthos.appointment.oculartrauma.giveup.modify",{
+                  id:$this.id,
+                  token:token
+                }).then(res=>{
+                  console.log(res,666)
+                  if(res.succ){
+                    $this.$router.push({
+                      name:'eyeIllness'
+                    })
+                  }else {
+                    $this.$weui.alert(res.msg)
+                  }
+                })
+              }
             }]
           });
-        },
-        toggle(){
-          this.$weui.actionSheet([
-            {
-              label: '选择就诊人',
-              onClick: function () {
-                console.log('拍照');
-              }
-            }, {
-              label: '从相册选择',
-              onClick: function () {
-                console.log('从相册选择');
-              }
-            }, {
-              label: '添加就诊人',
-              onClick: function () {
-                console.log();
-              }
-            }
-          ], [
-            {
-              label: '取消',
-              onClick: function () {
-                console.log('取消');
-              }
-            }
-          ],
-            {
-              className: 'custom-classname'
-            })
-        },
+        }
       }
     }
 </script>
@@ -286,4 +269,9 @@
  .custom-classname{
    font-size: 26rem/$rem;
  }
+  .addImg{
+    img{
+      padding: 5px 5px 0 0;
+    }
+  }
 </style>
