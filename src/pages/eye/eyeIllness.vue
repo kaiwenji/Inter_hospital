@@ -2,18 +2,18 @@
     <div class="page">
       <div class="contain"v v-show="showContain">
         <top>
-          <div class="middle big">眼底病快速通道</div>
+          <div class="middle big">眼外伤快速预约</div>
           <span slot="right" class="step" @click="orderDetail">立即预约</span>
         </top>
         <div class="banner">
-          <img src="../../../static/img/test.jpg" alt="">
+          <img :src="headerImg" alt="">
         </div>
         <div class="wrap">
           <div class="patMsg">
             <div class="msg mf">
               就诊人信息
             </div>
-            <div class="toggle">
+            <div class="toggle" @click="toggleUser">
               切换就诊人
             </div>
           </div>
@@ -144,22 +144,66 @@
               visitingDate:'',
               description:'',
               code:'',
-              imgList:[]
+              imgList:[],
+              headerImg:'',
+              userList:[],
+              compatId:''
             }
         },
         mounted(){
-          this.getData()
+          this.getUsers();
+          this.getImg()
         },
       methods:{
-        getData(){
-          api("smarthos.user.commpat.list",{
+        toggleUser(){
+            var arr = [];
+            for(var i=0;i<this.userList.length;i++){
+                var userObj = {};
+              userObj.label = this.userList[i].commpatName;
+              userObj.value = this.userList[i].id;
+              arr.push(userObj);
+            };
+            arr.push({
+              label:'添加就诊人',
+              value:0
+            });
+           var $this = this;
+            this.$weui.picker(arr,{
+              onConfirm: function (result) {
+                console.log(result,99999);
+                if(result[0].value==0){
+                  $this.$router.push({
+                    name:'addUser'
+                  })
+                }else {
+                  function getObj(item) {
+                    return item.id==result[0].value
+                  }
+                  $this.userList.filter(getObj);
+                  $this.$set($this.$data,'patMsg', $this.userList.filter(getObj)[0])
+                }
+              },
+            });
+          },
+        getUsers(){
+          api('smarthos.user.commpat.list',{
             token:token
           }).then(res=>{
-            console.log(res,9999);
+            console.log(res,55555)
             if(res.succ){
+              this.$set(this.$data,'userList',res.list)
               this.$set(this.$data,'patMsg',res.list[0])
             }else {
               this.$weui.alert(res.msg)
+            }
+          })
+        },
+        getImg(){
+          api('smarthos.appointment.fundus.img',{}).then(res=>{
+            if(res.succ){
+              this.$set(this.$data,'headerImg',res.obj)
+            }else {
+              this.$weui.alert(res,msg)
             }
           })
         },
@@ -177,7 +221,7 @@
             "description":this.description,
             "token":token
           }).then(res=>{
-            console.log(res);
+            console.log(res,44444444);
             if(res.succ){
               this.$weui.alert('预约成功');
               this.$router.push({
@@ -261,6 +305,7 @@
               this.$set(this.$data,'list',res.obj)
               this.areas+=value+" "
               if(this.index==4){
+                console.log(id,7777777777777777777777)
                 this.$set(this.$data,'code',id)
                 this.back()
               }

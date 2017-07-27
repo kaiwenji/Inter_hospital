@@ -83,7 +83,7 @@
       </div>
       </transition>
       <div class="bottemFooter">
-        <footers></footers>
+        <footers index="3"></footers>
       </div>
 
     </div>
