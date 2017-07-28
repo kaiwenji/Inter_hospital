@@ -73,12 +73,12 @@
             }).then(req=>{
               console.log(req,999)
               if(req.succ){
-//                this.$router.push({
-//                  name:'succeed',
-//                  params:{
-//                    msg:'密码修改成功'
-//                  }
-//                })
+                this.$router.push({
+                  name:'succeed',
+                  params:{
+                    msg:'密码修改成功'
+                  }
+                })
               }
             })
 
