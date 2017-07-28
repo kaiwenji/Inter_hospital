@@ -46,7 +46,7 @@
             </li>
           </ul>
         </div>
-        <p class="patientInfoTitle">就诊人信息 <span>切换就诊人></span> </p>
+        <p class="patientInfoTitle">就诊人信息 <span @click="setPat()">切换就诊人></span> </p>
         <div class="patientInfo">
           <div class="leftTitle">
             <span>姓&nbsp;&nbsp;名:</span>
@@ -103,10 +103,12 @@
     created(){
       let that = this
       console.log(that.applyId)
+      console.log(that.applyId)
       api("smarthos.appointment.detail",{
-        token:"18268256860",
-        id:that.applyId
+        token:localStorage.getItem("token"),
+        id:localStorage.getItem("applyId")
       }).then((data)=>{
+          console.log(data)
           that.applyDetail = data.obj
       })
     },
@@ -344,6 +346,8 @@
       font-size: 32rem/$rem;
       color: #cccccc;
       background-color: rgb(245,251,251);
+      word-break: break-all;
+      /*white-space: pre-wrap;*/
       textarea{
         width: 690rem/$rem;
         border:none;

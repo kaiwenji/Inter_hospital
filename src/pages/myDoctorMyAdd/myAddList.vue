@@ -62,8 +62,9 @@
     },
     created(){
       let that = this
+      console.log(localStorage.getItem("token"))
       api("smarthos.appointment.list",{
-          token:"18268256860",
+          token:localStorage.getItem("token"),
           numStatus:""
       }).then((data)=>{
            that.addList = data
@@ -116,7 +117,7 @@
   .recentChat{
     width:100%;
     position: fixed;
-    top: 50px;
+    top: 0;
     bottom:0;
     left:0;
     right:0;

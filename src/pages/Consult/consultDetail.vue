@@ -2,7 +2,7 @@
   <div class="app vertical">
       <app-header>
           <p>问医生</p>
-          
+          <div slot="left" @click="back">按钮</div>
               <p slot="right"class="m lightBlue" v-show="!isEnded">结束咨询</p>
           </app-header>
           <div class="patInfo" v-show='Got'>
@@ -24,9 +24,14 @@
     </div>
     </div>
       <my-loading v-show="!Got" class="myLoading"></my-loading>
-          <div class="ft" v-show="isEnded">
-              <p class="m light">该咨询已经结束</p>
-              <p class="m lightBlue">申请成为TA的患者</p>
+          <div class="ft">
+              <div v-if="isEnded">
+                  <p class="m light">该咨询已经结束</p>
+                  <p class="m lightBlue">申请成为TA的患者</p>
+    </div>
+              <div v-else>
+                  <my-battle @output="send"></my-battle>
+    </div>
     </div>
     
   </div>
@@ -39,11 +44,12 @@
     import Bubble from "../../base/bubble.vue";
     import MyPost from "../../business/post.vue";
     import MyLoading from "../../base/loading/loading.vue";
+    import MyBattle from "../../base/battle.vue";
   export default {
     data() {
       return {
           testList:[1,1,1,1,1,1],
-          isEnded:true,
+          isEnded:false,
           consultInfo:{},
           replyList:[],
           hasPhoto:false,
@@ -56,7 +62,8 @@
         AppHeader,
         bubble:Bubble,
         MyPost,
-        MyLoading
+        MyLoading,
+        MyBattle
     },
     mounted() {
         Api("smarthos.consult.pic.details",{
@@ -89,7 +96,33 @@
           getGender,
           goodTime
       },
-    methods: {}
+    methods: {
+        back(){
+            window.history.back();
+//            this.$router.push("/Consult");
+        },
+        send(msg){
+//            console.log(this.consultInfo);
+            Api("smarthos.consult.pic.reply",{
+                replyContent:msg,
+                consultId:this.consultInfo.id,
+                replyContentType:"TEXT",
+                token:window.localStorage['token']
+                
+            })
+            .then((val)=>{
+                if(val.succ){
+                    console.log(val);
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
+        }
+    }
   };
 </script>
 

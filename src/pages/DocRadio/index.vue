@@ -67,7 +67,8 @@
             Api("smarthos.sns.knowledge.page",{
                 pageNum:this.page,
                 pageSize:10,
-                docId:this.$route.params.id
+                docId:this.$route.params.id,
+                token:window.localStorage['token']
             })
             .then((val)=>{
                 if(val.succ)

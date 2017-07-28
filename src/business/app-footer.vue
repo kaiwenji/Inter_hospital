@@ -20,8 +20,8 @@
     },
     data() {
       return {
-        list:[{name:"首页",url:'../../static/img/home.png'},{name:"眼底圈",url:''},{name:"名医知道",url:''},{name:"我的",url:'../../static/img/my.png'}],
-        activeUrl:['../../static/img/home_on.png',"","","../../static/img/my_on.png"]
+        list:[{name:"首页",url:'../../static/img/home.png'},{name:"名医知道",url:''},{name:"我的",url:'../../static/img/my.png'}],
+        activeUrl:['../../static/img/home_on.png',"","../../static/img/my_on.png"]
       };
     },
     computed:{
@@ -38,7 +38,7 @@
     },
     methods: {
         go(index){
-            var indexList=["/index","/","/docRadio","/my"];
+            var indexList=["/index","/docRadio","/my"];
         this.$router.push(indexList[index]);
         },
         setCurrentPage(index){
