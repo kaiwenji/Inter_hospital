@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-bar">
+  <div class="nav-bar border-1px">
     <ul>
       <li v-for="tagName in tagNames">
         <router-link  tag="div" :to="tagName.tabLink">
@@ -21,14 +21,14 @@
 </script>
 <style scoped lang="scss">
   @import '../common/public.scss';
+  @import '../common/mixin.scss';
   .nav-bar{
     width:100%;
     height: 80rem/$rem;
     position: fixed;
     top: 50px;
     z-index:10;
-    border-bottom: 1px solid rgb(205,205,205);
-    background-color: rgb(249,249,249);
+    background-color: white;
     ul{
       padding:0;
       margin:0;
@@ -46,7 +46,9 @@
         }
         .router-link-active{
           height: 80rem/$rem;
+          width:160rem/$rem;
           line-height: 80rem/$rem;
+          text-align: center;
           border-bottom: 2px solid #0AACE9;
         }
       }

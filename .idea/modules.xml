@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ykwx.iml" filepath="$PROJECT_DIR$/.idea/ykwx.iml" />
+      <module fileurl="file://C:\Users\Administrator\Desktop\zeyk-master\.idea\ykwx.iml" filepath="C:\Users\Administrator\Desktop\zeyk-master\.idea\ykwx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/zeyk-master.iml" filepath="$PROJECT_DIR$/.idea/zeyk-master.iml" />
     </modules>
   </component>
 </project>

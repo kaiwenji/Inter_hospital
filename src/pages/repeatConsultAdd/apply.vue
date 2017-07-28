@@ -39,12 +39,13 @@
             <span>年&nbsp;&nbsp;龄:</span>
             <span>性&nbsp;&nbsp;别:</span>
           </div>
-          <div class="rightMatch">
-            <span>王小李</span>
-            <span>6583265742960754-053476</span>
-            <span>3416536423857</span>
-            <span>28</span>
-            <span>男</span>
+          <div class="rightMatch" v-if="compatInfo.self == true">
+            <span>{{ compatInfo.commpatName }}</span>
+            <span>{{ compatInfo.commpatIdcard }}</span>
+            <span>{{ compatInfo.commpatMobile }}</span>
+            <span>{{ useage }}</span>
+            <span v-if="compatInfo.commpatGender == 'M'">男</span>
+            <span v-else>女</span>
           </div>
         </div>
         <p class="repeatTitle">复诊需求描述</p>
@@ -97,7 +98,9 @@
         attaId:[],
         id:"",
         description:"",
-        showDialog:false
+        showDialog:false,
+        compatInfo:"",
+        useage:""
       }
     },
     mounted(){
@@ -105,6 +108,11 @@
 //      console.log(this.imageUrl)
     },
     created(){
+        this.compatInfo = JSON.parse(localStorage.getItem("commpat"))
+        var date = new Date()
+        var year = date.getFullYear()
+        var birthdayYear = parseInt(this.compatInfo.commpatIdcard.substr(6,4))
+        this.useage = year - birthdayYear
         this.id = this.$route.query.doctorId
         this.docAvatar = this.$route.query.docAvatar
         this.docName = this.$route.query.docName
@@ -183,17 +191,18 @@
            let that = this
 //          console.log(that.id)
           api("smarthos.appiontment.add",{
-            patId:"595c77bad2a4661d4f953878",
+            patId: that.compatInfo.patId,
             docId:that.id,
-            compatId:"595c901dd2a4cf2c6f685b40",
+            compatId:that.compatInfo.id,
             description:that.description,
             attaList:that.attaId,
-            token:"18268256860"
+            token:localStorage.getItem("token")
           }).then((data)=>{
 //               console.log(data.obj.id)
             if(data.code == 0){
 //              that.applyId = data.obj.id
               that.SET_APPLY_ID(data.obj.id)
+              localStorage.setItem("applyId",data.obj.id)
               that.showDialog = true
               setTimeout(()=>{
                 that.showDialog = false
@@ -357,6 +366,7 @@
       background-color: rgb(245,251,251);
       textarea{
         width: 690rem/$rem;
+        height:230rem/$rem;
         border:none;
         resize: none;
         outline: medium;
