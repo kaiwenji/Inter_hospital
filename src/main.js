@@ -7,8 +7,10 @@ import "weui";
 import store from './store/index'
 import weui from './lib/wejs'
 import Vuelidate from 'vuelidate'
+import resource from "vue-resource";
 Vue.use(Vuelidate)
 Vue.use(weui)
+Vue.use(resource);
 
 Vue.config.productionTip = false
 let UA = window.navigator.userAgent.toLocaleLowerCase();
@@ -24,7 +26,6 @@ if (/micromessenger/.test(UA)) {
 } else {
   window.brower = "";
 }
-
 /*
  * 移动端rem布局
  * width:20rem

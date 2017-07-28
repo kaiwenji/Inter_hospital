@@ -30,7 +30,7 @@
                   <p class="m lightBlue">申请成为TA的患者</p>
     </div>
               <div v-else>
-                  <my-battle></my-battle>
+                  <my-battle @output="send"></my-battle>
     </div>
     </div>
     
@@ -98,8 +98,29 @@
       },
     methods: {
         back(){
-            console.log("back");
-            this.$router.push("/");
+            window.history.back();
+//            this.$router.push("/Consult");
+        },
+        send(msg){
+//            console.log(this.consultInfo);
+            Api("smarthos.consult.pic.reply",{
+                replyContent:msg,
+                consultId:this.consultInfo.id,
+                replyContentType:"TEXT",
+                token:window.localStorage['token']
+                
+            })
+            .then((val)=>{
+                if(val.succ){
+                    console.log(val);
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
         }
     }
   };

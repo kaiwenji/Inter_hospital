@@ -19,9 +19,9 @@
     </div>
           <div class="tab" ref="tab">
               <div class="tab_contain">
-                  <div><div><img src="../../static/img/red.png"><p class="red">预约挂号</p></div></div>
-                  <div><div @click="To('jhsq')"><img src="../../static/img/green.png"><p class="green">加号申请</p></div></div>
-                  <div><div @click="To('hzbd')"><img src="../../static/img/blue.png"><p class="blue">患者报到</p></div></div>
+                  <div><div><img src="../../static/img/red.png"><p class="m red">预约挂号</p></div></div>
+                  <div><div @click="To('jhsq')"><img src="../../static/img/green.png"><p class="m green">加号申请</p></div></div>
+                  <div><div @click="To('hzbd')"><img src="../../static/img/blue.png"><p class="m blue">患者报到</p></div></div>
     </div>
               <div class="tab_shadow">
     </div>
@@ -247,22 +247,26 @@
 <style scoped lang="scss">
     @import "../common/var.scss";
     $small:rgb(204,204,204);
-    $orangeRed:rgb(247,94,35);
+    $orangeRed:rgb(247,93,32);
     $lightGreen:rgb(42,182,179);
     $lightBlue:rgb(22,151,219);
     .rotate{
         transform:rotate(180deg);
     }
     p{
+           
         font-size:0.875rem;
         &.green{
             color:$lightGreen;
+            line-height:0.85rem;
         }
         &.red{
             color:$orangeRed;
+            line-height:0.85rem;
         }
         &.blue{
             color:$lightBlue;
+            line-height:0.85rem;
         }
     }
     header{
@@ -282,7 +286,8 @@
     }
     .info{
         height:14rem;
-        background-color:deepskyblue;
+        background-image:url(../../static/img/background.png);
+        background-size:cover;
         div{
             padding-top:45px;
             text-align:center;
@@ -317,8 +322,8 @@
                         display:flex;
                         flex-direction:column;
                         img{
-                            padding-bottom:0.5rem;
-                            height:1.92rem;
+                            padding-bottom:0.8rem;
+                            height:1.86rem;
                         }
 
                     }
