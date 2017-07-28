@@ -1,47 +1,42 @@
 <template>
     <div class="wrap">
+      <top>
+          <div slot="left"></div>
+        <div>首页</div>
+      </top>
       <div class="title">
-        <lunbo :imgList="imgList"></lunbo>
+        <lunbo :imgList="imgList">
+        </lunbo>
       </div>
-      <div class="contain mainColor">
-        <div class="leftContain">
+      <div class="contain">
+        <div class="registration">
+          <img src="../../../static/img/home_registration.png" alt="">
+          <span class="bf"> 预约挂号</span>
+        </div>
+        <div class="inquiry">
+          <img class="myDocImg" src="../../../static/img/myDoc.png" alt="">
+          <sapn class="bf">
+          问医生
+          </sapn>
+        </div>
+      </div>
+      <div class="containTitle">
+        <div class="eyeIllness" @click="eyeIllness">
           <div>
-            <img src="../../../static/img/eye.png" alt="">
-          </div>
-          <div class="bf">
-             大眼预诊
-          </div>
-          <div class="mfc" >
-            预诊快速响应
+            <p  class="eyeImg"><img src="../../../static/img/eye.png" alt=""></p>
+            <p class="bf">眼底病</p>
           </div>
         </div>
-        <div class="rightContain">
-          <div class="topContain" @click="eyeIllness">
-            <div>
-              <img src="../../../static/img/nv.png" alt="">
-            </div>
-            <div>
-              <p class="bf" >眼底快速预约</p>
-              <p class="mfc">15分钟快速预约</p>
-            </div>
+        <div class="eyeInquiry" @click="eyeInjury">
+          <div>
+            <p  class="eyeImg"><img src="../../../static/img/home_eye_trauma.png" alt=""></p>
+            <p class="bf">眼外伤</p>
           </div>
-          <div class="bottomContain">
-            <div class="fameDoc">
-              <div>
-                <img class="fameDocImg" src="../../../static/img/msg.png" alt="">
-              </div>
-              <div class="bf">
-                名医预约
-              </div>
-            </div>
-            <div class="myDoc">
-              <div>
-                <img class="myDocImg" src="../../../static/img/myDoc.png" alt="">
-              </div>
-              <div class="bf" @click="goMy">
-                我的医生
-              </div>
-            </div>
+        </div>
+        <div class="visit">
+          <div class="repetition">
+            <p  class="eyeImg"><img src="../../../static/img/home_pat_ill.png" alt=""></p>
+            <p class="bf">复诊</p>
           </div>
         </div>
       </div>
@@ -110,6 +105,25 @@
           this.getData();
         },
       methods:{
+        eyeInjury(){
+          api('smarthos.appointment.fundus.detail',{
+            token:token
+          }).then(res=>{
+            if(res.succ){
+              if(res.obj){
+                this.$router.push({
+                  name:"eyeInjuryDetail"
+                })
+              }else {
+                this.$router.push({
+                  name:"eyeInjury"
+                })
+              }
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+        },
         eyeIllness(){
           api('smarthos.appointment.oculartrauma.detail',{
             token:token
@@ -172,6 +186,73 @@
 </script>
 <style scoped lang='scss'>
     @import '../../common/public.scss';
+    .containTitle{
+      width: 100%;
+      height: 225rem/$rem;
+      margin-bottom: 20rem/$rem;
+      background: white;
+      display: flex;
+    }
+    .eyeIllness{
+      width: 33.33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid gainsboro;
+    }
+    .eyeInquiry{
+      width: 33.33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: 1px solid gainsboro;
+    }
+    .visit{
+      width: 33.33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .eyeImg{
+      img{
+        width: 100rem/$rem;
+        height: 100rem/$rem;
+      }
+    }
+    .contain{
+      height: 120rem/$rem;
+      width: 100%;
+      margin-bottom: 20rem/$rem;
+      background: white;
+      display: flex;
+    }
+    .repetition{
+      text-align: center;
+    }
+    .registration{
+      height: 120rem/$rem;
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img{
+        width: 50rem/$rem;
+        height: 50rem/$rem;
+        margin-right: 20rem/$rem;
+      }
+    }
+    .inquiry{
+      height: 120rem/$rem;
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        img{
+          width: 50rem/$rem;
+          height: 50rem/$rem;
+           margin-right: 20rem/$rem;
+        }
+    }
     .ft{
       display:flex;
       flex-direction:row;
@@ -193,75 +274,22 @@
     }
  .title{
    width: 100%;
-   height: 340rem/$rem;
+   height: 210rem/$rem;
  }
-  .contain{
-    width: 100%;
-    height: 362rem/$rem;
-    display: flex;
-    margin-bottom: 20rem/$rem;
-  }
-  .leftContain{
-    width: 278rem/$rem;
-    height: 362rem/$rem;
-    border-right: 1px solid gainsboro;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+
   .leftContain img{
     display: block;
     width: 96rem/$rem;
     height: 96rem/$rem;
   }
-  .rightContain{
-    height: 362rem/$rem;
-    width: 472rem/$rem;
-   display: flex;
-    flex-direction: column;
-  }
-  .topContain{
-    width: 100%;
-    height: 180rem/$rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid gainsboro;
-  }
+
   .topContain img{
     width: 86rem/$rem;
     height: 86rem/$rem;
     box-sizing: border-box;
     padding-right: 30rem/$rem;
   }
-  .bottomContain{
-    display: flex;
-    flex: 1;
-  }
-  .fameDoc{
-    flex: 1;
-    border-right: 1px solid gainsboro;
-    display: flex;
-    flex-direction:column ;
-    justify-content: center;
-    align-items: center;
-  }
-  .myDoc{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .fameDocImg{
-    width: 60rem/$rem;
-    height: 60rem/$rem;
-  }
-  .myDocImg{
-    width: 60rem/$rem;
-    height: 60rem/$rem;
-  }
+
   .hotShare{
     overflow: auto;
     flex: 1;

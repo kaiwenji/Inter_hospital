@@ -51,9 +51,9 @@
       api("smarthos.follow.docpat.list",{
         token:"18268256860",
       }).then(function(data){
-        console.log(data)
+//        console.log(data)
         that.followList = data
-        console.log(that.followList)
+//        console.log(that.followList)
       })
     },
     methods:{
@@ -84,7 +84,7 @@
     left:0;
     right:0;
     z-index:1;
-    /*background-color: green;*/
+    background-color: white;
     ul{
       padding:0;
       margin:0;

@@ -35,7 +35,7 @@
       </upload>
     </div>
     <div class="btn">
-      <div class="text mfc">由{{creatorName}}添加</div>
+      <div class="text mfc">{{date |  Todate}} &nbsp;&nbsp;由{{creatorName}}添加</div>
       <a @click="deleteCase" style="background: #ff8588" href="javascript:;" class="weui-btn weui-btn_primary">删除</a>
     </div>
   </div>
@@ -52,8 +52,9 @@
       upload
     },
     filters:{
-      Getdate,
-      Todate
+      Todate,
+      Getdate
+
     },
     data(){
       return {

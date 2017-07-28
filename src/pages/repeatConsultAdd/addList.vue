@@ -1,9 +1,9 @@
 <template>
   <div class="recentChat">
     <v-header :title="title" :rightTitle="rightTitle"></v-header>
-    <scroll class="myDoctorList" ref="contactList" :data="followList.list">
+    <scroll class="myDoctorList" ref="contactList" :data="followList" :pullup="pullup" @scrollToEnd="scrollToEnd" >
       <div>
-        <ul class="border-1px" v-for="item in followList.list" :key="item.id">
+        <ul class="border-1px" v-for="item in followList" :key="item.id">
           <router-link tag="div" :to="{path:'/apply',query:{doctorId:item.id,docAvatar:item.docAvatar,docName:item.docName,hosName:item.hosName,deptName:item.deptName,docTitle:item.docTitle}}">
             <li>
               <div class="cancelImg">
@@ -29,6 +29,12 @@
             </li>
           </router-link>
         </ul>
+        <div class="loadMore" v-if="loadingStatus">
+                <span class="pullMore">
+                   <img src="../../../static/img/loading.gif" alt="">
+                   数据加载中...
+                </span>
+        </div>
       </div>
 
     </scroll>
@@ -43,7 +49,11 @@
       return{
         followList:[],
         title:"复诊加号",
-        rightTitle:"我的加号"
+        rightTitle:"我的加号",
+        pullup:true,
+        listPage:1,
+        dataLength:"",
+        loadingStatus:true,
       }
     },
     mounted(){
@@ -55,12 +65,36 @@
         pageNum:"1",
         pageSize:"10"
       }).then(function(data){
-        console.log(data)
-        that.followList = data
-        console.log(that.followList)
+        for(var i=0;i<data.list.length; i++){
+          that.followList.push(data.list[i])
+        }
       })
     },
     methods:{
+      scrollToEnd(){
+          if (this.preventRepeatRequest) {
+            return
+          }
+          this.loadingStatus = true
+          this.preventRepeatRequest = true;
+          this.listPage +=1;
+          let that = this
+          let token = localStorage.getItem("token")
+          api("smarthos.user.doc.list",{
+            pageNum:that.listPage,
+            pageSize:"10"
+          }).then((data)=>{
+            for(var i=0;i<data.list.length; i++){
+              that.followList.push(data.list[i])
+            }
+            this.loadingStatus = false
+            that.dataLength = data.list.length
+            if(data.list.length >= 10){
+              this.preventRepeatRequest = false;
+            }
+          })
+        },
+
 
     },
     components:{
@@ -89,6 +123,21 @@
     right:0;
     z-index:1;
     background-color: white;
+    .loadMore{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span.pullMore{
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        img{
+          width: 16px;
+          height: 16px;
+          margin-right: 5px;
+        }
+      }
+    }
     ul{
       padding:0;
       margin:0;

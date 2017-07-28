@@ -41,9 +41,9 @@
 
     watch: {
       $route(to, from){
-//        console.log(this.urlObj.history)
+       console.log(this.urlObj.history)
         let routeLength = this.urlObj.history.length;
-//        console.log(routeLength, '一开始的空')
+        console.log(routeLength, '一开始的空')
         if (routeLength === 0) {
           this.slide = 'left'
           if (to.path === from.path && to.path === '/') {
@@ -51,23 +51,24 @@
           } else {
             this.urlObj.history = from.path;
             this.urlObj.history = to.path;
-//            console.log(this.urlObj.history,1111)
+           console.log(this.urlObj.history,1111)
           }
         } else if (routeLength === 1) {
           this.slide = 'left'
           this.urlObj.history = to.path;
-//          console.log(this.urlObj.history, 9999)
+         console.log(this.urlObj.history, 9999)
         } else {
-//          console.log(this.urlObj.history, 9999)
+
           let lastBeforeRoute = this.urlObj.history[routeLength - 2];
           if (lastBeforeRoute === to.path) {
-//            console.log('后退的')
+            console.log('后退的')
             this.urlObj.back;
             this.slide = 'right'
+            console.log(this.urlObj.history, 9999)
           } else {
             this.urlObj.history = to.path;
-//            console.log('倩倩进的')
-//            console.log(this.urlObj.history)
+          console.log('倩倩进的')
+           console.log(this.urlObj.history)
             this.slide = 'left'
           }
         }

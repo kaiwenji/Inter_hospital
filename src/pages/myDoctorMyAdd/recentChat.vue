@@ -2,14 +2,14 @@
     <div class="recentChat">
       <div class="myDoctorList" ref="contactList">
         <div>
-          <ul @click="goChat" class="border-1px">
+          <ul @click="goChat" class="border-1px" v-for="item in chatList">
             <li>
               <div class="cancelImg">
-                <img src="../../assets/logo.png" alt="">
+                <img :src=" item.userDoc.docAvatar " alt="">
               </div>
               <div class="cancelIntro">
                 <div>
-                  <span class="chatDoctor">李冰</span>
+                  <span class="chatDoctor">{{ item.userDoc.docName }}</span> <span class="doctorTitle">{{ item.userDoc.docTitle }}</span>
                   <div class="badgeDoc">
                     <span class="myDoctor">我的医生</span>
                   </div>
@@ -25,10 +25,10 @@
             </li>
           </ul>
         </div>
-        <div class="loading-container" v-show="chatList.length != 0">
+        <div class="loading-container" v-show="chatList.length == 0">
            <loading></loading>
         </div>
-        <v-mask  v-show="chatList.length != 0"></v-mask>
+        <v-mask  v-show="chatList.length == 0"></v-mask>
       </div>
     </div>
 </template>
@@ -50,9 +50,12 @@
         })
       },
       created(){
+        let that = this
+        let token = localStorage.getItem('token')
         api("smarthos.follow.message.last.list",{
-          token:"18297912203",
+          "token":token,
         }).then((data)=>{
+            that.chatList = data.list
             console.log(data)
         })
       },
@@ -92,15 +95,15 @@
   left:0;
   right:0;
   z-index:1;
-  /*background-color: green;*/
+  background-color: white;
   ul{
     padding:0;
     margin:0;
-    height: 140rem/$rem;
+    height: 180rem/$rem;
     border-top: 1px solid rgb(205,205,205);
     li{
       list-style-type: none;
-      height: 140rem/$rem;
+      height: 180rem/$rem;
       display: flex;
       .cancelImg{
         width: 70px;
@@ -131,10 +134,15 @@
         p{
           margin:0;
           color: #999999;
-          font-size: 14px;
+          font-size: 28rem/$rem;
         }
         span.chatDoctor{
-          font-size: 16px;
+          font-size: 32rem/$rem;
+          color: #333333;
+        }
+        span.doctorTitle{
+          font-size: 28rem/$rem;
+          color: #666666;
         }
       }
       .cancelTime{
@@ -147,11 +155,12 @@
           font-size: 14px;
           color: #999999;
         }
-        p{
+        p.time{
           margin:0;
           text-align: right;
           span.badge{
             display: inline-block;
+            top:0;
             width: 30rem/$rem;
             height: 30rem/$rem;
             border-radius: 50%;

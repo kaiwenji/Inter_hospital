@@ -127,6 +127,34 @@ const getGender=function(str){
         return "女";
     }
 }
+const week = function (item) {
+  var date =""
+  switch (item)
+  {
+    case 1:
+      date="一";
+      break;
+    case 2:
+      date="二";
+      break;
+    case 3:
+      date="三";
+      break;
+    case 4:
+      date="四";
+      break;
+    case 5:
+      date="五";
+      break;
+    case 6:
+      date="六";
+      break;
+    case 7:
+      date="日";
+      break;
+  }
+  return date;
+}
 
-export {Todate,getWeek,getDay,goodTime,getMyDay,getAge,getGender,Getdate}
+export {Todate,getWeek,getDay,goodTime,getMyDay,getAge,getGender,Getdate,week}
 
