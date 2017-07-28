@@ -24,7 +24,7 @@
               <div class="weui-uploader__bd">
                 <ul class="weui-uploader__files" id="uploaderFiles">
                   <li class="weui-uploader__file" v-for="item of srcList">
-                    <img :src="item" alt="" class="uploadImg" @click="deleteImg(item)"><br>
+                    <img :src="item.attaFileUrl" alt="" class="uploadImg" @click="deleteImg(item.attaFileUrl)"><br>
                     <!--<span>{{num+'%'}}</span>-->
                   </li>
                 </ul>
@@ -43,34 +43,52 @@
 <script type="text/ecmascript-6">
 import ajax from '../lib/ajax'
     export default{
+      props:['imgList'],
         components: {
 
         },
         data(){
             return {
               index:0,
-              srcList:[],
+            srcList:[],
               num:0,
-              attaIdList:[],
-              index:0
+              attaIdList:[]
             }
         },
+      watch:{
+        imgList:function () {
+          this.srcList=this.imgList.slice();
+          console.log(this.imgList, 77777)
+          this.getId()
+        }
+      },
         mounted(){
+            console.log(45456456)
 
         },
       methods:{
+        getId(){
+          if(this.imgList){
+              for(var i=0;i<this.imgList.length;i++){
+                console.log(121221)
+                this.attaIdList.push(this.imgList[i].id)
+              }
+              this.$emit('getAttaIdsList',this.attaIdList)
+          }
+        },
         upLoad(e){
-          var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+          var src  = {}
+          var  url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
           for (var i = 0, len = files.length; i < len; ++i) {
             var file = files[i];
             if (url) {
-              src = url.createObjectURL(file);
+              src.attaFileUrl = url.createObjectURL(file);
               var arr = this.srcList;
               arr.push(src)
               this.$set(this.$data,'srcList',arr);
 
             } else {
-              src = e.target.result;
+              src.attaFileUrl = e.target.result;
               var arr = this.srcList;
               arr.push(src)
               this.$set(this.$data,'srcList',arr);
@@ -92,10 +110,11 @@ import ajax from '../lib/ajax'
           },'PAT','IMAGE').then(data=>{
             console.log(data,66666)
             if(data.succ){
-              this.attaIdList[this.index] = data.obj.id;
-              this.index++
+//              this.attaIdList[this.index] = data.obj.id;
+//              this.index++
+              this.attaIdList.push(data.obj.id)
               console.log(this.attaIdList,798798798)
-              this.$set(this.$data,'attaList',data.obj.attaId);
+//              this.$set(this.$data,'attaList',data.obj.attaId);
               this.$emit('getAttaIdsList',this.attaIdList)
               this.$weui.alert('上传成功')
             }else {

@@ -1,17 +1,16 @@
 <template>
     <div>
         <top>
-            <div class="middle big">过敏史</div>
+            <div class="middle big">所患疾病</div>
             <span slot="right" class="step" @click="save">保存修改</span>
         </top>
       <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="weui-textarea" v-model="allergyHistory" placeholder="请输入文本" rows="3"></textarea>
+            <textarea class="weui-textarea" v-model="presentingComplaint" placeholder="请输入文本" rows="3"></textarea>
           </div>
         </div>
       </div>
-
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -24,26 +23,23 @@
         },
         data(){
             return {
-              allergyHistory:''
+              presentingComplaint:''
             }
         },
         mounted(){
-          this.$set(this.$data,'allergyHistory',this.$route.params.allergyHistory)
+          this.$set(this.$data,'presentingComplaint',this.$route.params.presentingComplaint)
         },
       methods:{
         save(){
           api("smarthos.medicalinfo.modify",{
-            "presentingComplaint":"",
+            "presentingComplaint":this.presentingComplaint,
             "pastHistory":"",
             "familyHistory":"",
-            "allergyHistory":this.allergyHistory,
+            "allergyHistory":"",
             "token":token
           }).then(res=>{
             if(res.succ){
-              console.log(res);
-              this.$router.push({
-                name:'healthRecord'
-              })
+              console.log(res)
             }else {
               this.$weui.alert(res.msg)
             }
@@ -53,7 +49,7 @@
     }
 </script>
 <style scoped lang='scss'>
-    @import '../../common/public.scss';
+    @import "../../common/public.scss";
 
     .step {
         padding-right: 5px;

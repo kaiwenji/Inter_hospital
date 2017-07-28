@@ -21,12 +21,15 @@ import register from "../login/register.vue";
 import myDetail from "../login/myDetail.vue";
 import eyeIllness from "../eye/eyeIllness.vue";
 import orderDetail from "../eye/orderDetail.vue";
+import eyeInjury from "../eye/eyeInjury.vue";
+import eyeInjuryDetail from "../eye/eyeInjuryDetail.vue";
 import healthRecord from "../healthRecord/healthRecord.vue";
 import addCase from "../healthRecord/addCase.vue";
 import caseDetail from "../healthRecord/caseDetail.vue";
 import allergyHistory from "../healthRecord/allergyHistory.vue";
 import familyHistory from "../healthRecord/familyHistory.vue";
 import pastHistory from "../healthRecord/pastHistory.vue";
+import presentingComplaint from "../healthRecord/presentingComplaint.vue";
 
 export default[
 
@@ -135,5 +138,17 @@ export default[
     path: '/pastHistory',
     name:'pastHistory',
     component: pastHistory
+  },{
+    path: '/presentingComplaint',
+    name:'presentingComplaint',
+    component: presentingComplaint
+  },{
+    path: '/eyeInjury',
+    name:'eyeInjury',
+    component: eyeInjury
+  },{
+    path: '/eyeInjuryDetail',
+    name:'eyeInjuryDetail',
+    component: eyeInjuryDetail
   },
 ]

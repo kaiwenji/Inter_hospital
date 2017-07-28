@@ -4,6 +4,8 @@
         <p class="headerTitle">问医生</p>
         <p slot="right" class="lightBlue" @click="addNew">立即提问</p>
     </app-header>
+    <div class="app" v-show="Got">
+
     <div class="wrap">
     <div class="notice inter">
         <div class="img">
@@ -36,23 +38,13 @@
     <div class="request inter">
         <textarea v-model="content" @focus="text_fade"></textarea>
     </div>
-    <div class="picture"></div>
-    </div>
-    <my-popup :show="showPat" @activate="showPat=false">
-        <div slot="contain" class="contain">
-        <div class="title">
-            <p class="m light">请选择就诊人</p>
-    </div>
-        <div class="main">
-        <div v-for="item in patList" @click="check(item)">
-            <p class="dark">{{item}}</p>
+    <div class="picture">
+        <my-upload @getAttaIdsList="getAttaIdsList"></my-upload>
     </div>
     </div>
-        <div class="ft">
-            <p class="dark">添加就诊人</p>
-    </div>
-    </div>
-    </my-popup>
+        
+<!-- 切换就诊人模块-->
+        <set-pat @activate="check" :patList="patList" :showPat="showPat"></set-pat>
     <div v-show="showSuccess">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
@@ -68,26 +60,37 @@
         </div>
     </div>
     </div>
+    <my-loading class="myLoading" v-show="!Got"></my-loading>
+    </div>
 </template>
 <script>
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
-    import MyPopup from "../../base/popup.vue";
+    import SetPat from "../../business/setPat.vue";
     import {getAge,getGender} from "../../lib/filter.js";
+    import MyUpload from "../../business/upload.vue";
+    import MyLoading from "../../base/loading/loading.vue";
   export default {
     data() {
       return {
           showPat:false,
-          patList:["大周","小毛","老白","老邢","小郭"],
+          patList:[],
           showLoading:false,
           showSuccess:false,
           chosedIndex:0,
-          content:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"
+          content:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。",
+          Got:false,
+          attaList:[]
       };
     },
     computed: {
         patInfo(){
-            return this.patList[this.chosedIndex];
+            if(this.patList.length>0){
+                return this.patList[this.chosedIndex];
+            }
+            else{
+                return {}
+            }
         }
     },
       filters:{
@@ -96,21 +99,35 @@
       },
     components: {
         AppHeader,
-        MyPopup
+        SetPat,
+        MyUpload,
+        MyLoading
     },
     mounted() {
         Api("smarthos.user.commpat.list",{
             token:window.localStorage['token']
         })
         .then((val)=>{
-            console.log(val.list);
-            this.patList=val.list;
+            this.Got=true;
+            if(val.succ){
+                console.log(val.list);
+                this.patList=val.list;
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+             ()=>{
+            this.$weui.alert("网络错误");
         })
     },
     beforeDestroy() {
 
     },
     methods: {
+        getAttaIdsList(item){
+            this.attaList=item;
+        },
         text_fade(){
             if(this.content=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
                 this.content="";
@@ -125,6 +142,9 @@
             this.showPat=true;
         },
         check(item){
+            console.log(item);
+            this.showPat=false;
+            this.chosedIndex=item;            
         },
         addNew(){
             this.showLoading=true;
@@ -133,12 +153,13 @@
                 consulterMobile:this.patInfo.commpatMobile,
                 consulterIdcard:this.patInfo.commpatIdcard,
                 consultContent:this.content,
-                token:window.localStorage['token']
+                token:window.localStorage['token'],
+                attaIdList:this.attaList
             })
             .then((val)=>{
                 console.log(val);
                 this.showLoading=false;
-                this.addSuccess(val.obj.id);
+                this.addSuccess(val.obj.consultInfo.id);
             })
         },
         addSuccess(id){
@@ -241,22 +262,53 @@
         font-size:0.8rem;
         padding:0.8rem;
     }
+    
+/* 选择就诊人模块css   */
     .contain{
+        background:rgb(238,238,238);
         display:flex;
         flex-direction:column;
         flex:1 1 auto;
         div{
+            background:white;
             p{
+                position:relative;
+                border-top:.5px solid silver;
                 @include letter;
+                &:hover{
+                    background-color:silver;
+                }
+                &:active{
+                    background:white;
+                }
+                img{
+                    position:absolute;
+                    height:1rem;
+                    left:13rem;
+                    top:.8rem;
+                }
             }
             flex:0 0 auto;
             text-align:center;
             padding:0 auto;
-            border-bottom:1px solid grey;
+            &.title{
+                border-bottom:.5px solid silver;
+            }
             &.main{
+                
                 flex: 1 1 auto;
                 overflow:auto;
             }
+            &.ft{
+                margin-top:.5rem;
+            }
         }
+    }
+    
+/*    */
+    
+    
+    .picture{
+        padding-left:0.8rem;
     }
 </style>

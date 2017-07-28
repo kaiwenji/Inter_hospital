@@ -27,7 +27,7 @@
             }
         },
         mounted(){
-
+          this.$set(this.$data,'pastHistory',this.$route.params.pastHistory)
         },
       methods:{
         save(){
@@ -40,6 +40,9 @@
           }).then(res=>{
             if(res.succ){
               console.log(res)
+              this.$router.push({
+                name:'healthRecord'
+              })
             }else {
               this.$weui.alert(res.msg)
             }

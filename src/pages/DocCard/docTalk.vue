@@ -3,7 +3,7 @@
     <app-header>
         <p class="headerTitle">医生说</p>
     </app-header>
-    <pull-up @pullUp="loadingMore">
+    <pull-up @pullUp="loadingMore" :flag="flag">
     <div class="main">
     <div v-for="item in audioList">
     <doc-panel :item="item" @recommend="setColor"></doc-panel>
@@ -16,10 +16,12 @@
             <p class="weui-toast__content">无更多内容</p>
         </div>
     </div>
+    <my-loading v-show="!Got" class="myLoading"></my-loading>
     </div>
 </template>
 
 <script>
+    import MyLoading from "../../base/loading/loading.vue";
     import PullUp from "../../base/pullUp.vue";
     import AppHeader from "../../business/app-header.vue";
     import DocPanel from "../../business/docPanel.vue";
@@ -29,14 +31,17 @@
       return {
           audioList:[],
           page:1,
-          nothingMore:false
+          nothingMore:false,
+          Got:false,
+          flag:true
       };
     },
     computed: {},
     components: {
         AppHeader,
         DocPanel,
-        PullUp
+        PullUp,
+        MyLoading
     },
     mounted() {
 
@@ -54,16 +59,24 @@
                 docId:this.$route.params.id
             })
             .then((val)=>{
-                console.log(val);
-                this.audioList=val.list;
-                if(this.page==val.page.total){
-                    this.page=-1;
+                this.Got=true;
+                this.flag=!this.flag;
+                if(val.succ){
+                    this.audioList=val.list;
+                    if(this.page==val.page.total){
+                        this.page=-1;
+                    }
+                    else{
+                        this.page++;
+                    }
                 }
                 else{
-                    this.page++;
+                    this.$weui.alert(val.msg);
                 }
-                console.log(this.page);
                 
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
             })
         },
         loadingMore(){

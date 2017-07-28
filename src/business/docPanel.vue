@@ -11,20 +11,20 @@
                   <div class="supplement"></div>
     </div>
               <div class="ft">
-                  <p class="s light">{{item.snsKnowledge.createTime | getMyDay}}</p>
+                  <p class="s light">{{item.snsKnowledge.createTime|getMyDay}}</p>
                   <p class="right s light">{{item.snsKnowledge.readNum}}人听过</p>
-                  <p class="s last light" ref="thumb" @click="setColor"><img class="icon" src="../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
+                  <p class="s last light" ref="thumb" @click="setColor(item)"><img class="icon" :src="recSrc" >{{item.snsKnowledge.likes}}</p>
     </div>
     </div>
     </div>
 </template>
 
 
-<script type="text/ecmascript-6">
+<script>
 
-    import {getMyDay} from "../lib/filter.js";
-    import Bubble from "../base/bubble.vue";
-
+    import {getMyDay,goodTime} from "../lib/filter.js";
+    import Bubble from "../base/bubble.vue"; 
+    import Api from "../lib/api.js";
   export default {
       props:{
           item:{
@@ -40,14 +40,22 @@
       };
     },
     computed:{
-
+        recSrc(){
+            if(this.item.islikes){
+                return "../../static/img/rec_on.png";
+            }
+            else{
+                return "../../static/img/rec_off.png";
+            }
+        }
     },
     components:{
         bubble:Bubble
 
     },
       filters:{
-          getMyDay
+          getMyDay,
+          goodTime
       },
     mounted() {
         this.$refs.bubble.$el.addEventListener("click",(e)=>{
@@ -67,8 +75,32 @@
 
     },
     methods: {
-        setColor(){
-            this.$emit("recommend")
+        setColor(item){
+            Api("smarthos.sns.knowledge.likes",{
+                knowledgeId:item.snsKnowledge.id,
+                token:window.localStorage['token']          
+            })
+            .then((val)=>{
+                if(val.succ){
+                    Api("smarthos.sns.knowledge.info",{
+                        id:item.snsKnowledge.id,
+                        token:window.localStorage['token']     
+                    })
+                    .then((val)=>{
+                        console.log(val);
+                        item.snsKnowledge=val.obj.snsKnowledge;
+                    },
+                         ()=>{
+                        this.$weui.alert("网络错误");
+                    })
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
         },
         activate(){
             console.log("activate")

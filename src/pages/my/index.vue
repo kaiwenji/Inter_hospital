@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="titleImg">
-          <img src="../../../static/img/psb.jpg" alt="" @click="upLoad">
+          <img :src="patAvatar" alt="" @click="upLoad">
         </div>
         <div class="name">
           <span>小李</span>
@@ -74,13 +74,16 @@
       <div class="boxShaw" v-show="showShaw" @click="cancel">
           <div class="bottom">
             <div class="cell mfc">更换头像</div>
-            <div class="cell photo" @click.stop="goPhoto">相册</div>
+            <div class="cell photo">
+              <label for="uploaderInput">相册</label>
+              <input @change="upLoadImg" id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" />
+            </div>
             <div class="cancel" @click="cancel">取消</div>
           </div>
       </div>
       </transition>
       <div class="bottemFooter">
-        <footers></footers>
+        <footers index="3"></footers>
       </div>
 
     </div>
@@ -89,7 +92,9 @@
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import footers from '../../business/app-footer.vue'
+    import ajax from '../../lib/ajax'
     var token  = localStorage.getItem('token')
+    var patAvatar  = localStorage.getItem('patAvatar')
     import api from '../../lib/api'
     export default{
         components: {
@@ -98,13 +103,27 @@
         },
         data(){
             return {
-              showShaw:false
+              showShaw:false,
+              patAvatar:patAvatar
             }
         },
         mounted(){
 //          this.getData()
         },
       methods:{
+        getData(){
+          api("smarthos.user.pat.infomation.modify",{
+            token:token,
+            patAvatar:this.patAvatar
+          }).then(res=>{
+            console.log(res,111111)
+            if(res.succ){
+
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+        },
         goUsers(){
           this.$router.push({
             name:'users'
@@ -116,8 +135,21 @@
         cancel(){
           this.$set(this.$data,'showShaw',false)
         },
-        goPhoto(){
-          console.log(123)
+        upLoadImg(e){
+          console.log(e)
+          e.stopPropagation();
+          var files = e.target.files[0]
+          ajax(files,{},'PAT','IMAGE').then(data=>{
+            if(data.succ){
+              console.log(data)
+//              this.attaId = data.obj.attaId;
+              this.$set(this.$data,'patAvatar',data.obj.attaFileUrl);
+              localStorage.setItem('patAvatar',data.obj.attaFileUrl)
+              this.getData()
+            }else {
+              this.$weui.alert(data.msg)
+            }
+          })
         },
         goHealthRecord(){
           this.$router.push({

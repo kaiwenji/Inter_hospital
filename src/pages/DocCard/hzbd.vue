@@ -4,7 +4,7 @@
         <p class="headerTitle">患者报到</p>
         <p slot="right" class="headerWord" @click="appoint()">提交</p>
     </app-header>
-    <div class="wrap">
+    <div class="wrap" v-show="docGot&&patGot">
     <div class="notice inter">
         <p class="s">温馨提示：请确认您曾在{{name}}医生处就诊过，否则医生将不通过您的请求</p>
     </div>
@@ -12,7 +12,7 @@
         <p class="l">医生信息</p>
     </div>
     <div class="inter docInfo">
-        <img src="../../../static/img/docProfile.png">
+        <img :src="docInfo.docAvatar" class="profile">
         <div>
             <p class="xl darker title" >{{docInfo.docName}}&nbsp;&nbsp;&nbsp;<span class="l dark">{{docInfo.docTitle}}</span></p>
             <p class="m light">{{docInfo.hosName}}</p>
@@ -47,31 +47,26 @@
     <div class="request inter">
         <textarea class="xl"v-model="description" @focus="text_fade" @blur="text_show"></textarea>
     </div>
-    <div class="picture"></div>
+    <div class="picture">
+        <my-upload></my-upload>
     </div>
-    <my-popup :show="showPat" @activate="showPat=false">
-        <div slot="contain" class="contain">
-        <div class="title">
-            <p class="m light">请选择就诊人</p>
+
     </div>
-        <div class="main">
-        <div v-for="item,index in patList" @click="check(index)">
-            <p class="dark">{{item.commpatName}}</p>
-    </div>
-    </div>
-        <div class="ft">
-            <p class="dark">添加就诊人</p>
-    </div>
-    </div>
-    </my-popup>
+    
+<!-- 切换就诊人模块   -->
+    <set-pat @activate="check" :patList="patList" :showPat="showPat"></set-pat>
+    
     <my-toast :start="showLoading" :success="showSuccess"></my-toast>
+    <my-loading class="myLoading" v-show="!patGot||!docGot"></my-loading>
     </div>
 </template>
 <script>
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
-    import MyPopup from "../../base/popup.vue";
+    import SetPat from "../../business/setPat.vue";
     import MyToast from "../../base/toast.vue";
+    import MyUpload from "../../business/upload.vue";
+    import MyLoading from "../../base/loading/loading.vue";
   export default {
      data() {
       return {
@@ -83,7 +78,9 @@
           chosedIndex:0,
           description:"请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。",
           showLoading:false,
-          showSuccess:false
+          showSuccess:false,
+          docGot:false,
+          patGot:false
       };
     },
     computed: {
@@ -95,35 +92,64 @@
         }
     },
       filters:{
+          
+          /*获取年龄*/
           getAge(id){
               if(!id){
                   return "";
               }
-            let year=parseInt(id.substring(6,10));
-            var date=new Date();
-            return date.getFullYear()-year; 
-          },
-          isBlank(str){
-              if(str=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
-                  return "";
+              var year;
+              if(id.length==18){
+                  year=parseInt(id.substring(6,10));
               }
+              else{
+                  year=1900+parseInt(id.substring(7,9));
+              }
+              var date=new Date();
+              return date.getFullYear()-year; 
           }
       },
     components: {
         AppHeader,
-        MyPopup,
-        MyToast
+        SetPat,
+        MyToast,
+        MyUpload,
+        MyLoading
     },
     mounted() {
+        /**
+        获取医生信息
+        **/
         Api("smarthos.user.doc.card.get",{docId:this.$route.params.id})
         .then((val)=>{
-//            console.log(val);
-            this.docInfo=val.obj.doc;
+            this.docGot=true;
+            if(val.succ){
+//                console.log(val);
+                this.docInfo=val.obj.doc;
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+             ()=>{
+            this.docGot=true;
+            this.$weui.alert("网络错误");
         })
+        /*获取病人列表*/
         Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
         .then((val)=>{
-            console.log(val);
-            this.patList=val.list;
+            this.patGot=true;
+            if(val.succ){
+                this.patList=val.list;
+                
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+        ()=>{
+            this.patGot=true;
+            this.$weui.alert("网络错误");
         })
 
     },
@@ -131,28 +157,49 @@
 
     },      
     methods: {
-                appoint(){
+        /**提交预约**/
+        appoint(){
             console.log(this.docInfo);
             this.showLoading=true;
             Api("smarthos.appiontment.add",{
                 patId:this.patInfo.patId,
                 docId:this.docInfo.id,
                 compatId:this.patInfo.id,
-                description:this.description,
+                description:this.isBlank(this.description),
                 token:window.localStorage['token']
             })
             .then((val)=>{
+                this.showLoading=false;
                 console.log(val);
                 if(val.succ){
-                    this.showLoading=false;
+                    
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
                     },1000)
                 }
-            })
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.showLoading=false;
+                    this.$weui.alert("网络错误");
+                     this.$router.push("/")
+                     })
             
         },
+          /*检查textarea是否为默认值*/
+          isBlank(str){
+              if(str=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
+                  return "";
+              } 
+              else{
+                  return str;
+              }
+          },
+        
+        /*textarea控制函数*/
         text_fade(){
             if(this.description=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
                 this.description="";
@@ -163,14 +210,21 @@
                 this.description="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。";
             }
         },
+        
+        /*弹出可供选择的病人选项*/
         setPat(){
             this.showPat=true;
         },
+        
+        /*关闭病人选项框*/
         check(item){
             this.showPat=false;
             this.chosedIndex=item;
             
         },
+        
+        
+        /*日期选择轮盘*/
         setDate(){
             var _this=this;
            weui.datePicker({
@@ -272,27 +326,15 @@
         color:#999999;
         padding:1rem;
     }
-    .contain{
-        display:flex;
-        flex-direction:column;
-        flex:1 1 auto;
-        div{
-            p{
-                @include letter;
-            }
-            flex:0 0 auto;
-            text-align:center;
-            padding:0 auto;
-            border-bottom:1px solid grey;
-            &.main{
-                flex: 1 1 auto;
-                overflow:auto;
-            }
-        }
-    }
+
     .dateChoose{
         p{
             padding:0.8rem;
         }
     }
+    
+    .picture{
+        padding-left:0.8rem;
+    }
+
 </style>

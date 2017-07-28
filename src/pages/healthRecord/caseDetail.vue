@@ -2,7 +2,7 @@
   <div>
     <top>
       <div class="middle big">病例详情</div>
-      <span slot="right" class="step">保存</span>
+      <span slot="right" class="step" @click="save">保存</span>
     </top>
     <div class="wrap">
       <div class="weui-cells">
@@ -30,54 +30,82 @@
 
     </div>
     <div class="addImg">
-      <img src="" alt="">
-      <upload>
+      <upload :imgList="imgList" v-on:getAttaIdsList="getAttaIdsList">
         <div slot="title"></div>
       </upload>
     </div>
     <div class="btn">
-      <div class="text mfc">2016/7/28由李康飞添加</div>
-      <a style="background: #ff8588" href="javascript:;" class="weui-btn weui-btn_primary">删除</a>
+      <div class="text mfc">{{date |  Todate}} &nbsp;&nbsp;由{{creatorName}}添加</div>
+      <a @click="deleteCase" style="background: #ff8588" href="javascript:;" class="weui-btn weui-btn_primary">删除</a>
     </div>
   </div>
 </template>
 <script type="text/ecmascript-6">
   import top from '../../business/app-header.vue'
   import upload from '../../business/upload.vue'
-  import {Getdate} from '../../lib/filter'
+  import {Getdate,Todate} from '../../lib/filter'
+  import api from '../../lib/api'
+  var token = localStorage.getItem('token');
   export default{
     components: {
       top,
       upload
     },
     filters:{
+      Todate,
       Getdate
+
     },
     data(){
       return {
         caseObj:{},
         date:'',
         caseText:'',
-        imgList:[]
+        imgList:[],
+        imgId:[],
+        id:'',
+        creatorName:''
       }
     },
     mounted(){
       var caseObj = this.$route.params.caseObj;
-      console.log(caseObj,5555)
+      console.log(caseObj,121212)
       this.$set(this.$data,'caseObj',caseObj)
       this.$set(this.$data,'date',caseObj.medicalHistory.createTime)
       this.$set(this.$data,'caseText',caseObj.medicalHistory.medContent)
-      this.$set(this.$data,'imgList',caseObj.medicalHistory.attaList)
+      this.$set(this.$data,'id',caseObj.medicalHistory.id)
+      this.$set(this.$data,'imgList',caseObj.attaList)
+      this.$set(this.$data,'creatorName',caseObj.creatorName)
     },
     methods:{
+      getAttaIdsList(value){
+        this.$set(this.$data,'imgId',value)
+      },
+      save(){
+        api("smarthos.medicalhistory.modify",{
+          "medicalTime":this.date,
+          "medContent":this.caseText,
+          "id":this.id,
+          "attaList":this.imgId,
+          "token":token
+        }).then(res=>{
+          console.log(res,565656565656)
+          if(res.succ){
+            this.$router.push({
+              name:'healthRecord'
+            })
+          }else {
+            this.$weui.alert(res.msg)
+          }
+        })
+      },
       selectDate(){
-
         var $this = this;
         this.$weui.datePicker({
           start: 2010,
           end: 2020,
           onConfirm: function(result){
-            $this.$set(this.$data,'date','');
+            $this.$set($this.$data,'date','');
             console.log(result,6666);
             for(var i=0;i<result.length;i++){
               $this.date+=result[i].value+'-'
@@ -88,6 +116,21 @@
           }
         });
       },
+      deleteCase(){
+        api("smarthos.medicalhistory.delete",{
+          id:this.id,
+          token:token
+        }).then(res=>{
+          console.log(res,7877878)
+          if(res.succ){
+            this.$router.push({
+              name:'healthRecord'
+            })
+          }else {
+            this.$weui.alert(res.msg)
+          }
+        })
+      }
     }
   }
 </script>

@@ -2,7 +2,7 @@
     <div>
         <top>
             <div class="middle big">家族史</div>
-            <span slot="right" class="step">保存修改</span>
+            <span slot="right" class="step" @click="save">保存修改</span>
         </top>
       <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
@@ -27,10 +27,10 @@
             }
         },
         mounted(){
-
+          this.$set(this.$data,'familyHistory',this.$route.params.familyHistory)
         },
       methods:{
-        getData(){
+        save(){
           api("smarthos.medicalinfo.modify",{
             "presentingComplaint":"",
             "pastHistory":"",
@@ -40,6 +40,9 @@
           }).then(res=>{
             if(res.succ){
               console.log(res)
+              this.$router.push({
+                name:'healthRecord'
+              })
             }else {
               this.$weui.alert(res.msg)
             }

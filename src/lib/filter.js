@@ -61,12 +61,15 @@ const getDay = (time)=>{
 }
 
 const getMyDay = (oldTime)=>{
-    var time = oldTime.replace(/\-/g, "/");
-
+    var time=oldTime;
+    if(typeof(oldTime)=='string'){
+        time = oldTime.replace(/\-/g, "/");
+    }
     let date=new Date(time);
     let month= ("0" + (date.getMonth() + 1)).slice(-2);
     let day=("0" + (date.getDate())).slice(-2);
     let year=date.getFullYear();
+    console.log(year,month,day);
     return Number(year)+"-"+Number(month)+"-"+Number(day);
 }
 var goodTime = function(unixTime){
@@ -125,6 +128,34 @@ const getGender=function(str){
         return "女";
     }
 }
+const week = function (item) {
+  var date =""
+  switch (item)
+  {
+    case 1:
+      date="一";
+      break;
+    case 2:
+      date="二";
+      break;
+    case 3:
+      date="三";
+      break;
+    case 4:
+      date="四";
+      break;
+    case 5:
+      date="五";
+      break;
+    case 6:
+      date="六";
+      break;
+    case 7:
+      date="日";
+      break;
+  }
+  return date;
+}
 
-export {Todate,getWeek,getDay,goodTime,getMyDay,getAge,getGender,Getdate}
+export {Todate,getWeek,getDay,goodTime,getMyDay,getAge,getGender,Getdate,week}
 

@@ -3,63 +3,59 @@
     <app-header>
         <p class="headerTitle">问医生</p>
     </app-header>
+    <pull-up @pullUp="getMore" :flag="flag" v-show="Got">
     <div class="main">
         <div class="nothing" v-if="consultList.length==0">
             <p class="xxl darker" >你还没有回答任何问题</p>
             <p class="m lightBlue">去回答</p>
     </div>
         <div v-else>
-          <div class="panel" v-for="item in consultList" @click="getDetail(item)">
-              <p class="font-hide m content">{{ item.consultInfo.consultContent}}</p>
-              <div class="horizontal">
-                  <img src="../../../static/img/qr.png">
-                  <img src="../../../static/img/qr.png">
-                  <img src="../../../static/img/qr.png">
-                  <img class="last" src="../../../static/img/qr.png">
+            <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)":key="item.consultInfo.id"></my-post>
+    
     </div>
-              <div class="ft">
-                  <p v-if="!item.userDocVo" class="light m">暂无医生回答</p>
-                  <img :src="item.userDocVo&&item.userDocVo.docAvatar" class="icon" v-if="item.userDocVo">
-                  <p class="lightBlue m" v-if="item.userDocVo">{{item.userDocVo&&item.userDocVo.docName}}<span class="light m">回答</span></p>
-                  <p class="middle m light">{{item.consultInfo.createTime | goodTime}}</p>
-                  <p class="right m light">{{item.consultInfo.replyCount||0}}条评论</p>
-                  
+    
     </div>
-    </div>
-    </div>
-    </div>
+    </pull-up>
     <div class="button" @click="addConsult">
     </div>
+    <div id="toast" v-show="nothingMore">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <p class="weui-toast__content">无更多内容</p>
+        </div>
+    </div>
+    <my-loading class="myLoading" v-show="!Got"></my-loading>
     </div>
 </template>
 
 <script>
+    import PullUp from "../../base/pullUp.vue";
+    import MyPost from "../../business/post.vue";
     import {goodTime} from "../../lib/filter.js";
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
+    import MyLoading from "../../base/loading/loading.vue";
   export default {
     data() {
       return {
           consultList:[],
           testList:[1,1,1,1,1,1,1,1,1,1],
           page:1,
-          noReply:false
+          noReply:false,
+          nothingMore:false,
+          flag:true,
+          Got:false
       };
     },
     computed: {},
     components: {
-        AppHeader
+        AppHeader,
+        MyPost,
+        PullUp,
+        MyLoading
     },
     mounted() {
-        Api("smarthos.consult.pic.list.page",{
-            pageSize:10,
-            pageNum:1,
-            token:window.localStorage['token']
-        })
-        .then((val)=>{
-            console.log(val.list);
-            this.consultList=val.list;
-        })
+        this.getMore();
     },
     beforeDestroy() {
 
@@ -74,6 +70,39 @@
         },
         addConsult(){
             this.$router.push("/Consult/newConsult");
+        },
+        getMore(){
+            if(this.page==-1){
+                this.nothingMore=true;
+                setTimeout(()=>{this.nothingMore=false},1000);
+                return;
+            }
+            Api("smarthos.consult.pic.list.page",{
+                pageSize:10,
+                pageNum:this.page,
+                token:window.localStorage['token']
+            })
+            .then((val)=>{
+                this.Got=true;
+                this.flag=!this.flag;
+                if(val.succ){
+                    console.log(val);
+                    this.consultList.push(...val.list);
+                    if(this.page==val.page.total){
+                        this.page=-1;
+                    }
+                    else{
+                        this.page++;
+                    }
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+                
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
         }
     }
   };
@@ -103,53 +132,7 @@
             padding-bottom:0.8rem;
         }
     }
-    .panel{
-        .content{
-            min-height:2rem;
-        }
-        padding:0.8rem;
-        margin-bottom:0.5rem;
-        margin-left:0.8rem;
-        margin-right:0.8rem;
-        background-color:#FFFFFF;
-        border-radius:10px;
-/*        height:8rem;*/
-        img{
-            padding-top:0.8rem;
-            padding-bottom:0.8rem;
-            padding-right:0.6rem;
-            display:block;
-            height:3rem;
-            flex:1 1 auto;
-            &.last{
-                padding-right:0;
-            }
-        }
-        .ft{
-            @include horizontal;
-            .icon{
-                border-radius:1rem;
-                flex:0 0 auto;
-                display:block;
-                height:0.8rem;
-                width:0.8rem;
-                padding:0;
-                padding-top:0.2rem;
-            }
-            p{
-                flex:0 0 auto;
-                &.middle{
-                    padding-top:0.1rem;
-                    flex:1 1 auto;
-                    text-align:right;
-                }
-                &.right{
-                    padding-left:0.5rem;
-                    padding-top:0.1rem;
-                }
-            }
-        }
-    }
+    
     
     .button{
         position:fixed;
@@ -164,5 +147,11 @@
             background-image:url(../../../static/img/addRecord_on.png);
         }
     }
-    
+        #toast{
+        p{
+            position:absolute;
+            left:1.3em;
+            top:3em;
+        }
+    }
 </style>
