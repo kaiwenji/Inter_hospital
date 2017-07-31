@@ -28,7 +28,9 @@
     },
     components: {},
     mounted() {
-        this.initialAudio();
+        this.$refs.music.addEventListener('canplay',this.getDuration, false);
+    },
+    watch:{
     },
     beforeDestroy() {
         clearInterval(this.intervalId);
@@ -36,12 +38,6 @@
     },
     methods: {
         initialAudio(){
-            console.log(this.$refs.music);
-            this.$refs.music.addEventListener('canplay',this.getDuration, false);
-            setTimeout(()=>{
-                this.$refs.music.play();
-//                this.$refs.music.pause();
-            },1000);
         },
         getDuration(){
                this.duration=this.setTimeFormat(this.$refs.music.duration);
