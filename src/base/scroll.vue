@@ -62,6 +62,7 @@
           probeType: this.probeType,
           click: true
         })
+        console.log(this.scroll)
         if (this.listenScroll) {
           let me = this
           this.scroll.on('scroll', (pos) => {

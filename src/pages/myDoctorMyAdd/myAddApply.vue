@@ -69,8 +69,8 @@
           {{ applyDetail.description }}
         </div>
         <div class="upload">
-          <div class="addPicture" v-for="item in applyDetail.attaList">
-            <img :src="item.attaFileUrl" alt="">
+          <div class="addPicture" v-for="(item,index) in applyDetail.attaList" ref="addPicture">
+            <img :src="item.attaFileUrl" alt="" @click="enlarge(index)">
           </div>
           <!--<div class="wordFor">-->
             <!--<span>添加图片</span>-->
@@ -80,30 +80,64 @@
       </div>
 
     </div>
+    <div class="centerDisplay" transition="fade" v-if="popImg">
+      <div class="slider-wrapper" ref="sliderWrapper">
+        <slider ref="slider" :popImg="popImg" :index="goindex">
+          <div class="largePicture" v-for="item in applyDetail.attaList"  @click="enSmall">
+            <img :src="item.attaFileUrl" alt="">
+          </div>
+
+        </slider>
+      </div>
+
+    </div>
+
   </div>
 </template>
 <script>
   import header from '../../base/header'
   import BScroll from 'better-scroll'
+  import Scroll from '../../base/scroll'
   import api from '../../lib/api'
-  import {mapGetters} from 'vuex'
+  import {mapGetters,mapMutations} from 'vuex'
+  import slider from '../../base/slider'
   export default{
     data(){
       return{
         title:'我的加号',
         rightTitle:'',
-        applyDetail:{}
+        applyDetail:{},
+        popImg:false,
+        goindex:""
       }
     },
     computed:{
       ...mapGetters([
-          "applyId"
+        "currentPageIndex"
       ])
+    },
+    mounted(){
+//      console.log(this.$refs.addPicture.children.length)
+//       this.$nextTick(()=>{
+//           setTimeout(()=>{
+//             if(this.applyDetail != ''){
+//                 for(var i=0;i<this.$refs.addPicture.length;i++){
+//                     this.$refs.addPicture[i].click(()=>{
+//                         this.popImg = true
+//                         this.pageIndex = i
+//                     })
+//
+//                 }
+//               console.log(this.applyDetail)
+//               console.log(this.$refs.addPicture.length)
+//
+//             }
+//
+//           },1000)
+//       })
     },
     created(){
       let that = this
-      console.log(that.applyId)
-      console.log(that.applyId)
       api("smarthos.appointment.detail",{
         token:localStorage.getItem("token"),
         id:localStorage.getItem("applyId")
@@ -112,19 +146,52 @@
           that.applyDetail = data.obj
       })
     },
-    mounted(){
-      this._initSuccessScroll()
-    },
+//    mounted(){
+////       setTimeout(()=>{
+////         this.$nextTick(()=>{
+////           this._initSuccessScroll()
+////         })
+////       },20000)
+//
+//    },
     methods:{
+      ...mapMutations([
+          'SET_CURRENT_PAGE_INDEX'
+      ]),
       _initSuccessScroll(){
         this.success = new BScroll(this.$refs.success,{
           click:true
         })
         console.log(this.success)
+      },
+      enlarge(index){
+
+
+             this.popImg = true
+//             console.log(this.popImg)
+//             this.pageIndex = index
+             this.goindex = index
+        this.SET_CURRENT_PAGE_INDEX(index)
+//        this.$refs.slider.gotoPage()
+//        this.$nextTick(()=>{
+//          this.$refs.slider.gotoPage()
+//        })
+
+      },
+      enSmall(){
+        this.popImg = false
       }
     },
     components:{
-      'VHeader':header
+      'VHeader':header,
+       slider
+    },
+    watch:{
+      applyDetail(){
+          setTimeout(()=>{
+            this._initSuccessScroll()
+          },20)
+      }
     }
   }
 </script>
@@ -135,8 +202,58 @@
     height:100%;
     top:0;
     bottom:0;
+    left:0;
+    right:0;
     z-index:100;
+
+    /*word-break: break-all;*/
     position: fixed;
+    .centerDisplay{
+      width:100%;
+      height:100%;
+      position: fixed;
+      display: flex;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index:90;
+      background-color: rgba(0,0,0,.3);
+      justify-content: center;
+      align-items: center;
+    }
+    .fade-transition{
+      transition: all 0.5s;
+      opacity: 1;
+      background: rgba(7, 17, 27, 0.6);
+    }
+    .fade-enter,.fade-leave{
+      opacity: 0;
+      background: rgba(7, 17, 27, 0);
+    }
+    .slider-wrapper{
+      position: relative;
+      width:100%;
+      top:0;
+      z-index:100;
+
+      background-color: #E64340;
+      overflow: hidden;
+    }
+    /*.largePicture{*/
+      /*!*overflow: hidden;*!*/
+      /*width:100%;*/
+      /*display: inline-block;*/
+      /*!*display: flex;*!*/
+      /*!*justify-content: center;*!*/
+      /*!*align-items: center;*!*/
+       /*img{*/
+         /*width: 100%;*/
+         /*!*height: 500px;*!*/
+         /*border:1px solid red;*/
+         /*display: inline-block;*/
+       /*}*/
+    /*}*/
   }
   .successContent{
     width:100%;
@@ -358,13 +475,20 @@
     }
     .upload{
       width: 690rem/$rem;
-      height: 230rem/$rem;
+      height: 460rem/$rem;
       border-radius: 10px;
+      /*word-break: break-all;*/
+      word-wrap: break-word;
       margin: 30rem/$rem auto;
-      display: flex;
+      /*display: flex;*/
       .addPicture{
-        margin-right: 10px;
+        display: inline-block;
+        width: 140rem/$rem;
+        height: 140rem/$rem;
+        margin-right: 16.2px;
         img{
+          display: inline-block;
+          word-wrap: break-word;
           width: 140rem/$rem;
           height: 140rem/$rem;
         }
