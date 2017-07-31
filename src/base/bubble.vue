@@ -2,8 +2,7 @@
   <div class="">
       <div class="bubble" @click="on()"ref=bubble>
           <p>{{duration}}</p>
-          <audio ref="music" id="music" onload="initialAudio">
-              <source :src="src">
+          <audio ref="music" id="music" @load="initialAudio"@canplay="getDuration":src="src">
         </audio>
     </div>
   </div>
@@ -29,7 +28,7 @@
     },
     components: {},
     mounted() {
-        this.$refs.music.addEventListener("loadstart",this.initialAudio);
+        this.initialAudio();
     },
     beforeDestroy() {
         clearInterval(this.intervalId);
@@ -37,9 +36,15 @@
     },
     methods: {
         initialAudio(){
-            this.$refs.music.addEventListener('canplaythrough', ()=> { 
+            console.log(this.$refs.music);
+            this.$refs.music.addEventListener('canplay',this.getDuration, false);
+            setTimeout(()=>{
+                this.$refs.music.play();
+//                this.$refs.music.pause();
+            },1000);
+        },
+        getDuration(){
                this.duration=this.setTimeFormat(this.$refs.music.duration);
-            }, false);
         },
         on(){
             if(this.$refs.music.paused){

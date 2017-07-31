@@ -9,11 +9,11 @@
     </div>
     </app-header>
       <div class="wrap">
-          <pull-up @pullUp="loadingMore" :flag="flag">
+          <my-pullup @pullUp="loadingMore" :flag="flag">
           <div v-for="item in audioList" :key="item.snsKnowledge.id">
           <doc-panel :item="item" @activate="go(item)"></doc-panel>
     </div>
-    </pull-up>
+    </my-pullup>
     </div>
       <my-loading v-show="!Got"class="myLoading"></my-loading>
     <div id="toast" v-show="nothingMore">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import PullUp from "../../base/pullUp.vue";
+    import MyPullup from "../../base/pullUp.vue";
     import AppHeader from "../../business/app-header.vue";
     import DocPanel from "../../business/docPanel.vue";
     import AppFooter from '../../business/app-footer.vue';
@@ -49,7 +49,7 @@
         AppHeader,
         DocPanel,
         AppFooter,
-        PullUp,
+        MyPullup,
         MyLoading
     },
     mounted() {
