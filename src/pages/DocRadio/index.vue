@@ -9,11 +9,11 @@
     </div>
     </app-header>
       <div class="wrap">
-          <my-pullup @pullUp="loadingMore" :flag="flag">
+<!--          <my-pullup @pullUp="loadingMore" :flag="flag">-->
           <div v-for="item in audioList" :key="item.snsKnowledge.id">
           <doc-panel :item="item" @activate="go(item)"></doc-panel>
     </div>
-    </my-pullup>
+<!--    </my-pullup>-->
     </div>
       <my-loading v-show="!Got"class="myLoading"></my-loading>
     <div id="toast" v-show="nothingMore">

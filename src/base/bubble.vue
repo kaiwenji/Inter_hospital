@@ -2,7 +2,7 @@
   <div class="">
       <div class="bubble" @click="on()"ref=bubble>
           <p>{{duration}}</p>
-          <audio ref="music" id="music" @load="initialAudio"@canplay="getDuration":src="src">
+          <audio ref="music" id="music" @load="initialAudio":src="src" autoplay>
         </audio>
     </div>
   </div>
@@ -18,7 +18,7 @@
     },
     props:{
         src:{
-            default:"",
+            default:"./static/music/test.mp3",
             type:String,
             required:true
         }
@@ -29,8 +29,14 @@
     components: {},
     mounted() {
         this.$refs.music.addEventListener('canplay',this.getDuration, false);
+        if (this.$refs.music.readyState>3){
+            this.getDuration();
+        }
     },
     watch:{
+        src(){
+            console.log(this.src);
+        }
     },
     beforeDestroy() {
         clearInterval(this.intervalId);

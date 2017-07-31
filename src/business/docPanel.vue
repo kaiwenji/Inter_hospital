@@ -116,6 +116,7 @@
 <style scoped lang="scss">
     @import "../common/var.scss";
         .audioItem{
+            height:8.4rem;
             border:1px solid lightgrey;
             display:flex;
             flex-direction:row;
@@ -128,6 +129,9 @@
                     width:80%;
                     margin:0 auto;
                     border-radius:2rem;
+                }
+                .font-hide{
+                    height:2.2rem;
                 }
 
             }
