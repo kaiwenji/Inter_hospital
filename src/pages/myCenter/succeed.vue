@@ -1,7 +1,7 @@
 <template>
     <div class="page">
       <top>
-        <div class="middle big">修改密码</div>
+        <div class="middle big">{{msg}}</div>
       </top>
       <div  class="title">
         <div class="page__bd page__bd_spacing">
@@ -11,7 +11,7 @@
           </div>
         </div>
       <div class="text">
-        修改成功
+        成功
       </div>
       <div class="btn">
         <a style="background: rgb(48, 207, 208)" href="javascript:;" class="weui-btn weui-btn_primary" @click="login">立即登录</a>

@@ -4,7 +4,7 @@
             <div class="middle big">常用就诊人</div>
             <span slot="right" class="add" @click="goAddUser">添加</span>
         </top>
-      <div class="wrap">
+      <div v-show="!showLoading" class="wrap">
         <!--<div class="patMassage">-->
           <!--<div class="weui-cells" @click="goEditUser()">-->
             <!--<a class="weui-cell weui-cell_access" href="javascript:;">-->
@@ -34,22 +34,26 @@
           </template>
         </left-swipe>
       </div>
+      <My-loading v-show="showLoading" class="myLoading"></My-loading>
     </div>
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import leftSwipe from '../../base/leftSwipe.vue'
     import api from '../../lib/api'
+    import MyLoading from "../../base/loading/loading.vue";
     var token = localStorage.getItem('token')
     export default{
         components: {
             top,
-          leftSwipe
+          leftSwipe,
+          MyLoading
         },
         data(){
             return {
               list:[],
-              patId:""
+              patId:"",
+              showLoading:true
             }
         },
         mounted(){
@@ -62,6 +66,7 @@
           }).then(res=>{
             console.log(res,66666);
             if(res.succ){
+              this.$set(this.$data,'showLoading',false)
               this.$set(this.$data,'list',res.list)
             }else {
               this.$weui.alert('获取失败')

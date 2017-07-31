@@ -43,8 +43,8 @@
       $route(to, from){
        console.log(this.urlObj.history)
         let routeLength = this.urlObj.history.length;
-        console.log(routeLength, '一开始的空')
-        if (routeLength === 0) {
+         if (routeLength === 0) {
+          console.log(routeLength, '一开始的空')
           this.slide = 'left'
           if (to.path === from.path && to.path === '/') {
             this.urlObj.history = to.path;

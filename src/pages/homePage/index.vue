@@ -4,75 +4,78 @@
           <div slot="left"></div>
         <div>首页</div>
       </top>
-      <div class="title">
-        <lunbo :imgList="imgList">
-        </lunbo>
-      </div>
-      <div class="contain">
-        <div class="registration">
-          <img src="../../../static/img/home_registration.png" alt="">
-          <span class="bf"> 预约挂号</span>
+        <div v-show="!showLoading" class="title">
+          <lunbo :imgList="imgList">
+          </lunbo>
         </div>
-        <div class="inquiry">
-          <img class="myDocImg" src="../../../static/img/myDoc.png" alt="">
-          <sapn class="bf">
-          问医生
-          </sapn>
-        </div>
-      </div>
-      <div class="containTitle">
-        <div class="eyeIllness" @click="eyeIllness">
-          <div>
-            <p  class="eyeImg"><img src="../../../static/img/eye.png" alt=""></p>
-            <p class="bf">眼底病</p>
+      <div v-show="!showLoading" class="wrapScroll">
+        <div class="contain">
+          <div class="registration">
+            <img src="../../../static/img/home_registration.png" alt="">
+            <span class="bf"> 预约挂号</span>
+          </div>
+          <div class="inquiry">
+            <img class="myDocImg" src="../../../static/img/myDoc.png" alt="">
+            <sapn class="bf">
+              问医生
+            </sapn>
           </div>
         </div>
-        <div class="eyeInquiry" @click="eyeInjury">
-          <div>
-            <p  class="eyeImg"><img src="../../../static/img/home_eye_trauma.png" alt=""></p>
-            <p class="bf">眼外伤</p>
+        <div class="containTitle">
+          <div class="eyeIllness" @click="eyeIllness">
+            <div>
+              <p  class="eyeImg"><img src="../../../static/img/eye.png" alt=""></p>
+              <p class="bf">眼底病</p>
+            </div>
+          </div>
+          <div class="eyeInquiry" @click="eyeInjury">
+            <div>
+              <p  class="eyeImg"><img src="../../../static/img/home_eye_trauma.png" alt=""></p>
+              <p class="bf">眼外伤</p>
+            </div>
+          </div>
+          <div class="visit">
+            <div class="repetition">
+              <p  class="eyeImg"><img src="../../../static/img/home_pat_ill.png" alt=""></p>
+              <p class="bf">复诊</p>
+            </div>
           </div>
         </div>
-        <div class="visit">
-          <div class="repetition">
-            <p  class="eyeImg"><img src="../../../static/img/home_pat_ill.png" alt=""></p>
-            <p class="bf">复诊</p>
+        <div class="hotShare mainColor">
+          <div class="header">
+            <div class="hot mf">热门分享</div>
+            <div  class="more mfc">
+              更多&nbsp;
+              <img src="../../../static/img/more.png" alt="">&nbsp;&nbsp;
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="hotShare mainColor">
-        <div class="header">
-          <div class="hot mf">热门分享</div>
-          <div  class="more mfc">
-            更多&nbsp;
-            <img src="../../../static/img/more.png" alt="">&nbsp;&nbsp;
-          </div>
-        </div>
-        <div class="detail" v-for="item of knowledge">
+          <div class="detail" v-for="item of knowledge">
 
-          <div class="titleImg">
-            <img :src="item.docAvatar" alt="">
-          </div>
-          <div class="docMsg">
-            <div><span class="bf">{{item.docName}}</span></div>
-            <!--<div>-->
+            <div class="titleImg">
+              <img :src="item.docAvatar" alt="">
+            </div>
+            <div class="docMsg">
+              <div><span class="bf">{{item.docName}}</span></div>
+              <!--<div>-->
               <!--<span class="mfc">昨天 20:00</span>-->
-            <!--</div>-->
-            <div class="easyContain">
+              <!--</div>-->
+              <div class="easyContain">
               <span  class="mf">
                 {{item.snsKnowledge.description.substring(0,35)}}......
               </span>
-            </div>
-            <bubble ref="bubble" id="bubble" :src="item.snsKnowledge.knowUrl"></bubble>
-            <div class="ft musicBottom">
-              <p class="s">{{item.snsKnowledge.createTime | Todate}}</p>
-              <p class="right s">{{item.snsKnowledge.readNum}}人听过</p>
-              <p class="right s" id="thumb" @click="setColor(item)"><img class="icon" src="../../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
+              </div>
+              <bubble ref="bubble" id="bubble" :src="item.snsKnowledge.knowUrl"></bubble>
+              <div class="ft musicBottom">
+                <p class="s">{{item.snsKnowledge.createTime | Todate}}</p>
+                <p class="right s">{{item.snsKnowledge.readNum}}人听过</p>
+                <p class="right s" id="thumb" @click="setColor(item)"><img class="icon" src="../../../static/img/rec_off.png">{{item.snsKnowledge.likes}}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <footers></footers>
+      <My-loading v-show="showLoading" class="myLoading"></My-loading>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -81,15 +84,17 @@
     import top from '../../business/app-header.vue'
     import footers from '../../business/app-footer.vue'
     import api from '../../lib/api'
-   import Bubble from "../../base/bubble.vue";
+    import Bubble from "../../base/bubble.vue";
     import {Todate} from '../../lib/filter'
+    import MyLoading from "../../base/loading/loading.vue";
     var token = localStorage.getItem('token')
     export default{
         components: {
             top,
             lunbo,
           Bubble,
-          footers
+          footers,
+          MyLoading
         },
       filters:{
         Todate
@@ -98,7 +103,8 @@
             return {
               imgList:[],
               obj:{},
-              knowledge:[]
+              knowledge:[],
+              showLoading:true
             }
         },
         mounted(){
@@ -167,6 +173,7 @@
           }).then(res=>{
             console.log(res,6666)
             if(res.succ){
+              this.$set(this.$data,'showLoading',false)
               this.$set(this.$data,'obj',res.obj)
               this.$set(this.$data,'imgList',res.obj.adsettings)
               this.$set(this.$data,'knowledge',res.obj.knowledge)
@@ -186,6 +193,15 @@
 </script>
 <style scoped lang='scss'>
     @import '../../common/public.scss';
+    .wrapScroll{
+      /*display: flex;*/
+      flex-direction: column;
+      flex: 1;
+      overflow-y: auto;
+    }
+    /*.myLoading{*/
+      /*height: 100%;*/
+    /*}*/
     .containTitle{
       width: 100%;
       height: 225rem/$rem;
@@ -291,7 +307,7 @@
   }
 
   .hotShare{
-    overflow: auto;
+    /*overflow: auto;*/
     flex: 1;
     box-sizing: border-box;
     /*margin-bottom: 5rem/$rem;*/

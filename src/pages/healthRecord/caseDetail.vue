@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="page">
     <top>
       <div class="middle big">病例详情</div>
       <span slot="right" class="step" @click="save">保存</span>
     </top>
-    <div class="wrap">
+    <div >
       <div class="weui-cells">
         <a @click="selectDate" class="weui-cell weui-cell_access" href="javascript:;">
           <div class="weui-cell__bd">
@@ -27,7 +27,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <div class="addImg">
       <upload :imgList="imgList" v-on:getAttaIdsList="getAttaIdsList">
@@ -136,7 +135,11 @@
 </script>
 <style scoped lang='scss'>
   @import '../../common/public.scss';
-
+.page{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
   .step {
     padding-right: 5px;
     color: #3CC51F;
@@ -148,15 +151,17 @@
   .addImg{
     box-sizing: border-box;
     background: white;
+    flex: 1;
+    overflow: auto;
     /*padding:0 30rem/$rem;*/
   }
   .btn{
-    position: fixed;
-    bottom: 20rem/$rem;
+    /*position: fixed;*/
+    margin-bottom: 20rem/$rem;
     box-sizing: border-box;
     padding: 20rem/$rem;
-    left: 0;
     width: 100%;
+    background: white;
   }
   .text{
     text-align: center;
@@ -167,6 +172,9 @@
     width: 140rem/$rem;
     height: 140rem/$rem;
     margin-right: 5px;
+  }
+  .weui-cells:after{
+    border: none;
   }
 
 </style>

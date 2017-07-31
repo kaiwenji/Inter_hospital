@@ -102,7 +102,13 @@
              }).then(res=>{
                console.log(res,66666)
                if(res.succ){
-                 localStorage.setItem('token',res.token)
+                 localStorage.setItem('token',res.token);
+                 this.$router.push({
+                   name:"succeed",
+                   params:{
+                     msg:'注册成功'
+                   }
+                 })
                }else {
                  this.$weui.alert(res.msg)
                }
