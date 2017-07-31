@@ -4,12 +4,11 @@
           <div slot="left"></div>
         <div>首页</div>
       </top>
-
-        <div class="title">
+        <div v-show="!showLoading" class="title">
           <lunbo :imgList="imgList">
           </lunbo>
         </div>
-      <div class="wrapScroll">
+      <div v-show="!showLoading" class="wrapScroll">
         <div class="contain">
           <div class="registration">
             <img src="../../../static/img/home_registration.png" alt="">
@@ -75,8 +74,8 @@
           </div>
         </div>
       </div>
-
       <footers></footers>
+      <My-loading v-show="showLoading" class="myLoading"></My-loading>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -85,15 +84,17 @@
     import top from '../../business/app-header.vue'
     import footers from '../../business/app-footer.vue'
     import api from '../../lib/api'
-   import Bubble from "../../base/bubble.vue";
+    import Bubble from "../../base/bubble.vue";
     import {Todate} from '../../lib/filter'
+    import MyLoading from "../../base/loading/loading.vue";
     var token = localStorage.getItem('token')
     export default{
         components: {
             top,
             lunbo,
           Bubble,
-          footers
+          footers,
+          MyLoading
         },
       filters:{
         Todate
@@ -102,7 +103,8 @@
             return {
               imgList:[],
               obj:{},
-              knowledge:[]
+              knowledge:[],
+              showLoading:true
             }
         },
         mounted(){
@@ -171,6 +173,7 @@
           }).then(res=>{
             console.log(res,6666)
             if(res.succ){
+              this.$set(this.$data,'showLoading',false)
               this.$set(this.$data,'obj',res.obj)
               this.$set(this.$data,'imgList',res.obj.adsettings)
               this.$set(this.$data,'knowledge',res.obj.knowledge)
@@ -196,6 +199,9 @@
       flex: 1;
       overflow-y: auto;
     }
+    /*.myLoading{*/
+      /*height: 100%;*/
+    /*}*/
     .containTitle{
       width: 100%;
       height: 225rem/$rem;

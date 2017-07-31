@@ -14,6 +14,7 @@ import editUser from "../patient/editUser.vue";
 import editPhone from "../patient/editPhone.vue";
 import index from "../homePage/index.vue";
 import my from "../my/index.vue";
+import patientGround from "../my/patientGround.vue";
 import login from "../login/index.vue";
 import forgetPassword from "../login/forgetPassword.vue";
 import password from "../login/password.vue";
@@ -146,9 +147,14 @@ export default[
     path: '/eyeInjury',
     name:'eyeInjury',
     component: eyeInjury
-  },{
+  }, {
     path: '/eyeInjuryDetail',
-    name:'eyeInjuryDetail',
+    name: 'eyeInjuryDetail',
     component: eyeInjuryDetail
-  },
+  }
+  // },{
+  //   path: '/',
+  //   name:'patientGround',
+  //   component: patientGround
+  // },
 ]
