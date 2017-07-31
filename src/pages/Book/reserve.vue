@@ -1,7 +1,7 @@
 <template>
   <div ref="main" class="app">
           <app-header>
-          <div class="middle big" style="text-overflow:ellipsis;white-space:nowrap;overflow:hidden; flex:1 1 auto">{{title}}</div>
+          <div class="middle big">{{title}}</div>
     </app-header>
             <div class="weui-loadmore" v-show="!Got">
                 <i class="weui-loading"></i>
@@ -10,7 +10,7 @@
           <div class="weui-loadmore weui-loadmore_line" v-show="failure">
               <span class="weui-loadmore__tips">网络错误</span>
     </div>
-      <div v-show="Got&&!failure" class="flex overflow">
+      <div v-show="Got&&!failure" class="flex wrap">
       <div class="weui-cells flex">
           <div class="weui-cell">
               <div>
@@ -85,8 +85,8 @@
 
 <script>
     import api from '../../lib/api.js';
-    import MyNav from "./nav";
-    import AppHeader from "../../components/business/app-header";
+    import MyNav from "../../base/nav";
+    import AppHeader from "../../business/app-header";
   export default {
     data() {
       return {
@@ -101,7 +101,7 @@
           isShown:false,
           recordDis:false,
           msg:"",
-          Got:false,
+          Got:true,
           failure:false,
           patList:[],
           title:"就诊信息确认"
@@ -126,7 +126,7 @@
     },
     methods: {
         setPat(){
-            this.$router.push({path:"/service/setPat/",query:{key:this.key}});
+            this.$router.push("/users/");
         },
         bind(){
 //            console.log(this.patInfo);
@@ -136,30 +136,30 @@
             this.auVal=val;
         },
         done(){
-            if(this.auVal==""){
-                this.msg="验证码不能为空";
-                this.isShown=true;
-            }
-            else if(this.patInfo.compatRecord=="暂未绑定病案号"){
-                this.recordDis=true;
-            }
-            else{
-                let command=window.localStorage['isAppt']?"nethos.book.order.register":"nethos.book.order.register";
-                api(command,{bookNumId:this.bookNumId,bookHosId:this.bookHosId,compatId:this.patInfo.compatId,captcha:this.auVal,token:this.token})
-                .then((val)=>{
-                    console.log(val);
-                    if(val.msg){
-                        this.msg=val.msg;
+//            if(this.auVal==""){
+//                this.msg="验证码不能为空";
+//                this.isShown=true;
+//            }
+//            else if(this.patInfo.compatRecord=="暂未绑定病案号"){
+//                this.recordDis=true;
+//            }
+//            else{
+//                let command="nethos.book.order.register";
+//                api(command,{bookNumId:this.bookNumId,bookHosId:this.bookHosId,compatId:this.patInfo.compatId,captcha:this.auVal,token:this.token})
+//                .then((val)=>{
+//                    console.log(val);
+//                    if(val.msg){
+//                        this.msg=val.msg;
                         this.isShown=true;
-                    }
-                    if(val.succ){
-                    this.$router.push({path:"/service/book/info/"+"1",query:{key:this.key}});
-                    }
-                },
-                     ()=>{
-                    this.failure=true;
-                })
-            }
+//                    }
+//                    if(val.succ){
+//                    this.$router.push({path:"/service/book/info/"+"1",query:{key:this.key}});
+//                    }
+//                },
+//                     ()=>{
+//                    this.failure=true;
+//                })
+//            }
         },
         getPat(name,id,phone,compatRecord,compatId){
             var pat=new Object();
@@ -176,23 +176,23 @@
             this.$refs.main.style.height=screenHeight-45 + 'px';
         },
         generateQR(){
-              api("nethos.book.captcha.generate",{
-                  compatId:this.patInfo.compatId,
-                  bookHosId:this.bookHosId,
-                  bookNumId:this.bookNumId,
-                  token:this.token
-                                                 })
-              .then((val)=>{
+//              api("nethos.book.captcha.generate",{
+//                  compatId:this.patInfo.compatId,
+//                  bookHosId:this.bookHosId,
+//                  bookNumId:this.bookNumId,
+//                  token:this.token
+//                                                 })
+//              .then((val)=>{
                   this.Got=true;
-                  this.imgSrc=val.obj.captcha;
-                  this.imgSrc.replace(/[\r\n]/g,"");
-                  document.getElementById('au').setAttribute("src","data:image/png;base64,"+this.imgSrc);
-                  console.log(val.obj);
-              },
-                   ()=>{
-                  this.failure=true;
-                  this.Got=true;
-              })
+//                  this.imgSrc=val.obj.captcha;
+//                  this.imgSrc.replace(/[\r\n]/g,"");
+//                  document.getElementById('au').setAttribute("src","data:image/png;base64,"+this.imgSrc);
+//                  console.log(val.obj);
+//              },
+//                   ()=>{
+//                  this.failure=true;
+//                  this.Got=true;
+//              })
         }
 
     },
@@ -204,7 +204,7 @@
           var temp=new Object();
           if(!storage['hosName']||!storage['deptName']||!storage['name']||!storage['date']||!storage['date']||!storage['time']||!storage['Ampm'] ||!storage['bookFee']){
               alert("填写内容不完整，请重新填写");
-              this.$router.push({path:"/service/book",query:{key:this.key}});
+//              this.$router.push({path:"/service/book",query:{key:this.key}});
           }
           temp.hosName=storage["hosName"];
           temp.deptName=storage['deptName'];
@@ -218,30 +218,32 @@
           var backSrc=storage['last']||"/";
           this.token=window.localStorage['token'];
           var item={}
-          if(window.localStorage['compatInfo']!=undefined){
-              item=JSON.parse(window.localStorage['compatInfo']);
-              this.getPat(item.compatName,item.compatIdcard,item.compatMobile,item.compatRecord,item.compatId);
-              this.generateQR();              
-          }
-          else{
-              api("nethos.pat.compat.list",{token:this.token})
-              .then((val)=>{
-                  this.patList=val.list;
-                  var item=val.list[0];
-                  this.getPat(item.compatName,item.compatIdcard,item.compatMobile,item.compatRecord,item.compatId);
-                  this.generateQR();
-              },
-                   ()=>{
-                  this.failure=true;
+//          if(window.localStorage['compatInfo']!=undefined){
+//              item=JSON.parse(window.localStorage['compatInfo']);
+//              this.getPat(item.compatName,item.compatIdcard,item.compatMobile,item.compatRecord,item.compatId);
+//              this.generateQR();              
+//          }
+//          else{
+//              api("nethos.pat.compat.list",{token:this.token})
+//              .then((val)=>{
                   this.Got=true;
-              })
-          }
+//                  this.patList=val.list;
+//                  var item=val.list[0];
+//                  this.getPat(item.compatName,item.compatIdcard,item.compatMobile,item.compatRecord,item.compatId);
+//                  this.generateQR();
+//              },
+//                   ()=>{
+//                  this.failure=true;
+//                  this.Got=true;
+//              })
+//          }
           
       }
   };
 </script>
 
 <style scoped lang="scss">
+    @import '../../common/var.scss'; 
     .pat-header{
         display:flex;
         flex-direction:column;

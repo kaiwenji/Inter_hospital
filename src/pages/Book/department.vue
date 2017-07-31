@@ -160,7 +160,7 @@
     }
     li{
         text-align:center;
-        border-top:1px solid #CCCCCC;
+        border-bottom:1px solid #CCCCCC;
         li-disabled{
             color:lightgrey;
         }
@@ -172,13 +172,13 @@
     {
         background-color:#F2F2F2;
         width:7rem;
-        border:1px solid #CCCCCC;
+        border-right:1px solid #CCCCCC;
 
     }
     .main{
         flex: 1;
         max-width: 13rem;
-        border:1px solid #CCCCCC;
+/*        border:1px solid #CCCCCC;*/
 
     }
     .isChosed

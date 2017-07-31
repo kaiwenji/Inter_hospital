@@ -3,7 +3,7 @@ import Hospital from "./hospital.vue";
 import Department from "./department.vue";
 import Doctor from "./doctor.vue";
 import DoctorInfo from "./doctorInfo.vue";
-//import Reserve from "./reserve.vue";
+import Reserve from "./reserve.vue";
 export default[
     {
         path:"/book/",
@@ -24,6 +24,10 @@ export default[
             {
                 path:"/book/doctorInfo/:id",
                 component:DoctorInfo
+            },
+            {
+                path:"/book/reserve/:id",
+                component:Reserve
             }
         ]
         

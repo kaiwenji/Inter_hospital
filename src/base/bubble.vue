@@ -37,9 +37,8 @@
     },
     methods: {
         initialAudio(){
-            var _this=this;
-            this.$refs.music.addEventListener('canplaythrough', function() { 
-               _this.duration=_this.setTimeFormat(_this.$refs.music.duration);
+            this.$refs.music.addEventListener('canplaythrough', ()=> { 
+               this.duration=this.setTimeFormat(this.$refs.music.duration);
             }, false);
         },
         on(){
