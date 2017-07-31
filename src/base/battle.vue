@@ -1,11 +1,11 @@
 <template>
 <div class="horizontal">
     <div>
-        <img src="../../static/img/chat.png" @click="setType()">
+        <img src="../../static/img/chat.png" @click="setType(this)">
     </div>
     <div class="middle">
     <input type="text" v-show="type=='text'" v-model="msg">
-        <input type="button" v-show="type!='text'" ref="recordButton">
+        <input type="button" v-show="type!='text'" value="点击输入语音"  class="recordButton"ref="recordButton">
     </div>
     <div>
         <img src="../../static/img/聊天界面-添加.png" @click="send">
@@ -15,12 +15,19 @@
 <script>
     import Api from "../lib/api.js";
     import Timer from "../lib/timer.js";
+    var radioId="";
     export default({
         data(){
             return{
                 type:"text",
                 msg:"",
-                timer:""
+                timer:"",
+                radioId:radioId
+            }
+        },
+        watch:{
+            radioId(){
+                this.$emit("output",{src:this.radioId,type:"AUDIO"});
             }
         },
         methods:{
@@ -43,8 +50,8 @@
                 }
                 wx.ready(()=>{
                     wx.stopRecord({
-                        success:function(res){
-                            console.log(res.localId);
+                        success:(res)=>{
+                            this.radioId=res.localId;
                         }
                     })
                 })
@@ -61,16 +68,18 @@
                     wx.config(params);
                 })
             },
-            setType(){
+            setType(e){
                 if(this.type=='text'){
                     this.type='audio';
+                    e.event.target.src="../../static/img/keyboard.png";
                 }
                 else{
                     this.type='text';
+                    e.event.target.src="../../static/img/chat.png"
                 }
             },
             send(){
-                this.$emit("output",this.msg);
+                this.$emit("output",{msg:this.msg,type:"TEXT"});
                 }
         },
         components:{
@@ -98,10 +107,14 @@
             &.middle{
                 padding:0.26rem 0 ;
                 input{
+                    border:0px solid transparent;
                     width:13.7rem;
                     height:1.8rem;
                     background:$bgColor;
                     border-radius:10px;
+                    &.recordButton{
+                        border:1px solid black;
+                    }
                 }
                 flex:1 1 auto;
             }

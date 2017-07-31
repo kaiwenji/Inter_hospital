@@ -3,8 +3,8 @@
  */
 import * as types from './mutation-types'
 const matutaions = {
-   [types.SET_APPLY_ID](state,applyId){
-     state.applyId = applyId
+   [types.SET_CURRENT_PAGE_INDEX](state,currentPageIndex){
+     state.currentPageIndex = currentPageIndex
    }
 }
 export default matutaions

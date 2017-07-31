@@ -13,4 +13,10 @@ function formatDate(now) {
     +(hour<10?"0"+hour:hour)+":"
     +(minute<10?"0"+minute:minute)
 }
-export {formatDate}
+function formDateHour(nowTime){
+  var h=nowTime.getHours();
+  var m=nowTime.getMinutes();
+  return (h<10?"0"+h:h)+":"
+    +(m<10?"0"+m:m)
+}
+export {formatDate,formDateHour}

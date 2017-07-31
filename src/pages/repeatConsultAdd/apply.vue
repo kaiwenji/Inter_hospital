@@ -1,7 +1,7 @@
 <template>
   <div class="apply">
     <v-header :title="title" :rightTitle="rightTitle" @on-apply="applying()"></v-header>
-    <scroll class="applyContent" ref="success">
+    <div class="applyContent" ref="apply">
       <div>
         <div class="reasonWrap">
           <div class="refuseReason">
@@ -48,19 +48,20 @@
             <span v-else>女</span>
           </div>
         </div>
-        <p class="repeatTitle">复诊需求描述</p>
-        <div class="repeat">
+        <p class="applyRepeatTitle">复诊需求描述</p>
+        <div class="applyRepeat">
           <textarea placeholder="请务必填写您的病史、主诉、症状、指标、治疗经过,相关的检查报告请拍照上传" v-model="description"></textarea>
         </div>
         <div class="upload">
-          <div class="addPicture" v-for="image in imageUrl" v-show="imageUrl.length != 0">
-            <img :src="image" alt="" ref="replaceImg">
+          <div class="addPicture" v-for="singleImage in previewImg" v-if="previewImg.length != 0">
+            <span class="deleteImg">X</span>
+            <img :src="singleImage" alt="" ref="replaceImg">
           </div>
           <div class="addPicture">
             <input type="file" name="upload" id="upload" ref="upload" @change="onFileChange">
-            <img src="../../../static/img/添加图片.png" alt="" @click="selectImg()">
+            <img src="../../../static/img/添加图片.png" alt=""  @click="selectImg()">
           </div>
-          <div class="wordFor" v-show="imageUrl.length == 0">
+          <div class="wordFor" v-show="imageUrl.length == 0" >
             <span>添加图片</span>
             <span>请上传患处图片,让医生更了解您的病情</span>
           </div>
@@ -70,12 +71,12 @@
         <pop-up></pop-up>
       </div>
       <v-mask  :showList="showDialog"></v-mask>
-    </scroll>
+    </div>
   </div>
 </template>
 <script>
   import header from '../../base/header'
-  import Scroll from "../../base/scroll"
+  import BScroll from 'better-scroll'
   import api from '../../lib/api'
   import PopUp from '../../base/popup/popup'
   import VMask from '../../base/mask'
@@ -91,6 +92,7 @@
         deptName:"",
         docTitle:"",
         image:"",
+        previewImg:[],
         imageUrl:[],
         imagesString:"",
         fileName:[],
@@ -104,7 +106,7 @@
       }
     },
     mounted(){
-//      this._initSuccessScroll()
+      this._initApplyScroll()
 //      console.log(this.imageUrl)
     },
     created(){
@@ -126,18 +128,25 @@
       ])
     },
     methods:{
-//      _initSuccessScroll(){
-//        this.success = new BScroll(this.$refs.success,{
-//          click:true
-//        })
-//        console.log(this.success)
-//      }
 
       ...mapMutations([
          'SET_APPLY_ID'
       ]),
+      _initApplyScroll(){
+        this.apply = new BScroll(this.$refs.apply,{
+          click:true
+        })
+        console.log(this.apply)
+      },
       selectImg(e){
-          this.$refs.upload.click()
+            console.log("触发了几次")
+           if(this.previewImg.length < 9){
+             this.$refs.upload.click()
+           }else{
+               alert("最多上传九张照片")
+           }
+
+
       },
       onFileChange(e){
           var file = e.target.files[0]
@@ -153,17 +162,20 @@
           let reader = new FileReader()
           reader.readAsDataURL(file)
           reader.onload = function(){
-            that.image = this.result
+            console.log(that.$refs.replaceImg)
+            that.previewImg.push(this.result)
+//            that.$refs.replaceImg.src = this.result
 //            console.log(fileName)
 //            console.log(that.image)
             api("smarthos.system.file.upload.image.base64",{
-              module:"CONSULT",
+              module:"APPOINTMENT",
               fileType:"IMAGE",
               fileName:fileName,
               base64:this.result
             }).then((data)=>{
-//              console.log(data)
+              console.log(data)
               that.imageUrl.push(data.obj.attaFileUrl)
+              console.log(that.imageUrl)
               that.attaId.push(data.obj.id)
 //              console.log(that.imageUrl)
             })
@@ -215,12 +227,11 @@
     },
     components:{
       'VHeader':header,
-       Scroll,
        PopUp,
        VMask
     },
     watch:{
-//       "$route":this.$refs.success.refresh()
+
     }
   }
 </script>
@@ -242,7 +253,7 @@
     right:0;
     overflow: hidden;
     background-color: white;
-    .doctorInfoTitle,.patientInfoTitle,.repeatTitle{
+    .doctorInfoTitle,.patientInfoTitle,.applyRepeatTitle{
       width: 690rem/$rem;
       margin: 30rem/$rem auto;
       font-size: 32rem/$rem;
@@ -358,7 +369,7 @@
         }
       }
     }
-    .repeat{
+    .applyRepeat{
       width: 690rem/$rem;
       height: 230rem/$rem;
       border-radius: 10px;
@@ -377,12 +388,21 @@
     }
     .upload{
       width: 690rem/$rem;
-      height: 230rem/$rem;
+      height: 460rem/$rem;
       border-radius: 10px;
+      word-break: break-all;
+      position: relative;
       margin: 30rem/$rem auto;
-      display: flex;
+      /*display: flex;*/
       .addPicture{
-        margin-right: 10px;
+        float: left;
+        margin-right: 16.2px;
+        .deleteImg{
+          position: absolute;
+          top:0;
+          left:0;
+          background-color: #E64340;
+        }
         >input{
           display: none;
         }

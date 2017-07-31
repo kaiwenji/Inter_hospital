@@ -3,7 +3,6 @@
       <app-header>
           <p>问医生</p>
           <div slot="left" @click="back">按钮</div>
-              <p slot="right"class="m lightBlue" v-show="!isEnded">结束咨询</p>
           </app-header>
           <div class="patInfo" v-show='Got'>
               <p class="xl dark">患者资料 {{consultInfo.consulterName}} {{consultInfo.consulterGender|getGender}} {{consultInfo.consulterIdcard|getAge}}岁</p>
@@ -101,15 +100,18 @@
             window.history.back();
 //            this.$router.push("/Consult");
         },
-        send(msg){
-//            console.log(this.consultInfo);
-            Api("smarthos.consult.pic.reply",{
-                replyContent:msg,
+        send(res){
+            var params={
+                token:window.localStorage['token'],
                 consultId:this.consultInfo.id,
-                replyContentType:"TEXT",
-                token:window.localStorage['token']
-                
-            })
+                replyContent:res.msg||"",
+                replyContentType:res.type
+            };
+            if(res.type=='AUDIO'){
+                params.attaList=[]
+                params.attaList.push(res.src);
+            }
+            Api("smarthos.consult.pic.reply",params)
             .then((val)=>{
                 if(val.succ){
                     console.log(val);
@@ -179,10 +181,13 @@
     
     
     .ft{
+        position:fixed;
+        bottom:0px;
+        width:100%;
         text-align:center;
-        padding-bottom:0.8rem;
+/*        padding-bottom:0.8rem;*/
         p{
-            padding-top:.5rem;
+            padding-left:0.8rem;
         }
     }
 </style>

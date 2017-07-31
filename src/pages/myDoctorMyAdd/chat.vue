@@ -66,7 +66,7 @@
   import BScroll from 'better-scroll'
   import api from '../../lib/api'
   import {getCurrentTime} from '../../utils/format.js'
-  import { formatDate } from '../../utils/formatTimeStamp.js'
+  import { formatDate,formDateHour } from '../../utils/formatTimeStamp.js'
   export default{
       data(){
         return{
@@ -77,13 +77,14 @@
           inputInfo:'',
           time:[],
           chatText:[],
-          chatTime: ['2017-7-18','2017-7-21'],
+          chatTime: [],
           preventRepeatRequest:false,
           ratingOffset:1,
           loadingStatus:false,
           dataLength:"",
           imgSrc:"",
-          displayUrl:""
+          displayUrl:"",
+          timeReverse:[]
         }
       },
       created(){
@@ -98,15 +99,18 @@
           pageSize:"10"
         }).then((data)=>{
             that.chatText = data.list
-          let dtCur = new Date();
-          let sCur = dtCur.getSeconds();
-          that.time.push(sCur)
-          let position = that.time.indexOf(sCur)
-          if((that.time[position] - that.time[position-1])<5){
-            that.chatTime.push("")
-          }else{
-            that.chatTime.push(formatDate (new Date(data.obj.createTime)))
-          }
+//           console.log(data.list)
+           that.aboutTime()
+//          console.log(that.chatTime)
+//          let dtCur = new Date();
+//          let sCur = dtCur.getSeconds();
+//          that.time.push(sCur)
+//          let position = that.time.indexOf(sCur)
+//          if((that.time[position] - that.time[position-1])<5){
+//            that.chatTime.push("")
+//          }else{
+//            that.chatTime.push(formatDate (new Date(data.obj.createTime)))
+//          }
 
 
 //           for(var i=0;i<data.list.length;i++){
@@ -145,6 +149,44 @@
 
       },
       methods:{
+          aboutTime(){
+             var currentTime = new Date()
+             var firstLog = currentTime.getTime() - (new Date(this.chatText[0].createTime)).getTime()
+             var firstLogDay = Math.floor(firstLog/(12*3600*1000))
+             if(firstLogDay >=1){
+               this.chatTime.unshift(formatDate (new Date(this.chatText[0].createTime)))
+             }else{
+               this.chatTime.unshift(formDateHour (new Date(this.chatText[0].createTime)))
+             }
+
+            for(var i=0;i<this.chatText.length;i++){
+//              console.log(this.chatText[i].createTime)
+              if(i <=8){
+                var sumInter = Math.abs((new Date( this.chatText[i].createTime)).getTime() - (new Date(this.chatText[i+1].createTime)).getTime())
+                var inter = sumInter%(24*3600*1000)
+                var inter2 = inter%(3600*1000)
+                var interMinutes = Math.floor(inter2/(60*1000))
+//                console.log(interMinutes)
+                if(interMinutes < 5){
+                  this.chatTime.push("")
+                }else{
+                  this.chatTime.push(formDateHour (new Date(this.chatText[i+1].createTime)))
+
+                  var date2 = new Date()
+//                  console.log(new Date(this.chatText[i].createTime))
+                  var date3 = Math.abs(date2.getTime() - (new Date(this.chatText[i+1].createTime)).getTime())
+                  var days = Math.floor( date3/(12*3600*1000))
+//                  console.log(this.days[i])
+//                  console.log("时间已经大于5 分钟")
+                  if(days >=1){
+//                    console.log("时间已经大于 1 天")
+                    this.chatTime.push(formatDate (new Date(this.chatText[i+1].createTime)))
+                  }
+                }
+              }
+            }
+//            console.log(this.chatTime)
+          },
           loadMore(){
             if (this.preventRepeatRequest) {
               return
@@ -160,9 +202,51 @@
               pageNum:that.ratingOffset,
               pageSize:"10"
             }).then((data)=>{
+
+              var currentTime = new Date()
+              var firstLog = currentTime.getTime() - (new Date(data.list[0].createTime)).getTime()
+              var firstLogDay = Math.floor(firstLog/(12*3600*1000))
+              if(firstLogDay > 0){
+                that.timeReverse.unshift(formatDate (new Date(data.list[0].createTime)))
+              }else{
+                that.timeReverse.unshift(formDateHour (new Date(data.list[0].createTime)))
+              }
+
+//              that.timeReverse.unshift(formatDate (new Date(data.list[0].createTime)))
                  for(var i=0;i<data.list.length;i++){
                    that.chatText.unshift(data.list[i])
+
+//              console.log(this.chatText[i].createTime)
+                     if(i <=data.list.length-2){
+                       var sumInter = Math.abs((new Date( data.list[i].createTime)).getTime() - (new Date(data.list[i+1].createTime)).getTime())
+                       var inter = sumInter%(24*3600*1000)
+                       var inter2 = inter%(3600*1000)
+                       var interMinutes = Math.floor(inter2/(60*1000))
+//                       console.log(interMinutes)
+                       if(interMinutes < 5){
+                         that.timeReverse.unshift("")
+                       }else{
+
+
+                         var date2 = new Date()
+//                  console.log(new Date(that.chatText[i].createTime))
+                         var date3 = Math.abs(date2.getTime() - (new Date(data.list[i+1].createTime)).getTime())
+                         var days = Math.floor( date3/(12*3600*1000))
+                         if(days >=1){
+                           that.timeReverse.unshift(formatDate (new Date(data.list[i+1].createTime)))
+                         }else{
+                           that.timeReverse.unshift(formDateHour (new Date(data.list[i+1].createTime)))
+                         }
+                       }
+                     }
+
                  }
+                 for(var j=0;j<that.timeReverse.length;j++){
+                     that.chatTime.unshift(that.timeReverse[j])
+
+                 }
+              that.timeReverse = []
+
               this.loadingStatus = false
               that.dataLength = data.list.length
               if(data.list.length >= 10){
@@ -242,7 +326,7 @@
               msgType:"TEXT",
               msgContent:that.inputInfo
             }).then((data)=>{
-              console.log(data)
+//              console.log(data)
               that.chatText.push(data.obj)
               let dtCur = new Date();
              let sCur = dtCur.getSeconds();
@@ -251,7 +335,7 @@
              if((that.time[position] - that.time[position-1])<5){
                that.chatTime.push("")
              }else{
-               that.chatTime.push(formatDate (new Date(data.obj.createTime)))
+               that.chatTime.push(formDateHour (new Date(data.obj.createTime)))
              }
 
 
@@ -310,7 +394,7 @@
             this.$refs.picture.click()
         },
         sendPicture(e){
-             console.log("123")
+//             console.log("123")
              let that = this
              if(typeof FileReader === 'undefined'){
                  alert("抱歉，你的浏览器版本过低，请更换其它浏览器！")
@@ -332,7 +416,7 @@
                       fileType:"IMAGE",
                       fileName: fileName,
                   }).then((data)=>{
-                       console.log(data)
+//                       console.log(data)
                        that.displayUrl = data.obj.attaFileUrl
                        api("smarthos.follow.message.add",{
                          token:localStorage.getItem("token"),
@@ -340,7 +424,7 @@
                          msgType:"PIC",
                          msgContent:that.displayUrl
                        }).then((data)=>{
-                           console.log(data)
+//                           console.log(data)
                          that.chatText.push(data.obj)
                          let dtCur = new Date();
                          let sCur = dtCur.getSeconds();
@@ -349,7 +433,7 @@
                          if((that.time[position] - that.time[position-1])<5){
                            that.chatTime.push("")
                          }else{
-                           that.chatTime.push(formatDate (new Date(data.obj.createTime)))
+                           that.chatTime.push(formDateHour (new Date(data.obj.createTime)))
                          }
 
                          var o = document.getElementById("app");

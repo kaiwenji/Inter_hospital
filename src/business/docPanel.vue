@@ -119,7 +119,7 @@
             padding:1rem;
             background-color:white;
             .hd{
-                width:5rem;
+                width:3rem;
                 flex:0 0 auto;
                 img{
                     width:80%;
