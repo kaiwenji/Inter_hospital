@@ -11,11 +11,7 @@ import doctor from "../pages/doctor.vue";
 import DocCard from "../pages/DocCard/router.js";
 import DocRadio from "../pages/DocRadio/router.js";
 import Consult from "../pages/Consult/router.js";
-import test from "../pages/DocRadio/index.vue";
-import DocTalk from "../pages/DocCard/docTalk"
-import HZBD from "../pages/DocCard/hzbd"
-import JHSQ from "../pages/DocCard/jhsq"
-
+import Book from "../pages/Book/router.js"
 import file from '../pages/file/router'
 import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
 import repeatConsultAdd from '../pages/repeatConsultAdd/router'
@@ -34,18 +30,6 @@ export default new Router({
          path:"/doctor/:id",
           component:doctor
       },
-      {
-      path: '/docTalk',
-      component: DocTalk
-    },
-        {
-      path: '/hzbd',
-      component: HZBD
-    },
-        {
-      path: '/jhsq',
-      component: JHSQ
-    },
     //   {
     //   path: '/changePhone',
     //   name:'changePhone',
@@ -74,6 +58,7 @@ export default new Router({
       ...Consult,
       ...myDoctorMyAdd,
       ...repeatConsultAdd,
-      ...file
+      ...file,
+      ...Book
   ]
 })

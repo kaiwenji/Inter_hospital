@@ -2,8 +2,7 @@
   <div class="app vertical">
       <app-header>
           <p>问医生</p>
-          
-              <p slot="right"class="m lightBlue" v-show="!isEnded">结束咨询</p>
+          <div slot="left" @click="back">按钮</div>
           </app-header>
           <div class="patInfo" v-show='Got'>
               <p class="xl dark">患者资料 {{consultInfo.consulterName}} {{consultInfo.consulterGender|getGender}} {{consultInfo.consulterIdcard|getAge}}岁</p>
@@ -24,9 +23,14 @@
     </div>
     </div>
       <my-loading v-show="!Got" class="myLoading"></my-loading>
-          <div class="ft" v-show="isEnded">
-              <p class="m light">该咨询已经结束</p>
-              <p class="m lightBlue">申请成为TA的患者</p>
+          <div class="ft">
+              <div v-if="isEnded">
+                  <p class="m light">该咨询已经结束</p>
+                  <p class="m lightBlue">申请成为TA的患者</p>
+    </div>
+              <div v-else>
+                  <my-battle @output="send"></my-battle>
+    </div>
     </div>
     
   </div>
@@ -39,11 +43,12 @@
     import Bubble from "../../base/bubble.vue";
     import MyPost from "../../business/post.vue";
     import MyLoading from "../../base/loading/loading.vue";
+    import MyBattle from "../../base/battle.vue";
   export default {
     data() {
       return {
           testList:[1,1,1,1,1,1],
-          isEnded:true,
+          isEnded:false,
           consultInfo:{},
           replyList:[],
           hasPhoto:false,
@@ -56,7 +61,8 @@
         AppHeader,
         bubble:Bubble,
         MyPost,
-        MyLoading
+        MyLoading,
+        MyBattle
     },
     mounted() {
         Api("smarthos.consult.pic.details",{
@@ -89,7 +95,36 @@
           getGender,
           goodTime
       },
-    methods: {}
+    methods: {
+        back(){
+            window.history.back();
+//            this.$router.push("/Consult");
+        },
+        send(res){
+            var params={
+                token:window.localStorage['token'],
+                consultId:this.consultInfo.id,
+                replyContent:res.msg||"",
+                replyContentType:res.type
+            };
+            if(res.type=='AUDIO'){
+                params.attaList=[]
+                params.attaList.push(res.src);
+            }
+            Api("smarthos.consult.pic.reply",params)
+            .then((val)=>{
+                if(val.succ){
+                    console.log(val);
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
+        }
+    }
   };
 </script>
 
@@ -146,10 +181,13 @@
     
     
     .ft{
+        position:fixed;
+        bottom:0px;
+        width:100%;
         text-align:center;
-        padding-bottom:0.8rem;
+/*        padding-bottom:0.8rem;*/
         p{
-            padding-top:.5rem;
+            padding-left:0.8rem;
         }
     }
 </style>

@@ -22,7 +22,7 @@
             <p class="weui-toast__content">无更多内容</p>
         </div>
     </div>
-      <app-footer index="2"></app-footer>
+      <app-footer index="1"></app-footer>
   </div>
 </template>
 
@@ -67,7 +67,8 @@
             Api("smarthos.sns.knowledge.page",{
                 pageNum:this.page,
                 pageSize:10,
-                docId:this.$route.params.id
+                docId:this.$route.params.id,
+                token:window.localStorage['token']
             })
             .then((val)=>{
                 if(val.succ)

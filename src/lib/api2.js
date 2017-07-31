@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/6/1 0001.
  */
 import axios from "axios";
-let url = "//api-z2eye.hztywl.cn:6060/app";
+let url = "//nethos.diandianys.com/api/app";
 let spid = "1001";
 let random = "";
 for (let i = 0; i < 4; i++) {
@@ -12,12 +12,14 @@ for (let i = 0; i < 4; i++) {
 
 
 let base = {
-  "channel": "23",
-  "format": "JSON",
-  "oper": "127.0.0.1",
-  "random": "1234",
-  "sign": "3f52f63fad63c5dd209d28420977fb5d",
-  "spid": "1001"
+  channel: 4,
+  format: "JSON",
+  oper: "127.0.0.1",
+  spid: spid,
+
+  random: random
+
+ // sign: sign
 };
 
 
@@ -30,26 +32,21 @@ export default function (service, options) {
   //   bus.$emit("loading", {status: 'start'});
   // }
   let obj = {...base,service,...options};
-  // let sign = hex_md5(hex_md5("aAr9MVS9j1") + JSON.stringify(obj));
+  let sign = hex_md5(hex_md5("aAr9MVS9j1") + JSON.stringify(obj));
   let config = {
     headers: {
-      "Content-Type": "application/json",
-      "test":true
+      "sign":sign,
+      "Content-Type": "application/json"
     },
   }
 
   return axios.post(url, obj, config)
     .then((res) => {
-      // bus.$emit("loading", {status: 'stop'});
+      bus.$emit("loading", {status: 'stop'});
       if (res.status == 200) {
-          if(!res.data.succ){
-              console.log(res);
-          }
         return res.data;
-
       } else {
         return res;
-          
       }
     });
 }
