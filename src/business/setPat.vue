@@ -1,13 +1,13 @@
 <template>
 <!-- 切换就诊人模块-->
-    <my-popup :show="showPat" @activate="showPat=false">
+    <my-popup :show="showPat" @activate="close">
         <div slot="contain" class="contain">
         <div class="title">
             <p class="m light">请选择就诊人</p>
     </div>
         <div class="main">
         <div v-for="item,index in patList" @click="check(index)">
-            <p class="dark">{{item.date}}</p>
+            <p class="dark">{{item.commpatName}}</p>
 
     </div>
             <p class="lightBlue" @click="addPat()">添加就诊人<span><img src="../../static/img/add.png"></span></p>
@@ -44,6 +44,9 @@
             },
             addPat(){
                 this.$router.push("/users/");
+            },
+            close(){
+                this.$emit("close");
             }
         }
     })

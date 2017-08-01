@@ -46,7 +46,7 @@
     </div>
     
 <!-- 选择就诊人模块   -->
-    <set-pat @activate="check" :patList="patList" :showPat="showPat"></set-pat>
+    <set-pat @activate="check" :patList="patList" :showPat="showPat" @close="showPat=false"></set-pat>
     <my-toast :start="showLoading" :success="showSuccess"></my-toast>
     <my-loading class="myLoading" v-show="!patGot||!docGot"></my-loading>
     </div>

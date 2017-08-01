@@ -1,19 +1,19 @@
 <template>
       <div class="audioItem" @click="activate">
           <div class="hd">
-              <img :src="item.docAvatar">
+              <img :src="audioInfo.docAvatar">
     </div>
           <div class="bd" ref="bd">
-              <p class="l">{{item.docName}}</p>
-              <p class="font-hide m">{{item.snsKnowledge.description}}</p>
+              <p class="l">{{audioInfo.docName}}</p>
+              <p class="font-hide m">{{audioInfo.snsKnowledge.description}}</p>
               <div class="Bubble">
-              <bubble ref="bubble" :src="item.snsKnowledge.knowUrl"></bubble>
+              <bubble ref="bubble" :src="audioInfo.snsKnowledge.knowUrl"></bubble>
                   <div class="supplement"></div>
     </div>
               <div class="ft">
-                  <p class="s light">{{item.snsKnowledge.createTime|getMyDay}}</p>
-                  <p class="right s light">{{item.snsKnowledge.readNum}}人听过</p>
-                  <p class="s last light" ref="thumb" @click="setColor(item)"><img class="icon" :src="recSrc" >{{item.snsKnowledge.likes}}</p>
+                  <p class="s light">{{audioInfo.snsKnowledge.createTime|getMyDay}}</p>
+                  <p class="right s light">{{audioInfo.snsKnowledge.readNum}}人听过</p>
+                  <p class="s last light" ref="thumb" @click="setColor(item)"><img class="icon" :src="recSrc" >{{audioInfo.snsKnowledge.likes}}</p>
     </div>
     </div>
     </div>
@@ -40,12 +40,15 @@
       };
     },
     computed:{
+        audioInfo(){
+            return this.item;
+        },
         recSrc(){
             if(this.item.islikes){
-                return "../../static/img/rec_on.png";
+                return "./static/img/rec_on.png";
             }
             else{
-                return "../../static/img/rec_off.png";
+                return "./static/img/rec_off.png";
             }
         }
     },
@@ -88,7 +91,7 @@
                     })
                     .then((val)=>{
                         console.log(val);
-                        item.snsKnowledge=val.obj.snsKnowledge;
+                        this.audioInfo=val.obj;
                     },
                          ()=>{
                         this.$weui.alert("网络错误");

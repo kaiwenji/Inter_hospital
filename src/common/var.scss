@@ -53,17 +53,18 @@ $shitYellow:rgb(242,198,19);
         font-size:0.64rem;
         }
     .font-hide{
+        white-space:normal;
         overflow:hidden;
         text-overflow: ellipsis;
         display:-webkit-box;
         -webkit-line-clamp:2;
         -webkit-box-orient:vertical;
     }
-.font-hidee{
-    overflow:hidden;
-    text-overflow: ellipsis;
-    white-space:nowrap;
-}
+//.font-hidee{
+//    overflow:hidden;
+//    text-overflow: ellipsis;
+//    white-space:nowrap;
+//}
 .headerTitle{
     flex:1 1 auto;
     text-align:center;

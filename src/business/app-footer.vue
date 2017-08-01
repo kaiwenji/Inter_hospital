@@ -20,8 +20,8 @@
     },
     data() {
       return {
-        list:[{name:"首页",url:'../../static/img/home.png'},{name:"名医知道",url:''},{name:"我的",url:'../../static/img/my.png'}],
-        activeUrl:['../../static/img/home_on.png',"","../../static/img/my_on.png"]
+        list:[{name:"首页",url:'./static/img/home.png'},{name:"名医知道",url:''},{name:"我的",url:'./static/img/my.png'}],
+        activeUrl:['./static/img/home_on.png',"","./static/img/my_on.png"]
       };
     },
     computed:{

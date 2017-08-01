@@ -96,11 +96,11 @@
         isFollow(){
             if(!this.isFollow){
                 this.$refs.followButton.className="followButton";
-                this.$refs.heart.src="../../static/img/follow.png";  
+                this.$refs.heart.src="./static/img/follow.png";  
             }
             else{
                 this.$refs.followButton.className+=" followed";
-                this.$refs.heart.src="../../static/img/followed.png";  
+                this.$refs.heart.src="./static/img/followed.png";  
             }
         }
     },
