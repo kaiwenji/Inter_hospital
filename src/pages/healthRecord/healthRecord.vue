@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <top>
+        <top @click="goMy">
             <div class="middle big">健康档案</div>
         </top>
       <div v-show="!showLoading" class="wrap">
@@ -96,6 +96,9 @@
         this.record()
         },
       methods:{
+        goMy(){
+          this.$router.push('my')
+        },
         record(){
           api("smarthos.medicalhistory.list.page",{
             token:token

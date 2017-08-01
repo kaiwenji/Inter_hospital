@@ -77,50 +77,56 @@ import ajax from '../lib/ajax'
           }
         },
         upLoad(e){
-          var src  = {}
-          var  url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
-          for (var i = 0, len = files.length; i < len; ++i) {
-            var file = files[i];
-            if (url) {
-              src.attaFileUrl = url.createObjectURL(file);
-              var arr = this.srcList;
-              arr.push(src)
-              this.$set(this.$data,'srcList',arr);
+          if(this.attaIdList.length>8){
+            this.$weui.alert('最多可以上传9张图片')
+            return false;
+          }else {
+            var src  = {}
+            var  url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+            for (var i = 0, len = files.length; i < len; ++i) {
+              var file = files[i];
+              if (url) {
+                src.attaFileUrl = url.createObjectURL(file);
+                var arr = this.srcList;
+                arr.push(src)
+                this.$set(this.$data,'srcList',arr);
 
-            } else {
-              src.attaFileUrl = e.target.result;
-              var arr = this.srcList;
-              arr.push(src)
-              this.$set(this.$data,'srcList',arr);
-            }
-          }
-          var file = e.target.files[0];
-          var $this = this
-          console.log(file,99999)
-          ajax(file,{
-            progress:function (evt) {
-              if (evt.lengthComputable) {
-                var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-                $this.$set($this.$data,'num',percentComplete)
-                console.log('上传中'+this.num+"%",88888)
-              }else {
-                console.log('无法计算')
+              } else {
+                src.attaFileUrl = e.target.result;
+                var arr = this.srcList;
+                arr.push(src)
+                this.$set(this.$data,'srcList',arr);
               }
             }
-          },'PAT','IMAGE').then(data=>{
-            console.log(data,66666)
-            if(data.succ){
+            var file = e.target.files[0];
+            var $this = this
+            console.log(file,99999)
+            ajax(file,{
+              progress:function (evt) {
+                if (evt.lengthComputable) {
+                  var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+                  $this.$set($this.$data,'num',percentComplete)
+                  console.log('上传中'+this.num+"%",88888)
+                }else {
+                  console.log('无法计算')
+                }
+              }
+            },'PAT','IMAGE').then(data=>{
+              console.log(data,66666)
+              if(data.succ){
 //              this.attaIdList[this.index] = data.obj.id;
 //              this.index++
-              this.attaIdList.push(data.obj.id)
-              console.log(this.attaIdList,798798798)
+                this.attaIdList.push(data.obj.id)
+                console.log(this.attaIdList,798798798);
 //              this.$set(this.$data,'attaList',data.obj.attaId);
-              this.$emit('getAttaIdsList',this.attaIdList)
-              this.$weui.alert('上传成功')
-            }else {
-              alert('上传失败')
-            }
-          })
+                this.$emit('getAttaIdsList',this.attaIdList)
+                this.$weui.alert('上传成功')
+              }else {
+                alert('上传失败')
+              }
+            })
+          }
+
 
 
 

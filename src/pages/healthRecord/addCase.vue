@@ -52,7 +52,9 @@
             }
         },
         mounted(){
-
+          var day2 = new Date();
+           day2.setTime(day2.getTime());
+          this.date = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
         },
       methods:{
         getAttaIdsList(value){

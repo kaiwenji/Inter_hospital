@@ -23,22 +23,22 @@
           </div>
         </div>
         <span class="form-group__message" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
-        <div class="weui-cells__title">性别</div>
-        <div class="weui-cells">
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
-            </div>
-          </div>
-        </div>
-        <div class="weui-cells__title">年龄</div>
-        <div class="weui-cells">
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
-            </div>
-          </div>
-        </div>
+        <!--<div class="weui-cells__title">性别</div>-->
+        <!--<div class="weui-cells">-->
+          <!--<div class="weui-cell">-->
+            <!--<div class="weui-cell__bd">-->
+              <!--<input class="weui-input" type="text" placeholder="请输入"/>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="weui-cells__title">年龄</div>-->
+        <!--<div class="weui-cells">-->
+          <!--<div class="weui-cell">-->
+            <!--<div class="weui-cell__bd">-->
+              <!--<input class="weui-input" type="text" placeholder="请输入"/>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
 
       </div>
       <div class="mfc  text">
