@@ -82,9 +82,9 @@
           </div>
       </div>
       </transition>
-      <div class="bottemFooter">
-        <footers index="3"></footers>
-      </div>
+      <!--<div class="bottemFooter">-->
+        <!--<footers index="3"></footers>-->
+      <!--</div>-->
 
     </div>
 
@@ -180,6 +180,11 @@
 .page{
   display: flex;
   flex: 1;
+  position: fixed;
+  top:0;
+  bottom:98rem/$rem;
+  z-index:100;
+  background-color: white;
   flex-direction: column;
   width: 100%;
 }

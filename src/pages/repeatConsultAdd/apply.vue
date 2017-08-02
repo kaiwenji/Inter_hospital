@@ -53,9 +53,9 @@
           <textarea placeholder="请务必填写您的病史、主诉、症状、指标、治疗经过,相关的检查报告请拍照上传" v-model="description"></textarea>
         </div>
         <div class="upload">
-          <div class="addPicture" v-for="singleImage in previewImg" v-if="previewImg.length != 0">
-            <span class="deleteImg">X</span>
-            <img :src="singleImage" alt="" ref="replaceImg">
+          <div class="addPicture" v-for="(singleImage,index) in previewImg" v-if="previewImg.length != 0">
+            <!--<span class="deleteImg">X</span>-->
+            <img :src="singleImage" alt="" ref="replaceImg" @click="makeLarge(index)">
           </div>
           <div class="addPicture">
             <input type="file" name="upload" id="upload" ref="upload" @change="onFileChange">
@@ -71,6 +71,21 @@
         <pop-up></pop-up>
       </div>
       <v-mask  :showList="showDialog"></v-mask>
+      <div class="centerDisplay" transition="fade" v-if="largePreview" @click="makeSmall">
+        <div class="slider-wrapper" ref="sliderWrapper">
+          <slider ref="slider" :popImg="largePreview" :index="goindex">
+            <div  v-for="singleImage in previewImg"  @click="makeSmall">
+              <img :src="singleImage" alt="">
+            </div>
+
+          </slider>
+        </div>
+      </div>
+      <div class="alertArea" v-if="showAlert">
+         <div>
+           <alert :alertTitle="alertTitle" :alertMsg="alertMsg" @on-set="closeAlert"></alert>
+         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -80,6 +95,8 @@
   import api from '../../lib/api'
   import PopUp from '../../base/popup/popup'
   import VMask from '../../base/mask'
+  import Slider from '../../base/slider'
+  import Alert from '../../base/alert'
   import {mapGetters,mapMutations} from 'vuex'
   export default{
     data(){
@@ -102,7 +119,12 @@
         description:"",
         showDialog:false,
         compatInfo:"",
-        useage:""
+        useage:"",
+        largePreview:false,
+        goindex:"",
+        showAlert:"",
+        alertTitle:"温馨提示",
+        alertMsg:"图片最多可以上传九张哦"
       }
     },
     mounted(){
@@ -128,7 +150,13 @@
       ])
     },
     methods:{
-
+      makeLarge(index){
+          this.largePreview = true
+          this.goindex = index
+      },
+      makeSmall(){
+        this.largePreview = false
+      },
       ...mapMutations([
          'SET_APPLY_ID'
       ]),
@@ -136,14 +164,17 @@
         this.apply = new BScroll(this.$refs.apply,{
           click:true
         })
-        console.log(this.apply)
+      },
+      closeAlert(){
+        this.showAlert = false
       },
       selectImg(e){
-            console.log("触发了几次")
            if(this.previewImg.length < 9){
              this.$refs.upload.click()
            }else{
-               alert("最多上传九张照片")
+               this.showAlert = true
+               console.log(this.showAlert)
+//               alert("最多上传九张照片")
            }
 
 
@@ -173,9 +204,9 @@
               fileName:fileName,
               base64:this.result
             }).then((data)=>{
-              console.log(data)
+//              console.log(data)
               that.imageUrl.push(data.obj.attaFileUrl)
-              console.log(that.imageUrl)
+//              console.log(that.imageUrl)
               that.attaId.push(data.obj.id)
 //              console.log(that.imageUrl)
             })
@@ -228,7 +259,9 @@
     components:{
       'VHeader':header,
        PopUp,
-       VMask
+       VMask,
+       Slider,
+       Alert
     },
     watch:{
 
@@ -253,6 +286,51 @@
     right:0;
     overflow: hidden;
     background-color: white;
+    .centerDisplay{
+      width:100%;
+      height:100%;
+      position: fixed;
+      display: flex;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      z-index:90;
+      background-color: rgba(0,0,0,.3);
+      justify-content: center;
+      align-items: center;
+    }
+    .fade-transition{
+      transition: all 0.5s;
+      opacity: 1;
+      background: rgba(7, 17, 27, 0.6);
+    }
+    .fade-enter,.fade-leave{
+      opacity: 0;
+      background: rgba(7, 17, 27, 0);
+    }
+    .slider-wrapper{
+      position: relative;
+      width:100%;
+      top:0;
+      z-index:100;
+
+      /*background-color: #E64340;*/
+      overflow: hidden;
+    }
+    .alertArea{
+      width:100%;
+      height:100%;
+      position: fixed;
+      top:0;
+      bottom:0;
+      left:0;
+      right:0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /*background-color: #3CC51F;*/
+    }
     .doctorInfoTitle,.patientInfoTitle,.applyRepeatTitle{
       width: 690rem/$rem;
       margin: 30rem/$rem auto;

@@ -1,6 +1,9 @@
 <template>
   <div class="top_bar main_head border-1px">
-    <section class="goBack" @click="back()">
+    <section class="scanImg"  v-if="path == '/patientIndex'">
+      <img :src="imgSrc" alt="">
+    </section>
+    <section class="goBack" @click="back()" v-else>
        <img src="../../static/img/返回.png" alt="">
     </section>
     <section class="title">
@@ -13,13 +16,24 @@
 </template>
 <script>
   export default{
+    data(){
+        return{
+          path:""
+        }
+    },
     props:{
       title:{
           type:String
       },
       rightTitle:{
           type:String
+      },
+      imgSrc:{
+          default:"../../static/img/返回.png"
       }
+    },
+    mounted(){
+      this.path = this.$route.path
     },
     methods:{
       back(){
@@ -30,7 +44,9 @@
       }
     },
     watch:{
-
+      "$route":function(){
+        this.path = this.$route.path
+      }
     }
   }
 </script>
@@ -62,9 +78,20 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      padding-left: 15px;
       img{
         height: 15px;
+        padding-left: 30rem/$rem;
+      }
+    }
+    .scanImg{
+      flex:1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      /*padding-left: 15px;*/
+      img{
+        width:40rem/$rem;
+        padding-left: 30rem/$rem;
       }
     }
     .title{
