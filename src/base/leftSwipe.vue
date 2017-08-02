@@ -21,6 +21,7 @@
 </template>
 <script type="text/ecmascript-6">
   var token = localStorage.getItem('token');
+  var myId =JSON.parse(localStorage.getItem('commpat')).id;
   import api from '../lib/api'
   export default{
       props:{
@@ -35,26 +36,32 @@
       }
     },
      mounted(){
-
+      console.log(myId,99999999)
      },
      methods:{
        del(id){
-       api("smarthos.user.commpat.delete",{
-         "commpatId":id,
-         "token": token
-       }).then(res=>{
-         console.log(res);
-         if(res.succ){
-           this.$weui.alert('删除成功')
-           var container = document.querySelector('.swipeleft');           //将展开的DOM归位 除掉样式类
-           container.className="";
-           this.expansion=null;
-           this.$emit('getData')
-         }else {
-           this.$weui.alert(res.msg)
-         }
+        if(id==myId){
+          this.$weui.alert('不能删除自己');
+          return false;
+        }else {
+          api("smarthos.user.commpat.delete",{
+            "commpatId":id,
+            "token": token
+          }).then(res=>{
+            console.log(res);
+            if(res.succ){
+              this.$weui.alert('删除成功')
+              var container = document.querySelector('.swipeleft');           //将展开的DOM归位 除掉样式类
+              container.className="";
+              this.expansion=null;
+              this.$emit('getData')
+            }else {
+              this.$weui.alert(res.msg)
+            }
 
-       })
+          })
+        }
+
 
        },
        goEditUser(id,item){

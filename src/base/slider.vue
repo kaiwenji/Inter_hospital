@@ -65,7 +65,7 @@
                 snap:true,
                 snapThreshold: 1
             })
-           console.log(this.slider)
+//           console.log(this.slider)
           this.slider.on("scrollEnd",()=>{
            let pageIndex = this.slider.getCurrentPage().pageX
             this.SET_CURRENT_PAGE_INDEX(pageIndex)
@@ -77,7 +77,7 @@
           this.slider && this.slider.refresh()
         },
         popImg1(){
-          console.log("qw")
+//          console.log("qw")
 //          if(this.popImg == true){
 //              console.log("qw")
 //            this.$nextTick(()=>{
@@ -94,8 +94,6 @@
           this.SET_CURRENT_PAGE_INDEX(pageIndex)
           pageIndex = this.index
           this.slider.goToPage(pageIndex,0,0)
-          console.log(pageIndex)
-          console.log("在这里吗")
         }
       },
 
@@ -151,12 +149,16 @@
     position: relative;
     overflow-x: hidden;
     white-space: nowrap;
-    background-color: #3CC51F;
+    display: flex;
+    align-items: center;
+    /*background-color: #3CC51F;*/
     .slider-item{
       float: left;
       box-sizing: border-box;
       overflow: hidden;
       text-align: center;
+      /*display: flex;*/
+      /*align-items: center;*/
       img{
         display: block;
         width:100%;

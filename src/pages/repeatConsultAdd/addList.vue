@@ -1,6 +1,6 @@
 <template>
   <div class="recentChat">
-    <v-header :title="title" :rightTitle="rightTitle"></v-header>
+    <v-header :title="title" :rightTitle="rightTitle" @on-addList="listDetail()"></v-header>
     <scroll class="myDoctorList" ref="contactList" :data="followList" :pullup="pullup" @scrollToEnd="scrollToEnd" >
       <div>
         <ul class="border-1px" v-for="item in followList" :key="item.id">
@@ -40,7 +40,7 @@
     </scroll>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
   import Scroll from '../../base/scroll'
   import header from '../../base/header'
   import api from '../../lib/api'
@@ -94,6 +94,11 @@
             }
           })
         },
+        listDetail(){
+          this.$router.push({
+            name:"myAddList"
+          })
+      }
 
 
     },

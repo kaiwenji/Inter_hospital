@@ -38,7 +38,7 @@
     },
     methods: {
         go(index){
-            var indexList=["/index","/docRadio","/my"];
+            var indexList=["/patientIndex","/myDoctorChat/recentChat","/my"];
         this.$router.push(indexList[index]);
         },
         setCurrentPage(index){

@@ -1,6 +1,6 @@
 <template>
     <div class="chat">
-      <v-header :title="title" :rightTitle="rightTitle"></v-header>
+      <v-header :title="docName" :rightTitle="rightTitle"></v-header>
       <scroll :class="seeMore ? 'conversationUp':'conversation'" @make-blur="inputHide()" ref="list"  :data="chatText" :data1="seeMore" @scroll = "scroll" :listen-scroll="listenScroll" :probe-type="probeType">
           <section class="conversationList" ref="slideList" >
             <div class="loadTip" v-if="loadingStatus">
@@ -13,7 +13,8 @@
               <li v-for="(item,index) in chatText" ref="chatLi">
                 <div :class="{timeLog:chatTime[index] != ''}" ref="myLog" v-if="chatTime[index] != ''">{{chatTime[index]}}</div>
                 <div class="other" :class="{mysay:item.msgSenderType == 'PAT'}">
-                  <img src="../../../static/img/chatOrigin.jpg" alt="">
+                  <img :src="patAvatar" alt="" v-if="item.msgSenderType == 'PAT'">
+                  <img :src="docAvatar" alt="" v-else>
                   <div class="whatsay">
                     <div class="whatsay_svg">
                       <svg>
@@ -70,7 +71,6 @@
   export default{
       data(){
         return{
-          title:'黄靖江',
           rightTitle:'',
           seeMore:false,
           light:false,
@@ -84,11 +84,17 @@
           dataLength:"",
           imgSrc:"",
           displayUrl:"",
-          timeReverse:[]
+          timeReverse:[],
+          docAvatar:"",
+          patAvatar:"",
+          docName:""
         }
       },
       created(){
         this.listenScroll = true
+        this.patAvatar = localStorage.getItem('patAvatar')
+        this.docAvatar = this.$route.query.docAvatar
+        this.docName = this.$route.query.docName
          this.probeType = 3
         let that = this
         let token = localStorage.getItem("token")

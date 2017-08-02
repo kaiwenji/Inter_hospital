@@ -17,6 +17,12 @@ export default [
       {
         path:'recentChat',
         component:recentChat,
+        children:[
+          {
+            path:'chat',
+            component:chat
+          }
+        ]
       },
       {
         path:'followDoctor',
@@ -29,6 +35,7 @@ export default [
     component:chat
   },
   {
+    name:"myAddList",
     path:'/myAddList',
     component:myAddList,
     children:[

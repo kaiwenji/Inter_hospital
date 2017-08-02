@@ -12,7 +12,7 @@ import users from "../patient/users.vue";
 import addUser from "../patient/addUser.vue";
 import editUser from "../patient/editUser.vue";
 import editPhone from "../patient/editPhone.vue";
-import index from "../homePage/index.vue";
+// import index from "../homePage/index.vue";
 import my from "../my/index.vue";
 import patientGround from "../my/patientGround.vue";
 import login from "../login/index.vue";
@@ -74,12 +74,13 @@ export default[
   },{
     path: '/editPhone/:compatId',
     name:'editPhone',
-    component: editPhone
-  },{
-    path: '/index',
-    name:'index',
-    component: index
-  },{
+    component: editPhone}
+  // },{
+  //   path: '/index',
+  //   name:'index',
+  //   component: index
+  // }
+  ,{
     path: '/my',
     name:'my',
     component: my

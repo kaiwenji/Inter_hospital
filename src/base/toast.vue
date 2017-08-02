@@ -16,12 +16,13 @@
             <p class="weui-toast__content">加载中</p>
         </div>
     </div>
+
     </div>
 </template>
 
 
 <script>
-    
+
 export default({
     props:{
         start:{
@@ -33,7 +34,9 @@ export default({
             type:Boolean,
             default:false,
             required:true
-        }
+        },
+
+
     },
     watch:{
         start(){
@@ -46,11 +49,11 @@ export default({
     data(){
         return{
             showSuccess:false,
-            showLoading:false
+            showLoading:false,
         }
     },
     methods:{
-        
+
     }
 })
 </script>

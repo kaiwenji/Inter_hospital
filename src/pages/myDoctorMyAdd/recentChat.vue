@@ -2,27 +2,29 @@
     <div class="recentChat">
       <div class="myDoctorList" ref="contactList">
         <div>
-          <ul @click="goChat" class="border-1px" v-for="item in chatList">
-            <li>
-              <div class="cancelImg">
-                <img :src=" item.userDoc.docAvatar " alt="">
-              </div>
-              <div class="cancelIntro">
-                <div>
-                  <span class="chatDoctor">{{ item.userDoc.docName }}</span> <span class="doctorTitle">{{ item.userDoc.docTitle }}</span>
-                  <div class="badgeDoc">
-                    <span class="myDoctor">我的医生</span>
+          <ul  class="border-1px" v-for="item in chatList">
+            <router-link tag="div" :to="{path:'/chat',query:{docAvatar:item.userDoc.docAvatar,docName:item.userDoc.docName}}">
+              <li>
+                <div class="cancelImg">
+                  <img :src=" item.userDoc.docAvatar " alt="">
+                </div>
+                <div class="cancelIntro">
+                  <div>
+                    <span class="chatDoctor">{{ item.userDoc.docName }}</span> <span class="doctorTitle">{{ item.userDoc.docTitle }}</span>
+                    <div class="badgeDoc">
+                      <span class="myDoctor">我的医生</span>
+                    </div>
+                    <p>您的全科分诊已经开始，点击进入</p>
                   </div>
-                  <p>您的全科分诊已经开始，点击进入</p>
                 </div>
-              </div>
-              <div class="cancelTime">
-                <div >
-                  <span class="year">2017/4/29</span>
-                  <p class="time"><span class="badge">1</span></p>
+                <div class="cancelTime">
+                  <div >
+                    <span class="year">2017/4/29</span>
+                    <p class="time"><span class="badge">1</span></p>
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            </router-link>
           </ul>
         </div>
         <div class="loading-container" v-show="chatList.length == 0">
@@ -55,8 +57,11 @@
         api("smarthos.follow.message.last.list",{
           "token":token,
         }).then((data)=>{
-            that.chatList = data.list
-            console.log(data)
+            if(data.code == 0){
+              that.chatList = data.list
+              console.log(data)
+              console.log(that.chatList)
+            }
         })
       },
       methods:{
@@ -65,9 +70,6 @@
               click:true
             })
           },
-          goChat(){
-              this.$router.push('/chat')
-          }
       },
       components:{
           Loading,
@@ -100,7 +102,6 @@
     padding:0;
     margin:0;
     height: 180rem/$rem;
-    border-top: 1px solid rgb(205,205,205);
     li{
       list-style-type: none;
       height: 180rem/$rem;

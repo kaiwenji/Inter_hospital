@@ -31,15 +31,18 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-          <a class="weui-cell weui-cell_access" href="javascript:;">
+          <a @click="myAdd"  class="weui-cell weui-cell_access" href="javascript:;" >
             <div class="weui-cell__hd"><img src="../../../static/img/jiahao.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
               <p class="bf">&nbsp;&nbsp;我的加号</p>
             </div>
             <div class="weui-cell__ft"></div>
           </a>
+          <a class="weui-cell weui-cell_access" href="javascript:;">
+
+          </a>
         </div>
-        <div class="weui-cells ">
+
           <a @click="goHealthRecord" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/jiankang.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
@@ -47,8 +50,11 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-        </div>
-        <div class="weui-cells ">
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+
+        </a>
+
+
           <a @click="goAccountAbout" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/account.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
@@ -70,7 +76,9 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-        </div>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+
+        </a>
       </div>
 
       <transition name="f">
@@ -132,6 +140,11 @@
             name:'users'
           })
         },
+        myAdd(){
+          this.$router.push({
+            name:"addList"
+          })
+        },
         upLoad(){
         this.$set(this.$data,'showShaw',true)
         },
@@ -146,6 +159,7 @@
             if(data.succ){
               console.log(data)
 //              this.attaId = data.obj.attaId;
+              console.log(data.obj.attaFileUrl)
               this.$set(this.$data,'patAvatar',data.obj.attaFileUrl);
               localStorage.setItem('patAvatar',data.obj.attaFileUrl)
               this.getData()
@@ -183,6 +197,11 @@
 .page{
   display: flex;
   flex: 1;
+  position: fixed;
+  top:0;
+  bottom:98rem/$rem;
+  z-index:100;
+  background-color: white;
   flex-direction: column;
   width: 100%;
 }
@@ -191,7 +210,6 @@
   flex: 1;
   flex-direction: column;
   overflow: auto;
-  margin-bottom: 2.5rem;
 }
   .title{
     width: 100%;
@@ -283,5 +301,10 @@
     .weui-cells{
      overflow: visible;
     }
+    .weui-cells:after{
+      border-bottom: 1px solid gainsboro;
+    }
+
+
 
 </style>

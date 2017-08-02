@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-bar border-1px">
+  <div class="nav-bar">
     <ul>
       <li v-for="tagName in tagNames">
         <router-link  tag="div" :to="tagName.tabLink">
@@ -24,7 +24,7 @@
   @import '../common/mixin.scss';
   .nav-bar{
     width:100%;
-    height: 80rem/$rem;
+    height: 40px;
     position: fixed;
     top: 50px;
     z-index:10;

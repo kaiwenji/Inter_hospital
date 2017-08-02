@@ -13,8 +13,10 @@ import DocRadio from "../pages/DocRadio/router.js";
 import Consult from "../pages/Consult/router.js";
 import Book from "../pages/Book/router.js"
 import file from '../pages/file/router'
+import my from '../pages/my/index'
 import myDoctorMyAdd from '../pages/myDoctorMyAdd/router'
 import repeatConsultAdd from '../pages/repeatConsultAdd/router'
+import patientIndex from '../pages/patientIndex'
 
 import Home from '../pages/login/router'
 Router.prototype.goBack = function () {
@@ -27,8 +29,21 @@ Vue.use(Router)
 export default new Router({
   routes: [
       {
+        name:"patientIndex",
+        path:"/patientIndex",
+        component:patientIndex,
+        children:[
+          {
+            path:'my',
+            component:my
+          },
+          ...myDoctorMyAdd,
+        ]
+      },
+      {
+         name:"doctor",
          path:"/doctor/:id",
-          component:doctor
+         component:doctor
       },
     //   {
     //   path: '/changePhone',
@@ -56,9 +71,9 @@ export default new Router({
       ...DocCard,
       ...DocRadio,
       ...Consult,
-      ...myDoctorMyAdd,
+      // ...myDoctorMyAdd,
       ...repeatConsultAdd,
       ...file,
-      ...Book
+      ...Book,
   ]
 })

@@ -3,28 +3,30 @@
     <div class="myDoctorList" ref="contactList">
       <div>
         <ul class="border-1px" v-for="item in followList.list">
-          <li>
-            <div class="cancelImg">
-              <img :src=" item.userDocVO.docAvatar " alt="">
-            </div>
-            <div class="cancelIntro">
-              <div>
-                <span class="followName">{{ item.userDocVO.docName }}</span>
-                <div class="badgeDoc">
-                  <span class="myDoctor">我的医生</span>
-                </div>
-                <p>{{ item.userDocVO.hosName }}</p>
-                <p>{{ item.userDocVO.deptName }} {{ item.userDocVO.docTitle }}</p>
+          <router-link tag="div" :to="{name:'doctor',params:{id:item.userDocVO.id}} ">
+            <li>
+              <div class="cancelImg">
+                <img :src=" item.userDocVO.docAvatar " alt="">
               </div>
-            </div>
-            <div class="cancelTime">
-              <div class="forArrow">
+              <div class="cancelIntro">
+                <div>
+                  <span class="followName">{{ item.userDocVO.docName }}</span>
+                  <div class="badgeDoc">
+                    <span class="myDoctor">我的医生</span>
+                  </div>
+                  <p>{{ item.userDocVO.hosName }}</p>
+                  <p>{{ item.userDocVO.deptName }} {{ item.userDocVO.docTitle }}</p>
+                </div>
+              </div>
+              <div class="cancelTime">
+                <div class="forArrow">
                 <span>
                    <img src="../../../static/img/查看更多.png" alt="">
                 </span>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
+          </router-link>
         </ul>
 
       </div>
@@ -38,7 +40,7 @@
   export default{
     data(){
         return{
-          followList:[]
+          followList:[],
         }
     },
     mounted(){
@@ -49,11 +51,12 @@
     created(){
       let that = this
       api("smarthos.follow.docpat.list",{
-        token:"18268256860",
+        token:localStorage.getItem('token'),
       }).then(function(data){
-//        console.log(data)
-        that.followList = data
-//        console.log(that.followList)
+         if(data.code == 0){
+           that.followList = data
+           console.log(that.followList)
+         }
       })
     },
     methods:{

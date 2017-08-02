@@ -1,6 +1,6 @@
 <template>
     <div>
-         <v-header :title="title" :rightTitle="rightTitle"></v-header>
+         <v-header @click="goIndex" :title="title" :rightTitle="rightTitle"></v-header>
          <nav-bar :tagNames="tagNames"></nav-bar>
          <router-view></router-view>
     </div>
@@ -22,7 +22,12 @@
       components:{
          'VHeader':header,
           navBar
+      },
+    methods:{
+      goIndex(){
+        this.$router.push('/patientIndex')
       }
+    }
   }
 </script>
 <style>

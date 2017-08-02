@@ -74,9 +74,14 @@
           })
         },
         goAddUser(){
-          this.$router.push({
-            name:'addUser'
-          })
+          if(this.list.length>5){
+            this.$weui.alert('最多添加5个就诊人')
+          }else {
+            this.$router.push({
+              name:'addUser'
+            })
+          }
+
         },
 
       }
