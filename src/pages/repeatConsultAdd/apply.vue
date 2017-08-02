@@ -195,6 +195,7 @@
           reader.onload = function(){
             console.log(that.$refs.replaceImg)
             that.previewImg.push(this.result)
+            console.log(this.result)
 //            that.$refs.replaceImg.src = this.result
 //            console.log(fileName)
 //            console.log(that.image)

@@ -37,6 +37,7 @@
       }
     },
     mounted() {
+        console.log(this.$route.path)
       setTimeout(() => {
         this._setSliderWidth()
         this._initDots()
@@ -112,7 +113,7 @@
           this.slider.goToPage(pageIndex, 0, 400)
         }, this.interval)
       }
-    }
+    },
   }
 </script>
 
