@@ -1,9 +1,9 @@
 <template>
     <div class="page">
-        <top>
+        <top @click="goMy">
             <div class="middle big">健康档案</div>
         </top>
-      <div class="wrap">
+      <div v-show="!showLoading" class="wrap">
         <div class="patMsg">
           <div class="patImg">
             <img src="../../../static/img/psb.jpg" alt="">
@@ -65,23 +65,27 @@
           <!--<img  src="../../../static/img/btn.png" alt="">-->
         </div>
       </div>
+      <My-loading v-show="showLoading" class="myLoading"></My-loading>
     </div>
 </template>
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import api from '../../lib/api'
     import {Getdate} from '../../lib/filter'
+    import MyLoading from "../../base/loading/loading.vue";
     var token = localStorage.getItem('token')
     var commpat = JSON.parse(localStorage.getItem('commpat'))
     export default{
         components: {
-            top
+            top,
+          MyLoading
         },
         data(){
             return {
               commpat:commpat,
               list:[],
-              healthDetail:{}
+              healthDetail:{},
+              showLoading:true
             }
         },
       filters:{
@@ -92,6 +96,9 @@
         this.record()
         },
       methods:{
+        goMy(){
+          this.$router.push('my')
+        },
         record(){
           api("smarthos.medicalhistory.list.page",{
             token:token
@@ -142,6 +149,7 @@
           }).then(res=>{
             console.log(res,6666)
             if(res.succ){
+              this.$set(this.$data,'showLoading',false)
               this.$set(this.$data,'healthDetail',res.obj)
             }else {
               this.$weui.alert(res.msg)
@@ -254,5 +262,8 @@
     repeat:no-repeat;
     background-size:110rem/$rem;
   }
+  /*.myLoading{*/
+    /*height: 100%;*/
+  /*}*/
 
 </style>

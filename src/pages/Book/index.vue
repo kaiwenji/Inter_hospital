@@ -54,11 +54,6 @@ $info:  #3399FF;
         display:block;
         border-radius:50%;
     }
-    .font-hide{
-        text-overflow:ellipsis;
-        white-space:nowrap;
-        overflow:hidden;
-    }
     .arrow{
         width:2rem;
         height:2rem;

@@ -74,10 +74,10 @@
                     
                     <p class="weui-msg__desc small">号源时段以医院实际情况为准</p>
     </div>
-                    <div class="overflow">
+                    <div class="wrap">
                     <ul>
                         <li v-for="item in filteredBookList" @click="reserve(item)"> 
-                            <a>{{item.index}}号 {{item.hour}}:{{item.minute}}-{{item.newHour}}:{{item.newMinute}}</a>
+                            <p class="l">{{item.index}}号 {{item.hour}}:{{item.minute}}-{{item.newHour}}:{{item.newMinute}}</p>
                         </li>
                     </ul>
     </div>
@@ -225,7 +225,7 @@
         reserve(item){
             window.localStorage['time']= item.hour+':'+item.minute+'-'+item.newHour+':'+item.newMinute;
             window.localStorage['last']="/service/book/doctorInfo/"+this.$route.params.id;
-            this.$router.push({path:"/service/book/reserve/"+item.bookNumId+"&"+this.doctorInfo.bookHosId,query:{key:this.key}});
+            this.$router.push({path:"/book/reserve/"+item.bookNumId+"&"+this.doctorInfo.bookHosId,query:{key:this.key}});
         },
         getTime(str){
             let date=new Date(str);
@@ -297,12 +297,17 @@
         display:flex;
         flex-direction:column;
         height:18.75rem;
+        text-align:center;
         .small{
             font-size:0.75rem;
             padding:0.3rem 0 0 0.625rem;
         }
-        a{
-            font-size:0.75rem;
+        li,div{
+            
+            border-bottom:1px solid silver;
+        }
+        p{
+            padding:0.8rem;
         }
     }
 </style>

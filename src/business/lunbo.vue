@@ -44,12 +44,12 @@ import cssTransform from '../lib/transform'
       methods:{
         getData(){
           setTimeout(()=>{
-            document.addEventListener(
-              "touchstart",
-              function(ev){
-                ev.preventDefault();
-              }
-            );
+//            document.addEventListener(
+//              "touchstart",
+//              function(ev){
+//               ev.preventDefault();
+//              }
+//            );
             var wrap = document.querySelector("#wapper");
             var list = document.querySelector("#list");
             if(list.innerHTML){
@@ -78,6 +78,7 @@ import cssTransform from '../lib/transform'
             wrap.addEventListener(
               "touchstart",
               function(e) {
+//                e.preventDefault();
                 list.style.transition = "none";
 
                 var translateX = cssTransform(list,"translateX");

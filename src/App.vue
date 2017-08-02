@@ -44,7 +44,11 @@
 
         let routeLength = this.urlObj.history.length;
 
+
         if (routeLength === 0) {
+
+         if (routeLength === 0) {
+
           this.slide = 'left'
           if (to.path === from.path && to.path === '/') {
             this.urlObj.history = to.path;

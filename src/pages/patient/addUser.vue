@@ -24,10 +24,13 @@
           <span class="form-group__message bf" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
 
           <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
+            <div class="weui-cell weui-cell_warn">
               <div class="weui-cell__hd"><label class="weui-label bf">手机号</label></div>
               <div class="weui-cell__bd" v-bind:class="{ 'form-group--error': $v.mobile.$error }">
                 <input  @blur="$v.mobile.$touch()" class="weui-input" type="number" v-model="mobile" placeholder="请输入手机号"/>
+              </div>
+              <div class="weui-cell__ft" @click="showRemind">
+                <i class="weui-icon-warn"></i>
               </div>
             </div>
             <span class="form-group__message bf" v-show="!$v.mobile.cd&&showPhoneError">请输入正确的手机号</span>
@@ -86,6 +89,15 @@
 
         },
       methods:{
+        showRemind(){
+          this.$weui.dialog({
+            content: '若该患者曾前往浙二就诊过，最好填写在浙二留的手机号 若该手机号不再使用，可以前往医院修改，或者直接填写真实的本人使用的手机号',
+            buttons: [{
+              label: '确定',
+              type: 'primary'
+            }]
+          });
+        },
         getCode(){
           if(this.$v.mobile.$invalid){
             this.$set(this.$data,'showPhoneError',true)
@@ -147,6 +159,12 @@
     .add{
       color: #0FBDFF;
     }
+  .weui-cell_warn{
+    color: black;
+  }
+  .weui-icon-warn{
+    color: grey;
+  }
     .weui-cells{
       margin: 30rem/$rem 0;
     }

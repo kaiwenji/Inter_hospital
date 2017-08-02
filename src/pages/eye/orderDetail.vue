@@ -4,7 +4,7 @@
             <!--<div class="middle big">眼底快速通道</div>-->
             <span slot="right" class="step" @click="again">重新申请</span>
         </top>
-      <div class="wrap">
+      <div v-show="!showLoading" class="wrap">
         <div class="hintMsg">
           <div class="succ">
             <img src="../../../static/img/succ.png" alt="">
@@ -96,6 +96,7 @@
           </div>
         </div>
       </div>
+      <My-loading v-show="showLoading" class="myLoading"></My-loading>
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -103,9 +104,11 @@
     var token = localStorage.getItem('token');
     import api from '../../lib/api'
     import {Todate} from '../../lib/filter'
+    import MyLoading from "../../base/loading/loading.vue";
     export default{
         components: {
-            top
+            top,
+          MyLoading
         },
       filters:{
         Todate
@@ -113,7 +116,8 @@
         data(){
             return {
               orderDetail:{},
-              id:''
+              id:'',
+              showLoading:true
             }
         },
         mounted(){
@@ -130,6 +134,7 @@
           }).then(res=>{
             console.log(res,66666);
             if(res.succ){
+              this.$set(this.$data,'showLoading',false)
               this.$set(this.$data,'orderDetail',res.obj)
               this.$set(this.$data,'id',res.obj.id)
             }else {
@@ -203,6 +208,9 @@
      margin-top: 20rem/$rem;
     }
   }
+    /*.myLoading{*/
+      /*height: 100%;*/
+    /*}*/
     .sfc{
       font-size: 22rem/$rem;
       color: #0fbdff;

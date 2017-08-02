@@ -23,22 +23,22 @@
           </div>
         </div>
         <span class="form-group__message" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
-        <div class="weui-cells__title">性别</div>
-        <div class="weui-cells">
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
-            </div>
-          </div>
-        </div>
-        <div class="weui-cells__title">年龄</div>
-        <div class="weui-cells">
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入"/>
-            </div>
-          </div>
-        </div>
+        <!--<div class="weui-cells__title">性别</div>-->
+        <!--<div class="weui-cells">-->
+          <!--<div class="weui-cell">-->
+            <!--<div class="weui-cell__bd">-->
+              <!--<input class="weui-input" type="text" placeholder="请输入"/>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="weui-cells__title">年龄</div>-->
+        <!--<div class="weui-cells">-->
+          <!--<div class="weui-cell">-->
+            <!--<div class="weui-cell__bd">-->
+              <!--<input class="weui-input" type="text" placeholder="请输入"/>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
 
       </div>
       <div class="mfc  text">
@@ -102,7 +102,13 @@
              }).then(res=>{
                console.log(res,66666)
                if(res.succ){
-                 localStorage.setItem('token',res.token)
+                 localStorage.setItem('token',res.token);
+                 this.$router.push({
+                   name:"succeed",
+                   params:{
+                     msg:'注册成功'
+                   }
+                 })
                }else {
                  this.$weui.alert(res.msg)
                }

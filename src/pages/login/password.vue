@@ -78,7 +78,10 @@
               console.log(req,999)
               if(req.succ){
                 this.$router.push({
-                  name:'succeed'
+                  name:'succeed',
+                  params:{
+                    msg:'忘记密码'
+                  }
                 })
               }else {
                 this.$weui.alert(res.msg)
