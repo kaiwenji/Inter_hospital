@@ -5,10 +5,7 @@
     </transition>
   </div>
 </template>
-
-
 <script type="text/ecmascript-6">
-
   import urlHistory from "./lib/urlHistory"
   export default {
     name: 'app',
@@ -41,45 +38,40 @@
 
     watch: {
       $route(to, from){
-
+//        this.scroll();
+        console.log(this.urlObj.history)
         let routeLength = this.urlObj.history.length;
-
-
         if (routeLength === 0) {
-
-          if (routeLength === 0) {
-
-            this.slide = 'left'
-            if (to.path === from.path && to.path === '/') {
-              this.urlObj.history = to.path;
-            } else {
-              this.urlObj.history = from.path;
-              this.urlObj.history = to.path;
-
-            }
-          } else if (routeLength === 1) {
-            this.slide = 'left'
+          console.log(routeLength, '一开始的空')
+          this.slide = 'left'
+          if (to.path === from.path && to.path === '/') {
             this.urlObj.history = to.path;
-
           } else {
+            this.urlObj.history = from.path;
+            this.urlObj.history = to.path;
+            console.log(this.urlObj.history,1111)
+          }
+        } else if (routeLength === 1) {
+          this.slide = 'left'
+          this.urlObj.history = to.path;
+          console.log(this.urlObj.history, 9999)
+        } else {
 
-            let lastBeforeRoute = this.urlObj.history[routeLength - 2];
-            if (lastBeforeRoute === to.path) {
-
-              this.urlObj.back;
-              this.slide = 'right'
-
-            } else {
-              this.urlObj.history = to.path;
-
-
-              this.slide = 'left'
-            }
+          let lastBeforeRoute = this.urlObj.history[routeLength - 2];
+          if (lastBeforeRoute === to.path) {
+            console.log('后退的')
+            this.urlObj.back;
+            this.slide = 'right'
+            console.log(this.urlObj.history, 9999)
+          } else {
+            this.urlObj.history = to.path;
+            console.log('倩倩进的')
+            console.log(this.urlObj.history)
+            this.slide = 'left'
           }
         }
-      },
-
-    }
+      }
+    },
   }
 </script>
 
@@ -95,14 +87,13 @@
     top: 0;
     bottom: 0;
     overflow: hidden;
-background: #f5f5f5;
-      display:flex;
-      flex-direction:column;
+    background: #f5f5f5;
+    display:flex;
+    flex-direction:column;
   }
 
   .left-enter-active, .left-leave-active, .right-enter-active, .right-leave-active {
     transition: all 0.3s ease;
-
     display: flex;
     flex-direction: column;
   }
