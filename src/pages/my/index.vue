@@ -31,15 +31,18 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-          <a @click="myAdd()" class="weui-cell weui-cell_access" href="javascript:;">
+          <a @click="myAdd"  class="weui-cell weui-cell_access" href="javascript:;" >
             <div class="weui-cell__hd"><img src="../../../static/img/jiahao.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
               <p class="bf">&nbsp;&nbsp;我的加号</p>
             </div>
             <div class="weui-cell__ft"></div>
           </a>
+          <a class="weui-cell weui-cell_access" href="javascript:;">
+
+          </a>
         </div>
-        <div class="weui-cells ">
+
           <a @click="goHealthRecord" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/jiankang.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
@@ -47,8 +50,11 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-        </div>
-        <div class="weui-cells ">
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+
+        </a>
+
+
           <a @click="goAccountAbout" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/account.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
@@ -70,7 +76,9 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-        </div>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+
+        </a>
       </div>
 
       <transition name="f">
@@ -85,9 +93,9 @@
           </div>
       </div>
       </transition>
-      <!--<div class="bottemFooter">-->
-        <!--<footers index="3"></footers>-->
-      <!--</div>-->
+      <div class="bottemFooter">
+        <footers index="3"></footers>
+      </div>
 
     </div>
 
@@ -202,7 +210,6 @@
   flex: 1;
   flex-direction: column;
   overflow: auto;
-  margin-bottom: 2.5rem;
 }
   .title{
     width: 100%;
@@ -294,5 +301,10 @@
     .weui-cells{
      overflow: visible;
     }
+    .weui-cells:after{
+      border-bottom: 1px solid gainsboro;
+    }
+
+
 
 </style>

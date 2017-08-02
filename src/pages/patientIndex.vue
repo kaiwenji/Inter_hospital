@@ -27,11 +27,11 @@
 
                  </div>
                  <div class="three">
-                   <div class="eyeSick border-1px-right">
+                   <div class="eyeSick border-1px-right" @click="eyeIllness">
                      <img src="../../static/img/eye.png" alt="">
                      <span>眼底病</span>
                    </div>
-                   <div class="eyeOut border-1px-right">
+                   <div class="eyeOut border-1px-right"  @click="eyeInjury">
                      <img src="../../static/img/home_eye_trauma.png" alt="">
                      <span>眼外伤</span>
                    </div>
@@ -91,23 +91,29 @@
               <alert :alertTitle="alertTitle" :alertMsg="alertMsg" @on-set="close"></alert>
             </div>
           </div>
-         <div class="footer">
-             <router-link tag="div" :to="item.tabLink" v-for="item in tagNames" :key="item.id" :class="tellPath == '/myDoctorChat/followDoctor'? 'followBlue':''">
-               <img v-if="tellPath == '/patientIndex'" :src="item.imgLinkIndexOn">
-               <img v-else-if="tellPath == '/myDoctorChat/recentChat'" :src="item.imgLinkOn">
-               <img v-else-if="tellPath == '/myDoctorChat/followDoctor'" :src="item.imgLinkOn">
-               <img v-else-if="tellPath == '/patientIndex/my'" :src="item.imgLinkMyOn">
-               <span >{{item.title}}</span>
-             </router-link>
-         </div>
+      <div class="bottemFooter">
+        <footers index="1"></footers>
+      </div>
+         <!--<div class="footer">-->
+             <!--<router-link tag="div" :to="item.tabLink" v-for="item in tagNames" :key="item.id" :class="tellPath == '/myDoctorChat/followDoctor'? 'followBlue':''">-->
+               <!--<img v-if="tellPath == '/patientIndex'" :src="item.imgLinkIndexOn">-->
+               <!--<img v-else-if="tellPath == '/myDoctorChat/recentChat'" :src="item.imgLinkOn">-->
+               <!--<img v-else-if="tellPath == '/myDoctorChat/followDoctor'" :src="item.imgLinkOn">-->
+               <!--<img v-else-if="tellPath == '/patientIndex/my'" :src="item.imgLinkMyOn">-->
+               <!--<span >{{item.title}}</span>-->
+             <!--</router-link>-->
+         <!--</div>-->
+
     </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
   import header from '../base/header'
   import Carousel from '../base/carousel'
   import BScroll from 'better-scroll'
   import api from '../lib/api'
+  import footers from '../business/app-footer.vue'
   import Alert from '../base/alert'
+  var token = localStorage.getItem('token')
   import { formDateMinute,formatDate } from '../utils/formatTimeStamp.js'
   export default{
       data(){
@@ -157,6 +163,45 @@
         })
       },
       methods:{
+        eyeIllness(){
+          api('smarthos.appointment.oculartrauma.detail',{
+            token:token
+          }).then(res=>{
+            if(res.succ){
+              if(res.obj){
+                this.$router.push({
+                  name:"orderDetail"
+                })
+              }else {
+                this.$router.push({
+                  name:"eyeIllness"
+                })
+              }
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+
+        },
+        eyeInjury(){
+          api('smarthos.appointment.fundus.detail',{
+            token:token
+          }).then(res=>{
+            if(res.succ){
+              if(res.obj){
+                this.$router.push({
+                  name:"eyeInjuryDetail"
+                })
+              }else {
+                this.$router.push({
+                  name:"eyeInjury"
+                })
+              }
+            }else {
+              this.$weui.alert(res.msg)
+            }
+          })
+        },
         _initKnowScroll(){
             this.knowScroll = new BScroll(this.$refs.wholeScroll,{
                 click:true
@@ -250,7 +295,8 @@
       components:{
           "VHeader":header,
            Carousel,
-           Alert
+           Alert,
+        footers
       },
       watch:{
         knowDetail(){
@@ -275,6 +321,13 @@
 <style scoped lang="scss">
   @import '../common/public.scss';
   @import '../common/mixin.scss';
+  .bottemFooter{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+  }
   .index{
     position: fixed;
     top:0;

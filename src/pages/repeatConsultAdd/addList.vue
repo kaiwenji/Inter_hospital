@@ -40,7 +40,7 @@
     </scroll>
   </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
   import Scroll from '../../base/scroll'
   import header from '../../base/header'
   import api from '../../lib/api'
