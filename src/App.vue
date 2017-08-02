@@ -90,14 +90,13 @@
     top: 0;
     bottom: 0;
     overflow: hidden;
-background: #f5f5f5;
-      display:flex;
-      flex-direction:column;
+    background: #f5f5f5;
+    display:flex;
+    flex-direction:column;
   }
 
   .left-enter-active, .left-leave-active, .right-enter-active, .right-leave-active {
     transition: all 0.3s ease;
-
     display: flex;
     flex-direction: column;
   }

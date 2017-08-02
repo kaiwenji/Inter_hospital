@@ -45,13 +45,6 @@
             }
         },
         mounted(){
-          api("smarthos.system.stddept.list",{
-            "hasDept": true,
-            "hasDoc": true,
-            "deptLevel": 1
-          }).then(res=>{
-            console.log(res)
-          })
         },
       methods:{
         forgetPassword(){
