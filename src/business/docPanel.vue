@@ -99,10 +99,12 @@
 //              console.log(this.$refs);
 
         this.$refs.music.addEventListener("canplaythrough",()=>{
+            alert("canplay");
             this.$refs.music.play();
             
         })
         this.$refs.music.addEventListener("ended",()=>{
+            console.log("ended");
             this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
             
         })
@@ -113,18 +115,25 @@
     },
     methods: {
         play(audioInfo,index){
+            
             var url=audioInfo.snsKnowledge.knowUrl
             if(index==this.nowPlaying){
                 return ;
             }
-//            this.$refs.music.pause();
             if(this.nowPlaying!=-1){
                 this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
             }
             this.src=url;
+            setTimeout(this.keepGoing,100);
+            this.$refs.music.play();
             this.nowPlaying=index;
         },
-
+        keepGoing(){
+            if(this.$refs.music.paused){
+                this.$refs.music.play();
+                setTimeout(this.keepGoing,100);
+            }
+        },
         setColor(item){
             Api("smarthos.sns.knowledge.likes",{
                 knowledgeId:item.snsKnowledge.id,
