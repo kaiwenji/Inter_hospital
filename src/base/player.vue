@@ -93,26 +93,24 @@
                 startLeft = 0,
                 startX = 0;
             var _this=this;
-            sliderHandler.addEventListener('touchstart', function (e) {
-                    startLeft = parseInt(sliderHandler.style.left) * totalLen / 100;
+            sliderHandler.addEventListener('touchstart', (e)=> {
+                    startLeft = parseInt(sliderHandler.style.left) * this.$refs.slider.clientWidth / 100;
                     startX = e.changedTouches[0].clientX;
                 });
-            sliderHandler.addEventListener('touchmove', function(e){
+            sliderHandler.addEventListener('touchmove', (e)=>{
                 var dist = startLeft + e.changedTouches[0].clientX - startX,
                     percent;
-                dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
-                percent =  parseInt(dist / totalLen * 100);
+                dist = dist < 0 ? 0 : dist > this.$refs.slider.clientWidth ? this.$refs.slider.clientWidth : dist;
+                percent =  parseInt(dist / this.$refs.slider.clientWidth * 100);
                 sliderTrack.style.width= percent + '%';
                 sliderHandler.style.left=percent + '%';
                 _this.$refs.music.currentTime=_this.$refs.music.duration*(percent/100);
-                _this.currentTime=_this.setTimeFormat(_this.$refs.music.currentTime);;
-//                alert(Math.floor(_this.$refs.music.duration*(percent/100)));
-                e.preventDefault();
+                _this.currentTime=_this.setTimeFormat(_this.$refs.music.currentTime);
                 });
         },
         on(){
             if(this.$refs.music.paused&&!this.$refs.music.ended){
-                this.$refs.button.src="../../static/img/pause.png";
+                this.$refs.button.src="./static/img/pause.png";
                 this.$refs.music.play();
                 if(this.$refs.music){
                     this.currentTime=this.setTimeFormat(this.$refs.music.currentTime);
@@ -122,7 +120,7 @@
             else{
                 this.$refs.music.pause();
                 clearInterval(this.intervalId);
-                this.$refs.button.src="../../static/img/on.png";    
+                this.$refs.button.src="./static/img/on.png";    
             }
         },
         getCurrentTime(){
@@ -235,6 +233,7 @@
         background-color:white;
     }
     .weui-slider__inner{
+        width:100%;
         background-color:$transparent;
     }
     .weui-slider{

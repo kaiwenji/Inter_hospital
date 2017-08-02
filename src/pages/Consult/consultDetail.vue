@@ -1,8 +1,8 @@
 <template>
-  <div class="app vertical">
+  <div class="module vertical">
       <app-header>
           <p>问医生</p>
-          <div slot="left" @click="back">按钮</div>
+          <div slot="left" @click="back" ref="backBtn"><font><span>&#xe600;</span></font></div>
           </app-header>
           <div class="patInfo" v-show='Got'>
               <p class="xl dark">患者资料 {{consultInfo.consulterName}} {{consultInfo.consulterGender|getGender}} {{consultInfo.consulterIdcard|getAge}}岁</p>
@@ -85,6 +85,10 @@
             this.Got=true;
             this.$weui.alert("网络错误");
         })
+        
+        this.$refs.backBtn.addEventListener("click",(e)=>{
+            e.stopPropagation();
+        })
 
     },
     beforeDestroy() {
@@ -97,8 +101,8 @@
       },
     methods: {
         back(){
-            window.history.back();
-//            this.$router.push("/Consult");
+//            window.history.back();
+            this.$router.push("/Consult");
         },
         send(res){
             var params={
@@ -130,6 +134,17 @@
 
 <style scoped lang="scss">
     @import "../../common/var.scss";
+    @font-face {
+    font-family: 'iconfont';
+    src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
+    }
+    .module{
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        bottom:2.3rem;
+    }
     p{
         word-break:break-all;
     }

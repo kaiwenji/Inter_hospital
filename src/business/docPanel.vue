@@ -1,21 +1,29 @@
 <template>
-      <div class="audioItem" @click="activate">
+<div>
+    <div v-for="audioInfo,index in audioList" :key="audioInfo.snsKnowledge.id">
+      <div class="audioItem" @click="activate(audioInfo)">
           <div class="hd">
               <img :src="audioInfo.docAvatar">
     </div>
           <div class="bd" ref="bd">
               <p class="l">{{audioInfo.docName}}</p>
-              <p class="font-hide m">{{audioInfo.snsKnowledge.description}}</p>
+              <div style="height:3rem">
+              <p class="font-hide m" >{{audioInfo.snsKnowledge.description}}</p>
+    </div>
               <div class="Bubble">
-              <bubble ref="bubble" :src="audioInfo.snsKnowledge.knowUrl"></bubble>
+              <bubble ref="bubble" :pause="audioInfo.on" @activate="play(audioInfo,index)" duration=""></bubble>
                   <div class="supplement"></div>
     </div>
               <div class="ft">
                   <p class="s light">{{audioInfo.snsKnowledge.createTime|getMyDay}}</p>
                   <p class="right s light">{{audioInfo.snsKnowledge.readNum}}人听过</p>
-                  <p class="s last light" ref="thumb" @click="setColor(item)"><img class="icon" :src="recSrc" >{{audioInfo.snsKnowledge.likes}}</p>
+                  <p class="s last light" ref="thumb" @click="setColor(audioInfo)"><img class="icon" :src="recSrc[index]" >{{audioInfo.snsKnowledge.likes}}</p>
     </div>
     </div>
+    </div>
+    </div>
+    
+          <audio  :src="src" ref="music" class="music"></audio>
     </div>
 </template>
 
@@ -23,33 +31,59 @@
 <script>
 
     import {getMyDay,goodTime} from "../lib/filter.js";
-    import Bubble from "../base/bubble.vue"; 
+    import Bubble from "../business/bubble.vue"; 
     import Api from "../lib/api.js";
   export default {
       props:{
-          item:{
-              type:Object,
-              default:{},
+          list:{
+              type:Array,
+              default:[],
               required:true
           }
       },
     data() {
       return {
-          arrow:true
+          src:"",
+          nowPlaying:-1
 
       };
     },
+      watch:{
+          list(){
+              setTimeout(()=>{
+                  console.log(this.$refs.bubble[0].$el)
+                  for(let i=0;i<this.$refs.bubble.length;i++){
+                      this.$refs.bubble[i].$el.addEventListener("click",(e)=>{
+                        e._flag=true;
+                    })
+                      this.$refs.thumb[i].addEventListener("click",(e)=>{
+                    e._flag=true;
+                },false);
+                    this.$refs.bd[i].addEventListener("click",(e)=>{
+                        if(e._flag){
+                            e.stopPropagation();
+                        }
+                    },false);
+                  }
+              },20);
+             
+          }
+      },
     computed:{
-        audioInfo(){
-            return this.item;
+        audioList(){
+            return this.list;
         },
         recSrc(){
-            if(this.item.islikes){
-                return "./static/img/rec_on.png";
+            var res=[];
+            for(let i =0;i<this.audioList.length;i++){
+                if(this.audioList[i].islikes){
+                    res[i]= "./static/img/rec_on.png";
+                }
+                else{
+                    res[i]= "./static/img/rec_off.png";
+                }
             }
-            else{
-                return "./static/img/rec_off.png";
-            }
+            return res;
         }
     },
     components:{
@@ -61,23 +95,36 @@
           goodTime
       },
     mounted() {
-        this.$refs.bubble.$el.addEventListener("click",(e)=>{
-                e._flag=true;
-            })
 
-        this.$refs.thumb.addEventListener("click",(e)=>{
-            e._flag=true;
-        },false);
-        this.$refs.bd.addEventListener("click",(e)=>{
-            if(e._flag){
-                e.stopPropagation();
-            }
-        },false)
+//              console.log(this.$refs);
+
+        this.$refs.music.addEventListener("canplaythrough",()=>{
+            this.$refs.music.play();
+            
+        })
+        this.$refs.music.addEventListener("ended",()=>{
+            this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
+            
+        })
     },
     beforeDestroy() {
+        
 
     },
     methods: {
+        play(audioInfo,index){
+            var url=audioInfo.snsKnowledge.knowUrl
+            if(index==this.nowPlaying){
+                return ;
+            }
+//            this.$refs.music.pause();
+            if(this.nowPlaying!=-1){
+                this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
+            }
+            this.src=url;
+            this.nowPlaying=index;
+        },
+
         setColor(item){
             Api("smarthos.sns.knowledge.likes",{
                 knowledgeId:item.snsKnowledge.id,
@@ -105,9 +152,8 @@
                 this.$weui.alert("网络错误");
             })
         },
-        activate(){
-            console.log("activate")
-            this.$emit("activate");
+        activate(item){
+            this.$router.push("/docRadio/detail/"+item.snsKnowledge.id);
         }
     }
   };
@@ -130,9 +176,6 @@
                     margin:0 auto;
                     border-radius:2rem;
                 }
-                .font-hide{
-                    height:2.2rem;
-                }
 
             }
             .bd{
@@ -140,6 +183,9 @@
                     display:flex;
                     flex-direction:row;
                     p{
+                        &.font-hide{
+                            height:2.2rem;
+                        }
                         flex:1 0 auto;
                         &.last{
                             position:relative;

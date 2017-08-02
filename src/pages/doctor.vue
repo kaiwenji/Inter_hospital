@@ -1,5 +1,5 @@
 <template>
-  <div class="app" ref="wrap">
+  <div class="app wrap" ref="wrap">
       
       <app-header style="border:1px solid transparent"class="test" ref="header" id="header"> 
           <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
@@ -39,11 +39,9 @@
           <div class="docAudio"v-show="showDocTalk" >
               <div class="title">
                   <p class="l">医生说</p>
-                  <div><p @click="getMoreAudio()" v-show="!nothingMore">更多</p></div>
+                  <div><p @click="getMoreAudio()" v-show="!nothingMore"><img src="../../static/img/getMore.png"></p></div>
     </div>
-              <div v-for="item in audioList">
-              <doc-panel :item="item"></doc-panel>
-    </div>
+              <doc-panel :list="audioList"></doc-panel>
               
     </div>
           <div class="QR">
@@ -66,6 +64,7 @@
     import Bubble from "../base/bubble.vue";
     import Api from "../lib/api.js";
     import {getDefaultProfile} from "../lib/public.js";
+    import myMixin from "../lib/canScroll.js";
   export default {
     data() {
       return {
@@ -81,6 +80,7 @@
           isFollow:false
       };
     },
+      mixins:[myMixin],
     computed: {
         followWord(){
             return this.isFollow?"已关注":"关注";
@@ -144,7 +144,9 @@
             else{
                 this.showDocTalk=true;
             }
-            
+            val.list.forEach((item)=>{
+                this.audioList.push(Object.assign({}, item, { on: false }));
+            })
             this.audioList=val.list;
             if (val.page.total==1){
                 this.nothingMore=true;
@@ -388,6 +390,9 @@
                 flex: 0 0 auto;
                 padding:0.8rem;
                 
+            }
+            img{
+                height:1rem;
             }
             
             
