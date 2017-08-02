@@ -9,7 +9,10 @@
     <section class="title">
       <span class="word">{{title}}</span>
     </section>
-    <section class="nav"  @click="apply()">
+    <section class="nav"  @click="myAdd()" v-if="path == '/addList'">
+      <span class="rightWord">{{rightTitle}}</span>
+    </section>
+    <section class="nav"  @click="apply()" v-else>
       <span class="rightWord">{{rightTitle}}</span>
     </section>
   </div>
@@ -41,6 +44,9 @@
       },
       apply(){
           this.$emit("on-apply")
+      },
+      myAdd(){
+          this.$emit("on-addList")
       }
     },
     watch:{

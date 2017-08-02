@@ -46,7 +46,7 @@
                  <div class="doctorKnow border-1px">
                    <div class="left30">
                      <span>名医知道</span>
-                     <span>更多 > </span>
+                     <span @click="moreKnow()">更多 > </span>
                    </div>
                  </div>
                  <div class="knowCard border-1px" v-for="(item,index) in knowDetail">
@@ -145,12 +145,15 @@
         api("smarthos.user.pat.index",{
             token:"18268256860"
         }).then((data)=>{
-            that.adImg = data.obj.adsettings
-            for(var j=0;j<data.obj.knowledge.length;j++){
-            that.time.push(formatDate(new Date(data.obj.knowledge[j].snsKnowledge.createTime)))
-            that.clickTime.push("")
-            }
-          that.knowDetail = data.obj.knowledge
+             if(data.code == 0){
+               that.adImg = data.obj.adsettings
+               for(var j=0;j<data.obj.knowledge.length;j++){
+                 that.time.push(formatDate(new Date(data.obj.knowledge[j].snsKnowledge.createTime)))
+                 that.clickTime.push("")
+               }
+               that.knowDetail = data.obj.knowledge
+             }
+
         })
       },
       methods:{
@@ -236,6 +239,9 @@
                    that.showAlert = true
                 }
             })
+        },
+        moreKnow(){
+          this.$router.push("/docRadio")
         },
         close(){
             this.showAlert = false

@@ -5,6 +5,7 @@ import addList from './addList'
 import apply from './apply'
 export default[
   {
+    name:"addList",
     path:"/addList",
     component:addList
   },

@@ -199,12 +199,13 @@
 //            console.log(fileName)
 //            console.log(that.image)
             api("smarthos.system.file.upload.image.base64",{
-              module:"APPOINTMENT",
+              module:"PAT",
               fileType:"IMAGE",
               fileName:fileName,
               base64:this.result
             }).then((data)=>{
-//              console.log(data)
+              console.log(data)
+              console.log(data.obj.attaFileUrl)
               that.imageUrl.push(data.obj.attaFileUrl)
 //              console.log(that.imageUrl)
               that.attaId.push(data.obj.id)

@@ -41,8 +41,9 @@ export default new Router({
         ]
       },
       {
+         name:"doctor",
          path:"/doctor/:id",
-          component:doctor
+         component:doctor
       },
     //   {
     //   path: '/changePhone',

@@ -31,7 +31,7 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-          <a class="weui-cell weui-cell_access" href="javascript:;">
+          <a @click="myAdd()" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/jiahao.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
               <p class="bf">&nbsp;&nbsp;我的加号</p>
@@ -132,6 +132,11 @@
             name:'users'
           })
         },
+        myAdd(){
+          this.$router.push({
+            name:"addList"
+          })
+        },
         upLoad(){
         this.$set(this.$data,'showShaw',true)
         },
@@ -146,6 +151,7 @@
             if(data.succ){
               console.log(data)
 //              this.attaId = data.obj.attaId;
+              console.log(data.obj.attaFileUrl)
               this.$set(this.$data,'patAvatar',data.obj.attaFileUrl);
               localStorage.setItem('patAvatar',data.obj.attaFileUrl)
               this.getData()
