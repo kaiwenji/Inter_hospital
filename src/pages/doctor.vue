@@ -38,20 +38,11 @@
           <div class="docAudio"v-show="showDocTalk" >
               <div class="title">
                   <p class="l">医生说</p>
-<<<<<<< HEAD
                   <div><p @click="getMoreAudio()" v-show="!nothingMore"><img src="../../static/img/getMore.png"></p></div>
     </div>
               <doc-panel :list="audioList"></doc-panel>
               
     </div>
-=======
-                  <div><p @click="getMoreAudio()" v-show="!nothingMore">更多</p></div>
-              </div>
-              <div v-for="item in audioList">
-                <doc-panel :item="item"></doc-panel>
-              </div>
-          </div>
->>>>>>> 68647f5e5bcd157c87b49306d1c84be6bf3fbab3
           <div class="QR">
               <div>
                 <p>扫一扫二维码，关注我</p>
