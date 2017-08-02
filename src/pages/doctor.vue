@@ -148,13 +148,9 @@
             else{
                 this.showDocTalk=true;
             }
-<<<<<<< HEAD
             val.list.forEach((item)=>{
                 this.audioList.push(Object.assign({}, item, { on: false }));
             })
-=======
-
->>>>>>> 68647f5e5bcd157c87b49306d1c84be6bf3fbab3
             this.audioList=val.list;
             if (val.page.total==1){
                 this.nothingMore=true;
@@ -399,16 +395,11 @@
                 padding:0.8rem;
 
             }
-<<<<<<< HEAD
+            
             img{
                 height:1rem;
             }
             
-            
-=======
-
-
->>>>>>> 68647f5e5bcd157c87b49306d1c84be6bf3fbab3
         }
 
 
