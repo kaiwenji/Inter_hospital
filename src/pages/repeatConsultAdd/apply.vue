@@ -145,9 +145,9 @@
         this.docTitle = this.$route.query.docTitle
     },
     computed:{
-      ...mapGetters([
-          "applyId"
-      ])
+//      ...mapGetters([
+//          "applyId"
+//      ])
     },
     methods:{
       makeLarge(index){
@@ -157,9 +157,9 @@
       makeSmall(){
         this.largePreview = false
       },
-      ...mapMutations([
-         'SET_APPLY_ID'
-      ]),
+//      ...mapMutations([
+//         'SET_APPLY_ID'
+//      ]),
       _initApplyScroll(){
         this.apply = new BScroll(this.$refs.apply,{
           click:true
@@ -232,29 +232,35 @@
       },
       applying(){
           console.log(this.applyId)
+         if(this.description === ''){
+           this.$weui.alert("请在下方填写您的复诊需求")
+              return
+         }else{
            let that = this
 //          console.log(that.id)
-          api("smarthos.appiontment.add",{
-            patId: that.compatInfo.patId,
-            docId:that.id,
-            compatId:that.compatInfo.id,
-            description:that.description,
-            attaList:that.attaId,
-            token:localStorage.getItem("token")
-          }).then((data)=>{
+           api("smarthos.appiontment.add",{
+             patId: that.compatInfo.patId,
+             docId:that.id,
+             compatId:that.compatInfo.id,
+             description:that.description,
+             attaList:that.attaId,
+             token:localStorage.getItem("token")
+           }).then((data)=>{
 //               console.log(data.obj.id)
-            if(data.code == 0){
+             if(data.code == 0){
 //              that.applyId = data.obj.id
-              that.SET_APPLY_ID(data.obj.id)
-              localStorage.setItem("applyId",data.obj.id)
-              that.showDialog = true
-              setTimeout(()=>{
-                that.showDialog = false
-                that.$router.push("/myAddList/myAddApply")
-              },1000)
-            }
+               that.SET_APPLY_ID(data.obj.id)
+               localStorage.setItem("applyId",data.obj.id)
+               that.showDialog = true
+               setTimeout(()=>{
+                 that.showDialog = false
+                 that.$router.push("/myAddList/myAddApply")
+               },1000)
+             }
 
-          })
+           })
+         }
+
       }
     },
     components:{
