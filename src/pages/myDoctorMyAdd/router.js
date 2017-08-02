@@ -29,6 +29,7 @@ export default [
     component:chat
   },
   {
+    name:"myAddList",
     path:'/myAddList',
     component:myAddList,
     children:[

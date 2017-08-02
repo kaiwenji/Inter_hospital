@@ -80,7 +80,7 @@
       </div>
 
     </div>
-    <div class="centerDisplay" transition="fade" v-if="popImg">
+    <div class="centerDisplay" transition="fade" v-if="popImg" @click="enSmall">
       <div class="slider-wrapper" ref="sliderWrapper">
         <slider ref="slider" :popImg="popImg" :index="goindex">
           <div class="largePicture" v-for="item in applyDetail.attaList"  @click="enSmall">

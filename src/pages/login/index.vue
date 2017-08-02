@@ -73,7 +73,7 @@
               localStorage.setItem('commpat',JSON.stringify(res.obj.commpat))
               console.log(JSON.stringify(res.obj.commpat))
               this.$router.push({
-                name:'index'
+                name:'patientIndex'
               })
             }else {
               this.$weui.alert(res.msg)

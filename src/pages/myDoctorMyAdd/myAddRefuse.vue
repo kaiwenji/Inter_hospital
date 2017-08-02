@@ -104,7 +104,6 @@
         this.success = new BScroll(this.$refs.success,{
           click:true
         })
-        console.log(this.success)
       }
     },
     components:{

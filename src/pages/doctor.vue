@@ -1,13 +1,12 @@
 <template>
   <div class="app" ref="wrap">
-      
-      <app-header style="border:1px solid transparent"class="test" ref="header" id="header"> 
+
+      <app-header style="border:1px solid transparent"class="test" ref="header" id="header">
           <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
           <div slot="right" ref="followButton" style="flex:0 0 auto" class="followButton" @click="follow">
-
               <p  class="l ft" ><img ref="heart"src="../../static/img/follow.png">{{followWord}}</p>
-    </div>
-    </app-header>
+          </div>
+      </app-header>
       <div v-show="Got">
           <div class="info">
               <div>
@@ -15,46 +14,45 @@
                   <p class="l docName">{{docInfo.docName}}<span v-show="docInfo.famous" class="icon s">名医</span></p>
                   <p class="m">{{docInfo.deptName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{docInfo.docTitle}}</p>
                   <p>{{docInfo.hosName}}</p>
-    </div>
-    </div>
+             </div>
+          </div>
           <div class="tab" ref="tab">
               <div class="tab_contain">
                   <div><div><img src="../../static/img/red.png"><p class="m red">预约挂号</p></div></div>
                   <div><div @click="To('jhsq')"><img src="../../static/img/green.png"><p class="m green">加号申请</p></div></div>
                   <div><div @click="To('hzbd')"><img src="../../static/img/blue.png"><p class="m blue">患者报到</p></div></div>
-    </div>
+              </div>
               <div class="tab_shadow">
-    </div>
-    </div>
+               </div>
+          </div>
           <div class="supplement" ref="supplement"></div>
           <div class="speciality" v-for="item,index in list">
               <div>
-                      <p class="title">{{item.title}}</p>
-              <p class="font-hide":id="item.title">{{item.desc}}</p>
-    </div>
+                   <p class="title">{{item.title}}</p>
+                   <p class="font-hide":id="item.title">{{item.desc}}</p>
+              </div>
               <div class="button" style="display:flex;flex-direction:column" @click="getDetail(item,this,index)">
                   <img src="../../static/img/pullDown.png" class=""style="padding:2.6rem 1rem;width:1rem;">
-    </div>
-    </div>
+              </div>
+          </div>
           <div class="docAudio"v-show="showDocTalk" >
               <div class="title">
                   <p class="l">医生说</p>
                   <div><p @click="getMoreAudio()" v-show="!nothingMore">更多</p></div>
-    </div>
+              </div>
               <div v-for="item in audioList">
-              <doc-panel :item="item"></doc-panel>
-    </div>
-              
-    </div>
+                <doc-panel :item="item"></doc-panel>
+              </div>
+          </div>
           <div class="QR">
               <div>
                 <p>扫一扫二维码，关注我</p>
                 <img :src="docInfo.docQrcode">
-    </div>
-    </div>
+              </div>
+          </div>
           <div>
-    </div>
-    </div>
+          </div>
+      </div>
       <my-loading class='myLoading'v-show="!Got"></my-loading>
   </div>
 </template>
@@ -96,19 +94,24 @@
         isFollow(){
             if(!this.isFollow){
                 this.$refs.followButton.className="followButton";
-                this.$refs.heart.src="./static/img/follow.png";  
+                this.$refs.heart.src="../../static/img/follow.png";
             }
             else{
                 this.$refs.followButton.className+=" followed";
-                this.$refs.heart.src="./static/img/followed.png";  
+                this.$refs.heart.src="../../static/img/followed.png";
+                this.$refs.heart.src="./static/img/follow.png";
             }
+//            else{
+//                this.$refs.followButton.className+=" followed";
+//                this.$refs.heart.src="./static/img/followed.png";
+//            }
         }
     },
     mounted() {
         this.docId=this.$route.params.id;
         this.rem=window.screen.width/20;
         this.$refs.wrap.onscroll=()=>{
-            
+
             var top=this.$refs.wrap.scrollTop;
             this.setHeaderColor(top);
             this.setTabClass(top);
@@ -125,7 +128,7 @@
             this.list[0].desc=this.docInfo.docSkill;
             this.list[1].desc=this.docInfo.docResume;
             this.Got=true;
-            
+
         },
                       ()=>{
                     this.$weui.alert("网络错误");
@@ -135,7 +138,7 @@
             pageNum:1,
             pageSize:3,
             token:window.localStorage['token']
-            
+
         })
         .then((val)=>{
             if(!val.succ||!val.list||val.list.length==0){
@@ -144,7 +147,7 @@
             else{
                 this.showDocTalk=true;
             }
-            
+
             this.audioList=val.list;
             if (val.page.total==1){
                 this.nothingMore=true;
@@ -165,10 +168,10 @@
         getDetail(item,event,index){
             var article=document.getElementById(item.title);
             var picture=event.event.target;
-            picture.className=picture.className=="rotate"?"":"rotate"; 
+            picture.className=picture.className=="rotate"?"":"rotate";
             article.className=article.className=='font-show'?"font-hide":"font-show";
-            
-            
+
+
         },
         getMoreAudio(){
             this.$router.push("/docTalk/"+this.docId);
@@ -182,7 +185,7 @@
                 })
                 .then((val)=>{
                     if(val.succ){
-                        this.isFollow=false; 
+                        this.isFollow=false;
                     }
                     else{
                         this.$weui.alert(val.msg);
@@ -192,7 +195,7 @@
                     this.$weui.alert("网络错误");
                 }
                       )
-                
+
             }
             else{
                 Api("smarthos.follow.docpat.add",{
@@ -201,7 +204,7 @@
                 })
                 .then((val)=>{
                     if(val.succ){
-                        this.isFollow=true; 
+                        this.isFollow=true;
                     }
                     else{
                         this.$weui.alert(val.msg);
@@ -212,8 +215,8 @@
                 })
             }
         },
-        
-    
+
+
         setHeaderColor(top){
             var limit=5*this.rem;
             var opacity=top-limit>0?top-limit:0;
@@ -254,7 +257,7 @@
         transform:rotate(180deg);
     }
     p{
-           
+
         font-size:0.875rem;
         &.green{
             color:$lightGreen;
@@ -308,7 +311,7 @@
             .tab_shadow{
                 flex:1 1 auto;
                 background-image:linear-gradient(to top,lightgrey,white);
-                
+
             }
             .tab_contain{
                 height:3.9rem;
@@ -333,7 +336,7 @@
             &.tab_fixed{
             position:fixed;
             top:45px;
-            width:20rem; 
+            width:20rem;
                 z-index:30;
             }
         }
@@ -343,7 +346,7 @@
         background-color:white;
         display:flex;
         flex-direction:row;
-        align-items:center; 
+        align-items:center;
         margin-bottom:1rem;
         div{
             &.button{
@@ -387,13 +390,13 @@
             p{
                 flex: 0 0 auto;
                 padding:0.8rem;
-                
+
             }
-            
-            
+
+
         }
 
-        
+
     }
     .QR{
         background-color:white;
@@ -433,7 +436,7 @@
     .font-show{
         padding-bottom:1rem;
     }
-    
+
 /*    名医标签*/
     .icon{
         background:rgb(242,198,19);
@@ -442,9 +445,9 @@
         border-radius:0.3rem;
         padding:0 .3rem;
         left:11.5rem;
-        top:.1rem;   
+        top:.1rem;
     }
-    
+
 /*    医生姓名*/
     .docName{
         position:relative;

@@ -19,4 +19,9 @@ function formDateHour(nowTime){
   return (h<10?"0"+h:h)+":"
     +(m<10?"0"+m:m)
 }
-export {formatDate,formDateHour}
+function formDateMinute(playDuration){
+  var m1=parseInt(playDuration/60)
+  var s = parseInt(playDuration%60)
+  return (m1 < 10?"0" + m1:m1)+ "′"+(s<10?"0"+s:s)+"″"
+}
+export {formatDate,formDateHour,formDateMinute}
