@@ -29,6 +29,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
       {
+        name:"patientIndex",
         path:"/patientIndex",
         component:patientIndex,
         children:[
