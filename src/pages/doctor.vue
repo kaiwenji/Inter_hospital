@@ -94,20 +94,17 @@
         isFollow(){
             if(!this.isFollow){
                 this.$refs.followButton.className="followButton";
-<<<<<<< HEAD
                 this.$refs.heart.src="../../static/img/follow.png";
             }
             else{
                 this.$refs.followButton.className+=" followed";
                 this.$refs.heart.src="../../static/img/followed.png";
-=======
-                this.$refs.heart.src="./static/img/follow.png";  
+                this.$refs.heart.src="./static/img/follow.png";
             }
-            else{
-                this.$refs.followButton.className+=" followed";
-                this.$refs.heart.src="./static/img/followed.png";  
->>>>>>> d385558a01d72fc01edec748e01bbcb240c2f50c
-            }
+//            else{
+//                this.$refs.followButton.className+=" followed";
+//                this.$refs.heart.src="./static/img/followed.png";
+//            }
         }
     },
     mounted() {

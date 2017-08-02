@@ -47,38 +47,39 @@
 
         if (routeLength === 0) {
 
-         if (routeLength === 0) {
-
-          this.slide = 'left'
-          if (to.path === from.path && to.path === '/') {
-            this.urlObj.history = to.path;
-          } else {
-            this.urlObj.history = from.path;
-            this.urlObj.history = to.path;
-
-          }
-        } else if (routeLength === 1) {
-          this.slide = 'left'
-          this.urlObj.history = to.path;
-
-        } else {
-
-          let lastBeforeRoute = this.urlObj.history[routeLength - 2];
-          if (lastBeforeRoute === to.path) {
-
-            this.urlObj.back;
-            this.slide = 'right'
-
-          } else {
-            this.urlObj.history = to.path;
-
+          if (routeLength === 0) {
 
             this.slide = 'left'
+            if (to.path === from.path && to.path === '/') {
+              this.urlObj.history = to.path;
+            } else {
+              this.urlObj.history = from.path;
+              this.urlObj.history = to.path;
+
+            }
+          } else if (routeLength === 1) {
+            this.slide = 'left'
+            this.urlObj.history = to.path;
+
+          } else {
+
+            let lastBeforeRoute = this.urlObj.history[routeLength - 2];
+            if (lastBeforeRoute === to.path) {
+
+              this.urlObj.back;
+              this.slide = 'right'
+
+            } else {
+              this.urlObj.history = to.path;
+
+
+              this.slide = 'left'
+            }
           }
         }
-      }
-    },
+      },
 
+    }
   }
 </script>
 
