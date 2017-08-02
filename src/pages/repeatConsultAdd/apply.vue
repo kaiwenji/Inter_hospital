@@ -250,7 +250,7 @@
 //               console.log(data.obj.id)
              if(data.code == 0){
 //              that.applyId = data.obj.id
-               that.SET_APPLY_ID(data.obj.id)
+//               that.SET_APPLY_ID(data.obj.id)
                localStorage.setItem("applyId",data.obj.id)
                that.showDialog = true
                setTimeout(()=>{
