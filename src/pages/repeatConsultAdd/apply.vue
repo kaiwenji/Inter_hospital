@@ -14,23 +14,28 @@
         </div>
         <p class="doctorInfoTitle">医生信息</p>
         <div class="doctorInfo">
-          <ul>
-            <li>
-              <div class="cancelImg">
-                <img :src="docAvatar" alt="">
-              </div>
-              <div class="cancelIntro">
-                <div class="introTitle">
-                  <span class="subTitle">{{ docName }}</span>
-                  <span class="myDoctor">我的医生</span>
-                  <p>{{ hosName }}</p>
-                  <p>{{ deptName }} {{ docTitle }}</p>
+          <router-link tag="div" :to="{name:'doctor',params:{id:id}}">
+            <ul>
+              <li>
+                <div class="cancelImg">
+                  <img :src="docAvatar" alt="">
                 </div>
-              </div>
-            </li>
-          </ul>
+                <div class="cancelIntro">
+                  <div class="introTitle">
+                    <span class="subTitle">{{ docName }}</span>
+                    <span class="myDoctor">我的医生</span>
+                    <p>{{ hosName }}</p>
+                    <p>{{ deptName }} {{ docTitle }}</p>
+                  </div>
+                  <div class="applyGoMore">
+                    <span> <img src="../../../static/img/查看更多.png" alt=""> </span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </router-link>
         </div>
-        <p class="patientInfoTitle">就诊人信息 <span>切换就诊人></span> </p>
+        <p class="patientInfoTitle">就诊人信息 <span @click="changePatient()">切换就诊人></span> </p>
         <div class="patientInfo">
           <div class="leftTitle">
             <span>姓&nbsp;&nbsp;名:</span>
@@ -39,12 +44,20 @@
             <span>年&nbsp;&nbsp;龄:</span>
             <span>性&nbsp;&nbsp;别:</span>
           </div>
-          <div class="rightMatch" v-if="compatInfo.self == true">
+          <div class="rightMatch" v-if="chosedIndex == 0">
             <span>{{ compatInfo.commpatName }}</span>
             <span>{{ compatInfo.commpatIdcard }}</span>
             <span>{{ compatInfo.commpatMobile }}</span>
             <span>{{ useage }}</span>
             <span v-if="compatInfo.commpatGender == 'M'">男</span>
+            <span v-else>女</span>
+          </div>
+          <div class="rightMatch" v-else>
+            <span>{{ patList[chosedIndex].commpatName }}</span>
+            <span>{{ patList[chosedIndex].commpatIdcard }}</span>
+            <span>{{ patList[chosedIndex].commpatMobile }}</span>
+            <span>{{ useage }}</span>
+            <span v-if="patList[chosedIndex].commpatGender == 'M'">男</span>
             <span v-else>女</span>
           </div>
         </div>
@@ -86,6 +99,7 @@
            <alert :alertTitle="alertTitle" :alertMsg="alertMsg" @on-set="closeAlert"></alert>
          </div>
       </div>
+      <toggle-patient :patList="patList" :showPat="showPat" @activate="check" @toggleClosed="closePatient()"></toggle-patient>
     </div>
   </div>
 </template>
@@ -97,6 +111,7 @@
   import VMask from '../../base/mask'
   import Slider from '../../base/slider'
   import Alert from '../../base/alert'
+  import TogglePatient from '../../base/togglePatient'
   import {mapGetters,mapMutations} from 'vuex'
   export default{
     data(){
@@ -124,7 +139,10 @@
         goindex:"",
         showAlert:"",
         alertTitle:"温馨提示",
-        alertMsg:"图片最多可以上传九张哦"
+        alertMsg:"图片最多可以上传九张哦",
+        showPat:false,
+        patList:[],
+        chosedIndex:0
       }
     },
     mounted(){
@@ -143,6 +161,14 @@
         this.hosName = this.$route.query.hosName
         this.deptName = this.$route.query.deptName
         this.docTitle = this.$route.query.docTitle
+        let that =this
+        api("smarthos.user.commpat.list",{
+          token:localStorage.getItem("token")
+        }).then((data)=>{
+            console.log(data.list)
+            that.patList = data.list
+           console.log(that.patList)
+        })
     },
     computed:{
 //      ...mapGetters([
@@ -173,11 +199,15 @@
              this.$refs.upload.click()
            }else{
                this.showAlert = true
-               console.log(this.showAlert)
+//               console.log(this.showAlert)
 //               alert("最多上传九张照片")
            }
 
 
+      },
+      check(item){
+        this.showPat=false;
+        this.chosedIndex=item;
       },
       onFileChange(e){
           var file = e.target.files[0]
@@ -193,9 +223,8 @@
           let reader = new FileReader()
           reader.readAsDataURL(file)
           reader.onload = function(){
-            console.log(that.$refs.replaceImg)
+//            console.log(that.$refs.replaceImg)
             that.previewImg.push(this.result)
-            console.log(this.result)
 //            that.$refs.replaceImg.src = this.result
 //            console.log(fileName)
 //            console.log(that.image)
@@ -205,8 +234,8 @@
               fileName:fileName,
               base64:this.result
             }).then((data)=>{
-              console.log(data)
-              console.log(data.obj.attaFileUrl)
+//              console.log(data)
+//              console.log(data.obj.attaFileUrl)
               that.imageUrl.push(data.obj.attaFileUrl)
 //              console.log(that.imageUrl)
               that.attaId.push(data.obj.id)
@@ -232,36 +261,67 @@
 
       },
       applying(){
-          console.log(this.applyId)
+//          console.log(this.applyId)
          if(this.description === ''){
            this.$weui.alert("请在下方填写您的复诊需求")
               return
          }else{
            let that = this
 //          console.log(that.id)
-           api("smarthos.appiontment.add",{
-             patId: that.compatInfo.patId,
-             docId:that.id,
-             compatId:that.compatInfo.id,
-             description:that.description,
-             attaList:that.attaId,
-             token:localStorage.getItem("token")
-           }).then((data)=>{
+           if(that.chosedIndex == 0){
+             api("smarthos.appiontment.add",{
+               patId: that.compatInfo.patId,
+               docId:that.id,
+               compatId:that.compatInfo.id,
+               description:that.description,
+               attaList:that.attaId,
+               token:localStorage.getItem("token")
+             }).then((data)=>{
 //               console.log(data.obj.id)
-             if(data.code == 0){
+               if(data.code == 0){
 //              that.applyId = data.obj.id
 //               that.SET_APPLY_ID(data.obj.id)
-               localStorage.setItem("applyId",data.obj.id)
-               that.showDialog = true
-               setTimeout(()=>{
-                 that.showDialog = false
-                 that.$router.push("/myAddList/myAddApply")
-               },1000)
-             }
+                 localStorage.setItem("applyId",data.obj.id)
+                 that.showDialog = true
+                 setTimeout(()=>{
+                   that.showDialog = false
+                   that.$router.push("/myAddList/myAddApply")
+                 },1000)
+               }
 
-           })
+             })
+           }else{
+             api("smarthos.appiontment.add",{
+               patId: that.patList[that.chosedIndex].patId,
+               docId:that.id,
+               compatId:that.patList[that.chosedIndex].id,
+               description:that.description,
+               attaList:that.attaId,
+               token:localStorage.getItem("token")
+             }).then((data)=>{
+//               console.log(data.obj.id)
+               if(data.code == 0){
+//              that.applyId = data.obj.id
+//               that.SET_APPLY_ID(data.obj.id)
+                 localStorage.setItem("applyId",data.obj.id)
+                 that.showDialog = true
+                 setTimeout(()=>{
+                   that.showDialog = false
+                   that.$router.push("/myAddList/myAddApply")
+                 },1000)
+               }
+
+             })
+           }
+
          }
 
+      },
+      changePatient(){
+        this.showPat=true;
+      },
+      closePatient(){
+        this.showPat=false;
       }
     },
     components:{
@@ -269,7 +329,8 @@
        PopUp,
        VMask,
        Slider,
-       Alert
+       Alert,
+       TogglePatient
     },
     watch:{
 
@@ -347,6 +408,7 @@
       justify-content: space-between;
       span{
         font-size: 28rem/$rem;
+        display: inline-block;
         color: #0FBDFF;
       }
     }
@@ -394,8 +456,18 @@
           .cancelIntro{
             flex:2;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             /*line-height: 10px;*/
+            .applyGoMore{
+              margin-right: 25rem/$rem;
+              span{
+                img{
+                  width:16rem/$rem;
+                  height:24rem/$rem;
+                }
+              }
+            }
             .introTitle{
               .subTitle{
                 font-size: 16px;

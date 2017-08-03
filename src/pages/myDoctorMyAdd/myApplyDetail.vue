@@ -17,8 +17,8 @@
             <div class="wrapWord">
               <div>
                 <span v-if="applyDetail.numStatus == 'APPLYING'">申请中</span>
-                <span v-if="applyDetail.numStatus == 'REFUSED'">加号已拒绝</span>
-                <span v-if="applyDetail.numStatus == 'AGREED'">加号已成功</span>
+                <span v-else-if="applyDetail.numStatus == 'REFUSED'">加号已拒绝</span>
+                <span v-else>加号已成功</span>
                 <span>{{ applyDetail.resultDescription }}</span>
               </div>
             </div>
@@ -73,8 +73,8 @@
             <img :src="item.attaFileUrl" alt="" @click="enlarge(index)">
           </div>
           <!--<div class="wordFor">-->
-            <!--<span>添加图片</span>-->
-            <!--<span>请上传患处图片,让医生更了解您的病情</span>-->
+          <!--<span>添加图片</span>-->
+          <!--<span>请上传患处图片,让医生更了解您的病情</span>-->
           <!--</div>-->
         </div>
       </div>
@@ -108,7 +108,8 @@
         rightTitle:'',
         applyDetail:{},
         popImg:false,
-        goindex:""
+        goindex:"",
+        applyId:""
       }
     },
     computed:{
@@ -137,13 +138,15 @@
 //       })
     },
     created(){
+      this.applyId = this.$route.query.id
       let that = this
       api("smarthos.appointment.detail",{
         token:localStorage.getItem("token"),
-        id:localStorage.getItem("applyId")
+        id:that.applyId
       }).then((data)=>{
 //          console.log(data)
-          that.applyDetail = data.obj
+        that.applyDetail = data.obj
+        console.log(that.applyDetail)
       })
     },
 //    mounted(){
@@ -156,7 +159,7 @@
 //    },
     methods:{
       ...mapMutations([
-          'SET_CURRENT_PAGE_INDEX'
+        'SET_CURRENT_PAGE_INDEX'
       ]),
       _initSuccessScroll(){
         this.success = new BScroll(this.$refs.success,{
@@ -167,10 +170,10 @@
       enlarge(index){
 
 
-             this.popImg = true
+        this.popImg = true
 //             console.log(this.popImg)
 //             this.pageIndex = index
-             this.goindex = index
+        this.goindex = index
         this.SET_CURRENT_PAGE_INDEX(index)
 //        this.$refs.slider.gotoPage()
 //        this.$nextTick(()=>{
@@ -182,20 +185,20 @@
         this.popImg = false
       },
       goIndex(){
-          this.$router.push({
-            name:"patientIndex"
-          })
+        this.$router.push({
+          name:"patientIndex"
+        })
       }
     },
     components:{
       'VHeader':header,
-       slider
+      slider
     },
     watch:{
       applyDetail(){
-          setTimeout(()=>{
-            this._initSuccessScroll()
-          },20)
+        setTimeout(()=>{
+          this._initSuccessScroll()
+        },20)
       }
     }
   }
@@ -246,18 +249,18 @@
       overflow: hidden;
     }
     /*.largePicture{*/
-      /*!*overflow: hidden;*!*/
-      /*width:100%;*/
-      /*display: inline-block;*/
-      /*!*display: flex;*!*/
-      /*!*justify-content: center;*!*/
-      /*!*align-items: center;*!*/
-       /*img{*/
-         /*width: 100%;*/
-         /*!*height: 500px;*!*/
-         /*border:1px solid red;*/
-         /*display: inline-block;*/
-       /*}*/
+    /*!*overflow: hidden;*!*/
+    /*width:100%;*/
+    /*display: inline-block;*/
+    /*!*display: flex;*!*/
+    /*!*justify-content: center;*!*/
+    /*!*align-items: center;*!*/
+    /*img{*/
+    /*width: 100%;*/
+    /*!*height: 500px;*!*/
+    /*border:1px solid red;*/
+    /*display: inline-block;*/
+    /*}*/
     /*}*/
   }
   .successContent{

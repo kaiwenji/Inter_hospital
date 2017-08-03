@@ -2,7 +2,7 @@
   <div >
       <transition name="vanish">
       <div class="background" @click="activate" v-show="isShown">
-    </div>
+      </div>
     </transition>
       <transition name="fade">
       <div class="options" v-show="isShown">
@@ -22,7 +22,7 @@
             type:Boolean,
             default:false,
             required:true
-        }  
+        }
       },
     computed: {
         isShown(){
@@ -38,7 +38,7 @@
     },
     methods: {
         activate(){
-            
+
             this.$emit("activate");
         }
     }
@@ -68,7 +68,7 @@
     display:flex;
     flex-direction:column;
 }
-        
+
     .fade-enter-active,.fade-leave-active{
         transition: all .5s ease;
     }

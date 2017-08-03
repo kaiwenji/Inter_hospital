@@ -9,6 +9,7 @@ import myDoctorChat from './myDoctorChat'
 import recentChat from './recentChat'
 import followDoctor from './followDoctor'
 import chat from "./chat"
+import myApplyDetail from './myApplyDetail'
 export default [
   {
     path:'/myDoctorChat',
@@ -50,6 +51,11 @@ export default [
       {
         path:'myAddApply',
         component:myAddApply,
+      },
+      {
+        name:"myApplyDetail",
+        path:'myApplyDetail',
+        component:myApplyDetail,
       }
     ]
   },
