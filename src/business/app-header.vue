@@ -1,5 +1,5 @@
 <template>
-  <header >
+  <header id="header">
         <div class="left" @click="back">
           <slot name="left">
             <font><span>&#xe600;</span></font>
@@ -13,7 +13,7 @@
 </template>
 
 
-<script type="text/ecmascript-6">
+<script>
 
   export default {
     props: {},
@@ -23,13 +23,16 @@
     computed: {},
 
     mounted() {
-
+        document.getElementById("header").addEventListener("touchmove",this.preventDefault);
     },
     beforeDestroy() {
-
+        document.getElementById("header").removeEventListener("touchmove",this.preventDefault);
     },
 
     methods: {
+        preventDefault(e){
+            e.preventDefault();
+        },
       back(){
         this.$router.go(-1)
       }

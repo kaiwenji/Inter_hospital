@@ -122,6 +122,10 @@
 font-family: 'iconfont';
 src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
 }
+      span{
+    font-family: 'iconfont';
+    font-size: 18px;
+  }
     p{
         word-break:break-all;
     }

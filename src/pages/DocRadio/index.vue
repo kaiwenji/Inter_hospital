@@ -8,12 +8,16 @@
               <span class="weui-badge badge">8</span>
     </div>
     </app-header>
-      <div class="wrap">
-          <my-pullup @pullUp="loadingMore" :flag="flag">
+      
+<!--      <my-metalbox :list="audioList">-->
+      <div style="position:fixed;top:2.36rem;bottom:2.5rem;left:0;right:0">
+          <my-pullup :list="audioList"@pullUp="loadingMore" :flag="flag">
               <doc-panel :list="audioList"></doc-panel>
 
     </my-pullup>
     </div>
+          
+<!--    </my-metalbox>-->
       <my-loading v-show="!Got"class="myLoading"></my-loading>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
@@ -33,6 +37,7 @@
     import MyLoading from "../../base/loading/loading.vue";
     import myMixin from "../../lib/canScroll.js";
     import Api from "../../lib/api.js";
+    import MyMetalbox from "../../base/metalBox.vue";
   export default {
     data() {
       return {
@@ -50,9 +55,11 @@
         DocPanel,
         AppFooter,
         MyPullup,
-        MyLoading
+        MyLoading,
+        MyMetalbox
     },
     mounted() {
+        
         document.getElementById("metalBox").addEventListener("click",(e)=>{
             e.stopPropagation();
             console.log("click");
@@ -63,7 +70,7 @@
         clearInterval(this.intervalId);
 
     },
-      mixins:[myMixin],
+//      mixins:[myMixin],
     methods: {
         getInfo(){
             Api("smarthos.sns.knowledge.page",{
@@ -76,7 +83,6 @@
                 if(val.succ)
                 {
                     this.Got=true;
-                    this.flag=!this.flag;
                     console.log(val);
                     val.list.forEach((item)=>{
                         this.audioList.push(Object.assign({}, item, { on: false }));
@@ -86,6 +92,8 @@
                         this.page=-1;
                     }
                     else{
+                        
+                        this.flag=!this.flag;
                         this.page++;
                     }
                     console.log(this.page);

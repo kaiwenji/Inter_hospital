@@ -1,5 +1,5 @@
 <template>
-<div>
+    <div>
     <div v-for="audioInfo,index in audioList" :key="audioInfo.snsKnowledge.id">
       <div class="audioItem" @click="activate(audioInfo)">
           <div class="hd">
@@ -29,7 +29,6 @@
 
 
 <script>
-
     import {getMyDay,goodTime} from "../lib/filter.js";
     import Bubble from "../business/bubble.vue"; 
     import Api from "../lib/api.js";
@@ -51,7 +50,6 @@
       watch:{
           list(){
               setTimeout(()=>{
-                  console.log(this.$refs.bubble[0].$el)
                   for(let i=0;i<this.$refs.bubble.length;i++){
                       this.$refs.bubble[i].$el.addEventListener("click",(e)=>{
                         e._flag=true;
@@ -95,6 +93,14 @@
           goodTime
       },
     mounted() {
+//        var scroll=new BScroll(document.getElementById("wrapper"),{
+//            startX:0,
+//            startY:0,
+//            scrollY:true,
+//            click:true,
+//            touch:true
+//            
+//        })
 
 //              console.log(this.$refs);
 
@@ -110,8 +116,7 @@
         })
     },
     beforeDestroy() {
-        
-
+        this.$refs.music.pause();
     },
     methods: {
         play(audioInfo,index){
@@ -125,7 +130,6 @@
             }
             this.src=url;
             setTimeout(this.keepGoing,100);
-            this.$refs.music.play();
             this.nowPlaying=index;
         },
         keepGoing(){

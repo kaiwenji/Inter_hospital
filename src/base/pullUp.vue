@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper" ref="wrapper">
+  <div id="wrapper" ref="wrapper" >
           <div id="scroller" ref="scroller">
               <slot><p>helloworld</p></slot>
     </div>
@@ -7,15 +7,21 @@
 </template>
 
 <script>
+
+    import BScroll from "better-scroll"
   export default {
     data() {
       return {
           topValue:0,
           interval:{},
           nothingMore:false,
-          ban:false
+          ban:false,
+          timeBan:false,
+          scroll:null,
+          bottom:0
       };
     },
+      
     computed:{
 
     },
@@ -23,12 +29,34 @@
 
     },
     mounted() {
-        this.setScroll();
+        
+        this.scroll=new BScroll(document.getElementById("wrapper"),{
+            startX:0,
+            startY:0,
+            scrollY:true,
+            click:true,
+            touch:true,
+            probeType: 3
+
+        })
+        
+            console.log(this.scroll);
+        this.scroll.on("touchend",(pos)=>{
+            if (pos.y<this.bottom+20&&!this.ban&&!this.timeBan){
+                this.$emit("pullUp");
+                this.ban=true;
+                this.timeBan=true;
+                setTimeout(()=>{
+                    this.timeBan=false;
+                },1000)
+            }
+        })
     },
     beforeDestroy() {
 
     },
     methods: {
+        
         setScroll(){
             this.topValue = 0,// 上次滚动条到顶部的距离  
                 this.interval = null;// 定时器  
@@ -59,19 +87,38 @@
               type:Boolean,
               default:true,
               required:true
+          },
+          list:{
+              type:Array,
+              default:()=>{
+                  return [];
+              },
+              required:false
           }
       },
       watch:{
           flag(){
               this.ban=false;
-          }
+          },
+          list(){
+              if(this.scroll){
+                  setTimeout(()=>{
+                      this.scroll.refresh();
+                      this.bottom=this.$refs.wrapper.offsetHeight-this.$refs.wrapper.scrollHeight;
+                  },100)
+              }
+              
+          },
       }
   };
 </script>
 
 <style scoped lang="scss">
     #wrapper{
-        flex:1 1 auto;
+        position:absolute;
+        height:100%;
+        width:100%;
+/*        flex:1 1 auto;*/
         overflow:auto;
     }
     #scroller{

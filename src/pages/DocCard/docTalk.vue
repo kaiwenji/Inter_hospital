@@ -3,8 +3,8 @@
     <app-header>
         <p class="headerTitle">医生说</p>
     </app-header>
-        <div class="wrap">
-    <pull-up @pullUp="loadingMore" :flag="flag">
+        <div style="position:fixed;top:2.36rem;left:0;right:0;bottom:0">
+    <pull-up :list="audioList"@pullUp="loadingMore" :flag="flag">
 
     <doc-panel :list="audioList"></doc-panel>
     </pull-up>
@@ -44,7 +44,7 @@
         PullUp,
         MyLoading
     },
-      mixins:[myMixin],
+//      mixins:[myMixin],
     mounted() {
 
         this.getInfo();
@@ -63,7 +63,6 @@
             })
             .then((val)=>{
                 this.Got=true;
-                this.flag=!this.flag;
                 if(val.succ){
                     val.list.forEach((item)=>{
                         this.audioList.push(Object.assign({}, item, { on: false }));
@@ -73,6 +72,7 @@
                         this.page=-1;
                     }
                     else{
+                        this.flag=!this.flag;
                         this.page++;
                     }
                 }
