@@ -1,11 +1,11 @@
 <template>
-  <div >
+  <div id="metalBox">
       <transition name="vanish">
-      <div class="background" @click="activate" v-show="isShown">
+      <div class="background" @click="activate" v-show="isShown" >
     </div>
     </transition>
       <transition name="fade">
-      <div class="options" v-show="isShown">
+      <div class="options" v-show="isShown" id="options">
           <slot name="contain"></slot>
     </div>
     </transition>
@@ -31,7 +31,6 @@
     },
     components: {},
     mounted() {
-
     },
     beforeDestroy() {
 

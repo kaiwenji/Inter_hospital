@@ -24,7 +24,9 @@ $fontFamily:'PingFangSC';
 .lf{
   font-size: 22rem/$rem;
 }
-
+p,span,textarea{
+    font-family:$fontFamily
+}
 $bgColor: #F5F5F5;
 $mainColor: #FFFFFF;
 $rem: 37.5;

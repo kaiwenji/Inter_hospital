@@ -3,13 +3,13 @@
     <app-header>
         <p class="headerTitle">医生说</p>
     </app-header>
+        <div class="wrap">
     <pull-up @pullUp="loadingMore" :flag="flag">
-    <div class="main">
-    <div v-for="item in audioList">
-    <doc-panel :item="item" @recommend="setColor"></doc-panel>
-    </div>
-    </div>
+
+    <doc-panel :list="audioList"></doc-panel>
     </pull-up>
+            
+    </div>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
@@ -26,6 +26,7 @@
     import AppHeader from "../../business/app-header.vue";
     import DocPanel from "../../business/docPanel.vue";
     import Api from "../../lib/api.js";
+    import myMixin from "../../lib/canScroll.js"
   export default {
     data() {
       return {
@@ -43,6 +44,7 @@
         PullUp,
         MyLoading
     },
+      mixins:[myMixin],
     mounted() {
 
         this.getInfo();
@@ -63,6 +65,9 @@
                 this.Got=true;
                 this.flag=!this.flag;
                 if(val.succ){
+                    val.list.forEach((item)=>{
+                        this.audioList.push(Object.assign({}, item, { on: false }));
+                    })
                     this.audioList=val.list;
                     if(this.page==val.page.total){
                         this.page=-1;
@@ -91,9 +96,6 @@
                 },1000);
             }
             
-        },
-        setColor(){
-            console.log("setColor");
         }
     }
   };
@@ -103,10 +105,6 @@
 @import "../../common/var.scss";
     header{
         border-bottom:1px solid lightgrey;
-    }
-    .main{
-        flex:1 1 auto;
-        overflow:auto;
     }
     .app{
         flex:1 1 auto;

@@ -8,6 +8,9 @@
         <div class="main">
         <div v-for="item,index in patList" @click="check(index)">
             <p class="dark">{{item.commpatName}}</p>
+            <p class="dark">{{item.commpatName}}</p>
+            <p class="dark">{{item.commpatName}}</p>
+            <p class="dark">{{item.commpatName}}</p>
 
     </div>
             <p class="lightBlue" @click="addPat()">添加就诊人<span><img src="../../static/img/add.png"></span></p>
@@ -84,7 +87,7 @@
                 border-bottom:.5px solid silver;
             }
             &.main{
-
+/*                height:700px;*/
                 flex: 1 1 auto;
                 overflow:auto;
             }

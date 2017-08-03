@@ -195,6 +195,7 @@
           reader.onload = function(){
             console.log(that.$refs.replaceImg)
             that.previewImg.push(this.result)
+            console.log(this.result)
 //            that.$refs.replaceImg.src = this.result
 //            console.log(fileName)
 //            console.log(that.image)
@@ -249,7 +250,7 @@
 //               console.log(data.obj.id)
              if(data.code == 0){
 //              that.applyId = data.obj.id
-               that.SET_APPLY_ID(data.obj.id)
+//               that.SET_APPLY_ID(data.obj.id)
                localStorage.setItem("applyId",data.obj.id)
                that.showDialog = true
                setTimeout(()=>{

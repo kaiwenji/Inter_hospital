@@ -1,7 +1,7 @@
 <template>
   <div id="wrapper" ref="wrapper">
           <div id="scroller" ref="scroller">
-      <slot></slot>
+              <slot><p>helloworld</p></slot>
     </div>
     </div>
 </template>
@@ -71,7 +71,9 @@
 
 <style scoped lang="scss">
     #wrapper{
-        height:100%;    
+        flex:1 1 auto;
         overflow:auto;
+    }
+    #scroller{
     }
 </style>

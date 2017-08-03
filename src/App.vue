@@ -5,7 +5,7 @@
     </transition>
   </div>
 </template>
-<script type="text/ecmascript-6">
+<script>
   import urlHistory from "./lib/urlHistory"
   export default {
     name: 'app',
@@ -18,7 +18,17 @@
       this.urlObj = new urlHistory();
 
     },
-
+mounted(){
+//document.body.addEventListener("touchmove",(e)=>{
+//    if(e._flag){
+//        console.log(e.target);
+//        
+//    }
+//    else{
+//        e.preventDefault();
+//    }
+//})
+},
     methods: {
       beforeEnter(el){
 
@@ -38,8 +48,6 @@
 
     watch: {
       $route(to, from){
-//        this.scroll();
-        console.log(this.urlObj.history)
         let routeLength = this.urlObj.history.length;
         if (routeLength === 0) {
           console.log(routeLength, '一开始的空')
@@ -78,7 +86,15 @@
 
 <style scoped  lang="scss">
   @import './common/public.scss';
-
+/*
+    html{
+        position:fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+*/
 
   #app {
     position: absolute;

@@ -53,9 +53,10 @@
       api("smarthos.follow.docpat.list",{
         token:localStorage.getItem('token'),
       }).then(function(data){
-//        console.log(data)
-        that.followList = data
-        console.log(that.followList)
+         if(data.code == 0){
+           that.followList = data
+           console.log(that.followList)
+         }
       })
     },
     methods:{

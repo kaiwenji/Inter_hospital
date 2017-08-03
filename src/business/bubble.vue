@@ -1,0 +1,126 @@
+<template>
+  <div class="">
+      <div class="bubble" @click="play()"ref=bubble :class="{'on':isPlay}">
+          <img src="../../static/img/broadcast.png">
+          <p>{{duration}}</p>
+<!--
+          <audio ref="music" id="music" @load="initialAudio":src="src" class="music">
+        </audio>
+-->
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+          isPlay:false,
+          flag:true
+      };
+    },
+    props:{
+        duration:{
+            default:'',
+            type:String,
+            required:true
+        },
+        pause:{
+            default:false,
+            type:Boolean,
+            required:true
+        }
+    },
+    computed: {
+        
+    },
+    components: {},
+    mounted() {
+//            var audio=this.$refs.music;
+//            audio.setAttribute("src",this.src);
+//        audio.addEventListener('canplay',this.getDuration, false);
+    },
+    watch:{
+        pause(){
+            console.log("pause",this.pause);
+            this.isPlay=false;
+        }
+    },
+    beforeDestroy() {
+//        clearInterval(this.intervalId);
+
+    },
+    methods: {
+        play(){
+            this.isPlay=true;
+            if(this.flag){
+//                setTimeout(()=>{
+                    this.$emit("activate");
+//                    this.flag=false;
+//                              },500)
+            }
+        }
+//        getDuration(){
+//               this.duration=this.setTimeFormat(this.$refs.music.duration);
+//        },
+//        on(){
+//            if(this.$refs.music.paused){
+//                var audioList=document.getElementsByClassName("music");
+//                for(let i=0;i<audioList.length;i++){
+//                    audioList[i].pause();
+//                    audioList[i].currentTime=0;
+//                    
+//                }
+//                this.$refs.bubble.className+=" on";
+//                this.$refs.music.play();
+//                this.intervalId=setInterval(this.checkIfEnd,100);
+//            }
+//        },
+//        checkIfEnd(){
+//          if(this.$refs.music.paused){
+//              console.log("end");
+//              this.$refs.bubble.className="bubble";
+//              clearInterval(this.intervalId);
+//          }  
+//        },
+//        setTimeFormat(item){
+//            var hour = Math.floor (item / 3600);
+//            var other = item % 3600;
+//            var minute = Math.floor (other / 60);
+//            var second = (other % 60).toFixed (0);
+//            var res=minute + '\'' + second + '\"';
+//            if(hour!=0){
+//                res=hour + '\'' +res;
+//            }
+//            return  res;
+//        }
+    }
+  };
+</script>
+
+<style scoped lang="scss">
+    .bubble{
+        position:relative;
+        background-image:url(../../static/img/bubble_off.png);
+        &.on{
+            background-image:url(../../static/img/bubble_on.png);
+        }
+        background-size:contain;
+        height:2rem;
+        width:8rem;
+        background-repeat:no-repeat;
+        display:flex;
+        flex-direction:row-reverse;
+        align-items:center;
+        p{
+            color:white;
+            padding:1rem;
+        }
+        img{
+            position:absolute;
+            height:0.8rem;
+            left:1rem;
+            top:0.6rem;
+        }
+    }
+</style>

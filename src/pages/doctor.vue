@@ -1,7 +1,7 @@
 <template>
-  <div class="app" ref="wrap">
-
-      <app-header style="border:1px solid transparent"class="test" ref="header" id="header">
+  <div class="app wrap" ref="wrap">
+      
+      <app-header style="border:1px solid transparent"class="test" ref="header" id="header"> 
           <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
           <div slot="right" ref="followButton" style="flex:0 0 auto" class="followButton" @click="follow">
               <p  class="l ft" ><img ref="heart"src="../../static/img/follow.png">{{followWord}}</p>
@@ -38,12 +38,11 @@
           <div class="docAudio"v-show="showDocTalk" >
               <div class="title">
                   <p class="l">医生说</p>
-                  <div><p @click="getMoreAudio()" v-show="!nothingMore">更多</p></div>
-              </div>
-              <div v-for="item in audioList">
-                <doc-panel :item="item"></doc-panel>
-              </div>
-          </div>
+                  <div><p @click="getMoreAudio()" v-show="!nothingMore"><img src="../../static/img/getMore.png"></p></div>
+    </div>
+              <doc-panel :list="audioList"></doc-panel>
+              
+    </div>
           <div class="QR">
               <div>
                 <p>扫一扫二维码，关注我</p>
@@ -64,6 +63,7 @@
     import Bubble from "../base/bubble.vue";
     import Api from "../lib/api.js";
     import {getDefaultProfile} from "../lib/public.js";
+    import myMixin from "../lib/canScroll.js";
   export default {
     data() {
       return {
@@ -79,6 +79,7 @@
           isFollow:false
       };
     },
+      mixins:[myMixin],
     computed: {
         followWord(){
             return this.isFollow?"已关注":"关注";
@@ -147,7 +148,9 @@
             else{
                 this.showDocTalk=true;
             }
-
+            val.list.forEach((item)=>{
+                this.audioList.push(Object.assign({}, item, { on: false }));
+            })
             this.audioList=val.list;
             if (val.page.total==1){
                 this.nothingMore=true;
@@ -392,8 +395,11 @@
                 padding:0.8rem;
 
             }
-
-
+            
+            img{
+                height:1rem;
+            }
+            
         }
 
 
