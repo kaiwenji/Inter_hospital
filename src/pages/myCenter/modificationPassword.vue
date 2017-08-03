@@ -33,7 +33,7 @@
     import top from '../../business/app-header.vue'
     import { required, minLength, alphaNum, maxLength} from 'vuelidate/lib/validators'
     import api from '../../lib/api'
-     var token = localStorage.getItem('token')
+//     var token = localStorage.getItem('token')
     export default{
         components: {
             top
@@ -47,6 +47,7 @@
       },
         data(){
             return {
+              token:localStorage.getItem('token'),
               patPassword:'',
               showPatPassWord:false,
               againPatPassword:''
@@ -69,7 +70,7 @@
             api('smarthos.user.pat.passowrd.modify',{
               patPassword:patPassword,
               newPatPassword:againPatPassword,
-              token:token
+              token:this.token
             }).then(req=>{
               console.log(req,999)
               if(req.succ){

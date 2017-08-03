@@ -58,7 +58,7 @@
   import { required, minLength, alphaNum, maxLength} from 'vuelidate/lib/validators'
   import cd from '../../lib/regex'
   import api from '../../lib/api'
-  var token  = localStorage.getItem('token')
+//  var token  = localStorage.getItem('token')
   export default{
     components: {
       top
@@ -75,6 +75,7 @@
     },
     data(){
       return {
+        token:localStorage.getItem('token'),
         patName:'',
         patIdcard:'',
         showNameError:false,
@@ -117,7 +118,7 @@
           this.$set(this.$data,'showCd',true)
         } else {
           api('smarthos.user.commpat.infomation.modify',{
-            "token": token,
+            "token": this.token,
             "commpatId": this.compatId,
             "commpatName": this.patName,
             "commpatIdcard": this.patIdcard
@@ -142,7 +143,7 @@
       },
       bindCode(){
         Api('nethos.book.compat.bind',{
-          token:token,
+          token:this.token,
           compatId:this.compatId
         }).then(req=>{
           console.log(req,999999);
@@ -155,7 +156,7 @@
       },
       deleteUser(){
         Api('nethos.pat.compat.delete',{
-          token:token,
+          token:this.token,
           compatId:this.compatId
         }).then(req=>{
           console.log(req,56565656);

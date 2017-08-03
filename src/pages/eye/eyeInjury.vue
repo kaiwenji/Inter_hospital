@@ -5,76 +5,81 @@
         <div class="middle big">眼底病快速通道</div>
         <span slot="right" class="step" @click="orderDetail">立即预约</span>
       </top>
-      <div class="banner">
-        <img :src="headerImg" alt="">
-      </div>
-      <div class="wrap">
-        <div class="patMsg">
-          <div class="msg mf">
-            就诊人信息
+      <div ref="wrapper" class="wrapper">
+        <div>
+          <div class="banner">
+            <img :src="headerImg" alt="">
           </div>
-          <div class="toggle" @click="toggleUser">
-            切换就诊人
-          </div>
-        </div>
-        <div class="patDetail">
-          <p>
-            <span class="bfc">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
-            <span class="bf">{{patMsg.commpatName}}</span>
-          </p>
-          <p>
-            <span class="bfc">身份证号：</span>
-            <span class="bf">{{patMsg.commpatIdcard}}</span>
-          </p>
-          <p>
-            <span class="bfc">电话号码：</span>
-            <span class="bf">{{patMsg.commpatMobile}}</span>
-          </p>
-          <p>
-            <span class="bfc">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>
-            <span class="bf">18</span>
-          </p>
-          <p>
-            <span class="bfc">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
-            <span class="bf">{{patMsg.commpatGender=='M'?'男':'女'}}</span>
-          </p>
-        </div>
-        <div class="date">
-          <div class="mf commom">预期就诊时间</div>
-          <div class="weui-cells" >
-            <a @click="visitingTime" class="weui-cell weui-cell_access" href="javascript:;">
-              <div class="weui-cell__bd">
-                <p class="mfc">{{visitingDate?visitingDate:'请选择预期就诊时间'}}</p>
+          <div class="wrap">
+            <div class="patMsg">
+              <div class="msg mf">
+                就诊人信息
               </div>
-              <div class="weui-cell__ft">
-                {{injuryDetail.visitingTime}} {{injuryDetail.visitingAmpm}}
-              </div>
-            </a>
-          </div>
-
-        </div>
-        <div class="date">
-          <div class="mf commom">病情描述</div>
-          <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-              <div class="weui-cell__bd">
-                <textarea v-model="description" class="weui-textarea" placeholder="请务必填写您的病史，主诉，症状，指标，治疗经过，相关的检查报告请拍照上传。" rows="3"></textarea>
+              <div class="toggle" @click="toggleUser">
+                切换就诊人
               </div>
             </div>
+            <div class="patDetail">
+              <p>
+                <span class="bfc">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+                <span class="bf">{{patMsg.commpatName}}</span>
+              </p>
+              <p>
+                <span class="bfc">身份证号：</span>
+                <span class="bf">{{patMsg.commpatIdcard}}</span>
+              </p>
+              <p>
+                <span class="bfc">电话号码：</span>
+                <span class="bf">{{patMsg.commpatMobile}}</span>
+              </p>
+              <p>
+                <span class="bfc">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</span>
+                <span class="bf">18</span>
+              </p>
+              <p>
+                <span class="bfc">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span>
+                <span class="bf">{{patMsg.commpatGender=='M'?'男':'女'}}</span>
+              </p>
+            </div>
+            <div class="date">
+              <div class="mf commom">预期就诊时间</div>
+              <div class="weui-cells" >
+                <a @click="visitingTime" class="weui-cell weui-cell_access" href="javascript:;">
+                  <div class="weui-cell__bd">
+                    <p class="mfc">{{visitingDate?visitingDate:'请选择预期就诊时间'}}</p>
+                  </div>
+                  <div class="weui-cell__ft">
+                    {{injuryDetail.visitingTime}} {{injuryDetail.visitingAmpm}}
+                  </div>
+                </a>
+              </div>
+
+            </div>
+            <div class="date">
+              <div class="mf commom">病情描述</div>
+              <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                  <div class="weui-cell__bd">
+                    <textarea v-model="description" class="weui-textarea" placeholder="请务必填写您的病史，主诉，症状，指标，治疗经过，相关的检查报告请拍照上传。" rows="3"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--<div class="upLoad">-->
+            <!--<div class="addImg">-->
+            <!--<img src="../../../static/img/addImg.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="hint">-->
+            <!--<p class="bf">添加图片</p>-->
+            <!--<p class="mfc">请上传患处图片，让医生更了解您</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <upload v-on:getAttaIdsList="getAttaIdsList">
+            </upload>
           </div>
         </div>
-        <!--<div class="upLoad">-->
-        <!--<div class="addImg">-->
-        <!--<img src="../../../static/img/addImg.png" alt="">-->
-        <!--</div>-->
-        <!--<div class="hint">-->
-        <!--<p class="bf">添加图片</p>-->
-        <!--<p class="mfc">请上传患处图片，让医生更了解您</p>-->
-        <!--</div>-->
-        <!--</div>-->
-        <upload v-on:getAttaIdsList="getAttaIdsList">
-        </upload>
       </div>
+
     </div>
     <selete-date :showPat="showPat" :patList="dateList" @activate="activate"></selete-date>
   </div>
@@ -84,7 +89,8 @@
   import upload from '../../business/upload.vue'
   import seleteDate from '../../business/seleteDate.vue'
   import api from '../../lib/api'
-  var token = localStorage.getItem('token')
+  import BScroll from 'better-scroll'
+//  var token = localStorage.getItem('token')
   export default{
     components: {
       top,
@@ -93,6 +99,7 @@
     },
     data(){
       return {
+        token:localStorage.getItem('token'),
         patMsg:{},
         showContain:true,
         list:[],
@@ -110,10 +117,36 @@
       }
     },
     mounted(){
+      this.initScroll();
       this.getUsers();
       this.getImg()
     },
+    watch:{
+      userList(){
+        console.log(121212)
+        this.$nextTick(()=>{
+          setTimeout(()=>{
+            this.initScroll()
+          },50)
+        })
+      },
+      imgList(){
+        console.log(898989)
+        this.$nextTick(()=>{
+          setTimeout(()=>{
+            this.initScroll()
+          },50)
+        })
+      }
+    },
     methods:{
+      initScroll(){
+        this.scroll = new BScroll(this.$refs.wrapper,{
+          click:true,
+          probeType: 1,
+          bounce: true
+        })
+      },
       activate(value){
         console.log(value,555555);
         this.$set(this.$data,'injuryDetail',value)
@@ -151,7 +184,7 @@
       },
       getUsers(){
         api('smarthos.user.commpat.list',{
-          token:token
+          token:this.token
         }).then(res=>{
           console.log(res,55555)
           if(res.succ){
@@ -182,7 +215,7 @@
           "compatId":this.patMsg.id,
           "attaIdsList":this.imgList,
           "description":this.description,
-          "token":token
+          "token":this.token
         }).then(res=>{
           console.log(res,44444444);
           if(res.succ){
@@ -247,6 +280,16 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    height: 100%;
+  }
+  .wrapper{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top:88rem/$rem;
+    bottom:0;
+    overflow: auto;
+    width: 100%;
   }
   .area{
     position: fixed;
@@ -279,7 +322,7 @@
     flex: 1;
     padding: 30rem/$rem;
     background: white;
-    overflow: auto;
+    /*overflow: auto;*/
   }
   .patMsg{
     width: 100%;

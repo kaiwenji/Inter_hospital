@@ -115,6 +115,7 @@
       },
         data(){
             return {
+              token:localStorage.getItem('token'),
               orderDetail:{},
               id:'',
               showLoading:true
@@ -130,7 +131,7 @@
         },
         getData(){
           api("smarthos.appointment.oculartrauma.detail",{
-            token:token
+            token:this.token
           }).then(res=>{
             console.log(res,66666);
             if(res.succ){
@@ -157,7 +158,7 @@
               onClick: function () {
                 api("smarthos.appointment.oculartrauma.giveup.modify",{
                   id:$this.id,
-                  token:token
+                  token:this.token
                 }).then(res=>{
                   console.log(res,666)
                   if(res.succ){

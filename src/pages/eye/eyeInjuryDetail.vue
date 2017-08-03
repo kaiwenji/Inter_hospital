@@ -4,72 +4,74 @@
       <!--<div class="middle big">眼底快速通道</div>-->
       <span slot="right" class="step" @click="again">重新申请</span>
     </top>
-    <div v-show="!showLoading" class="wrap">
-      <div class="hintMsg">
-        <div class="succ">
-          <img src="../../../static/img/succ.png" alt="">
-        </div>
-        <div class="text">
-          <p class="sfc">预约成功</p>
-          <p class="sfc">请前往浙二眼科医院，将页面展示给导医台护士，即可快速就诊眼底病专家</p>
-        </div>
-      </div>
-      <div class="contain">
-        <div class="patMsg">
-          <div class="msg mf">
-            就诊人信息
+    <div v-show="!showLoading" class="wrap" ref="wrapper">
+      <div>
+        <div class="hintMsg">
+          <div class="succ">
+            <img src="../../../static/img/succ.png" alt="">
           </div>
-          <!--<div class="toggle" @click="toggle">-->
-          <!--切换就诊人-->
-          <!--</div>-->
-        </div>
-        <div class="patDetail">
-          <p>
-            <span class="bfc">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
-            <span class="bf">{{orderDetail.compatName}}</span>
-          </p>
-          <p>
-            <span class="bfc">身份证号：</span>
-            <span class="bf">{{orderDetail.compatIdcard}}</span>
-          </p>
-          <p>
-            <span class="bfc">电话号码：</span>
-            <span class="bf">{{orderDetail.compatMobile}}</span>
-          </p>
-          <p>
-            <span class="bfc">年龄：</span>
-            <span class="bf">{{orderDetail.compatAge}}</span>
-          </p>
-          <p>
-            <span class="bfc">性别：</span>
-            <span class="bf">{{orderDetail.compatGender=='M'?'男':'女'}}</span>
-          </p>
-        </div>
-        <div class="date">
-          <div class="mf commom">预期就诊时间</div>
-          <div class="weui-cells" >
-            <a class="weui-cell weui-cell_access" href="javascript:;">
-              <div class="weui-cell__bd">
-                <p class="mfc">{{orderDetail.visitingTime | Getdate}} {{orderDetail.visitingAmpm}}</p>
-              </div>
-            </a>
+          <div class="text">
+            <p class="sfc">预约成功</p>
+            <p class="sfc">请前往浙二眼科医院，将页面展示给导医台护士，即可快速就诊眼底病专家</p>
           </div>
+        </div>
+        <div class="contain">
+          <div class="patMsg">
+            <div class="msg mf">
+              就诊人信息
+            </div>
+            <!--<div class="toggle" @click="toggle">-->
+            <!--切换就诊人-->
+            <!--</div>-->
+          </div>
+          <div class="patDetail">
+            <p>
+              <span class="bfc">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span>
+              <span class="bf">{{orderDetail.compatName}}</span>
+            </p>
+            <p>
+              <span class="bfc">身份证号：</span>
+              <span class="bf">{{orderDetail.compatIdcard}}</span>
+            </p>
+            <p>
+              <span class="bfc">电话号码：</span>
+              <span class="bf">{{orderDetail.compatMobile}}</span>
+            </p>
+            <p>
+              <span class="bfc">年龄：</span>
+              <span class="bf">{{orderDetail.compatAge}}</span>
+            </p>
+            <p>
+              <span class="bfc">性别：</span>
+              <span class="bf">{{orderDetail.compatGender=='M'?'男':'女'}}</span>
+            </p>
+          </div>
+          <div class="date">
+            <div class="mf commom">预期就诊时间</div>
+            <div class="weui-cells" >
+              <a class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                  <p class="mfc">{{orderDetail.visitingTime | Getdate}} {{orderDetail.visitingAmpm}}</p>
+                </div>
+              </a>
+            </div>
 
-        </div>
-        <div class="date">
-          <div class="mf commom">病情描述</div>
-          <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-              <div class="weui-cell__bd weui-textarea mf">
-                {{orderDetail.description}}
-                <!--<textarea class="weui-textarea" placeholder="请务必填写您的病史，主诉，症状，指标，治疗经过，相关的检查报告请拍照上传。" rows="3"></textarea>-->
+          </div>
+          <div class="date">
+            <div class="mf commom">病情描述</div>
+            <div class="weui-cells weui-cells_form">
+              <div class="weui-cell">
+                <div class="weui-cell__bd weui-textarea mf">
+                  {{orderDetail.description}}
+                  <!--<textarea class="weui-textarea" placeholder="请务必填写您的病史，主诉，症状，指标，治疗经过，相关的检查报告请拍照上传。" rows="3"></textarea>-->
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="upLoad">
-          <div class="addImg">
-            <img @click="bigImg(item.attaFileUrl)" v-for="item of orderDetail.attaList" :src="item.attaFileUrl" alt="">
+          <div class="upLoad">
+            <div class="addImg">
+              <img @click="bigImg(item.attaFileUrl)" v-for="item of orderDetail.attaList" :src="item.attaFileUrl" alt="">
+            </div>
           </div>
         </div>
       </div>
@@ -79,7 +81,8 @@
 </template>
 <script type="text/ecmascript-6">
   import top from '../../business/app-header.vue'
-  var token = localStorage.getItem('token');
+  import BScroll from 'better-scroll'
+//  var token = localStorage.getItem('token');
   import api from '../../lib/api'
   import MyLoading from "../../base/loading/loading.vue";
   import {Getdate} from '../../lib/filter'
@@ -93,22 +96,41 @@
     },
     data(){
       return {
+        token:localStorage.getItem('token'),
         orderDetail:{},
         id:'',
         showLoading:true
       }
     },
     mounted(){
+      this.initScroll()
       this.getData()
     },
+    watch:{
+      orderDetail(){
+        this.$nextTick(()=>{
+          setTimeout(()=>{
+            this.initScroll()
+          },50)
+        })
+      }
+    },
     methods:{
+      initScroll(){
+        this.scroll = new BScroll(this.$refs.wrapper,{
+          click:true,
+          probeType: 1,
+          bounce: true
+        })
+        console.log(this.scroll)
+      },
       bigImg(url){
         this.$weui.gallery(url, {
         });
       },
       getData(){
         api("smarthos.appointment.fundus.detail",{
-          token:token
+          token:this.token
         }).then(res=>{
           console.log(res,66666);
           if(res.succ){
@@ -135,7 +157,7 @@
             onClick: function () {
               api("smarthos.appointment.fundus.giveup.modify",{
                 id:$this.id,
-                token:token
+                token:this.token
               }).then(res=>{
                 console.log(res,666)
                 if(res.succ){
@@ -165,11 +187,17 @@
     flex: 1;
     flex-direction: column;
     overflow: hidden;
+    height: 100%;
   }
   .wrap{
     flex: 1;
     overflow: auto;
     box-sizing: border-box;
+    position: fixed;
+    left: 0;
+    right:0;
+    top:88rem/$rem;
+    bottom:0;
   }
   .hintMsg{
     padding: 20rem/$rem 30rem/$rem;
