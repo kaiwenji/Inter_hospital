@@ -32,13 +32,15 @@
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import api from '../../lib/api'
-    var token = localStorage.getItem('token')
+//    var token = localStorage.getItem('token')
     export default{
         components: {
             top
         },
         data(){
-            return {}
+            return {
+              token:localStorage.getItem('token')
+            }
         },
         mounted(){
 
@@ -57,7 +59,7 @@
         },
         quit(){
           api('smarthos.user.pat.exit',{
-            token:token
+            token:this.token
           }).then(req=>{
             if(req.succ){
               console.log(req);

@@ -1,6 +1,11 @@
 <template>
 <div class="app">
     <app-header>
+        <div class="left" @click="back">
+          <slot name="left">
+            <font><span>&#xe600;</span></font>
+          </slot>
+         </div>
         <p class="headerTitle">问医生</p>
     </app-header>
     <pull-up @pullUp="getMore" :flag="flag" v-show="Got">
@@ -64,6 +69,9 @@
           goodTime
       },
     methods: {
+        back(){
+            this.$router.push("/index/");
+        },
         getDetail(item){
 //            console.log(item);
             this.$router.push("/Consult/ConsultDetail/"+item.consultInfo.id);
@@ -110,6 +118,10 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
+@font-face {
+font-family: 'iconfont';
+src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
+}
     p{
         word-break:break-all;
     }

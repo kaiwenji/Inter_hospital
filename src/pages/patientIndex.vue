@@ -12,7 +12,7 @@
                        </div>
                      </carousel>
                  </div>
-               <div class="wholeArea">
+                <div class="wholeArea">
                  <div class="funArea">
                    <div class="bookNumer">
                      <img src="../../static/img/red.png" alt="">
@@ -212,6 +212,7 @@
             this.knowScroll = new BScroll(this.$refs.wholeScroll,{
                 click:true
             })
+          console.log(this.knowScroll,9999)
         },
         play(index){
               if(this.temp === ''){

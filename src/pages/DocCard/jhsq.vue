@@ -4,7 +4,7 @@
         <p class="headerTitle">加号申请</p>
         <p slot="right" class="headerWord" @click="appoint">申请加号</p>
     </app-header>
-    <div class="wrap" v-show="docGot&&patGot">
+    <div class="wrap" v-show="docGot&&patGot" :class="{'stand':showPat}">
     <div class="notice inter">
         <p class="s">温馨提示：请确认您曾在{{name}}医生处就诊过，否则医生将不通过您的请求</p>
     </div>
@@ -300,5 +300,8 @@
     }
     .picture{
         padding-left:0.8rem;
+    }
+    .stand{
+        overflow:hidden;
     }
 </style>

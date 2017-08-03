@@ -1,11 +1,11 @@
 <template>
-  <div >
+  <div id="metalBox">
       <transition name="vanish">
-      <div class="background" @click="activate" v-show="isShown">
-      </div>
+      <div class="background" @click="activate" v-show="isShown" >
+    </div>
     </transition>
       <transition name="fade">
-      <div class="options" v-show="isShown">
+      <div class="options" v-show="isShown" id="options">
           <slot name="contain"></slot>
     </div>
     </transition>
@@ -22,7 +22,7 @@
             type:Boolean,
             default:false,
             required:true
-        }
+        }  
       },
     computed: {
         isShown(){
@@ -31,14 +31,13 @@
     },
     components: {},
     mounted() {
-
     },
     beforeDestroy() {
 
     },
     methods: {
         activate(){
-
+            
             this.$emit("activate");
         }
     }
@@ -68,7 +67,7 @@
     display:flex;
     flex-direction:column;
 }
-
+        
     .fade-enter-active,.fade-leave-active{
         transition: all .5s ease;
     }

@@ -2,7 +2,7 @@
   <div class="">
       <div class="bubble" @click="on()"ref=bubble>
           <p>{{duration}}</p>
-          <audio ref="music" id="music" @load="initialAudio"@canplay="getDuration":src="src">
+          <audio ref="music" id="music" @load="initialAudio":src="src" class="music">
         </audio>
     </div>
   </div>
@@ -18,7 +18,7 @@
     },
     props:{
         src:{
-            default:"",
+            default:"./static/music/test.mp3",
             type:String,
             required:true
         }
@@ -28,9 +28,14 @@
     },
     components: {},
     mounted() {
-        this.$refs.music.addEventListener('canplay',this.getDuration, false);
+            var audio=this.$refs.music;
+            audio.setAttribute("src",this.src);
+        audio.addEventListener('canplay',this.getDuration, false);
     },
     watch:{
+        src(){
+            console.log(this.src);
+        }
     },
     beforeDestroy() {
         clearInterval(this.intervalId);
@@ -44,13 +49,19 @@
         },
         on(){
             if(this.$refs.music.paused){
+                var audioList=document.getElementsByClassName("music");
+                for(let i=0;i<audioList.length;i++){
+                    audioList[i].pause();
+                    audioList[i].currentTime=0;
+                    
+                }
                 this.$refs.bubble.className+=" on";
                 this.$refs.music.play();
                 this.intervalId=setInterval(this.checkIfEnd,100);
             }
         },
         checkIfEnd(){
-          if(this.$refs.music.ended){
+          if(this.$refs.music.paused){
               console.log("end");
               this.$refs.bubble.className="bubble";
               clearInterval(this.intervalId);

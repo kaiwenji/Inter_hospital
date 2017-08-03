@@ -35,13 +35,14 @@
   import phone from '../../lib/regex'
   import top from '../../business/app-header.vue'
   import api from '../../lib/api'
-  var token = localStorage.getItem('token')
+//  var token = localStorage.getItem('token')
   export default{
     components:{
       top
     },
     data(){
       return {
+        token:localStorage.getItem('token'),
         mobile:'',
         captcha:'',
         cid:'',
@@ -78,7 +79,7 @@
           this.$set(this.$data,'showError',true)
         }else {
           api('smarthos.captcha.pat.mobile.modify',{
-            token:token,
+            token:this.token,
           }).then(res=>{
             console.log(res,3333);
             if(res.succ){

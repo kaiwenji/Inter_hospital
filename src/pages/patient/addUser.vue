@@ -54,7 +54,7 @@
     import { required, minLength, alphaNum, maxLength} from 'vuelidate/lib/validators'
     import cd from '../../lib/regex'
     import api from '../../lib/api'
-    var token = localStorage.getItem('token')
+//    var token = localStorage.getItem('token')
     export default{
         components: {
             top
@@ -75,6 +75,7 @@
       },
         data(){
             return {
+              token:localStorage.getItem('token'),
               patName:'',
               patIdcard:'',
               showNameError:false,
@@ -104,7 +105,7 @@
           }else {
             console.log(2222)
             api('smarthos.captcha.commpat.add',{
-              token:token,
+              token:this.token,
               mobile:this.mobile
             }).then(res=>{
               console.log(res,3333);
@@ -127,7 +128,7 @@
             weui.alert('请输入正确的验证码')
           }else {
             api("smarthos.user.commpat.add",{
-              token:token,
+              token:this.token,
               commpatName:this.patName,
               commpatIdcard:this.patIdcard,
               cid:this.cid,

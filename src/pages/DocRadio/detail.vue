@@ -18,9 +18,9 @@
     </my-panel>
       <div class="main" v-show="Got">
           <div>
-          <p class="dark m">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大</p>
+          <p class="dark m" style="padding:0.8rem">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大</p>
     </div>
-          <my-player src="../../../static/music/test.mp3" :docInfo="docInfo"></my-player>
+          <my-player :docInfo="docInfo"></my-player>
     </div>
       <my-loading class="myLoading"v-show="!Got"></my-loading>
   </div>

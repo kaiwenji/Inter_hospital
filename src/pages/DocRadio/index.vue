@@ -10,9 +10,8 @@
     </app-header>
       <div class="wrap">
           <my-pullup @pullUp="loadingMore" :flag="flag">
-          <div v-for="item in audioList" :key="item.snsKnowledge.id">
-          <doc-panel :item="item" @activate="go(item)"></doc-panel>
-    </div>
+              <doc-panel :list="audioList"></doc-panel>
+
     </my-pullup>
     </div>
       <my-loading v-show="!Got"class="myLoading"></my-loading>
@@ -32,6 +31,7 @@
     import DocPanel from "../../business/docPanel.vue";
     import AppFooter from '../../business/app-footer.vue';
     import MyLoading from "../../base/loading/loading.vue";
+    import myMixin from "../../lib/canScroll.js";
     import Api from "../../lib/api.js";
   export default {
     data() {
@@ -60,8 +60,10 @@
         this.getInfo();
     },
     beforeDestroy() {
+        clearInterval(this.intervalId);
 
     },
+      mixins:[myMixin],
     methods: {
         getInfo(){
             Api("smarthos.sns.knowledge.page",{
@@ -76,7 +78,10 @@
                     this.Got=true;
                     this.flag=!this.flag;
                     console.log(val);
-                    this.audioList.push(...val.list);
+                    val.list.forEach((item)=>{
+                        this.audioList.push(Object.assign({}, item, { on: false }));
+                    })
+                    console.log(this.audioList);
                     if(this.page==val.page.total){
                         this.page=-1;
                     }
@@ -90,10 +95,6 @@
                 }
                 
             })
-        },
-        go(item){
-            console.log(item.snsKnowledge.id);
-            this.$router.push("/docRadio/detail/"+item.snsKnowledge.id);
         },
         loadingMore(){
             if (this.page!=-1){
@@ -113,8 +114,19 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
+    .music{
+/*        display:none;*/
+    }
     header{
         border-bottom:1px solid silver;
+    }
+    .module{
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        bottom:2.5rem;
+        @include vertical;
     }
     @mixin flex{
         display:flex;

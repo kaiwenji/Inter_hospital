@@ -16,13 +16,14 @@
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import api from '../../lib/api'
-    var token = localStorage.getItem('token')
+//    var token = localStorage.getItem('token')
     export default{
         components: {
             top
         },
         data(){
             return {
+              token:localStorage.getItem('token'),
               pastHistory:''
             }
         },
@@ -36,7 +37,7 @@
             "pastHistory":this.pastHistory,
             "familyHistory":"",
             "allergyHistory":"",
-            "token":token
+            "token":this.token
           }).then(res=>{
             if(res.succ){
               console.log(res)
