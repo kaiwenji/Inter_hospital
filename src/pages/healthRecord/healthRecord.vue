@@ -170,7 +170,6 @@
             if(res.succ){
               this.$set(this.$data,'showLoading',false)
               this.$set(this.$data,'healthDetail',res.obj);
-
             }else {
               this.$weui.alert(res.msg)
             }

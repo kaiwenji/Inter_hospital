@@ -74,9 +74,9 @@
               "cid": this.cid,
               "captcha": this.captcha,
               "patPassword": passWord
-            }).then(req=>{
-              console.log(req,999)
-              if(req.succ){
+            }).then(res=>{
+              console.log(res,999)
+              if(res.succ){
                 this.$router.push({
                   name:'succeed',
                   params:{

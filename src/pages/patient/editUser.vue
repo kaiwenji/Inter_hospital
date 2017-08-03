@@ -22,16 +22,26 @@
           </div>
         </div>
         <span class="form-group__message bf" v-if="!$v.patIdcard.cd&&showCd">请输入正确的身份证号</span>
-        <div class="weui-cells weui-cells_form">
-          <div class="weui-cell" @click="editPhone">
-            <div class="weui-cell__hd"><label class="weui-label bf">手机号</label></div>
+        <div class="weui-cells">
+          <a class="weui-cell weui-cell_access" href="javascript:;" @click="editPhone">
             <div class="weui-cell__bd">
-              {{mobile}}
+              <p>手机号 &nbsp; &nbsp;&nbsp;{{mobile}}</p>
             </div>
-            <div class="arrow" @click="changePhone">
-              &gt;
+            <div class="weui-cell__ft">
             </div>
-          </div>
+          </a>
+        </div>
+
+        <div class="weui-cells weui-cells_form">
+          <!--<div class="weui-cell" @click="editPhone">-->
+            <!--<div class="weui-cell__hd"><label class="weui-label bf">手机号</label></div>-->
+            <!--<div class="weui-cell__bd">-->
+              <!--{{mobile}}-->
+            <!--</div>-->
+            <!--<div class="arrow" @click="changePhone">-->
+              <!--&gt;-->
+            <!--</div>-->
+          <!--</div>-->
           <div class="weui-cell weui-cell_select weui-cell_select-after">
             <div class="weui-cell__hd">
               <label  class="weui-label bf">性&nbsp;&nbsp;&nbsp;别</label>
