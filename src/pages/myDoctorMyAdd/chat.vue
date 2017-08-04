@@ -87,7 +87,8 @@
           timeReverse:[],
           docAvatar:"",
           patAvatar:"",
-          docName:""
+          docName:"",
+          followId:""
         }
       },
       created(){
@@ -95,7 +96,8 @@
         this.patAvatar = localStorage.getItem('patAvatar')
         this.docAvatar = this.$route.query.docAvatar
         this.docName = this.$route.query.docName
-         this.probeType = 3
+        this.followId = this.$route.query.followId
+        this.probeType = 3
         let that = this
         let token = localStorage.getItem("token")
         api("smarthos.follow.message.detail.list",{
@@ -104,7 +106,11 @@
           pageNum:"1",
           pageSize:"10"
         }).then((data)=>{
-            that.chatText = data.list
+            if(data.code == 0){
+              that.chatText = data.list
+            }else{
+               this.$weui.alert("网络错误")
+            }
 //           console.log(data.list)
            that.aboutTime()
 //          console.log(that.chatTime)
@@ -204,7 +210,7 @@
             let token = localStorage.getItem("token")
             api("smarthos.follow.message.detail.list",{
               token:token,
-              followId:"5978419de4b04f855903517d",
+              followId:that.followId,
               pageNum:that.ratingOffset,
               pageSize:"10"
             }).then((data)=>{
@@ -328,21 +334,26 @@
           let token = localStorage.getItem("token")
             api("smarthos.follow.message.add",{
               token:token,
-              followId:"5978419de4b04f855903517d",
+              followId:that.followId,
               msgType:"TEXT",
               msgContent:that.inputInfo
             }).then((data)=>{
+              if(data.code == 0){
+                that.chatText.push(data.obj)
+                let dtCur = new Date();
+                let sCur = dtCur.getSeconds();
+                that.time.push(sCur)
+                let position = that.time.indexOf(sCur)
+                if((that.time[position] - that.time[position-1])<5){
+                  that.chatTime.push("")
+                }else{
+                  that.chatTime.push(formDateHour (new Date(data.obj.createTime)))
+                }
+
+              }else{
+                  this.$weui.alert("网络错误")
+              }
 //              console.log(data)
-              that.chatText.push(data.obj)
-              let dtCur = new Date();
-             let sCur = dtCur.getSeconds();
-             that.time.push(sCur)
-             let position = that.time.indexOf(sCur)
-             if((that.time[position] - that.time[position-1])<5){
-               that.chatTime.push("")
-             }else{
-               that.chatTime.push(formDateHour (new Date(data.obj.createTime)))
-             }
 
 
 //              that.time.push(formatDate (new Date(data.obj.createTime)))
@@ -400,7 +411,6 @@
             this.$refs.picture.click()
         },
         sendPicture(e){
-//             console.log("123")
              let that = this
              if(typeof FileReader === 'undefined'){
                  alert("抱歉，你的浏览器版本过低，请更换其它浏览器！")
@@ -414,7 +424,6 @@
               let reader = new FileReader()
               reader.readAsDataURL(file);
               reader.onload = function(){
-//                  e.target.value = ""
                   that.imgSrc = this.result
                   api("smarthos.system.file.upload.image.base64",{
                       base64:this.result,
@@ -426,7 +435,7 @@
                        that.displayUrl = data.obj.attaFileUrl
                        api("smarthos.follow.message.add",{
                          token:localStorage.getItem("token"),
-                         followId:"5978419de4b04f855903517d",
+                         followId:that.followId,
                          msgType:"PIC",
                          msgContent:that.displayUrl
                        }).then((data)=>{
@@ -539,6 +548,12 @@
             line-height: 48rem/$rem;
             color: #333333;
             word-break: break-all;
+            img{
+               border-radius: 0;
+               margin-left: 0;
+               width:100%;
+               height:100%;
+            }
           }
         }
       }

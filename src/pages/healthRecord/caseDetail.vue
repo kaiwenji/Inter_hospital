@@ -4,39 +4,42 @@
       <div class="middle big">病例详情</div>
       <span slot="right" class="step" @click="save">保存</span>
     </top>
-    <div >
-      <div class="weui-cells">
-        <a @click="selectDate" class="weui-cell weui-cell_access" href="javascript:;">
-          <div class="weui-cell__bd">
-            <p class="bf">日期</p>
+
+        <div >
+          <div class="weui-cells">
+            <a @click="selectDate" class="weui-cell weui-cell_access" href="javascript:;">
+              <div class="weui-cell__bd">
+                <p class="bf">日期</p>
+              </div>
+              <div class="weui-cell__ft bf">{{date | Getdate}}</div>
+            </a>
           </div>
-          <div class="weui-cell__ft bf">{{date | Getdate}}</div>
-        </a>
-      </div>
-      <div class="weui-cells">
-        <div class="weui-cell">
-          <div class="weui-cell__bd">
-            <p class="bf">请输入病例详情</p>
+          <div class="weui-cells">
+            <div class="weui-cell">
+              <div class="weui-cell__bd">
+                <p class="bf">请输入病例详情</p>
+              </div>
+            </div>
+          </div>
+          <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+              <div class="weui-cell__bd">
+                <textarea class="weui-textarea" v-model="caseText" placeholder="请输入文本" rows="3"></textarea>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
-          <div class="weui-cell__bd">
-            <textarea class="weui-textarea" v-model="caseText" placeholder="请输入文本" rows="3"></textarea>
-          </div>
+        <div class="addImg">
+          <upload :imgList="imgList" v-on:getAttaIdsList="getAttaIdsList">
+            <div slot="title"></div>
+          </upload>
         </div>
-      </div>
-    </div>
-    <div class="addImg">
-      <upload :imgList="imgList" v-on:getAttaIdsList="getAttaIdsList">
-        <div slot="title"></div>
-      </upload>
-    </div>
-    <div class="btn">
-      <div class="text mfc">{{date |  Todate}} &nbsp;&nbsp;由{{creatorName}}添加</div>
-      <a @click="deleteCase" style="background: #ff8588" href="javascript:;" class="weui-btn weui-btn_primary">删除</a>
-    </div>
+        <div class="btn">
+          <div class="text mfc">{{date |  Todate}} &nbsp;&nbsp;由{{creatorName}}添加</div>
+          <a @click="deleteCase" style="background: #ff8588" href="javascript:;" class="weui-btn weui-btn_primary">删除</a>
+        </div>
+
+
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -57,6 +60,7 @@
     },
     data(){
       return {
+        token:localStorage.getItem('token'),
         caseObj:{},
         date:'',
         caseText:'',
@@ -86,7 +90,7 @@
           "medContent":this.caseText,
           "id":this.id,
           "attaList":this.imgId,
-          "token":token
+          "token":this.token
         }).then(res=>{
           console.log(res,565656565656)
           if(res.succ){
@@ -118,7 +122,7 @@
       deleteCase(){
         api("smarthos.medicalhistory.delete",{
           id:this.id,
-          token:token
+          token:this.token
         }).then(res=>{
           console.log(res,7877878)
           if(res.succ){

@@ -38,13 +38,14 @@
   import phone from '../../lib/regex'
   import top from '../../business/app-header.vue'
   import api from '../../lib/api'
-  var token = localStorage.getItem('token')
+//  var token = localStorage.getItem('token')
   export default{
     components:{
       top
     },
     data(){
       return {
+        token:localStorage.getItem('token'),
         mobile:'',
         captcha:'',
         cid:'',
@@ -78,7 +79,7 @@
           alert('请输入手机号')
         }else {
           api("smarthos.user.commpat.mobile.modify",{
-            "token": token,
+            "token": this.token,
             "commpatId":this.commpatId,
             "cid": this.cid,
             "captcha": this.captcha
@@ -102,7 +103,7 @@
           this.$set(this.$data,'showError',true)
         }else {
           api("smarthos.captcha.commpat.mobile.modify",{
-            token:token,
+            token:this.token,
             mobile:this.mobile,
             commpatId:this.commpatId
           }).then(res=>{

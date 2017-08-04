@@ -46,6 +46,7 @@
         },
         data(){
             return {
+              token:localStorage.getItem('token'),
               date:'',
               caseDetail:'',
               imgList:[]
@@ -82,7 +83,7 @@
           api('smarthos.medicalhistory.add',{
             "medicalTime":this.date,
             "medContent":this.caseDetail,
-            "token":token,
+            "token":this.token,
             "attaList":this.imgList
           }).then(res=>{
             console.log(res,6666)

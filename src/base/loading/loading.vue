@@ -9,7 +9,7 @@
       props:{
           title:{
               type:String,
-              default:"处理中"
+              default:"加载中..."
           }
       }
   }

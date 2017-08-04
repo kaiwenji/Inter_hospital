@@ -1,9 +1,9 @@
 <template>
     <div class="recentChat">
-      <div class="myDoctorList" ref="contactList">
+      <div class="myDoctorList" ref="contactList" v-if="waitLoading == 1 && chatList.length > 0">
         <div>
           <ul  class="border-1px" v-for="item in chatList">
-            <router-link tag="div" :to="{path:'/chat',query:{docAvatar:item.userDoc.docAvatar,docName:item.userDoc.docName}}">
+            <router-link tag="div" :to="{path:'/chat',query:{docAvatar:item.userDoc.docAvatar,docName:item.userDoc.docName,followId:item.followMessage.followId}}">
               <li>
                 <div class="cancelImg">
                   <img :src=" item.userDoc.docAvatar " alt="">
@@ -27,11 +27,21 @@
             </router-link>
           </ul>
         </div>
+      </div>
+      <div class="myDoctorList" v-else-if="waitLoading == 1 && chatList.length == 0">
+        <div class="emptyHistory">
+          <span> 您还没有与医生进行聊天的记录</span>
+        </div>
+      </div>
+      <div class="myDoctorList" v-else>
+        <div class="emptyHistory">
+          <loading></loading>
+        </div>
+      </div>
         <div class="loading-container" v-show="chatList.length == 0">
-           <loading></loading>
+
         </div>
         <v-mask  v-show="chatList.length == 0"></v-mask>
-      </div>
     </div>
 </template>
 <script>
@@ -43,21 +53,17 @@
       data(){
         return{
           showList:true,
-          chatList:[]
+          chatList:[],
+          waitLoading:0
         }
-      },
-      mounted(){
-        this.$nextTick(()=>{
-          this._initRecentChat()
-        })
       },
       created(){
         let that = this
-        let token = localStorage.getItem('token')
         api("smarthos.follow.message.last.list",{
-          "token":token,
+          "token":localStorage.getItem('token'),
         }).then((data)=>{
             if(data.code == 0){
+               that.waitLoading = 1
               that.chatList = data.list
               console.log(data)
               console.log(that.chatList)
@@ -70,6 +76,13 @@
               click:true
             })
           },
+      },
+      watch:{
+        chatList(){
+          this.$nextTick(()=>{
+            this._initRecentChat()
+          })
+        }
       },
       components:{
           Loading,
@@ -98,6 +111,20 @@
   right:0;
   z-index:1;
   background-color: white;
+  .emptyHistory{
+    width:100%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span{
+      display: inline;
+      >div{
+        color:#0FBDFF;
+        display: inline;
+      }
+    }
+  }
   ul{
     padding:0;
     margin:0;

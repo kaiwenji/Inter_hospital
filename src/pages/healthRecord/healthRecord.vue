@@ -1,64 +1,64 @@
 <template>
     <div class="page">
-        <top @click="goMy">
+        <top @click="goMy" ref="headers">
             <div class="middle big">健康档案</div>
         </top>
-      <div v-show="!showLoading" class="wrap">
-        <div class="patMsg">
-          <div class="patImg">
-            <img src="../../../static/img/psb.jpg" alt="">
-          </div>
-          <div class="patDetail">
-            <p class="bf">{{commpat.commpatName}}</p>
-            <p class="mfc">姓名：&nbsp; {{commpat.commpatName}}</p>
-            <p class="mfc">{{commpat.commpatGender=='M'?'男':'女'}} &nbsp;&nbsp;&nbsp;23</p>
-          </div>
-        </div>
-        <div class="basic">
-          <div class="weui-cells__title title">基本情况</div>
-          <div class="weui-cells bf">
-            <a @click="presentingComplaint" class="weui-cell weui-cell_access" href="javascript:;">
-              <div class="weui-cell__bd">
-                <p>所患疾病</p>
-              </div>
-              <div class="weui-cell__ft mfc">{{healthDetail.presentingComplaint?healthDetail.presentingComplaint.substring(0,8):'无'}}</div>
-            </a>
-            <a @click="pastHistory" class="weui-cell weui-cell_access" href="javascript:;">
-              <div class="weui-cell__bd">
-                <p>既往史</p>
-              </div>
-              <div class="weui-cell__ft mfc">{{healthDetail.pastHistory?healthDetail.pastHistory.substring(0,8):'无'}}</div>
-            </a>
-            <a @click="familyHistory" class="weui-cell weui-cell_access" href="javascript:;">
-              <div class="weui-cell__bd">
-                <p>家族史</p>
-              </div>
-              <div class="weui-cell__ft mfc">{{healthDetail.familyHistory?healthDetail.familyHistory.substring(0,8):'无'}}</div>
-            </a>
-            <a @click="allergyHistory" class="weui-cell weui-cell_access" href="javascript:;">
-              <div class="weui-cell__bd">
-                <p>过敏史</p>
-              </div>
-              <div class="weui-cell__ft mfc">{{healthDetail.allergyHistory?healthDetail.allergyHistory.substring(0,8):'无'}}</div>
-            </a>
-          </div>
-        </div>
-        <div class="record">
-          <div class="weui-cells__title title">诊疗记录</div>
-          <div class="recordDetail" v-for="item of list" @click="goCaseDetail(item)">
-            <div class="recordDate" >
-              <span class="mf">{{item.medicalHistory.createTime | Getdate}} </span>
+      <div v-show="!showLoading" ref="wrapper" class="wrap">
+        <div>
+          <div class="patMsg">
+            <div class="patImg">
+              <img src="../../../static/img/psb.jpg" alt="">
             </div>
-            <div class="recordContain">
-              <span class="mf">{{item.medicalHistory.medContent}}</span>
-              <p class="recordImg" >
-                <img :src="imgSrc.attaFileUrl" alt="" v-for="imgSrc of item.attaList">
-              </p>
+            <div class="patDetail">
+              <p class="bf">{{commpat.commpatName}}</p>
+              <p class="mfc">姓名：&nbsp; {{commpat.commpatName}}</p>
+              <p class="mfc">{{commpat.commpatGender=='M'?'男':'女'}} &nbsp;&nbsp;&nbsp;23</p>
             </div>
           </div>
+          <div class="basic">
+            <div class="weui-cells__title title">基本情况</div>
+            <div class="weui-cells bf">
+              <a @click="presentingComplaint" class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                  <p>所患疾病</p>
+                </div>
+                <div class="weui-cell__ft mfc">{{healthDetail.presentingComplaint?healthDetail.presentingComplaint.substring(0,8):'无'}}</div>
+              </a>
+              <a @click="pastHistory" class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                  <p>既往史</p>
+                </div>
+                <div class="weui-cell__ft mfc">{{healthDetail.pastHistory?healthDetail.pastHistory.substring(0,8):'无'}}</div>
+              </a>
+              <a @click="familyHistory" class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                  <p>家族史</p>
+                </div>
+                <div class="weui-cell__ft mfc">{{healthDetail.familyHistory?healthDetail.familyHistory.substring(0,8):'无'}}</div>
+              </a>
+              <a @click="allergyHistory" class="weui-cell weui-cell_access" href="javascript:;">
+                <div class="weui-cell__bd">
+                  <p>过敏史</p>
+                </div>
+                <div class="weui-cell__ft mfc">{{healthDetail.allergyHistory?healthDetail.allergyHistory.substring(0,8):'无'}}</div>
+              </a>
+            </div>
+          </div>
+          <div class="record">
+            <div class="weui-cells__title title">诊疗记录</div>
+            <div class="recordDetail" v-for="item of list" @click="goCaseDetail(item)">
+              <div class="recordDate" >
+                <span class="mf">{{item.medicalHistory.createTime | Getdate}} </span>
+              </div>
+              <div class="recordContain">
+                <span class="mf">{{item.medicalHistory.medContent}}</span>
+                <p class="recordImg" >
+                  <img :src="imgSrc.attaFileUrl" alt="" v-for="imgSrc of item.attaList">
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-
-
       </div>
       <div class="btn">
         <div class="btnImg" @click="goAddCase">
@@ -73,8 +73,9 @@
     import api from '../../lib/api'
     import {Getdate} from '../../lib/filter'
     import MyLoading from "../../base/loading/loading.vue";
-    var token = localStorage.getItem('token')
-    var commpat = JSON.parse(localStorage.getItem('commpat'))
+    import BScroll from 'better-scroll'
+//    var token = localStorage.getItem('token')
+//    var commpat = JSON.parse(localStorage.getItem('commpat'))
     export default{
         components: {
             top,
@@ -82,7 +83,8 @@
         },
         data(){
             return {
-              commpat:commpat,
+              token:localStorage.getItem('token'),
+              commpat:JSON.parse(localStorage.getItem('commpat')),
               list:[],
               healthDetail:{},
               showLoading:true
@@ -91,21 +93,38 @@
       filters:{
         Getdate
       },
+
         mounted(){
-        this.getData();
-        this.record()
+            this.initScroll()
+          this.getData();
+          this.record();
         },
+      watch:{
+        list(){
+          this.$nextTick(()=> {
+              this.initScroll()
+          })
+        }
+      },
       methods:{
+        initScroll(){
+            this.scroll = new BScroll(this.$refs.wrapper,{
+              click:true,
+              probeType: 1,
+              bounce: true
+            });
+          console.log(this.scroll,2222)
+        },
         goMy(){
           this.$router.push('my')
         },
         record(){
           api("smarthos.medicalhistory.list.page",{
-            token:token
+            token:this.token,
           }).then(res=>{
             console.log(res,888888)
             if(res.succ){
-              this.$set(this.$data,'list',res.list)
+              this.$set(this.$data,'list',res.list);
             }else {
               this.$weui.alert(res.msg)
             }
@@ -145,12 +164,12 @@
         },
         getData(){
           api('smarthos.medicalinfo.detail',{
-            token:token
+            token:this.token
           }).then(res=>{
             console.log(res,6666)
             if(res.succ){
               this.$set(this.$data,'showLoading',false)
-              this.$set(this.$data,'healthDetail',res.obj)
+              this.$set(this.$data,'healthDetail',res.obj);
             }else {
               this.$weui.alert(res.msg)
             }
@@ -180,10 +199,17 @@
       flex-direction: column;
       flex: 1;
       overflow: hidden;
+      height: 100%;
     }
     .wrap{
       flex: 1;
       overflow-y: auto;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top:88rem/$rem;
+      bottom: 0;
+      width: 100%;
     }
    .patMsg{
      padding: 20rem/$rem 30rem/$rem;

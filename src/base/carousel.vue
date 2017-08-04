@@ -37,7 +37,7 @@
       }
     },
     mounted() {
-        console.log(this.$route.path)
+//        console.log(this.$route.path)
       setTimeout(() => {
         this._setSliderWidth()
         this._initDots()
@@ -147,6 +147,7 @@
        position: absolute;
        right:0;
        left:0;
+       height: 20px;
        top:180rem/$rem;
        bottom: 12px;
        text-align: center;

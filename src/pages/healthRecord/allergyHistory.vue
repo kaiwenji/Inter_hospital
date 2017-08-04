@@ -24,6 +24,7 @@
         },
         data(){
             return {
+              token:localStorage.getItem('token'),
               allergyHistory:''
             }
         },
@@ -37,7 +38,7 @@
             "pastHistory":"",
             "familyHistory":"",
             "allergyHistory":this.allergyHistory,
-            "token":token
+            "token":this.token
           }).then(res=>{
             if(res.succ){
               console.log(res);

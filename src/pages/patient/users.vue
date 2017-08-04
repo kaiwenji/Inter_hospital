@@ -1,10 +1,11 @@
 <template>
     <div id="onlinepage">
-        <top>
+        <top @click="goMy">
+            <div slot="left"><span>&#xe600;</span></div>
             <div class="middle big">常用就诊人</div>
             <span slot="right" class="add" @click="goAddUser">添加</span>
         </top>
-      <div v-show="!showLoading" class="wrap">
+      <div v-show="!showLoading" ref="wrapper"  class="wrap">
         <!--<div class="patMassage">-->
           <!--<div class="weui-cells" @click="goEditUser()">-->
             <!--<a class="weui-cell weui-cell_access" href="javascript:;">-->
@@ -24,15 +25,18 @@
             <!--</a>-->
           <!--</div>-->
         <!--</div>-->
-        <left-swipe :list="list"  v-on:getData="getData">
-          <template slot="item" scope="props">
-            <div class="swipe" >
-              <p class="bf">{{ props.add }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label class="bfc">{{props.commpatGender=='M'?'男':'女'}} &nbsp;&nbsp;&nbsp; {{props.age}}</label></p>
-              <p class="bf"> 身份证号： <label  class="bfc">{{ props.identity }} </label></p>
-              <p class="bf"> 电话号码： <label  class="bfc">{{ props.phone }}</label></p>
-            </div>
-          </template>
-        </left-swipe>
+        <div>
+          <left-swipe :list="list"  v-on:getData="getData">
+            <template slot="item" scope="props">
+              <div class="swipe" >
+                <p class="bf">{{ props.add }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label class="bfc">{{props.commpatGender=='M'?'男':'女'}} &nbsp;&nbsp;&nbsp; {{props.age}}</label></p>
+                <p class="bf"> 身份证号： <label  class="bfc">{{ props.identity }} </label></p>
+                <p class="bf"> 电话号码： <label  class="bfc">{{ props.phone }}</label></p>
+              </div>
+            </template>
+          </left-swipe>
+        </div>
+
       </div>
       <My-loading v-show="showLoading" class="myLoading"></My-loading>
     </div>
@@ -40,9 +44,10 @@
 <script type="text/ecmascript-6">
     import top from '../../business/app-header.vue'
     import leftSwipe from '../../base/leftSwipe.vue'
+    import  BScroll from 'better-scroll'
     import api from '../../lib/api'
     import MyLoading from "../../base/loading/loading.vue";
-    var token = localStorage.getItem('token')
+//    var token = localStorage.getItem('token')
     export default{
         components: {
             top,
@@ -53,16 +58,38 @@
             return {
               list:[],
               patId:"",
-              showLoading:true
+              showLoading:true,
+              token : localStorage.getItem('token')
             }
         },
         mounted(){
-          this.getData()
+        this.initScroll()
+          this.getData();
         },
+      watch:{
+        list(){
+          this.$nextTick(()=> {
+            this.initScroll()
+          })
+        }
+      },
       methods:{
+        goMy(){
+          console.log('111111')
+          this.$router.push('my')
+        },
+
+        initScroll(){
+            this.scroll = new BScroll(this.$refs.wrapper,{
+              click:true,
+              probeType: 1,
+              bounce: true
+            });
+            console.log(this.scroll)
+        },
         getData(){
           api('smarthos.user.commpat.list',{
-            token:token
+            token:this.token
           }).then(res=>{
             console.log(res,66666);
             if(res.succ){
@@ -89,18 +116,33 @@
 </script>
 <style scoped lang="scss">
   @import '../../common/public.scss';
+  @font-face {
+    font-family: 'iconfont';
+    src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
+  }
+  span{
+    font-family: 'iconfont';
+    font-size: 18px;
+  }
   #onlinepage{
     flex: 1;
-    overflow: auto;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     background: white;
+    height: 100%;
   }
   .wrap{
     -webkit-overflow-scrolling: touch;
+    flex: 1;
     overflow: auto;
-    margin-top: 30rem/$rem 10rem/$rem 20rem/$rem 10rem/$rem;
-
+    /*margin-top: 30rem/$rem 10rem/$rem 20rem/$rem 10rem/$rem;*/
+    position: fixed;
+    width: 100%;
+    left: 0;
+   right: 0;
+    bottom: 0;
+    top:88rem/$rem;
   }
   .swipe{
     float: left;

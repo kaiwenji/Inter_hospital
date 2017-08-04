@@ -17,6 +17,7 @@
       </div>
       <div class="wrap">
         <div class="mainColor ">
+          <div class="weui-cells ">
           <a @click="goUsers" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/jiuzhen.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
@@ -31,18 +32,16 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-          <a @click="myAdd"  class="weui-cell weui-cell_access" href="javascript:;" >
+          <a @click="myAdd" class="weui-cell weui-cell_access" href="javascript:;" >
             <div class="weui-cell__hd"><img src="../../../static/img/jiahao.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
               <p class="bf">&nbsp;&nbsp;我的加号</p>
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-          <a class="weui-cell weui-cell_access" href="javascript:;">
-
-          </a>
+            </div>
         </div>
-
+        <div class="weui-cells ">
           <a @click="goHealthRecord" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/jiankang.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
@@ -50,11 +49,8 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
-
-        </a>
-
-
+        </div>
+        <div class="weui-cells ">
           <a @click="goAccountAbout" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/account.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
@@ -76,9 +72,7 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-        <a class="weui-cell weui-cell_access" href="javascript:;">
-
-        </a>
+        </div>
       </div>
 
       <transition name="f">
@@ -104,8 +98,8 @@
     import top from '../../business/app-header.vue'
     import footers from '../../business/app-footer.vue'
     import ajax from '../../lib/ajax'
-    var token  = localStorage.getItem('token')
-    var patAvatar  = localStorage.getItem('patAvatar')
+//    var token  = localStorage.getItem('token')
+//    var patAvatar  = localStorage.getItem('patAvatar')
     import api from '../../lib/api'
     export default{
         components: {
@@ -114,8 +108,9 @@
         },
         data(){
             return {
+              token:localStorage.getItem('token'),
               showShaw:false,
-              patAvatar:patAvatar
+              patAvatar:localStorage.getItem('patAvatar')
             }
         },
         mounted(){
@@ -124,7 +119,7 @@
       methods:{
         getData(){
           api("smarthos.user.pat.infomation.modify",{
-            token:token,
+            token:this.token,
             patAvatar:this.patAvatar
           }).then(res=>{
             console.log(res,111111)
@@ -142,7 +137,7 @@
         },
         myAdd(){
           this.$router.push({
-            name:"addList"
+            name:"myAddList"
           })
         },
         upLoad(){

@@ -20,8 +20,12 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  var token = localStorage.getItem('token');
-  var myId =JSON.parse(localStorage.getItem('commpat')).id;
+//  var token = localStorage.getItem('token');
+//  console.log(localStorage.getItem('commpat'),999999)
+//  if(localStorage.getItem('commpat')){
+//    var myId =JSON.parse(localStorage.getItem('commpat')).id;
+//  }
+
   import api from '../lib/api'
   export default{
       props:{
@@ -30,23 +34,29 @@
               default:[]
           }
       },
+    data(){
+      return{
+        token:localStorage.getItem('token'),
+        myId:JSON.parse(localStorage.getItem('commpat')).id
+      }
+    },
     watch:{
       list:function () {
         this.slide()
       }
     },
      mounted(){
-      console.log(myId,99999999)
+//      console.log(myId,99999999)
      },
      methods:{
        del(id){
-        if(id==myId){
+        if(id==this.myId){
           this.$weui.alert('不能删除自己');
           return false;
         }else {
           api("smarthos.user.commpat.delete",{
             "commpatId":id,
-            "token": token
+            "token": this.token
           }).then(res=>{
             console.log(res);
             if(res.succ){
@@ -106,7 +116,7 @@
 <style scoped lang="scss">
   @import "../common/public.scss";
   .container{
-    height: 400px;
+    /*height: 400px;*/
   }
   i{font-style:normal;}
   ul{

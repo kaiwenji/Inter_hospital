@@ -12,7 +12,7 @@
                        </div>
                      </carousel>
                  </div>
-               <div class="wholeArea">
+                <div class="wholeArea">
                  <div class="funArea">
                    <div class="bookNumer">
                      <img src="../../static/img/red.png" alt="">
@@ -35,7 +35,7 @@
                      <img src="../../static/img/home_eye_trauma.png" alt="">
                      <span>眼外伤</span>
                    </div>
-                   <div class="repeatSee">
+                   <div class="repeatSee" @click="repeat">
                      <img src="../../static/img/home_pat_ill.png" alt="">
                      <span>复诊</span>
                    </div>
@@ -46,7 +46,7 @@
                  <div class="doctorKnow border-1px">
                    <div class="left30">
                      <span>名医知道</span>
-                     <span @click="moreKnow()">更多 > </span>
+                     <span @click="moreKnow()" class="doctorMore">更多 > </span>
                    </div>
                  </div>
                  <div class="knowCard border-1px" v-for="(item,index) in knowDetail">
@@ -149,7 +149,7 @@
       created(){
          let that = this
         api("smarthos.user.pat.index",{
-            token:"18268256860"
+            token:localStorage.getItem("token")
         }).then((data)=>{
              if(data.code == 0){
                that.adImg = data.obj.adsettings
@@ -206,10 +206,17 @@
             }
           })
         },
+        repeat(){
+           console.log("12234132")
+          this.$router.push({
+            name:"addList"
+          })
+        },
         _initKnowScroll(){
             this.knowScroll = new BScroll(this.$refs.wholeScroll,{
                 click:true
             })
+          console.log(this.knowScroll,9999)
         },
         play(index){
               if(this.temp === ''){
@@ -335,6 +342,7 @@
   .index{
     position: fixed;
     top:0;
+    width:100%;
     bottom:0;
   }
     .wholeScroll{
@@ -428,6 +436,9 @@
                 font-size:28rem/$rem;
                 color: #999999;
                 font-family: PingFangSC;
+              }
+              span.doctorMore{
+                color: #0FBDFF;
               }
             }
           }
