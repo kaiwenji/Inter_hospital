@@ -1,8 +1,8 @@
 <template>
   <div class="recentChat">
-    <div class="myDoctorList" ref="contactList">
+    <div class="myDoctorList" ref="contactList" v-if="tempwait == 1 && followList.length > 0">
       <div>
-        <ul class="border-1px" v-for="item in followList.list">
+        <ul class="border-1px" v-for="item in followList">
           <router-link tag="div" :to="{name:'doctor',params:{id:item.userDocVO.id}} ">
             <li>
               <div class="cancelImg">
@@ -28,25 +28,30 @@
             </li>
           </router-link>
         </ul>
-
       </div>
-
+    </div>
+    <div class="myDoctorList" v-else-if="tempwait == 1 && followList.length == 0">
+      <div class="emptyHistory">
+        <span>您还没有关注任何医生</span>
+      </div>
+    </div>
+    <div class="myDoctorList" v-else>
+      <div class="emptyHistory">
+        <loading></loading>
+      </div>
     </div>
   </div>
 </template>
 <script>
   import BScroll from 'better-scroll'
+  import Loading from '../../base/loading/loading'
   import api from '../../lib/api'
   export default{
     data(){
         return{
           followList:[],
+          tempwait:0
         }
-    },
-    mounted(){
-      this.$nextTick(()=>{
-        this._initRecentChat()
-      })
     },
     created(){
       let that = this
@@ -54,10 +59,18 @@
         token:localStorage.getItem('token'),
       }).then(function(data){
          if(data.code == 0){
-           that.followList = data
+            that.tempwait = 1
+           that.followList = data.list
            console.log(that.followList)
          }
       })
+    },
+    watch:{
+      followList(){
+        this.$nextTick(()=>{
+          this._initRecentChat()
+        })
+      }
     },
     methods:{
       _initRecentChat(){
@@ -65,6 +78,9 @@
           click:true
         })
       }
+    },
+    components:{
+        Loading
     }
   }
 </script>
@@ -88,6 +104,20 @@
     right:0;
     z-index:1;
     background-color: white;
+    .emptyHistory{
+      width:100%;
+      height:100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span{
+        display: inline;
+        >div{
+          color:#0FBDFF;
+          display: inline;
+        }
+      }
+    }
     ul{
       padding:0;
       margin:0;

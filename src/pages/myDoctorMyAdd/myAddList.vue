@@ -1,11 +1,11 @@
 <template>
   <div class="recentChat">
     <v-header :title="title" :rightTitle="rightTitle"></v-header>
-    <scroll class="myDoctorList" ref="contactList" :data="addList.list">
+    <scroll class="myDoctorList" ref="contactList" :data="addList" v-if="tempDisplay == 1 && addList.length > 0 ">
       <div>
-        <ul  v-for="(item,index) in addList.list" class="border-1px">
+        <ul  v-for="(item,index) in addList" class="border-1px" >
 
-            <router-link tag="div" :to="pathMap[index]">
+            <router-link tag="div" :to="{path:'/myAddList/myApplyDetail',query:{id:item.id}}">
               <li>
               <div class="cancelImg">
                 <img :src="item.docAvatar" alt="">
@@ -41,6 +41,16 @@
       </div>
 
     </scroll>
+    <div v-else-if="tempDisplay == 1 && addList.length == 0" class="myDoctorList">
+      <div class="emptyHistory">
+        <span> 您还没有申请历史，快去<router-link tag="div" to="/apply">预约申请</router-link>吧</span>
+      </div>
+    </div>
+    <div v-else class="myDoctorList">
+      <div class="emptyHistory">
+        <loading></loading>
+      </div>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -49,6 +59,7 @@
   import Scroll from  '../../base/scroll'
   import api from '../../lib/api'
   import header from '../../base/header'
+  import Loading from '../../base/loading/loading'
   import { formatDate } from '../../utils/formatTimeStamp.js'
   export default{
     data(){
@@ -57,34 +68,40 @@
            rightTitle:'',
            addList:[],
            pathMap:[],
+           tempDisplay:0,
            thisDestination:""
         }
     },
     created(){
       let that = this
-      console.log(localStorage.getItem("token"))
       api("smarthos.appointment.list",{
           token:localStorage.getItem("token"),
           numStatus:""
       }).then((data)=>{
-           that.addList = data
-          var pathArray = new Array()
-           for(var i=0;i<data.list.length;i++){
-           var d = new Array()
-           d[i] = formatDate (new Date(data.list[i].createTime))
-           data.list[i].createTime = d[i]
+          if(data.code == 0){
+            this.tempDisplay = 1
+            that.addList = data.list
+//            var pathArray = new Array()
+            for(var i=0;i<data.list.length;i++){
+              var d = new Array()
+              d[i] = formatDate (new Date(data.list[i].createTime))
+              data.list[i].createTime = d[i]
 
-             var destination
-           if(data.list[i].numStatus == "APPLYING"){
-               pathArray.push("/myAddList/myAddApply")
-           }else if(data.list[i].numStatus == "AGREED"){
-             pathArray.push("/myAddList/myAddSuccess")
-           }else{
-             pathArray.push("/myAddList/myAddRefuse")
-           }
+//              var destination
+//              if(data.list[i].numStatus == "APPLYING"){
+//                pathArray.push("/myAddList/myAddApply")
+//              }else if(data.list[i].numStatus == "AGREED"){
+//                pathArray.push("/myAddList/myAddSuccess")
+//              }else{
+//                pathArray.push("/myAddList/myAddRefuse")
+//              }
 
-         }
-        that.pathMap = pathArray
+            }
+//            that.pathMap = pathArray
+          }else{
+              this.$weui.alert("网络错误")
+          }
+
       })
     },
     mounted(){
@@ -107,7 +124,8 @@
     },
     components:{
         'VHeader':header,
-         Scroll
+         Scroll,
+         Loading
     }
   }
 </script>
@@ -132,6 +150,20 @@
     right:0;
     z-index:1;
     background-color: white;
+    .emptyHistory{
+      width:100%;
+      height:100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span{
+        display: inline;
+        >div{
+          color:#0FBDFF;
+          display: inline;
+        }
+      }
+    }
     ul{
       padding:0;
       margin:0;

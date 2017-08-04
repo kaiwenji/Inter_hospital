@@ -137,7 +137,7 @@
         },
         myAdd(){
           this.$router.push({
-            name:"addList"
+            name:"myAddList"
           })
         },
         upLoad(){

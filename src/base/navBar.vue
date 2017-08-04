@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-bar">
+  <div class="nav-bar border-1px">
     <ul>
       <li v-for="tagName in tagNames">
         <router-link  tag="div" :to="tagName.tabLink">
@@ -36,7 +36,7 @@
       li{
         flex:1;
         display: flex;
-        height: 80rem/$rem;
+        height: 40px;
         align-items: center;
         justify-content: center;
         list-style-type: none;
@@ -45,9 +45,9 @@
           color: #333333;
         }
         .router-link-active{
-          height: 80rem/$rem;
+          height: 35px;
           width:160rem/$rem;
-          line-height: 80rem/$rem;
+          line-height: 40px;
           text-align: center;
           border-bottom: 2px solid #0AACE9;
         }

@@ -3,6 +3,9 @@
     <section class="scanImg"  v-if="path == '/patientIndex'">
       <img :src="imgSrc" alt="">
     </section>
+    <section class="goBack" @click="goIndex()" v-else-if="path == '/myAddList/myAddApply'">
+      <img src="../../static/img/返回.png" alt="">
+    </section>
     <section class="goBack" @click="back()" v-else>
        <img src="../../static/img/返回.png" alt="">
     </section>
@@ -37,6 +40,7 @@
     },
     mounted(){
       this.path = this.$route.path
+      console.log(this.path)
     },
     methods:{
       back(){
@@ -47,6 +51,9 @@
       },
       myAdd(){
           this.$emit("on-addList")
+      },
+      goIndex(){
+          this.$emit("go-index")
       }
     },
     watch:{
