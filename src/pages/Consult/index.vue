@@ -8,7 +8,7 @@
          </div>
         <p class="headerTitle">问医生</p>
     </app-header>
-    <pull-up @pullUp="getMore" :flag="flag" v-show="Got">
+    <pull-up @pullUp="getMore" :list=consultList :flag="flag" v-show="Got">
     <div class="main">
         <div class="nothing" v-if="consultList.length==0">
             <p class="xxl darker" >你还没有回答任何问题</p>

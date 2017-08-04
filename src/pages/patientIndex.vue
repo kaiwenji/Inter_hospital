@@ -18,16 +18,16 @@
                      <img src="../../static/img/red.png" alt="">
                      <span>预约挂号</span>
                    </div>
-                   <div class="askDoctor">
+                   <div class="askDoctor"  @click="askDoc">
                      <img src="../../static/img/myDoc.png" alt="">
-                     <span>问医生</span>
+                       <span>问医生</span>
                    </div>
                  </div>
                  <div class="blankLine">
 
                  </div>
                  <div class="three">
-                   <div class="eyeSick border-1px-right" @click="eyeIllness">
+                   <div class="eyeSick border-1px-right" @click="askDoc">
                      <img src="../../static/img/eye.png" alt="">
                      <span>眼底病</span>
                    </div>
@@ -106,7 +106,7 @@
 
     </div>
 </template>
-<script type="text/ecmascript-6">
+<script >
   import header from '../base/header'
   import Carousel from '../base/carousel'
   import BScroll from 'better-scroll'
@@ -163,6 +163,10 @@
         })
       },
       methods:{
+          askDoc(){
+              console.log("ask doc");
+              this.$router.push("/Consult/")
+          },
         eyeIllness(){
           api('smarthos.appointment.oculartrauma.detail',{
             token:token

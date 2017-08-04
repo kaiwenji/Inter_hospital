@@ -56,6 +56,12 @@
           Got:false
       };
     },
+      created(){ 
+          if(!window.localStorage['page']){
+              window.localStorage['page']=location.href;
+              window.location.reload();
+          }
+      },
     computed: {},
     components: {
         AppHeader,
@@ -92,6 +98,7 @@
 
     },
     beforeDestroy() {
+        window.localStorage.removeItem("page");
 
     },
       filters:{

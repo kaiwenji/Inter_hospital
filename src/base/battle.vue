@@ -59,7 +59,7 @@
             ,
             post(){
                 this.$http.post("http://api.diandianyy.com/util/weixin/app/jssdk",{
-                    url:document.location.href,
+                    url:location.href,
                     appid:"wxfc623ff79ce99489"
                 })
                 .then((val)=>{

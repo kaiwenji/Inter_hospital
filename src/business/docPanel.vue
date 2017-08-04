@@ -130,6 +130,7 @@
             }
             this.src=url;
             setTimeout(this.keepGoing,100);
+            this.$refs.music.play();
             this.nowPlaying=index;
         },
         keepGoing(){

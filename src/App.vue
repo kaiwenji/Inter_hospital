@@ -47,38 +47,38 @@ mounted(){
 
 
     watch: {
-      $route(to, from){
-        let routeLength = this.urlObj.history.length;
-        if (routeLength === 0) {
-          console.log(routeLength, '一开始的空')
-          this.slide = 'left'
-          if (to.path === from.path && to.path === '/') {
-            this.urlObj.history = to.path;
-          } else {
-            this.urlObj.history = from.path;
-            this.urlObj.history = to.path;
-            console.log(this.urlObj.history,1111)
-          }
-        } else if (routeLength === 1) {
-          this.slide = 'left'
-          this.urlObj.history = to.path;
-          console.log(this.urlObj.history, 9999)
-        } else {
-
-          let lastBeforeRoute = this.urlObj.history[routeLength - 2];
-          if (lastBeforeRoute === to.path) {
-            console.log('后退的')
-            this.urlObj.back;
-            this.slide = 'right'
-            console.log(this.urlObj.history, 9999)
-          } else {
-            this.urlObj.history = to.path;
-            console.log('倩倩进的')
-            console.log(this.urlObj.history)
-            this.slide = 'left'
-          }
-        }
-      }
+//      $route(to, from){
+//        let routeLength = this.urlObj.history.length;
+//        if (routeLength === 0) {
+//          console.log(routeLength, '一开始的空')
+//          this.slide = 'left'
+//          if (to.path === from.path && to.path === '/') {
+//            this.urlObj.history = to.path;
+//          } else {
+//            this.urlObj.history = from.path;
+//            this.urlObj.history = to.path;
+//            console.log(this.urlObj.history,1111)
+//          }
+//        } else if (routeLength === 1) {
+//          this.slide = 'left'
+//          this.urlObj.history = to.path;
+//          console.log(this.urlObj.history, 9999)
+//        } else {
+//
+//          let lastBeforeRoute = this.urlObj.history[routeLength - 2];
+//          if (lastBeforeRoute === to.path) {
+//            console.log('后退的')
+//            this.urlObj.back;
+//            this.slide = 'right'
+//            console.log(this.urlObj.history, 9999)
+//          } else {
+//            this.urlObj.history = to.path;
+//            console.log('倩倩进的')
+//            console.log(this.urlObj.history)
+//            this.slide = 'left'
+//          }
+//        }
+//      }
     },
   }
 </script>
@@ -108,6 +108,7 @@ mounted(){
     flex-direction:column;
   }
 
+/*
   .left-enter-active, .left-leave-active, .right-enter-active, .right-leave-active {
     transition: all 0.3s ease;
     display: flex;
@@ -139,4 +140,5 @@ mounted(){
   .right-leave-to {
     transform: translate(100%, 0);
   }
+*/
 </style>
