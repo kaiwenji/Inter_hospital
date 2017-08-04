@@ -23,8 +23,8 @@
 
               <div class="weui-uploader__bd">
                 <ul class="weui-uploader__files" id="uploaderFiles">
-                  <li class="weui-uploader__file" v-for="item of srcList">
-                    <img :src="item.attaFileUrl" alt="" class="uploadImg" @click="deleteImg(item.attaFileUrl)"><br>
+                  <li class="weui-uploader__file" v-for="item,index of srcList">
+                    <img :src="item.attaFileUrl" alt="" class="uploadImg" @click="deleteImg(index,item.attaFileUrl)"><br>
                     <!--<span>{{num+'%'}}</span>-->
                   </li>
                 </ul>
@@ -37,26 +37,49 @@
           </div>
         </div>
       </div>
-
+      <div class="bottom" v-show="showBig" >
+        <test  :indexes="indexes" :flag="flag">
+          <div class="test" v-for="item of srcList" >
+            <slot name="del">
+              <div>
+                <top>
+                  <div slot="left"></div>
+                  <a style="background: white;border: none;font-size: 16px;color: #3CC51F"  class="step" @touchstart="testDelete(item.attaFileUrl)">删除</a>
+                </top>
+              </div>
+            </slot>
+            <div style="display: flex;height: 100%;align-items: center"  @click="showContain">
+              <img :src="item.attaFileUrl" />
+            </div>
+          </div>
+        </test>
+      </div>
     </div>
 </template>
 <script type="text/ecmascript-6">
 import ajax from '../lib/ajax'
+import test from '../base/test.vue'
+import top from '../business/app-header.vue'
     export default{
       props:['imgList'],
         components: {
-
+          test,
+          top
         },
         data(){
             return {
               index:0,
             srcList:[],
               num:0,
-              attaIdList:[]
+              attaIdList:[],
+              showBig:false,
+              indexes:Number,
+              flag:0
             }
         },
       watch:{
         imgList:function () {
+          console.log('难道是他么')
           this.srcList=this.imgList.slice();
           console.log(this.imgList, 77777)
           this.getId()
@@ -67,6 +90,27 @@ import ajax from '../lib/ajax'
 
         },
       methods:{
+        showContain(){
+          console.log(11111)
+          this.$set(this.$data,'showBig',false)
+        },
+
+        testDelete(url){
+          console.log(url,21212121212121212);
+            for(var i=0;i<this.srcList.length;i++){
+              if(this.srcList[i].attaFileUrl==url){
+                if(confirm('确定删除该图片？')){
+                  this.srcList.splice(i,1)
+                  this.attaIdList.splice(i,1);
+                  this.$emit('getAttaIdsList',this.attaIdList)
+                  this.$set(this.$data,'showBig',false)
+                  console.log('删除');
+                  return false;
+                }
+              }
+            };
+
+        },
         getId(){
           if(this.imgList){
               for(var i=0;i<this.imgList.length;i++){
@@ -88,7 +132,7 @@ import ajax from '../lib/ajax'
               if (url) {
                 src.attaFileUrl = url.createObjectURL(file);
                 var arr = this.srcList;
-                arr.push(src)
+                arr.push(src);
                 this.$set(this.$data,'srcList',arr);
 
               } else {
@@ -100,13 +144,11 @@ import ajax from '../lib/ajax'
             }
             var file = e.target.files[0];
             var $this = this
-            console.log(file,99999)
             ajax(file,{
               progress:function (evt) {
                 if (evt.lengthComputable) {
                   var percentComplete = Math.round(evt.loaded * 100 / evt.total);
                   $this.$set($this.$data,'num',percentComplete)
-                  console.log('上传中'+this.num+"%",88888)
                 }else {
                   console.log('无法计算')
                 }
@@ -114,11 +156,7 @@ import ajax from '../lib/ajax'
             },'PAT','IMAGE').then(data=>{
               console.log(data,66666)
               if(data.succ){
-//              this.attaIdList[this.index] = data.obj.id;
-//              this.index++
                 this.attaIdList.push(data.obj.id)
-                console.log(this.attaIdList,798798798);
-//              this.$set(this.$data,'attaList',data.obj.attaId);
                 this.$emit('getAttaIdsList',this.attaIdList)
                 this.$weui.alert('上传成功')
               }else {
@@ -131,21 +169,26 @@ import ajax from '../lib/ajax'
 
 
         },
-        deleteImg(url){
+        deleteImg(indexes,url){
+          console.log(indexes,9999);
+          this.$set(this.$data,'indexes',indexes)
+          this.flag++;
+          this.$set(this.$data,'showBig',true)
+
           var $this = this;
-          var gallery = weui.gallery(url, {
-            onDelete: function(){
-              console.log($this.srcList.indexOf(url),55555);
-              var flag = $this.srcList.indexOf(url)
-              $this.srcList.splice(flag,1)
-              $this.attaIdList.splice(flag,1)
-              $this.$emit('getAttaIdsList',$this.attaIdList)
-              if(confirm('确定删除该图片？')){ console.log('删除'); }
-              gallery.hide(function() {
-                console.log('`gallery` has been hidden');
-              });
-            }
-          });
+//          var gallery = weui.gallery(url, {
+//            onDelete: function(){
+//              console.log($this.srcList.indexOf(url),55555);
+//              var flag = $this.srcList.indexOf(url)
+//              $this.srcList.splice(flag,1)
+//              $this.attaIdList.splice(flag,1)
+//              $this.$emit('getAttaIdsList',$this.attaIdList)
+//              if(confirm('确定删除该图片？')){ console.log('删除'); }
+//              gallery.hide(function() {
+//                console.log('`gallery` has been hidden');
+//              });
+//            }
+//          });
         }
       }
     }
@@ -185,7 +228,26 @@ import ajax from '../lib/ajax'
       height: 140rem/$rem;
       margin-right: 5px;
       margin-bottom: 5px;
-
+    }
+  .bottom{
+    position: fixed;
+    background: lightgrey;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 991;
+  }
+    .test {
+      float: left;
+      width: 100%;
+      height: 100%;
     }
 
+   .test img {
+      width: 100%;
+      display: block;
+    }
 </style>

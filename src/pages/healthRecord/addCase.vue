@@ -55,7 +55,9 @@
         mounted(){
           var day2 = new Date();
            day2.setTime(day2.getTime());
-          this.date = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+          var month = day2.getMonth()+1>10?day2.getMonth()+1:'0'+(day2.getMonth()+1);
+          var day = day2.getDate()>10?day2.getDate():'0'+day2.getDate();
+          this.date = day2.getFullYear()+"-" + month + "-" + day;
         },
       methods:{
         getAttaIdsList(value){
@@ -73,9 +75,19 @@
               for(var i=0;i<result.length;i++){
                 $this.date+=result[i].value+'-'
               }
-              var s =  $this.date
-              console.log( s.substring(0,s.length-1));
-              $this.$set($this.$data,'date', s.substring(0,s.length-1))
+              var s =  $this.date;
+              let now = new Date(s)
+              let year = now.getFullYear()
+              let mm = now.getMonth() + 1     //月
+              let dd = now.getDate()          //日
+              let clock=''
+              clock+=year+'-'
+              if(mm < 10) clock += "0"
+              clock += mm + "-"
+              if(dd < 10) clock += "0"
+              clock += dd;
+              console.log(clock,9999)
+              $this.$set($this.$data,'date',clock )
             }
           });
         },
