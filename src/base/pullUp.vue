@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper" ref="wrapper" >
+  <div id="wrapper" ref="wrapper" class="wrap" >
           <div id="scroller" ref="scroller">
               <slot><p>helloworld</p></slot>
     </div>
@@ -8,7 +8,7 @@
 
 <script>
 
-    import BScroll from "better-scroll"
+    import myMixin from "../lib/canScroll.js";
   export default {
     data() {
       return {
@@ -17,7 +17,6 @@
           nothingMore:false,
           ban:false,
           timeBan:false,
-          scroll:null,
           bottom:0
       };
     },
@@ -28,29 +27,9 @@
     components:{
 
     },
+      mixins:[myMixin],
     mounted() {
-        
-        this.scroll=new BScroll(document.getElementById("wrapper"),{
-            startX:0,
-            startY:0,
-            scrollY:true,
-            click:true,
-            touch:true,
-            probeType: 3
-
-        })
-        
-            console.log(this.scroll);
-        this.scroll.on("touchend",(pos)=>{
-            if (pos.y<this.bottom+20&&!this.ban&&!this.timeBan){
-                this.$emit("pullUp");
-                this.ban=true;
-                this.timeBan=true;
-                setTimeout(()=>{
-                    this.timeBan=false;
-                },1000)
-            }
-        })
+        this.setScroll();
     },
     beforeDestroy() {
 
@@ -100,21 +79,14 @@
           flag(){
               this.ban=false;
           },
-          list(){
-              if(this.scroll){
-                  setTimeout(()=>{
-                      this.scroll.refresh();
-                      this.bottom=this.$refs.wrapper.offsetHeight-this.$refs.wrapper.scrollHeight;
-                  },100)
-              }
-              
-          },
+
       }
   };
 </script>
 
 <style scoped lang="scss">
     #wrapper{
+        background:white;
         position:absolute;
         height:100%;
         width:100%;

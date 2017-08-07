@@ -59,7 +59,7 @@
             ,
             post(){
                 this.$http.post("http://api.diandianyy.com/util/weixin/app/jssdk",{
-                    url:location.href,
+                    url:location.href.split("#")[0],
                     appid:"wxfc623ff79ce99489"
                 })
                 .then((val)=>{
@@ -107,6 +107,8 @@
             &.middle{
                 padding:0.26rem 0 ;
                 input{
+                    font-size:20px;
+                    padding:.1rem;
                     border:0px solid transparent;
                     width:13.7rem;
                     height:1.8rem;

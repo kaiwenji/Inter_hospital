@@ -42,9 +42,6 @@ export default function (service, options) {
     .then((res) => {
       // bus.$emit("loading", {status: 'stop'});
       if (res.status == 200) {
-          if(!res.data.succ){
-              console.log(res);
-          }
         return res.data;
 
       } else {

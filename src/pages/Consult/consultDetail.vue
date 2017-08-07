@@ -56,11 +56,7 @@
           Got:false
       };
     },
-      created(){ 
-          if(!window.localStorage['page']){
-              window.localStorage['page']=location.href;
-              window.location.reload();
-          }
+      created(){
       },
     computed: {},
     components: {
@@ -98,7 +94,6 @@
 
     },
     beforeDestroy() {
-        window.localStorage.removeItem("page");
 
     },
       filters:{

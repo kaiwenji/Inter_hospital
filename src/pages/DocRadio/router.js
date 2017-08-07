@@ -4,7 +4,7 @@ import Detail from "./detail.vue";
 export default [
     {
         component:Index,
-        path:"/docRadio"
+        path:"/"
     },
     {
         component:Detail,

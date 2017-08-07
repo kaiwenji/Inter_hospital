@@ -32,6 +32,8 @@ import familyHistory from "../healthRecord/familyHistory.vue";
 import pastHistory from "../healthRecord/pastHistory.vue";
 import presentingComplaint from "../healthRecord/presentingComplaint.vue";
 
+
+
 export default[
 
 
@@ -84,11 +86,13 @@ export default[
     path: '/my',
     name:'my',
     component: my
-  },{
-    path: '/',
-    name:'login',
-    component: login
-  },{
+  },
+//    {
+//    path: '/docRadio',
+//    name:'login',
+//    component: login
+//  },
+    {
     path: '/forgetPassword',
     name:'forgetPassword',
     component: forgetPassword

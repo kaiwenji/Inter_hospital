@@ -1,6 +1,5 @@
 <template>
-  <div class="app wrap" ref="wrap">
-      
+  <div class="wrap" ref="wrap">
       <app-header style="border:1px solid transparent"class="test" ref="header" id="header"> 
           <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
           <div slot="right" ref="followButton" style="flex:0 0 auto" class="followButton" @click="follow">
@@ -16,6 +15,7 @@
                   <p>{{docInfo.hosName}}</p>
              </div>
           </div>
+          <div class="app">
           <div class="tab" ref="tab">
               <div class="tab_contain">
                   <div><div><img src="../../static/img/red.png"><p class="m red">预约挂号</p></div></div>
@@ -49,8 +49,7 @@
                 <img :src="docInfo.docQrcode">
               </div>
           </div>
-          <div>
-          </div>
+    </div>
       </div>
       <my-loading class='myLoading'v-show="!Got"></my-loading>
   </div>
@@ -79,7 +78,7 @@
           isFollow:false
       };
     },
-      mixins:[myMixin],
+//      mixins:[myMixin],
     computed: {
         followWord(){
             return this.isFollow?"已关注":"关注";
@@ -95,12 +94,11 @@
         isFollow(){
             if(!this.isFollow){
                 this.$refs.followButton.className="followButton";
-                this.$refs.heart.src="../../static/img/follow.png";
+                this.$refs.heart.src="./static/img/follow.png";
             }
             else{
                 this.$refs.followButton.className+=" followed";
-                this.$refs.heart.src="../../static/img/followed.png";
-                this.$refs.heart.src="./static/img/follow.png";
+                this.$refs.heart.src="./static/img/followed.png";
             }
 //            else{
 //                this.$refs.followButton.className+=" followed";
@@ -278,6 +276,9 @@
     header{
         border:none;
     }
+    .wrap{
+        background:rgb(248,248,248)
+    }
     .test{
         position:fixed;
         width:20rem;
@@ -286,9 +287,7 @@
 
     }
     .app{
-        flex:1 1 auto;
         background-color:rgb(248,248,248);
-        overflow:auto;
     }
     .info{
         height:14rem;
@@ -425,7 +424,7 @@
     }
     .followButton{
         &.followed{
-            color:$heartRed;
+            color:rgb(242,198,19);
         }
         position:relative;
         color:white;
@@ -445,13 +444,13 @@
 
 /*    名医标签*/
     .icon{
-        background:rgb(242,198,19);
-        color:white;
-        position:absolute;
-        border-radius:0.3rem;
-        padding:0 .3rem;
-        left:11.5rem;
-        top:.1rem;
+    background: #f2c613;
+    color: #fff;
+    position: absolute;
+    border-radius: .2rem;
+    padding: 0 .2rem;
+    left: 12rem;
+    top: .1rem;
     }
 
 /*    医生姓名*/

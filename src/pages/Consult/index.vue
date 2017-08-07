@@ -8,20 +8,22 @@
          </div>
         <p class="headerTitle">问医生</p>
     </app-header>
-    <pull-up @pullUp="getMore" :list=consultList :flag="flag" v-show="Got">
+
     <div class="main">
-        <div class="nothing" v-if="consultList.length==0">
+        <div class="nothing" v-if="consultList.length==0&&Got">
             <p class="xxl darker" >你还没有回答任何问题</p>
-            <p class="m lightBlue">去回答</p>
-    </div>
+            <p class="m lightBlue">点击右下角按钮立即提问</p>
+    </div>    
         <div v-else>
+
+        <pull-up @pullUp="getMore" :list=consultList :flag="flag" v-show="Got">
             <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)":key="item.consultInfo.id"></my-post>
-    
+    </pull-up> 
     </div>
-    
     </div>
-    </pull-up>
     <div class="button" @click="addConsult">
+        <p>立即</p>
+        <p>询问</p>
     </div>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
@@ -109,6 +111,7 @@
                 
             },
                  ()=>{
+                console.log(this.consultList.length);
                 this.$weui.alert("网络错误");
             })
         }
@@ -141,7 +144,6 @@ src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
         padding-top:0.8rem;
     }
     .nothing{
-        display:none;
         text-align:center;
         padding-top:11rem;
         p{
@@ -157,10 +159,15 @@ src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
         right:0.8rem;
         width:3rem;
         height:3rem;
-        background-image:url(../../../static/img/addRecord.png);
-        background-size:cover;
-        &:active{
-            background-image:url(../../../static/img/addRecord_on.png);
+        border-radius:50%;
+        background-color:rgb(15,189,255);
+        color:white;
+        p{
+            position:relative;
+            left:0.7rem;
+            top:.4rem;
+            line-height:1.4em;
+            font-size:0.8rem;
         }
     }
         #toast{

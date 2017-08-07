@@ -1,5 +1,6 @@
 <template>
   <div >
+      <p onClick="window.location.reload()">{{src}}</p>
       <div class="player">
           <div class="player_bd">
               <a @click="on()"><img class="button" ref="button" src="../../static/img/on.png"></a>
@@ -32,7 +33,7 @@
               <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}}人听过</p>
               <p class="right"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
     </div>
-          <audio ref="music" id="music" :src="src">
+          <audio ref="music" id="music" :src="docInfo.snsKnowledge&&docInfo.snsKnowledge.knowUrl" >
         </audio>
     </div>
   </div>
@@ -43,16 +44,22 @@
   export default {
     data() {
       return {
-          duration:"",
-          currentTime:"",
           intervalId:'',
           direction:"right",
           target:-1,
           src:""
+          
       };
     },
       filters:{
           getMyDay
+      },
+      watch:{
+          docInfo(){
+              this.src=this.docInfo.snsKnowledge.knowUrl;
+//              console.log(this.src);
+//              this.audioAutoPlay("music");
+          }
       },
     props:{
         docInfo:{
@@ -65,21 +72,25 @@
     },
     components: {},
     mounted() {
-        var _this=this;
-        this.$refs.music.addEventListener('canplaythrough', function() {
-//            alert("can play");
-           _this.duration=_this.setTimeFormat(_this.$refs.music.duration);
-            _this.currentTime=_this.setTimeFormat(_this.$refs.music.currentTime);
-        }, false);
+//        var _this=this;
+//        this.$refs.music.addEventListener('canplaythrough', function() {
+////            alert("canplay");
+////            this.$refs.music.play();
+//           _this.duration=_this.setTimeFormat(_this.$refs.music.duration);
+//            _this.currentTime=_this.setTimeFormat(_this.$refs.music.currentTime);
+//        }, false);
+//        this.$refs.music.pause();
         this.initialSlider();
 
     },
     beforeDestroy() {
+        this.$refs.music.pause();
         clearInterval(this.intervalId);
 
     },
     methods: {
         initialSlider(){
+            alert("初始化");
             var sliderHandler=document.getElementById("handler");
             var sliderTrack=document.getElementById("track");
             var totalLen = this.$refs.slider.clientWidth,
@@ -97,26 +108,20 @@
                 percent =  parseInt(dist / this.$refs.slider.clientWidth * 100);
                 sliderTrack.style.width= percent + '%';
                 sliderHandler.style.left=percent + '%';
+                _this.duration=_this.setTimeFormat(_this.$refs.music.duration);
                 _this.$refs.music.currentTime=_this.$refs.music.duration*(percent/100);
                 _this.currentTime=_this.setTimeFormat(_this.$refs.music.currentTime);
                 });
         },
         on(){
-            if(this.$refs.music.paused&&!this.$refs.music.ended){
-                setTimeout(this.keepGoing,100);
-                if(this.$refs.music){
-                    if(this.docInfo.snsKnowledge){
-//                        alert("getKnowURl")
-                        this.src=this.docInfo.snsKnowledge.knowUrl;
-                    }
-                    if(this.intervalId==''){
-                        this.intervalId=setInterval(this.getCurrentTime,500);
-                    }
-                    this.currentTime=this.setTimeFormat(this.$refs.music.currentTime);
-                }
+            if(this.$refs.music.paused){
+                this.$refs.music.play();
             }
             else{
                 this.$refs.music.pause();  
+            }
+            if(this.intervalId==''){
+                this.intervalId=setInterval(this.getCurrentTime,500);
             }
         },
         keepGoing(){
@@ -182,6 +187,9 @@
 <style scoped lang="scss">
     @import "../common/var.scss"; 
     $transparent:rgb(140,222,255);
+    .wrap{
+        padding-bottom:.5rem;
+    }
     p{
         color:$transparent;
         font-size:0.77rem;
@@ -207,7 +215,7 @@
         display:flex;
         flex-direction:row;
         .info{
-            padding-top:1rem;
+            padding-top:.7rem;
             flex:0 0 auto;
             width:10rem;
             height:4rem;
@@ -218,7 +226,7 @@
             flex:0 0 auto;
             width:3rem;
             height:4rem;
-            padding:1rem;
+            padding:.7rem;
         }
     }
     .button{
@@ -250,6 +258,7 @@
         padding:0;
     }
     .player_ft{
+        margin:0.8rem;
         display:flex;
         flex-direction:row;
         p{

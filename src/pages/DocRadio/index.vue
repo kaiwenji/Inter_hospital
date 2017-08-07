@@ -10,7 +10,7 @@
     </app-header>
       
 <!--      <my-metalbox :list="audioList">-->
-      <div style="position:fixed;top:2.36rem;bottom:2.5rem;left:0;right:0">
+      <div v-show="Got"style="position:fixed;top:2.36rem;bottom:2.5rem;left:0;right:0">
           <my-pullup :list="audioList"@pullUp="loadingMore" :flag="flag">
               <doc-panel :list="audioList"></doc-panel>
 
@@ -35,9 +35,7 @@
     import DocPanel from "../../business/docPanel.vue";
     import AppFooter from '../../business/app-footer.vue';
     import MyLoading from "../../base/loading/loading.vue";
-    import myMixin from "../../lib/canScroll.js";
     import Api from "../../lib/api.js";
-    import MyMetalbox from "../../base/metalBox.vue";
   export default {
     data() {
       return {
@@ -55,8 +53,7 @@
         DocPanel,
         AppFooter,
         MyPullup,
-        MyLoading,
-        MyMetalbox
+        MyLoading
     },
     mounted() {
         
@@ -70,7 +67,6 @@
         clearInterval(this.intervalId);
 
     },
-//      mixins:[myMixin],
     methods: {
         getInfo(){
             Api("smarthos.sns.knowledge.page",{

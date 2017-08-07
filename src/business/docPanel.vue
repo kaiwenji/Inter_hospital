@@ -23,7 +23,7 @@
     </div>
     </div>
     
-          <audio  :src="src" ref="music" class="music"></audio>
+          <audio  :src="src"ref="music" class="music"></audio>
     </div>
 </template>
 
@@ -49,21 +49,7 @@
     },
       watch:{
           list(){
-              setTimeout(()=>{
-                  for(let i=0;i<this.$refs.bubble.length;i++){
-                      this.$refs.bubble[i].$el.addEventListener("click",(e)=>{
-                        e._flag=true;
-                    })
-                      this.$refs.thumb[i].addEventListener("click",(e)=>{
-                    e._flag=true;
-                },false);
-                    this.$refs.bd[i].addEventListener("click",(e)=>{
-                        if(e._flag){
-                            e.stopPropagation();
-                        }
-                    },false);
-                  }
-              },20);
+              setTimeout(this.updatePanel,20);
              
           }
       },
@@ -93,20 +79,11 @@
           goodTime
       },
     mounted() {
-//        var scroll=new BScroll(document.getElementById("wrapper"),{
-//            startX:0,
-//            startY:0,
-//            scrollY:true,
-//            click:true,
-//            touch:true
-//            
-//        })
-
-//              console.log(this.$refs);
-
+//        setTimeout(this.updatePanel,200);
         this.$refs.music.addEventListener("canplaythrough",()=>{
-            alert("canplay");
-            this.$refs.music.play();
+           alert("canplay");
+//            this.$refs.music.play();
+            
             
         })
         this.$refs.music.addEventListener("ended",()=>{
@@ -119,7 +96,23 @@
         this.$refs.music.pause();
     },
     methods: {
+        updatePanel(){
+            for(let i=0;i<this.$refs.bubble.length;i++){
+                                  this.$refs.bubble[i].$el.addEventListener("click",(e)=>{
+                                    e._flag=true;
+                                })
+                                  this.$refs.thumb[i].addEventListener("click",(e)=>{
+                                e._flag=true;
+                            },false);
+                                this.$refs.bd[i].addEventListener("click",(e)=>{
+                                    if(e._flag){
+                                        e.stopPropagation();
+                                    }
+                                },false);
+                              }
+        },
         play(audioInfo,index){
+            console.log("bubble")
             
             var url=audioInfo.snsKnowledge.knowUrl
             if(index==this.nowPlaying){
@@ -129,8 +122,8 @@
                 this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
             }
             this.src=url;
-            setTimeout(this.keepGoing,100);
             this.$refs.music.play();
+//            setTimeout(this.keepGoing,100); 
             this.nowPlaying=index;
         },
         keepGoing(){
@@ -167,6 +160,7 @@
             })
         },
         activate(item){
+//            console.log(this.$refs.music.duration);
             this.$router.push("/docRadio/detail/"+item.snsKnowledge.id);
         }
     }
@@ -177,7 +171,7 @@
     @import "../common/var.scss";
         .audioItem{
             height:8.4rem;
-            border:1px solid lightgrey;
+            border-top:1px solid lightgrey;
             display:flex;
             flex-direction:row;
             padding:1rem;
@@ -193,6 +187,7 @@
 
             }
             .bd{
+                flex:1 1 auto;
                 .ft{
                     display:flex;
                     flex-direction:row;
