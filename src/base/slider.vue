@@ -7,7 +7,7 @@
       </div>
     </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
   import {addClass} from '../lib/dom.js'
   import BScroll from 'better-scroll'
   import {mapGetters,mapMutations} from 'vuex'

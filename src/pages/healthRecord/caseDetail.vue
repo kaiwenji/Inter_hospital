@@ -32,6 +32,7 @@
         <div class="addImg">
           <upload :imgList="imgList" v-on:getAttaIdsList="getAttaIdsList">
             <div slot="title"></div>
+            <div slot="del"></div>
           </upload>
         </div>
         <div class="btn">
