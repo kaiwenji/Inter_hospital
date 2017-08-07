@@ -83,8 +83,8 @@
     <div class="centerDisplay" transition="fade" v-if="popImg" @click="enSmall">
       <div class="slider-wrapper" ref="sliderWrapper">
         <slider ref="slider" :popImg="popImg" :index="goindex">
-          <div class="largePicture" v-for="item in applyDetail.attaList"  @click="enSmall">
-            <img :src="item.attaFileUrl" alt="">
+          <div class="largePicture" v-for="(item,index) in applyDetail.attaList"  @click="enSmall">
+            <img :src="item.attaFileUrl" alt="" @click="closeOnImg(index)">
           </div>
 
         </slider>
@@ -109,7 +109,8 @@
         applyDetail:{},
         popImg:false,
         goindex:"",
-        applyId:""
+        applyId:"",
+        id:""
       }
     },
     computed:{
@@ -138,11 +139,12 @@
 //       })
     },
     created(){
-      this.applyId = this.$route.query.id
+      this.id = this.$route.query.id
+      console.log(this.id)
       let that = this
       api("smarthos.appointment.detail",{
         token:localStorage.getItem("token"),
-        id:that.applyId
+        id:that.id
       }).then((data)=>{
 //          console.log(data)
         that.applyDetail = data.obj
@@ -182,6 +184,9 @@
 
       },
       enSmall(){
+        this.popImg = false
+      },
+      closeOnImg(){
         this.popImg = false
       },
       goIndex(){

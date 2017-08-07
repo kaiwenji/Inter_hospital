@@ -46,7 +46,7 @@
                  <div class="doctorKnow border-1px">
                    <div class="left30">
                      <span>名医知道</span>
-                     <span @click="moreKnow()" class="doctorMore">更多 > </span>
+                     <span @click="moreKnow()" class="doctorMore">更多></span>
                    </div>
                  </div>
                  <div class="knowCard border-1px" v-for="(item,index) in knowDetail">
