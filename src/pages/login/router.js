@@ -31,12 +31,16 @@ import allergyHistory from "../healthRecord/allergyHistory.vue";
 import familyHistory from "../healthRecord/familyHistory.vue";
 import pastHistory from "../healthRecord/pastHistory.vue";
 import presentingComplaint from "../healthRecord/presentingComplaint.vue";
+import test from '../../base/test.vue'
 
 
 
 export default[
 
-
+  // {
+  //   path:"/",
+  //   component:test
+  // },
   {
     path: '/changePhone',
     name:'changePhone',

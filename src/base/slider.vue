@@ -7,7 +7,7 @@
       </div>
     </div>
 </template>
-<script>
+<script type="text/ecmascript-6">
   import {addClass} from '../lib/dom.js'
   import BScroll from 'better-scroll'
   import {mapGetters,mapMutations} from 'vuex'
@@ -26,6 +26,9 @@
         },
         index:{
             type:Number
+        },
+        previewImg:{
+            type:Array,
         }
       },
       mounted(){
@@ -91,15 +94,29 @@
         },
         gotoPage(){
           let pageIndex = this.slider.getCurrentPage().pageX
-          this.SET_CURRENT_PAGE_INDEX(pageIndex)
           pageIndex = this.index
-          this.slider.goToPage(pageIndex,0,0)
+          this.SET_CURRENT_PAGE_INDEX(pageIndex)
+          this.slider.goToPage(this.currentPageIndex,0,0)
+        },
+        goTOChange(){
+            let myIndex
+            myIndex = this.currentPageIndex
+          this.slider.goToPage(myIndex,0,0)
         }
       },
 
        watch:{
-         popImg:function(){
-             console.log("123")
+//         popImg:function(){
+//             console.log("123")
+//         },
+         previewImg:function(){
+             if(this.currentPageIndex == this.previewImg.length-1){
+               this.goTOChange()
+             }
+
+//           this.setSliderWidth()
+//           this.initSlider()
+//           this.gotoPage()
          }
 //         popImg(){
 //             this.$nextTick(()=>{

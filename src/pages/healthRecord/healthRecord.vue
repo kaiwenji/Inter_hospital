@@ -7,7 +7,7 @@
         <div>
           <div class="patMsg">
             <div class="patImg">
-              <img src="../../../static/img/psb.jpg" alt="">
+              <img :src="patAvatar" alt="">
             </div>
             <div class="patDetail">
               <p class="bf">{{commpat.commpatName}}</p>
@@ -87,7 +87,8 @@
               commpat:JSON.parse(localStorage.getItem('commpat')),
               list:[],
               healthDetail:{},
-              showLoading:true
+              showLoading:true,
+              patAvatar:localStorage.getItem('patAvatar')
             }
         },
       filters:{

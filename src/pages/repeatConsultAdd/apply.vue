@@ -84,9 +84,11 @@
         <pop-up></pop-up>
       </div>
       <v-mask  :showList="showDialog"></v-mask>
-      <div class="centerDisplay" transition="fade" v-if="largePreview" @click="makeSmall">
+      <div class="centerDisplay" transition="fade" v-if="largePreview">
+        <button class='imgDelete' @touchend.prevent="deleteImg()">删除</button>
+        <button class='leftClose' @touchend.prevent="closeDelete()">关闭</button>
         <div class="slider-wrapper" ref="sliderWrapper">
-          <slider ref="slider" :popImg="largePreview" :index="goindex">
+          <slider ref="slider" :popImg="largePreview" :index="goindex" :previewImg="previewImg">
             <div  v-for="singleImage in previewImg"  @click="makeSmall">
               <img :src="singleImage" alt="">
             </div>
@@ -142,7 +144,8 @@
         alertMsg:"图片最多可以上传九张哦",
         showPat:false,
         patList:[],
-        chosedIndex:0
+        chosedIndex:0,
+
       }
     },
     mounted(){
@@ -171,16 +174,38 @@
         })
     },
     computed:{
-//      ...mapGetters([
-//          "applyId"
-//      ])
+      ...mapGetters([
+        "currentPageIndex"
+      ]),
+
     },
     methods:{
+      ...mapMutations([
+        'SET_CURRENT_PAGE_INDEX'
+      ]),
       makeLarge(index){
           this.largePreview = true
           this.goindex = index
       },
       makeSmall(){
+        this.largePreview = false
+      },
+      deleteImg(){
+        if(this.currentPageIndex == this.previewImg.length-1 && this.previewImg.length >1){
+          this.previewImg.splice(this.currentPageIndex,1)
+          this.attaId.splice(this.currentPageIndex,1)
+          this.currentPageIndex = this.currentPageIndex -1
+          this.SET_CURRENT_PAGE_INDEX(this.previewImg.length-1)
+        }else if(this.currentPageIndex < this.previewImg.length-1 && this.previewImg.length >1){
+          this.previewImg.splice(this.currentPageIndex,1)
+          this.attaId.splice(this.currentPageIndex,1)
+        }else if(this.currentPageIndex < this.previewImg.length && this.previewImg.length == 1){
+          this.previewImg.splice(this.currentPageIndex,1)
+          this.attaId.splice(this.currentPageIndex,1)
+           this.largePreview = false
+        }
+      },
+      closeDelete(){
         this.largePreview = false
       },
 //      ...mapMutations([
@@ -368,6 +393,32 @@
       background-color: rgba(0,0,0,.3);
       justify-content: center;
       align-items: center;
+      button.imgDelete{
+        background-color:white;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 70px;
+        right:10%;
+        border:none;
+        outline: medium;
+        border-radius: 10px;
+        /*opacity: 0.5;*/
+        color: #0FBDFF!important;
+      }
+      button.leftClose{
+        background-color:white;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 70px;
+        left:10%;
+        border:none;
+        outline: medium;
+        border-radius: 10px;
+        /*opacity: 0.5;*/
+        color: #0FBDFF!important;
+      }
     }
     .fade-transition{
       transition: all 0.5s;
