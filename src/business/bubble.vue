@@ -1,7 +1,7 @@
 <template>
   <div class="">
       <div class="bubble" @click="play()"ref=bubble :class="{'on':isPlay}">
-          <img src="../../static/img/broadcast.png">
+          <div class="broadcast" :class="{'loading':isLoading}"></div>
           <p>{{duration}}</p>
 <!--
           <audio ref="music" id="music" @load="initialAudio":src="src" class="music">
@@ -16,6 +16,7 @@
     data() {
       return {
           isPlay:false,
+          isLoading:false,
           flag:true
       };
     },
@@ -29,6 +30,16 @@
             default:false,
             type:Boolean,
             required:true
+        },
+        load:{
+            default:false,
+            type:Boolean,
+            required:false
+        },
+        playing:{
+            default:false,
+            type:Boolean,
+            required:false
         }
     },
     computed: {
@@ -44,6 +55,12 @@
         pause(){
             console.log("pause",this.pause);
             this.isPlay=false;
+            this.isLoading=false;
+        },
+        playing(){
+            console.log("playing");
+            this.isPlay=true;
+            this.isLoading=false;
         }
     },
     beforeDestroy() {
@@ -52,7 +69,8 @@
     },
     methods: {
         play(){
-            this.isPlay=true;
+            this.isLoading=true;
+//            this.isPlay=true;
             if(this.flag){
 //                setTimeout(()=>{
                     this.$emit("activate");
@@ -116,9 +134,16 @@
             color:white;
             padding:1rem;
         }
-        img{
+        .broadcast{
+            background-image:url("../../static/img/broadcast.png");
+            &.loading{
+                background-image:url('../../static/img/loading.gif');
+            }
+            background-size:0.6rem 0.8rem;
+            background-repeat:no-repeat;
             position:absolute;
             height:0.8rem;
+            width:0.8rem;
             left:1rem;
             top:0.6rem;
         }

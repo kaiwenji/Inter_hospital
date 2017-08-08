@@ -81,7 +81,7 @@
                     this.Got=true;
                     console.log(val);
                     val.list.forEach((item)=>{
-                        this.audioList.push(Object.assign({}, item, { on: false }));
+                        this.audioList.push(Object.assign({}, item, { on: false,pause:false }));
                     })
                     console.log(this.audioList);
                     if(this.page==val.page.total){

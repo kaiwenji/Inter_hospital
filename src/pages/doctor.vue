@@ -32,7 +32,7 @@
                    <p class="font-hide":id="item.title">{{item.desc}}</p>
               </div>
               <div class="button" style="display:flex;flex-direction:column" @click="getDetail(item,this,index)">
-                  <img src="../../static/img/pullDown.png" class=""style="padding:2.6rem 1rem;width:1rem;">
+                  <img src="../../static/img/pullDown.png" class=""style="padding:2.2rem 1rem;width:1rem;">
               </div>
           </div>
           <div class="docAudio"v-show="showDocTalk" >
@@ -170,7 +170,7 @@
             var article=document.getElementById(item.title);
             var picture=event.event.target;
             picture.className=picture.className=="rotate"?"":"rotate";
-            article.className=article.className=='font-show'?"font-hide":"font-show";
+            article.className=article.className==''?"font-hide":"";
 
 
         },
@@ -352,13 +352,14 @@
         margin-bottom:1rem;
         div{
             &.button{
+                padding:0;
                 flex:0 0 auto;
                 div{
                     margin:auto 0;
                 }
             }
             flex:1 1 auto;
-
+            padding-bottom:0.8rem;
             p{
                 &.title{
                     position:relative;
@@ -406,6 +407,7 @@
     .QR{
         background-color:white;
         div{
+            
             text-align:center;
             p{
                 padding:0.7rem;
@@ -414,6 +416,8 @@
             }
             img{
                 width:8.5rem;
+                
+        margin-bottom:4rem;
             }
         }
 

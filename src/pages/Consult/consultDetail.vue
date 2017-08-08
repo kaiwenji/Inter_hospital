@@ -74,6 +74,7 @@
         .then((val)=>{
             this.Got=true;
             if(val.succ){
+                console.log(val.obj);
                 this.info=val.obj;
                 this.consultInfo=val.obj.consultInfo;
                 console.log(this.info);

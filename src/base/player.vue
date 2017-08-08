@@ -1,5 +1,6 @@
 <template>
   <div >
+      <p>version1.6</p>
       <p onClick="window.location.reload()">{{src}}</p>
       <div class="player">
           <div class="player_bd">
@@ -13,7 +14,7 @@
                   <div class="weui-slider-box">
 
                             <div class="weui-slider">
-                                    <p class="right">{{currentTime}}/{{duration}}</p>
+                                    <p class="right">{{setTimeFormat(currentTime)}}/{{duration}}</p>
                                 <div class="weui-slider__inner" ref="slider">
                                     <div style="width: 0;" class="weui-slider__track" id="track" ref='track'>
     
@@ -33,7 +34,7 @@
               <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}}人听过</p>
               <p class="right"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
     </div>
-          <audio ref="music" id="music" :src="docInfo.snsKnowledge&&docInfo.snsKnowledge.knowUrl" >
+          <audio ref="music" id="music" :src="docInfo.snsKnowledge&&docInfo.snsKnowledge.knowUrl">
         </audio>
     </div>
   </div>
@@ -44,10 +45,12 @@
   export default {
     data() {
       return {
+          duration:"",
+          currentTime:"",
           intervalId:'',
           direction:"right",
           target:-1,
-          src:""
+          src:"",
           
       };
     },
@@ -68,18 +71,8 @@
             required:true
         }
     },
-    computed: {
-    },
     components: {},
     mounted() {
-//        var _this=this;
-//        this.$refs.music.addEventListener('canplaythrough', function() {
-////            alert("canplay");
-////            this.$refs.music.play();
-//           _this.duration=_this.setTimeFormat(_this.$refs.music.duration);
-//            _this.currentTime=_this.setTimeFormat(_this.$refs.music.currentTime);
-//        }, false);
-//        this.$refs.music.pause();
         this.initialSlider();
 
     },
@@ -90,7 +83,6 @@
     },
     methods: {
         initialSlider(){
-            alert("初始化");
             var sliderHandler=document.getElementById("handler");
             var sliderTrack=document.getElementById("track");
             var totalLen = this.$refs.slider.clientWidth,
@@ -110,7 +102,7 @@
                 sliderHandler.style.left=percent + '%';
                 _this.duration=_this.setTimeFormat(_this.$refs.music.duration);
                 _this.$refs.music.currentTime=_this.$refs.music.duration*(percent/100);
-                _this.currentTime=_this.setTimeFormat(_this.$refs.music.currentTime);
+                _this.currentTime=_this.$refs.music.currentTime;
                 });
         },
         on(){
@@ -121,20 +113,14 @@
                 this.$refs.music.pause();  
             }
             if(this.intervalId==''){
+                this.$refs.button.src="./static/img/loading.gif";
                 this.intervalId=setInterval(this.getCurrentTime,500);
             }
         },
-        keepGoing(){
-            console.log("keepgoing");
-            if(this.$refs.music.paused){
-                this.$refs.music.play();
-                setTimeout(this.keepGoing,100);
-            }
-        },
         getCurrentTime(){
+            console.log(this.$refs.music.paused);
             var newVal;
             if(this.$refs.music.ended){
-                this.on();
                 this.$refs.music.load();
                 newVal=0;
             }
@@ -143,14 +129,17 @@
                     this.$refs.button.src="./static/img/on.png";
                 }
                 else{
-                    this.$refs.button.src="./static/img/pause.png";
+                    if(this.$refs.music.currentTime!=this.currentTime){
+                        this.$refs.button.src="./static/img/pause.png";
+                    }
                 }
                 newVal=(this.$refs.music.currentTime/this.$refs.music.duration)*100;
             }
             if(this.target==-1){
                 this.target=this.$refs.shiftBlock.scrollWidth-this.$refs.shiftBlock.offsetWidth;
             }
-            this.currentTime=this.setTimeFormat(this.$refs.music.currentTime);
+            this.currentTime=this.$refs.music.currentTime;
+            this.duration=this.setTimeFormat(this.$refs.music.duration);
             this.$refs.track.style.width=newVal+"%";
             this.$refs.handler.style.left=newVal+ "%";
 

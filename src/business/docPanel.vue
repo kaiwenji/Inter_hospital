@@ -1,5 +1,7 @@
 <template>
     <div>
+        <p>{{test}}</p>
+        <p @click="check()">version2.6</p>
     <div v-for="audioInfo,index in audioList" :key="audioInfo.snsKnowledge.id">
       <div class="audioItem" @click="activate(audioInfo)">
           <div class="hd">
@@ -11,7 +13,7 @@
               <p class="font-hide m" >{{audioInfo.snsKnowledge.description}}</p>
     </div>
               <div class="Bubble">
-              <bubble ref="bubble" :pause="audioInfo.on" @activate="play(audioInfo,index)" duration=""></bubble>
+              <bubble ref="bubble" :pause="audioInfo.pause" :playing="audioInfo.on"@activate="play(audioInfo,index)" duration=""></bubble>
                   <div class="supplement"></div>
     </div>
               <div class="ft">
@@ -22,7 +24,6 @@
     </div>
     </div>
     </div>
-    
           <audio  :src="src"ref="music" class="music"></audio>
     </div>
 </template>
@@ -42,8 +43,9 @@
       },
     data() {
       return {
-          src:"",
-          nowPlaying:-1
+          src:"http://music.163.com/song/media/outer/url?id=229285.mp3",
+          nowPlaying:-1,
+          test:""
 
       };
     },
@@ -74,21 +76,18 @@
         bubble:Bubble
 
     },
+      created(){
+          this.audio= new Audio();
+          
+      },
       filters:{
           getMyDay,
           goodTime
       },
     mounted() {
-//        setTimeout(this.updatePanel,200);
-        this.$refs.music.addEventListener("canplaythrough",()=>{
-           alert("canplay");
-//            this.$refs.music.play();
-            
-            
-        })
         this.$refs.music.addEventListener("ended",()=>{
             console.log("ended");
-            this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
+            this.audioList[this.nowPlaying].pause=!this.audioList[this.nowPlaying].pause;
             
         })
     },
@@ -96,6 +95,11 @@
         this.$refs.music.pause();
     },
     methods: {
+        check(){
+//            this.audio.play();
+            this.$refs.music.play();
+            this.test="metadata";
+        },
         updatePanel(){
             for(let i=0;i<this.$refs.bubble.length;i++){
                                   this.$refs.bubble[i].$el.addEventListener("click",(e)=>{
@@ -119,17 +123,20 @@
                 return ;
             }
             if(this.nowPlaying!=-1){
-                this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
+                this.audioList[this.nowPlaying].pause=!this.audioList[this.nowPlaying].pause;
             }
             this.src=url;
-            this.$refs.music.play();
-//            setTimeout(this.keepGoing,100); 
+            setTimeout(this.keepGoing,500); 
             this.nowPlaying=index;
         },
         keepGoing(){
-            if(this.$refs.music.paused){
-                this.$refs.music.play();
-                setTimeout(this.keepGoing,100);
+            this.$refs.music.play();
+            if(!this.$refs.music.currentTime||this.$refs.music.currentTime==0){
+                setTimeout(this.keepGoing,500);
+            }
+            else{
+                console.log(this.$refs.music.currentTime);
+                this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
             }
         },
         setColor(item){
