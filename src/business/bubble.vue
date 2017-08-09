@@ -2,7 +2,7 @@
   <div class="">
       <div class="bubble" @click="play()"ref=bubble :class="{'on':isPlay}">
           <div class="broadcast" :class="{'loading':isLoading}"></div>
-          <p>{{duration}}</p>
+          <p class="l">{{duration}}</p>
 <!--
           <audio ref="music" id="music" @load="initialAudio":src="src" class="music">
         </audio>
@@ -77,7 +77,7 @@
 //                    this.flag=false;
 //                              },500)
             }
-        }
+        },
 //        getDuration(){
 //               this.duration=this.setTimeFormat(this.$refs.music.duration);
 //        },
@@ -101,22 +101,13 @@
 //              clearInterval(this.intervalId);
 //          }  
 //        },
-//        setTimeFormat(item){
-//            var hour = Math.floor (item / 3600);
-//            var other = item % 3600;
-//            var minute = Math.floor (other / 60);
-//            var second = (other % 60).toFixed (0);
-//            var res=minute + '\'' + second + '\"';
-//            if(hour!=0){
-//                res=hour + '\'' +res;
-//            }
-//            return  res;
-//        }
+
     }
   };
 </script>
 
 <style scoped lang="scss">
+    @import "../common/var.scss";
     .bubble{
         position:relative;
         background-image:url(../../static/img/bubble_off.png);

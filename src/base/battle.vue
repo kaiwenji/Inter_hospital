@@ -4,11 +4,19 @@
         <img src="../../static/img/chat.png" @click="setType(this)">
     </div>
     <div class="middle">
-    <input type="text" v-show="type=='text'" v-model="msg">
-        <input type="button" v-show="type!='text'" value="点击输入语音"  class="recordButton"ref="recordButton">
+    <input type="text" v-show="type=='text'" v-model="msg" >
+        <div v-show="type!='text'"  ref="recordButton" class="mask"></div>
+        <input type="button" v-show="type!='text'"  class="recordButton" value="按住说话">
     </div>
     <div>
         <img src="../../static/img/聊天界面-添加.png" @click="send">
+    </div>
+<!--    <div ref="block" class="block"></div>-->
+    <div id="toast" v-show="isRecord">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast" style="width:7.6em;">
+            <p class="weui-toast__content" style="padding-top:3rem;">{{text}}</p>
+        </div>
     </div>
     </div>
 </template>
@@ -22,16 +30,37 @@
                 type:"text",
                 msg:"",
                 timer:"",
-                radioId:radioId
+                radioId:radioId,
+                text:"",
+                isRecord:false
             }
         },
         watch:{
             radioId(){
-                this.$emit("output",{src:this.radioId,type:"AUDIO"});
             }
         },
         methods:{
+            upload(){
+                weui.dialog({
+                    title: '提示',
+                    content: '是否上传语音',
+                    className: 'custom-classname',
+                    buttons: [{
+                        label: '取消',
+                        type: 'default',
+                        onClick: function () {  }
+                    }, {
+                        label: '确定',
+                        type: 'primary',
+                        onClick: function () { this.$emit("output",{src:this.radioId,type:"AUDIO"});}
+                    }]
+                });
+            },
             startRecord(){
+                this.isRecord=true;
+                this.text="录音中";
+                console.log("touchstart");
+                var _this=this;
                 this.timer.start();
                 wx.ready(()=>{
                     wx.startRecord({
@@ -41,20 +70,40 @@
                     })
                 })
             },
+            check(){
+                console.log("check");
+            },
             stopRecord(){
+                this.isRecord=false;
+                var _this=this;
                 var time=this.timer.pause();
                 this.timer.reset();
-                if (time<500){
-                    console.log("录制时间过短");
-                    return;
-                }
-                wx.ready(()=>{
-                    wx.stopRecord({
-                        success:(res)=>{
-                            this.radioId=res.localId;
-                        }
+                if(time<1000){
+                    setTimeout(
+                        ()=>{
+                    _this.$weui.alert("时间过短");
+                    wx.ready(()=>{
+                        wx.stopRecord({
+                            success:(res)=>{
+                            }
+                        })
                     })
-                })
+                        },
+                        2000
+                )
+
+                }
+                else{
+                    wx.ready(()=>{
+                        wx.stopRecord({
+                            success:(res)=>{
+                                console.log("stop");
+                                this.radioId=res.localId;
+                                _this.upload();
+                            }
+                        })
+                    })
+                }
             }
             ,
             post(){
@@ -86,10 +135,15 @@
             
         },
         mounted(){
+//            window.ontouchstart = function(e) { e.preventDefault(); };
             this.timer=new Timer();
             this.post();
-             this.$refs.recordButton.addEventListener("touchstart",this.startRecord)
+             this.$refs.recordButton.addEventListener("touchstart",()=>{
+                 this.startRecord();
+             })
             this.$refs.recordButton.addEventListener("touchend",this.stopRecord)
+//            this.$refs.block.addEventListener("touchend",()=>{console.log("取消")})
+//            this.$refs.block.addEventListener("touchmove",()=>{this.text="撤回"})
 
             
         }
@@ -102,7 +156,7 @@
         flex:0 0 auto;
         div{
             flex:0 0 auto;
-            width:3.14rem;
+/*            width:3.14rem;*/
 
             &.middle{
                 padding:0.26rem 0 ;
@@ -114,9 +168,20 @@
                     height:1.8rem;
                     background:$bgColor;
                     border-radius:10px;
+
                     &.recordButton{
                         border:1px solid black;
                     }
+
+                }
+                .mask{
+                    z-index:100;
+                    width:70%;
+                    opacity:0;
+                    position:fixed;
+                    right:3rem;
+                    bottom:0;
+                    height:3rem;
                 }
                 flex:1 1 auto;
             }
@@ -125,5 +190,14 @@
                 padding: 0.42rem 0.8rem;  
             }
         }
+    }
+    .block{
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        bottom:3rem;
+        z-index:1001;
+        background:transparent;
     }
 </style>

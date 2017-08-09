@@ -31,6 +31,7 @@
 
     },
     mounted() {
+        console.log(this.index);
         this.setCurrentPage(this.index);
     },
     beforeDestroy() {

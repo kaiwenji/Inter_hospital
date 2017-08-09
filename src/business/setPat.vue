@@ -70,9 +70,11 @@
                 position:relative;
                 border-top:.5px solid silver;
                 @include letter;
+/*
                 &:hover{
                     background-color:silver;
                 }
+*/
                 img{
                     position:absolute;
                     height:1rem;

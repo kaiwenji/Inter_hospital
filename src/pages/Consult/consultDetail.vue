@@ -1,7 +1,7 @@
 <template>
   <div class="module vertical">
       <app-header>
-          <p>问医生</p>
+          <p>问医生version1.2</p>
           <div slot="left" @click="back" ref="backBtn"><font><span>&#xe600;</span></font></div>
           </app-header>
           <div class="patInfo" v-show='Got'>

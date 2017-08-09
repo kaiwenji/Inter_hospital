@@ -13,7 +13,7 @@
               <p class="font-hide m" >{{audioInfo.snsKnowledge.description}}</p>
     </div>
               <div class="Bubble">
-              <bubble ref="bubble" :pause="audioInfo.pause" :playing="audioInfo.on"@activate="play(audioInfo,index)" duration=""></bubble>
+              <bubble ref="bubble" :pause="audioInfo.pause" :playing="audioInfo.on"@activate="play(audioInfo,index)" :duration="setTimeFormat(audioInfo.snsKnowledge.duration||0)"></bubble>
                   <div class="supplement"></div>
     </div>
               <div class="ft">
@@ -95,6 +95,17 @@
         this.$refs.music.pause();
     },
     methods: {
+        setTimeFormat(item){
+            var hour = Math.floor (item / 3600);
+            var other = item % 3600;
+            var minute = Math.floor (other / 60);
+            var second = (other % 60).toFixed (0);
+            var res=minute + '\'' + second + '\"';
+            if(hour!=0){
+                res=hour + '\'' +res;
+            }
+            return  res;
+        },
         check(){
 //            this.audio.play();
             this.$refs.music.play();

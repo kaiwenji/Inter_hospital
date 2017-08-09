@@ -17,7 +17,9 @@
         <div v-else>
 
         <pull-up @pullUp="getMore" :list=consultList :flag="flag" v-show="Got">
+            <div class="inner">
             <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)":key="item.consultInfo.id"></my-post>
+    </div>
     </pull-up> 
     </div>
     </div>
@@ -125,6 +127,9 @@
 font-family: 'iconfont';
 src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
 }
+    .inner{
+        background:rgb(248,248,248);
+    }
       span{
     font-family: 'iconfont';
     font-size: 18px;

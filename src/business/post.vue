@@ -5,7 +5,7 @@
               <img :src="item.attaFileUrl" v-for="item,index in info.attaList" :class="{'last':index%4==3}">
 </div>
           <div class="ft">
-              <p class="lightBlue l"><img src="../../static/img/docProfile.png" class="icon">{{info.userDocVo&&info.userDocVo.docName||"李逵"}}<span class="l light">回答</span></p>
+              <p class="lightBlue l" v-show="info.userDocVo"><img src="../../static/img/docProfile.png" class="icon">{{info.userDocVo&&info.userDocVo.docName}}<span class="l light">回答</span></p>
               <p class="middle m light">{{consultInfo.createTime|goodTime}}创建</p>
               <p class="right m light">{{consultInfo.replyCount||0}}条评论</p>
 </div>
