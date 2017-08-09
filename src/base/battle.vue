@@ -64,7 +64,7 @@
                 })
                 .then((val)=>{
                     var params=val.data;
-                    params.debug=true;
+                    params.debug=false;
                     wx.config(params);
                 })
             },

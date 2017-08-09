@@ -37,10 +37,10 @@ import test from '../../base/test.vue'
 
 export default[
 
-  // {
-  //   path:"/",
-  //   component:test
-  // },
+//   {
+//     path:"/",
+//     component:test
+//   },
   {
     path: '/changePhone',
     name:'changePhone',
@@ -80,22 +80,18 @@ export default[
   },{
     path: '/editPhone/:compatId',
     name:'editPhone',
-    component: editPhone}
-  // },{
-  //   path: '/index',
-  //   name:'index',
-  //   component: index
-  // }
-  ,{
+    component: editPhone
+   },
+//    {
+//     path: '/index',
+//     name:'index',
+//     component: index
+//   }
+  {
     path: '/my',
     name:'my',
     component: my
   },
-//    {
-//    path: '/docRadio',
-//    name:'login',
-//    component: login
-//  },
     {
     path: '/forgetPassword',
     name:'forgetPassword',
@@ -160,10 +156,9 @@ export default[
     path: '/eyeInjuryDetail',
     name: 'eyeInjuryDetail',
     component: eyeInjuryDetail
-  }
-  // },{
-  //   path: '/',
-  //   name:'patientGround',
-  //   component: patientGround
-  // },
+  },{
+     path: '/',
+     name:'patientGround',
+     component: patientGround
+   },
 ]
