@@ -91,11 +91,12 @@ export default[
     name:'my',
     component: my
   },
-    {
-    path: '/',
-    name:'login',
-    component: login
-  },
+
+   {
+   path: '/',
+   name:'login',
+   component: login
+ },
     {
     path: '/forgetPassword',
     name:'forgetPassword',
