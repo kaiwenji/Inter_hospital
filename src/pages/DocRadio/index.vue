@@ -1,5 +1,7 @@
 <template>
-  <div class="app">
+<div>
+    <router-view @showDetail="showDetail=true" @showList="showDetail=false"></router-view>
+  <div class="app" v-show="!showDetail">
       <app-header id="header">
           <div slot="left" id="metalBox"></div>
           <p class="headerTitle">名医知道</p>
@@ -9,15 +11,12 @@
     </div>
     </app-header>
       
-<!--      <my-metalbox :list="audioList">-->
       <div v-show="Got"style="position:fixed;top:2.36rem;bottom:2.5rem;left:0;right:0">
           <my-pullup :list="audioList"@pullUp="loadingMore" :flag="flag">
               <doc-panel :list="audioList"></doc-panel>
 
     </my-pullup>
     </div>
-          
-<!--    </my-metalbox>-->
       <my-loading v-show="!Got"class="myLoading"></my-loading>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
@@ -27,6 +26,7 @@
     </div>
       <app-footer index="1"></app-footer>
   </div>
+    </div>
 </template>
 
 <script>
@@ -44,7 +44,8 @@
           nothingMore:false,
           docId:"595d05b0f19b9c898a58cc00",
           flag:true,
-          Got:false
+          Got:false,
+          showDetail:false
       };
     },
     computed: {},
@@ -76,15 +77,15 @@
                 token:window.localStorage['token']
             })
             .then((val)=>{
+                this.Got=true;
                 if(val.succ)
                 {
-                    this.Got=true;
                     console.log(val);
                     val.list.forEach((item)=>{
                         this.audioList.push(Object.assign({}, item, { on: false,pause:false }));
                     })
                     console.log(this.audioList);
-                    if(this.page==val.page.total){
+                    if(this.page==val.page.pages){
                         this.page=-1;
                     }
                     else{

@@ -1,7 +1,7 @@
 <template>
     <div>
         <p>{{test}}</p>
-        <p @click="check()">version2.6</p>
+        <p @click="check()">version3.2</p>
     <div v-for="audioInfo,index in audioList" :key="audioInfo.snsKnowledge.id">
       <div class="audioItem" @click="activate(audioInfo)">
           <div class="hd">
@@ -33,6 +33,7 @@
     import {getMyDay,goodTime} from "../lib/filter.js";
     import Bubble from "../business/bubble.vue"; 
     import Api from "../lib/api.js";
+    import Reload from "../lib/reload.js";
   export default {
       props:{
           list:{
@@ -43,6 +44,7 @@
       },
     data() {
       return {
+          docInfo:{},
           src:"http://music.163.com/song/media/outer/url?id=229285.mp3",
           nowPlaying:-1,
           test:""
@@ -94,6 +96,7 @@
     beforeDestroy() {
         this.$refs.music.pause();
     },
+      mixins:[Reload],
     methods: {
         setTimeFormat(item){
             var hour = Math.floor (item / 3600);
@@ -107,9 +110,12 @@
             return  res;
         },
         check(){
-//            this.audio.play();
+            this.audio.play();
             this.$refs.music.play();
-            this.test="metadata";
+            this.test="oncanplay";
+            setTimeout(()=>{
+                this.test="";
+            },1000)
         },
         updatePanel(){
             for(let i=0;i<this.$refs.bubble.length;i++){
@@ -128,7 +134,6 @@
         },
         play(audioInfo,index){
             console.log("bubble")
-            
             var url=audioInfo.snsKnowledge.knowUrl
             if(index==this.nowPlaying){
                 return ;
@@ -142,11 +147,10 @@
         },
         keepGoing(){
             this.$refs.music.play();
-            if(!this.$refs.music.currentTime||this.$refs.music.currentTime==0){
+            if(!this.$refs.music.paused){
                 setTimeout(this.keepGoing,500);
             }
             else{
-                console.log(this.$refs.music.currentTime);
                 this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
             }
         },
@@ -178,7 +182,6 @@
             })
         },
         activate(item){
-//            console.log(this.$refs.music.duration);
             this.$router.push("/docRadio/detail/"+item.snsKnowledge.id);
         }
     }

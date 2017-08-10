@@ -6,7 +6,7 @@
     <div class="middle">
     <input type="text" v-show="type=='text'" v-model="msg" >
         <div v-show="type!='text'"  ref="recordButton" class="mask"></div>
-        <input type="button" v-show="type!='text'"  class="recordButton" value="按住说话">
+        <input type="button" v-show="type!='text'"  class="recordButton s"  value="按住说话">
     </div>
     <div>
         <img src="../../static/img/聊天界面-添加.png" @click="send">
@@ -161,7 +161,7 @@
             &.middle{
                 padding:0.26rem 0 ;
                 input{
-                    font-size:20px;
+                    font-size:15px;
                     padding:.1rem;
                     border:0px solid transparent;
                     width:13.7rem;
@@ -170,7 +170,6 @@
                     border-radius:10px;
 
                     &.recordButton{
-                        border:1px solid black;
                     }
 
                 }

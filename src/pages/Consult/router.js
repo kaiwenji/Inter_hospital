@@ -1,10 +1,21 @@
 import Index from "./index.vue";
 import NewConsult from "./newConsult.vue";
 import ConsultDetail from "./consultDetail.vue";
+import ConsultList from "./consultList.vue";
 export default[
     {
         component:Index,
-        path:"/Consult"
+        path:"/Consult",
+        children:[
+            {
+                component:ConsultList,
+                path:"/"
+            },
+            {
+            component:ConsultDetail,
+            path:"/Consult/ConsultDetail/:id"
+        }
+        ]
     }
     ,
     {
@@ -12,8 +23,5 @@ export default[
         path:"/Consult/newConsult"
     }
     ,
-    {
-        component:ConsultDetail,
-        path:"/Consult/ConsultDetail/:id"
-    }
+
 ]

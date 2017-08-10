@@ -57,6 +57,7 @@
       };
     },
       created(){
+          this.$emit("showDetail");
       },
     computed: {},
     components: {
@@ -106,6 +107,7 @@
         back(){
 //            window.history.back();
             this.$router.push("/Consult");
+            this.$emit("showList");
         },
         send(res){
             var params={

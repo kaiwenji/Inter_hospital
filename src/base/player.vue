@@ -14,7 +14,7 @@
                   <div class="weui-slider-box">
 
                             <div class="weui-slider">
-                                    <p class="right">{{setTimeFormat(currentTime)}}/{{duration}}</p>
+                                    <p class="right">{{setTimeFormat(currentTime)}}/{{duration||''}}</p>
                                 <div class="weui-slider__inner" ref="slider">
                                     <div style="width: 0;" class="weui-slider__track" id="track" ref='track'>
     
@@ -34,7 +34,7 @@
               <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}}人听过</p>
               <p class="right"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
     </div>
-          <audio ref="music" id="music" :src="docInfo.snsKnowledge&&docInfo.snsKnowledge.knowUrl">
+          <audio ref="music" id="music" :src="src" @loadstart="check">
         </audio>
     </div>
   </div>
@@ -50,7 +50,7 @@
           intervalId:'',
           direction:"right",
           target:-1,
-          src:"",
+          src:"http://music.163.com/song/media/outer/url?id=28660171.mp3",
           
       };
     },
@@ -60,6 +60,7 @@
       watch:{
           docInfo(){
               this.src=this.docInfo.snsKnowledge.knowUrl;
+              this.duration=this.docInfo.snsKnowledge.duration;
 //              console.log(this.src);
 //              this.audioAutoPlay("music");
           }
@@ -73,8 +74,9 @@
     },
     components: {},
     mounted() {
+        this.audioAutoPlay("music");
         this.initialSlider();
-
+        this.on();
     },
     beforeDestroy() {
         this.$refs.music.pause();
@@ -82,6 +84,16 @@
 
     },
     methods: {
+        audioAutoPlay(id){  
+            var audio = document.getElementById(id);  
+            audio.play();  
+            document.addEventListener("WeixinJSBridgeReady", function () {  
+                    audio.play();  
+            }, false);  
+        }  ,
+        check(){
+            this.duration=this.$refs.music.duration;
+        },
         initialSlider(){
             var sliderHandler=document.getElementById("handler");
             var sliderTrack=document.getElementById("track");
@@ -129,9 +141,10 @@
                     this.$refs.button.src="./static/img/on.png";
                 }
                 else{
-                    if(this.$refs.music.currentTime!=this.currentTime){
+                    var last=this.$refs.music.currentTime;
+                    setTimeout(()=>{if(this.$refs.music.currentTime!=last){
                         this.$refs.button.src="./static/img/pause.png";
-                    }
+                    }},100)
                 }
                 newVal=(this.$refs.music.currentTime/this.$refs.music.duration)*100;
             }

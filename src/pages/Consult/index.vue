@@ -1,5 +1,6 @@
 <template>
-<div class="app">
+<div>
+<div class="app" v-show="!showDetail">
     <app-header>
         <div class="left" @click="back">
           <slot name="left">
@@ -35,6 +36,8 @@
     </div>
     <my-loading class="myLoading" v-show="!Got"></my-loading>
     </div>
+    <router-view @showList="showDetail=false" @showDetail="showDetail=true"></router-view>
+    </div>
 </template>
 
 <script>
@@ -53,7 +56,8 @@
           noReply:false,
           nothingMore:false,
           flag:true,
-          Got:false
+          Got:false,
+          showDetail:false
       };
     },
     computed: {},
@@ -100,7 +104,7 @@
                 if(val.succ){
                     console.log(val);
                     this.consultList.push(...val.list);
-                    if(this.page==val.page.total){
+                    if(this.page==val.page.pages){
                         this.page=-1;
                     }
                     else{

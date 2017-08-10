@@ -40,6 +40,9 @@
       };
     },
     computed: {},
+      created(){
+          this.$emit("showDetail");
+      },
     components: {
         AppHeader,
         MyPlayer,
@@ -47,23 +50,25 @@
         MyLoading
     },
     mounted() {
-        Api("smarthos.sns.knowledge.info",{
-            id:this.$route.params.id
-        })
-        .then((val)=>{
-            this.Got=true;
-            if(val.succ){
-                this.docInfo=val.obj;
-            }
-            else{
-                this.$weui.alert(val.msg);
-            }
-        },
-             ()=>{
-            this.$weui.alert("网络错误");
-        })
+        this.Got=true;
+//        Api("smarthos.sns.knowledge.info",{
+//            id:this.$route.params.id
+//        })
+//        .then((val)=>{
+//            this.Got=true;
+//            if(val.succ){
+//                this.docInfo=val.obj;
+//            }
+//            else{
+//                this.$weui.alert(val.msg);
+//            }
+//        },
+//             ()=>{
+//            this.$weui.alert("网络错误");
+//        })
     },
     beforeDestroy() {
+        this.$emit("showList");
 
     },
     methods: {
@@ -82,8 +87,12 @@
     }
 
     .app{
-        flex:1 1 auto;
-        @include flex;
+        position:fixed;
+        top:0;
+        right:0;
+        left:0;
+        bottom:0;
+        z-index:1002;
         
     }
     header{
