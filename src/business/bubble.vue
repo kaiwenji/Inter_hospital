@@ -1,6 +1,6 @@
 <template>
   <div class="">
-      <div class="bubble" @click="play()"ref=bubble :class="{'on':isPlay}">
+      <div class="bubble" ref=bubble :class="{'on':isPlay}">
           <div class="broadcast" :class="{'loading':isLoading}"></div>
           <p class="l">{{duration}}</p>
 <!--

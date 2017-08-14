@@ -1,9 +1,13 @@
 <template>
 <div class="app">
+    
+    
     <app-header>
         <p class="headerTitle">患者报到</p>
         <p slot="right" class="headerWord" @click="appoint()">提交</p>
     </app-header>
+    
+    
     <div class="wrap" v-show="docGot&&patGot" :class="{'stand':showPat}">
     <div class="notice inter">
         <p class="s">温馨提示：请确认您曾在{{name}}医生处就诊过，否则医生将不通过您的请求</p>
@@ -53,8 +57,6 @@
     <set-pat @activate="check" :patList="patList" :showPat="showPat" @close="showPat=false"></set-pat>
 
     </div>
-    
-<!-- 切换就诊人模块   -->
     
     <my-toast :start="showLoading" :success="showSuccess"></my-toast>
     <my-loading class="myLoading" v-show="!patGot||!docGot"></my-loading>
@@ -124,7 +126,6 @@
         .then((val)=>{
             this.docGot=true;
             if(val.succ){
-//                console.log(val);
                 this.docInfo=val.obj.doc;
             }
             else{
@@ -159,7 +160,6 @@
     methods: {
         /**提交预约**/
         appoint(){
-            console.log(this.docInfo);
             this.showLoading=true;
             Api("smarthos.appiontment.add",{
                 patId:this.patInfo.patId,
@@ -170,12 +170,11 @@
             })
             .then((val)=>{
                 this.showLoading=false;
-                console.log(val);
                 if(val.succ){
-                    
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
+                     this.$router.push("/")
                     },1000)
                 }
                 else{

@@ -3,7 +3,6 @@
     <router-view @showDetail="showDetail=true" @showList="showDetail=false"></router-view>
   <div class="app" v-show="!showDetail">
       <app-header id="header">
-          <div slot="left" id="metalBox"></div>
           <p class="headerTitle">名医知道</p>
           <div slot="right" style="position:relative">
               <img src="../../../static/img/envelop.png" class="envelop">
@@ -11,7 +10,7 @@
     </div>
     </app-header>
       
-      <div v-show="Got"style="position:fixed;top:2.36rem;bottom:2.5rem;left:0;right:0">
+      <div v-show="Got" style="flex:1 1 auto">
           <my-pullup :list="audioList"@pullUp="loadingMore" :flag="flag">
               <doc-panel :list="audioList"></doc-panel>
 
@@ -24,7 +23,6 @@
             <p class="weui-toast__content">无更多内容</p>
         </div>
     </div>
-      <app-footer index="1"></app-footer>
   </div>
     </div>
 </template>
@@ -57,17 +55,22 @@
         MyLoading
     },
     mounted() {
-        
-        document.getElementById("metalBox").addEventListener("click",(e)=>{
-            e.stopPropagation();
-            console.log("click");
-        });
         this.getInfo();
     },
     beforeDestroy() {
         clearInterval(this.intervalId);
 
     },
+      watch:{
+          showDetail(){
+              console.log("showDetail="+this.showDetail);
+              if(!this.showDetail&&!this.$refs.bubble){
+                  console.log("have a try")
+                  this.Got=false;
+                  this.getInfo();
+              }
+          }
+      },
     methods: {
         getInfo(){
             Api("smarthos.sns.knowledge.page",{
@@ -158,10 +161,6 @@
         width:1.1rem;
         right:1rem;
         top:15px;
-    }
-    #metalBox{
-        width:100%;
-        height:100%
     }
         #toast{
         p{

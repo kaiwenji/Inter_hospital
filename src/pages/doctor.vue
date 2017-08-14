@@ -1,7 +1,10 @@
+
+
+<!--医生名片页面-->
 <template>
   <div class="wrap" ref="wrap">
       <app-header style="border:1px solid transparent"class="test" ref="header" id="header"> 
-          <p style="text-align:center; flex:1 1 auto;" class="l">{{title}}</p>
+          <p  class="l">{{title}}</p>
           <div slot="right" ref="followButton" style="flex:0 0 auto" class="followButton" @click="follow">
               <p  class="l ft" ><img ref="heart"src="../../static/img/follow.png">{{followWord}}</p>
           </div>
@@ -9,9 +12,9 @@
       <div v-show="Got">
           <div class="info">
               <div>
-                  <img :src="docInfo.docAvatar" onerror="getDefaultProfile(docInfo.docGender,this)">
+                  <img :src="getProfile(docInfo)">
                   <p class="l docName">{{docInfo.docName}}<span v-show="docInfo.famous" class="icon s">名医</span></p>
-                  <p class="m">{{docInfo.deptName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{docInfo.docTitle}}</p>
+                  <p class="m">{{docInfo.deptName}}<span style="padding:0 1rem"></span>{{docInfo.docTitle}}</p>
                   <p>{{docInfo.hosName}}</p>
              </div>
           </div>
@@ -59,10 +62,8 @@
     import MyLoading from "../base/loading/loading.vue";
     import DocPanel from "../business/docPanel.vue";
     import AppHeader from "../business/app-header.vue";
-    import Bubble from "../base/bubble.vue";
     import Api from "../lib/api.js";
-    import {getDefaultProfile} from "../lib/public.js";
-    import myMixin from "../lib/canScroll.js";
+    import {getProfile} from "../lib/public.js";
   export default {
     data() {
       return {
@@ -78,7 +79,6 @@
           isFollow:false
       };
     },
-//      mixins:[myMixin],
     computed: {
         followWord(){
             return this.isFollow?"已关注":"关注";
@@ -86,7 +86,6 @@
     },
     components: {
         AppHeader,
-        bubble:Bubble,
         DocPanel,
         MyLoading
     },
@@ -100,15 +99,15 @@
                 this.$refs.followButton.className+=" followed";
                 this.$refs.heart.src="./static/img/followed.png";
             }
-//            else{
-//                this.$refs.followButton.className+=" followed";
-//                this.$refs.heart.src="./static/img/followed.png";
-//            }
         }
     },
+      
+      
     mounted() {
         this.docId=this.$route.params.id;
         this.rem=window.screen.width/20;
+        
+//        设置滚动动画效果
         this.$refs.wrap.onscroll=()=>{
 
             var top=this.$refs.wrap.scrollTop;
@@ -116,22 +115,29 @@
             this.setTabClass(top);
         }
 
+//获取医生信息        
         Api("smarthos.user.doc.card.get",{
             "docId":this.docId,
             token:window.localStorage['token']
         })
         .then((val)=>{
-            console.log(val);
-            this.docInfo=val.obj.doc;
-            this.isFollow=val.obj.hasFollow||false;
-            this.list[0].desc=this.docInfo.docSkill;
-            this.list[1].desc=this.docInfo.docResume;
+            if(val.succ){
+                this.docInfo=val.obj.doc;
+                this.isFollow=val.obj.hasFollow||false;
+                this.list[0].desc=this.docInfo.docSkill;
+                this.list[1].desc=this.docInfo.docResume;
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
             this.Got=true;
 
         },
                       ()=>{
                     this.$weui.alert("网络错误");
                 })
+        
+//        获取医生说列表
         Api("smarthos.sns.knowledge.page",{
             docId:this.docId,
             pageNum:1,
@@ -159,13 +165,23 @@
         })
 
             },
-    beforeDestroy() {
-
-    },
     methods: {
+        getProfile(docInfo){
+            if(!docInfo.docAvatar||docInfo.docAvatar==""){
+                var gender=docInfo.docGender;
+                return gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
+            }
+            else{
+                return docInfo.docAvatar;
+            }
+        },
+//        切换路由
         To(path){
             this.$router.push("/"+path+"/"+this.docId);
         },
+        
+        
+        
         getDetail(item,event,index){
             var article=document.getElementById(item.title);
             var picture=event.event.target;
@@ -174,9 +190,13 @@
 
 
         },
+        
+        
         getMoreAudio(){
             this.$router.push("/docTalk/"+this.docId);
         },
+        
+        
         /* 关注按键函数*/
         follow(){
             if (this.isFollow){
@@ -217,7 +237,7 @@
             }
         },
 
-
+//        标题透明度变化
         setHeaderColor(top){
             var limit=5*this.rem;
             var opacity=top-limit>0?top-limit:0;
@@ -232,6 +252,8 @@
                 document.getElementById("header").style.color="white";
             }
         },
+        
+//        tab固定or滚动
         setTabClass(top){
             if(top>14*this.rem-45){
                 if(this.$refs.tab.className!="tab tab_fixed"){
@@ -277,7 +299,7 @@
         border:none;
     }
     .wrap{
-        background:rgb(248,248,248)
+        background:rgb(248,248,248);
     }
     .test{
         position:fixed;

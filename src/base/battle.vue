@@ -1,3 +1,5 @@
+<!--输入框组件-->
+
 <template>
 <div class="horizontal">
     <div>
@@ -35,11 +37,9 @@
                 isRecord:false
             }
         },
-        watch:{
-            radioId(){
-            }
-        },
         methods:{
+            
+//            上传语音
             upload(){
                 weui.dialog({
                     title: '提示',
@@ -56,6 +56,8 @@
                     }]
                 });
             },
+            
+            
             startRecord(){
                 this.isRecord=true;
                 this.text="录音中";
@@ -70,14 +72,13 @@
                     })
                 })
             },
-            check(){
-                console.log("check");
-            },
             stopRecord(){
                 this.isRecord=false;
                 var _this=this;
                 var time=this.timer.pause();
                 this.timer.reset();
+                
+//                时间过短时
                 if(time<1000){
                     setTimeout(
                         ()=>{
@@ -106,16 +107,25 @@
                 }
             }
             ,
+            
+//            获取jssdk支持
             post(){
-                this.$http.post("http://api.diandianyy.com/util/weixin/app/jssdk",{
-                    url:location.href.split("#")[0],
-                    appid:"wxfc623ff79ce99489"
+                Api("smarthos.wechat.jsapiticket.get",{
+                    appid:"wx12466885225",
+                    reqUrl:location.href.split("#")[0]
                 })
                 .then((val)=>{
-                    var params=val.data;
-                    params.debug=false;
-                    wx.config(params);
+                    console.log(val);
                 })
+//                this.$http.post("http://api.diandianyy.com/util/weixin/app/jssdk",{
+//                    url:location.href.split("#")[0],
+//                    appid:"wx12466885225"
+//                })
+//                .then((val)=>{
+//                    var params=val.data;
+//                    params.debug=false;
+//                    wx.config(params);
+//                })
             },
             setType(e){
                 if(this.type=='text'){
@@ -131,19 +141,11 @@
                 this.$emit("output",{msg:this.msg,type:"TEXT"});
                 }
         },
-        components:{
-            
-        },
         mounted(){
-//            window.ontouchstart = function(e) { e.preventDefault(); };
             this.timer=new Timer();
             this.post();
-             this.$refs.recordButton.addEventListener("touchstart",()=>{
-                 this.startRecord();
-             })
+             this.$refs.recordButton.addEventListener("touchstart",this.startRecord)
             this.$refs.recordButton.addEventListener("touchend",this.stopRecord)
-//            this.$refs.block.addEventListener("touchend",()=>{console.log("取消")})
-//            this.$refs.block.addEventListener("touchmove",()=>{this.text="撤回"})
 
             
         }

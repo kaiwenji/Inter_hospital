@@ -1,3 +1,4 @@
+//刷新组件
 export default{
     mounted(){
         console.log(window.localStorage['refresh']);

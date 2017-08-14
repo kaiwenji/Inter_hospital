@@ -1,25 +1,24 @@
+<!--医生说列表组件-->
+
 <template>
     <div>
-        <p>{{test}}</p>
-        <p @click="check()">version3.2</p>
     <div v-for="audioInfo,index in audioList" :key="audioInfo.snsKnowledge.id">
-      <div class="audioItem" @click="activate(audioInfo)">
-          <div class="hd">
-              <img :src="audioInfo.docAvatar">
+      <div class="audioItem">
+          <div class="hd" @click="activate(audioInfo)">
+              <img :src="getProfile(audioInfo)">
     </div>
           <div class="bd" ref="bd">
+              <div @click="activate(audioInfo)">
               <p class="l">{{audioInfo.docName}}</p>
               <div style="height:3rem">
               <p class="font-hide m" >{{audioInfo.snsKnowledge.description}}</p>
     </div>
-              <div class="Bubble">
               <bubble ref="bubble" :pause="audioInfo.pause" :playing="audioInfo.on"@activate="play(audioInfo,index)" :duration="setTimeFormat(audioInfo.snsKnowledge.duration||0)"></bubble>
-                  <div class="supplement"></div>
     </div>
               <div class="ft">
                   <p class="s light">{{audioInfo.snsKnowledge.createTime|getMyDay}}</p>
                   <p class="right s light">{{audioInfo.snsKnowledge.readNum}}人听过</p>
-                  <p class="s last light" ref="thumb" @click="setColor(audioInfo)"><img class="icon" :src="recSrc[index]" >{{audioInfo.snsKnowledge.likes}}</p>
+                  <p class="s last light" ref="thumb" @click="setColor(audioInfo)"><span class="icon" :class="{'recommanded':audioInfo.islikes}"></span>{{audioInfo.snsKnowledge.likes}}</p>
     </div>
     </div>
     </div>
@@ -33,7 +32,6 @@
     import {getMyDay,goodTime} from "../lib/filter.js";
     import Bubble from "../business/bubble.vue"; 
     import Api from "../lib/api.js";
-    import Reload from "../lib/reload.js";
   export default {
       props:{
           list:{
@@ -45,50 +43,32 @@
     data() {
       return {
           docInfo:{},
-          src:"http://music.163.com/song/media/outer/url?id=229285.mp3",
-          nowPlaying:-1,
-          test:""
+          src:"",
+          nowPlaying:-1
 
       };
     },
       watch:{
           list(){
-              setTimeout(this.updatePanel,20);
-             
+//              setTimeout(this.updatePanel,20);
+              
           }
       },
     computed:{
         audioList(){
             return this.list;
-        },
-        recSrc(){
-            var res=[];
-            for(let i =0;i<this.audioList.length;i++){
-                if(this.audioList[i].islikes){
-                    res[i]= "./static/img/rec_on.png";
-                }
-                else{
-                    res[i]= "./static/img/rec_off.png";
-                }
-            }
-            return res;
         }
     },
     components:{
         bubble:Bubble
 
     },
-      created(){
-          this.audio= new Audio();
-          
-      },
       filters:{
           getMyDay,
           goodTime
       },
     mounted() {
         this.$refs.music.addEventListener("ended",()=>{
-            console.log("ended");
             this.audioList[this.nowPlaying].pause=!this.audioList[this.nowPlaying].pause;
             
         })
@@ -96,8 +76,16 @@
     beforeDestroy() {
         this.$refs.music.pause();
     },
-      mixins:[Reload],
     methods: {
+        getProfile(docInfo){
+            if(!docInfo.docAvatar||docInfo.docAvatar==""){
+                var gender=docInfo.docGender;
+                return !gender||gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
+            }
+            else{
+                return docInfo.docAvatar;
+            }
+        },
         setTimeFormat(item){
             var hour = Math.floor (item / 3600);
             var other = item % 3600;
@@ -109,31 +97,26 @@
             }
             return  res;
         },
-        check(){
-            this.audio.play();
-            this.$refs.music.play();
-            this.test="oncanplay";
-            setTimeout(()=>{
-                this.test="";
-            },1000)
-        },
+        
+        
+//        避免点击气泡的操作触发进入详情页的操作
         updatePanel(){
-            for(let i=0;i<this.$refs.bubble.length;i++){
-                                  this.$refs.bubble[i].$el.addEventListener("click",(e)=>{
+            if(this.$refs.bubble){
+                for(let i=0;i<this.$refs.bubble.length;i++){
+                                      this.$refs.thumb[i].addEventListener("click",(e)=>{
                                     e._flag=true;
-                                })
-                                  this.$refs.thumb[i].addEventListener("click",(e)=>{
-                                e._flag=true;
-                            },false);
-                                this.$refs.bd[i].addEventListener("click",(e)=>{
-                                    if(e._flag){
-                                        e.stopPropagation();
-                                    }
                                 },false);
-                              }
+                                    this.$refs.bd[i].addEventListener("click",(e)=>{
+                                        if(e._flag){
+                                            e.stopPropagation();
+                                        }
+                                    },false);
+                                  }
+            }
         },
+        
+        
         play(audioInfo,index){
-            console.log("bubble")
             var url=audioInfo.snsKnowledge.knowUrl
             if(index==this.nowPlaying){
                 return ;
@@ -145,15 +128,19 @@
             setTimeout(this.keepGoing,500); 
             this.nowPlaying=index;
         },
+        
+//        在切换url之后定时执行play命令直到音频开始播放
         keepGoing(){
             this.$refs.music.play();
-            if(!this.$refs.music.paused){
+            if(this.$refs.music.paused){
                 setTimeout(this.keepGoing,500);
             }
             else{
                 this.audioList[this.nowPlaying].on=!this.audioList[this.nowPlaying].on;
             }
         },
+        
+//        点赞接口
         setColor(item){
             Api("smarthos.sns.knowledge.likes",{
                 knowledgeId:item.snsKnowledge.id,
@@ -167,7 +154,7 @@
                     })
                     .then((val)=>{
                         console.log(val);
-                        this.audioInfo=val.obj;
+                        item=val.obj;
                     },
                          ()=>{
                         this.$weui.alert("网络错误");
@@ -186,6 +173,8 @@
         }
     }
   };
+    
+    
 </script>
 
 <style scoped lang="scss">
@@ -210,6 +199,7 @@
             .bd{
                 flex:1 1 auto;
                 .ft{
+                    padding-top:1rem;
                     display:flex;
                     flex-direction:row;
                     p{
@@ -223,25 +213,21 @@
                         }
                     }
                     .icon{
+                        background-image:url("../../static/img/rec_off.png");
+                        background-size:cover;
+                        background-repeat:no-repeat;
                         height:0.8rem;
+                        width:0.8rem;
                         position:absolute;
                         left:0rem;
                         top:0rem;
+                        &.recommanded{
+                            background-image:url("../../static/img/rec_on.png");
+                        }
                     }
 
                 }
 
             }
         }
-    .Bubble{
-        margin:0.8rem 0;
-        display:flex;
-        flex-direction:row;
-        div{
-            flex:0 0 auto;
-            &.supplement{
-                flex:1 1 auto;
-            }
-        }
-    }
 </style>

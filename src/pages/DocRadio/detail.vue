@@ -5,7 +5,7 @@
     </app-header>
       <my-panel @activate="goDoc" v-show="Got">
           <div slot="picture">
-              <img :src="docInfo.docAvatar" class="figure">
+              <img :src="getProfile(docInfo)" class="figure">
     </div>
           <div slot="article" class="article">
               <div class="horiFlex">
@@ -39,8 +39,8 @@
           Got:false
       };
     },
-    computed: {},
       created(){
+          console.log("showDetail");
           this.$emit("showDetail");
       },
     components: {
@@ -50,28 +50,38 @@
         MyLoading
     },
     mounted() {
-        this.Got=true;
-//        Api("smarthos.sns.knowledge.info",{
-//            id:this.$route.params.id
-//        })
-//        .then((val)=>{
-//            this.Got=true;
-//            if(val.succ){
-//                this.docInfo=val.obj;
-//            }
-//            else{
-//                this.$weui.alert(val.msg);
-//            }
-//        },
-//             ()=>{
-//            this.$weui.alert("网络错误");
-//        })
+        Api("smarthos.sns.knowledge.info",{
+            id:this.$route.params.id
+        })
+        .then((val)=>{
+            this.Got=true;
+            if(val.succ){
+                this.docInfo=val.obj;
+                console.log(this.docInfo);
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+             ()=>{
+            this.$weui.alert("网络错误");
+        })
     },
     beforeDestroy() {
+        console.log("showList")
         this.$emit("showList");
 
     },
     methods: {
+        getProfile(docInfo){
+            if(!docInfo.docAvatar||docInfo.docAvatar==""){
+                var gender=docInfo.docGender;
+                return !gender||gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
+            }
+            else{
+                return docInfo.docAvatar;
+            }
+        },
         goDoc(){
             this.$router.push("/doctor/"+this.docInfo.snsKnowledge.docId);
         }

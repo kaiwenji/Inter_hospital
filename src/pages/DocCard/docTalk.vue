@@ -3,7 +3,7 @@
     <app-header>
         <p class="headerTitle">医生说</p>
     </app-header>
-        <div style="position:fixed;top:2.36rem;left:0;right:0;bottom:0">
+        <div class="main">
     <pull-up :list="audioList"@pullUp="loadingMore" :flag="flag">
 
     <doc-panel :list="audioList"></doc-panel>
@@ -44,16 +44,13 @@
         PullUp,
         MyLoading
     },
-//      mixins:[myMixin],
     mounted() {
-
         this.getInfo();
-
-    },
-    beforeDestroy() {
-
     },
     methods: {
+        
+        
+        
         getInfo(){
             Api("smarthos.sns.knowledge.page",{
                 pageNum:this.page,
@@ -105,6 +102,13 @@
 @import "../../common/var.scss";
     header{
         border-bottom:1px solid lightgrey;
+    }
+    .main{
+        position:fixed;
+        top:2.36rem;
+        left:0;
+        right:0;
+        bottom:0;
     }
     .app{
         flex:1 1 auto;

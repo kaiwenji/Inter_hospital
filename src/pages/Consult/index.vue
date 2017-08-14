@@ -1,3 +1,6 @@
+<!--问诊帖子列表-->
+
+
 <template>
 <div>
 <div class="app" v-show="!showDetail">
@@ -51,7 +54,6 @@
     data() {
       return {
           consultList:[],
-          testList:[1,1,1,1,1,1,1,1,1,1],
           page:1,
           noReply:false,
           nothingMore:false,
@@ -76,17 +78,25 @@
       filters:{
           goodTime
       },
+      watch:{
+          showDetail(){
+              if (!this.showDetail&&this.consultList.length==0){
+                  this.getMore();
+              }
+          },
+      },
     methods: {
         back(){
             this.$router.push("/patientIndex");
         },
         getDetail(item){
-//            console.log(item);
             this.$router.push("/Consult/ConsultDetail/"+item.consultInfo.id);
         },
         addConsult(){
             this.$router.push("/Consult/newConsult");
         },
+        
+//        下拉刷新列表
         getMore(){
             if(this.page==-1){
                 this.nothingMore=true;
@@ -102,7 +112,6 @@
                 this.Got=true;
                 this.flag=!this.flag;
                 if(val.succ){
-                    console.log(val);
                     this.consultList.push(...val.list);
                     if(this.page==val.page.pages){
                         this.page=-1;
