@@ -32,6 +32,7 @@
     },
     mounted() {
         this.setCurrentPage(this.index);
+
     },
     beforeDestroy() {
 
