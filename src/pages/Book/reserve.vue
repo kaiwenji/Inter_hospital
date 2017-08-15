@@ -52,7 +52,7 @@
 
       <div class="weui-cells flex" v-show="Got">
       <my-nav title="验证码" :hasRight="hasRight" placeholder="请输入验证码" @update="updateVal">
-          <div slot="right"><img src="" id="au" style="height:1.875rem;width:3.75rem;"></div>
+          <div slot="right"><img src="http://img5.imgtn.bdimg.com/it/u=1119808892,1764789057&fm=26&gp=0.jpg" id="au" style="height:1.875rem;width:3.75rem;"></div>
     </my-nav>
       <div style="padding:20px 10px; background-color:rgb(248,248,248);">
       <button class="weui-btn weui-btn_plain-default" @click="done" style="background-color:white;height:2.6rem;border:1px solid #cccccc;font-size:1rem">确认挂号</button>
@@ -143,7 +143,9 @@
         
     },
     beforeDestroy() {
-        window.localStorage.removeItem("compatInfo")
+        if(window.localStorage['compatInfo']){
+            window.localStorage.removeItem("compatInfo")
+        }
     },
     methods: {
         check(item){
@@ -161,10 +163,11 @@
             this.auVal=val;
         },
         done(){
-//            if(this.auVal==""){
-//                this.msg="验证码不能为空";
-//                this.isShown=true;
-//            }
+            if(this.auVal==""){
+                this.msg="验证码不能为空";
+                this.isShown=true;
+                return;
+            }
 //            else if(this.patInfo.compatRecord=="暂未绑定病案号"){
 //                this.recordDis=true;
 //            }
@@ -175,10 +178,10 @@
 //                    console.log(val);
 //                    if(val.msg){
 //                        this.msg=val.msg;
-                        this.isShown=true;
+//                        this.isShown=true;
 //                    }
 //                    if(val.succ){
-//                    this.$router.push({path:"/service/book/info/"+"1",query:{key:this.key}});
+                    this.$router.push("/book/success");
 //                    }
 //                },
 //                     ()=>{
@@ -233,7 +236,7 @@
           }
           temp.hosName=storage["hosName"];
           temp.deptName=storage['deptName'];
-          temp.name=storage['name'];
+          temp.name=storage['docName'];
           temp.date=storage["date"];
           temp.time=storage['time'];
           temp.Ampm=storage['Ampm'];

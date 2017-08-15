@@ -49,7 +49,7 @@
   export default {
       data(){
           return{
-              department:[{'name':'外科',id:'001',deptList:[{'name':'a科室','src':'',hasScheme:true},{'name':'b科室','src':'',hasScheme:true}]},{'name':' 内科',id:'002',deptList:[{'name':'c科室','src':'',hasScheme:true},{'name':'d科室','src':''}]},{'name':'儿科',id:'003',deptList:[]}],
+              department:[{'name':'内科',id:'001',deptList:[{'name':'内科','src':'',hasScheme:true},{'name':'呼吸内科专业','src':'',hasScheme:true},{'name':'消化内科专业','src':'',hasScheme:true},{'name':'神经内科专业','src':'',hasScheme:true},{'name':'心血管内科专业','src':'',hasScheme:true},{'name':'血液内科专业','src':'',hasScheme:true}]},{'name':'外科',id:'002',deptList:[{'name':'外科','src':'',hasScheme:true},{'name':'普通外科专业','src':''},{'name':'肝脏移植项目','src':'',hasScheme:true},{'name':'神经外科专业','src':'',hasScheme:true},{'name':'骨科专业','src':'',hasScheme:true}]},{'name':'儿科',id:'003',deptList:[{'name':'儿科','src':'',hasScheme:true},{'name':'新生儿专业','src':'',hasScheme:false},{'name':'小儿传染病专业','src':'',hasScheme:true},{'name':'小儿消化专业','src':'',hasScheme:true},{'name':'小儿呼吸专业','src':'',hasScheme:true}]}],
               subDepartment:[],
               isChosed:"",
               hospital:{hosName:"浙二医院"},
@@ -74,7 +74,7 @@
               let storage=window.localStorage;
               if (item.hasScheme){
                   storage["bookDeptId"]=item.bookDeptId;
-                  storage["deptName"]=item.deptName;
+                  storage["deptName"]=item.name;
                   storage["deptIndex"]=this.isChosed;
 //                  storage["deptList"]=JSON.stringify(this.subDepartment);
                   let path="/book/doctor/"+item.bookDeptId;

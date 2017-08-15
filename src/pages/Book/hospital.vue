@@ -31,12 +31,11 @@
 
 <script>
     import AppHeader from "../../business/app-header";
-    import api from "../../lib/api2.js";
   export default {
       data()
       {
          return{
-             hospital:[{hosPic:"",hosName:"test",hosLevel:"test",hosAddress:"test",bookHosId:"123"},{hosPic:"",hosName:"test",hosLevel:"test",hosAddress:"test",bookHosId:"123"},{hosPic:"",hosName:"test",hosLevel:"test",hosAddress:"test",bookHosId:"123"}],
+             hospital:[{hosPic:"https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=b3f641ba03f79052fb124f6c6d9abcaf/0823dd54564e9258425bb4479682d158ccbf4e2f.jpg",hosName:"浙一医院",hosLevel:"三甲医院",hosAddress:"庆春路79号",bookHosId:"123"},{hosPic:"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268/sign=90b07595d843ad4ba62e41c6ba025a89/8718367adab44aed67f036d4ba1c8701a18bfb40.jpg",hosName:"省中医院",hosLevel:"三甲医院",hosAddress:"邮电路54号",bookHosId:"123"},{hosPic:"https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=96f70615c1ef7609280691cd4fb4c8a9/50da81cb39dbb6fdc865e7ae0324ab18972b377f.jpg",hosName:"省人民医院",hosLevel:"三甲医院",hosAddress:"浙江省杭州市朝晖院区上塘路158号",bookHosId:"123"}],
              isShown:false,
              hospitalId:"1234",
              hosName:'test',
