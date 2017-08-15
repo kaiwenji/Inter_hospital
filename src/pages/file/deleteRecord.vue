@@ -11,11 +11,6 @@
                  </div>
                </div>
            </div>
-          <div class="wrapInput">
-             <div class="inputTitle">
-                 请输入病历详情
-             </div>
-          </div>
           <div class="wrapText">
             <div>
               <textarea placeholder="请详细描述您的症状、疾病和身体情况。(请放心您的个人信息不会泄露)"></textarea>
@@ -61,7 +56,7 @@
   bottom:0;
   left:0;
   right:0;
-  /*background-color: green;*/
+  background-color: white;
   .wrapTime{
     width:100%;
     height: 90rem/$rem;

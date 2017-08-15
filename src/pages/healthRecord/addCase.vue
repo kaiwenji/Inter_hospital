@@ -92,7 +92,7 @@
           });
         },
         save(){
-          api('smarthos.medicalhistory.add',{
+          api('smarthos.medical.history.add',{
             "medicalTime":this.date,
             "medContent":this.caseDetail,
             "token":this.token,

@@ -120,7 +120,7 @@
           this.$router.push('my')
         },
         record(){
-          api("smarthos.medicalhistory.list.page",{
+          api("smarthos.medical.history.list.page",{
             token:this.token,
           }).then(res=>{
             console.log(res,888888)
@@ -164,7 +164,7 @@
           })
         },
         getData(){
-          api('smarthos.medicalinfo.detail',{
+          api('smarthos.medical.info.detail',{
             token:this.token
           }).then(res=>{
             console.log(res,6666)
