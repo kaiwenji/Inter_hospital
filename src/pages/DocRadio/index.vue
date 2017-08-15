@@ -1,7 +1,5 @@
 <template>
-<div>
-    <router-view @showDetail="showDetail=true" @showList="showDetail=false"></router-view>
-  <div class="app" v-show="!showDetail">
+  <div class="head">
       <app-header id="header">
           <p class="headerTitle">名医知道</p>
           <div slot="right" style="position:relative">
@@ -10,12 +8,10 @@
     </div>
     </app-header>
       
-      <div v-show="Got" style="flex:1 1 auto">
-          <my-pullup :list="audioList"@pullUp="loadingMore" :flag="flag">
+          <my-pullup v-show="Got" :list="audioList"@pullUp="loadingMore" :flag="flag">
               <doc-panel :list="audioList"></doc-panel>
 
     </my-pullup>
-    </div>
       <my-loading v-show="!Got"class="myLoading"></my-loading>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
@@ -24,7 +20,6 @@
         </div>
     </div>
   </div>
-    </div>
 </template>
 
 <script>
@@ -42,8 +37,7 @@
           nothingMore:false,
           docId:"595d05b0f19b9c898a58cc00",
           flag:true,
-          Got:false,
-          showDetail:false
+          Got:false
       };
     },
     computed: {},
@@ -54,6 +48,8 @@
         MyPullup,
         MyLoading
     },
+    watch:{
+    },
     mounted() {
         this.getInfo();
     },
@@ -61,16 +57,6 @@
         clearInterval(this.intervalId);
 
     },
-      watch:{
-          showDetail(){
-              console.log("showDetail="+this.showDetail);
-              if(!this.showDetail&&!this.$refs.bubble){
-                  console.log("have a try")
-                  this.Got=false;
-                  this.getInfo();
-              }
-          }
-      },
     methods: {
         getInfo(){
             Api("smarthos.sns.knowledge.page",{
@@ -122,6 +108,13 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
+    .head{
+        overflow:hidden;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    }
     .music{
 /*        display:none;*/
     }

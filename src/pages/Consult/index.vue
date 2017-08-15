@@ -140,7 +140,7 @@
 font-family: 'iconfont';
 src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
 }
-    .inner{
+    .inner,.wrap{
         background:rgb(248,248,248);
     }
       span{

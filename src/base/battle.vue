@@ -130,11 +130,11 @@
             setType(e){
                 if(this.type=='text'){
                     this.type='audio';
-                    e.event.target.src="../../static/img/keyboard.png";
+                    e.event.target.src="./static/img/keyboard.png";
                 }
                 else{
                     this.type='text';
-                    e.event.target.src="../../static/img/chat.png"
+                    e.event.target.src="./static/img/chat.png"
                 }
             },
             send(){

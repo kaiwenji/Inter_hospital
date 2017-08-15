@@ -30,7 +30,7 @@
           <div class="player_ft">
               <p>{{docInfo.snsKnowledge&&docInfo.snsKnowledge.createTime|getMyDay}}</p>
               <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}}人听过</p>
-              <p class="right"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
+              <p class="right" @click="recommand()"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
     </div>
           <audio ref="music" id="music" :src="src" @durationchange="setDuration">
     </audio>
@@ -40,7 +40,7 @@
 
 <script>
     import {getMyDay} from "../lib/filter.js";
-    import myMixin from "../lib/reload.js";
+    import Api from "../lib/api.js";
   export default {
     data() {
       return {
@@ -53,7 +53,6 @@
           
       };
     },
-      mixins:[myMixin],
       filters:{
           getMyDay
       },
@@ -79,6 +78,34 @@
 
     },
     methods: {
+        
+        recommand(){
+            Api("smarthos.sns.knowledge.likes",{
+                knowledgeId:this.docInfo.snsKnowledge.id,
+                token:window.localStorage['token']          
+            })
+            .then((val)=>{
+                if(val.succ){
+                    Api("smarthos.sns.knowledge.info",{
+                        id:this.docInfo.snsKnowledge.id,
+                        token:window.localStorage['token']     
+                    })
+                    .then((val)=>{
+                        console.log(val);
+                        this.docInfo=val.obj;
+                    },
+                         ()=>{
+                        this.$weui.alert("网络错误");
+                    })
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
+        },
         setDuration(){
             this.duration=this.setTimeFormat(this.$refs.music.duration);
             console.log(this.duration);

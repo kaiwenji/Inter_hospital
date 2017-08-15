@@ -72,10 +72,8 @@
 
 <style scoped lang="scss">
     #wrapper{
-        background:white;
-        position:absolute;
-        height:100%;
-        width:100%;
+        background:rgb(248,248,248);
+        flex:1 1 auto;
         overflow:auto;
     }
     #scroller{

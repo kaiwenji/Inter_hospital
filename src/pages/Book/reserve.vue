@@ -40,9 +40,9 @@
     </div>
     </div>
     <div class="containing" style="font-size:0.77rem">
-    <p>姓名: {{patInfo.name}}</p>
-    <p>手机号: {{patInfo.phone}}</p>
-    <p>身份证号: {{patInfo.id}}</p>
+    <p>姓名: {{patInfo.commpatName}}</p>
+    <p>手机号: {{patInfo.commpatMobile}}</p>
+    <p>身份证号: {{patInfo.commpatIdcard}}</p>
     <p>病案号: {{patInfo.compatRecord}}</p>
     </div>
     </div>
@@ -80,13 +80,15 @@
         </div>
     </div>
   </div>
+      <set-pat @activate="check" :patList="patList" :showPat="showPat" @close="showPat=false"></set-pat>
     </div>
 </template>
 
 <script>
-    import api from '../../lib/api.js';
+    import Api from '../../lib/api.js';
     import MyNav from "../../base/nav";
     import AppHeader from "../../business/app-header";
+    import SetPat from "../../business/setPat";
   export default {
     data() {
       return {
@@ -103,8 +105,9 @@
           msg:"",
           Got:true,
           failure:false,
-          patList:[],
-          title:"就诊信息确认"
+          title:"就诊信息确认",
+          showPat:false,
+          patList:[]
       };
     },
     computed:{
@@ -115,18 +118,40 @@
     },
     components:{
         MyNav,
-        AppHeader
+        AppHeader,
+        SetPat
     },
     mounted() {
-        //this.setHeight();
+//        获取病人列表
+        Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
+        .then((val)=>{
+            if(val.succ){
+                console.log(val.list);
+                this.patList=val.list;
+                if(this.patList.length>0){
+                    this.patInfo=this.patList[0];
+                }
+                
+            }
+            else{
+                this.$weui.alert(val.msg);
+            }
+        },
+        ()=>{
+            this.$weui.alert("网络错误");
+        })
         
     },
     beforeDestroy() {
         window.localStorage.removeItem("compatInfo")
     },
     methods: {
+        check(item){
+            this.showPat=false;
+            this.patInfo=this.patList[item];
+        },
         setPat(){
-            this.$router.push("/users/");
+            this.showPat=true;
         },
         bind(){
 //            console.log(this.patInfo);

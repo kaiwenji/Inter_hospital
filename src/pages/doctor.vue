@@ -21,7 +21,7 @@
           <div class="app">
           <div class="tab" ref="tab">
               <div class="tab_contain">
-                  <div><div><img src="../../static/img/red.png"><p class="m red">预约挂号</p></div></div>
+                  <div><div @click="To('book')"><img src="../../static/img/red.png"><p class="m red">预约挂号</p></div></div>
                   <div><div @click="To('jhsq')"><img src="../../static/img/green.png"><p class="m green">加号申请</p></div></div>
                   <div><div @click="To('hzbd')"><img src="../../static/img/blue.png"><p class="m blue">患者报到</p></div></div>
               </div>
@@ -177,7 +177,13 @@
         },
 //        切换路由
         To(path){
-            this.$router.push("/"+path+"/"+this.docId);
+            console.log(path);
+            if(path=='book'){
+                this.$router.push("/book/");
+            }
+            else{
+                this.$router.push("/"+path+"/"+this.docId);
+            }
         },
         
         

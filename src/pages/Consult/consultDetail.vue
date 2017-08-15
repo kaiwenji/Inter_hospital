@@ -1,7 +1,8 @@
 <template>
   <div class="module vertical">
       <app-header>
-          <div slot="left" @click="back" ref="backBtn"><font><span>&#xe600;</span></font></div>
+          <div slot="left" @click="back" ref="backBtn"><font><span class="icon">&#xe600;</span></font></div>
+          <p>问医生</p>
           </app-header>
           <div class="patInfo" v-show='Got'>
               <p class="xl dark">患者资料 {{consultInfo.consulterName}} {{consultInfo.consulterGender|getGender}} {{consultInfo.consulterIdcard|getAge}}岁</p>
@@ -149,6 +150,12 @@
     font-family: 'iconfont';
     src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
     }
+  span{
+      &.icon{
+        font-family: 'iconfont';
+        font-size: 18px;   
+      }
+  }
     .module{
         position:fixed;
         top:0;

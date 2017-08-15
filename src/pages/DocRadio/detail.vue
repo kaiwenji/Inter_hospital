@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-      <app-header>
+      <app-header v-show="Got">
           <p class="headerTitle">名医知道</p>
     </app-header>
       <my-panel @activate="goDoc" v-show="Got">
@@ -22,7 +22,7 @@
     </div>
           <my-player :docInfo="docInfo"></my-player>
     </div>
-      <my-loading class="myLoading"v-show="!Got"></my-loading>
+      <my-loading class="myLoading"v-show="!Got&&checkIfRefresh()"></my-loading>
   </div>
 </template>
 
@@ -32,6 +32,7 @@
     import AppHeader from "../../business/app-header.vue";
     import MyPlayer from "../../base/player.vue";
     import Api from "../../lib/api.js";
+    import Reload from "../../lib/reload.js";
   export default {
     data() {
       return {
@@ -39,10 +40,6 @@
           Got:false
       };
     },
-      created(){
-          console.log("showDetail");
-          this.$emit("showDetail");
-      },
     components: {
         AppHeader,
         MyPlayer,
@@ -67,11 +64,7 @@
             this.$weui.alert("网络错误");
         })
     },
-    beforeDestroy() {
-        console.log("showList")
-        this.$emit("showList");
-
-    },
+    mixins:[Reload],
     methods: {
         getProfile(docInfo){
             if(!docInfo.docAvatar||docInfo.docAvatar==""){
@@ -95,15 +88,10 @@
         display:flex;
         flex-direction:column;
     }
-
     .app{
-        position:fixed;
-        top:0;
-        right:0;
-        left:0;
-        bottom:0;
-        z-index:1002;
-        
+        display:flex;
+        flex-direction:column;
+        flex:1 1 auto;
     }
     header{
         border-bottom:1px solid lightgrey;

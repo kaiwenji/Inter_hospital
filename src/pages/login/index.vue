@@ -40,8 +40,8 @@
         },
         data(){
             return {
-              patMobile:'',
-              patPassword:''
+              patMobile:'13522365145',
+              patPassword:'111111'
             }
         },
         mounted(){

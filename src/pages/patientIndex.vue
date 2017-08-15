@@ -14,7 +14,7 @@
                  </div>
                 <div class="wholeArea">
                  <div class="funArea">
-                   <div class="bookNumer">
+                   <div class="bookNumer" @click="appoint()">
                      <img src="../../static/img/red.png" alt="">
                      <span>预约挂号</span>
                    </div>
@@ -27,7 +27,7 @@
 
                  </div>
                  <div class="three">
-                   <div class="eyeSick border-1px-right" @click="askDoc">
+                   <div class="eyeSick border-1px-right" @click="eyeIllness">
                      <img src="../../static/img/eye.png" alt="">
                      <span>眼底病</span>
                    </div>
@@ -92,7 +92,7 @@
             </div>
           </div>
       <div class="bottemFooter">
-        <footers index="1"></footers>
+        <footers index="0"></footers>
       </div>
          <!--<div class="footer">-->
              <!--<router-link tag="div" :to="item.tabLink" v-for="item in tagNames" :key="item.id" :class="tellPath == '/myDoctorChat/followDoctor'? 'followBlue':''">-->
@@ -141,6 +141,7 @@
          }
       },
       mounted(){
+          
           this.$nextTick(()=>{
               this.tellPath = this.$route.path
           })
@@ -163,6 +164,9 @@
         })
       },
       methods:{
+          appoint(){
+              this.$router.push("/book/");
+          },
           askDoc(){
               console.log("ask doc");
               this.$router.push("/Consult/")
