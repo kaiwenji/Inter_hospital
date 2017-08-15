@@ -1,3 +1,4 @@
+//定时器组件
 export default class Timer{
     constructor(){
         this.time=0;

@@ -66,7 +66,7 @@
     <div class="weui-loadmore weui-loadmore_line" v-show="failure">
         <span class="weui-loadmore__tips">网络错误</span>
     </div>
-      <pop-up :show="isShown">
+      <pop-up :show="isShown" @activate="isShown=false">
 
                 <div v-show="Got&!failure" class="popUp" slot="contain">
                     <div>

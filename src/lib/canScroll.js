@@ -1,3 +1,5 @@
+
+//禁止主页面滚动组件
 export default{
     mounted(){
         this.scroll();

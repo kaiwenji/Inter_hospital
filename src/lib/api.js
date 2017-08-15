@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/6/1 0001.
  */
 import axios from "axios";
-let url = "//api-z2eye.hztywl.cn:6060/app";
+let url = "//api-smarthos-ty.hztywl.cn/app";
 let spid = "1001";
 let random = "";
 for (let i = 0; i < 4; i++) {

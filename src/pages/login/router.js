@@ -91,6 +91,7 @@ export default[
     name:'my',
     component: my
   },
+
    {
    path: '/',
    name:'login',

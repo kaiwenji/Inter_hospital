@@ -1,12 +1,14 @@
+<!--上拉加载组件-->
+
 <template>
   <div id="wrapper" ref="wrapper" class="wrap" >
-          <div id="scroller" ref="scroller">
-              <slot><p>helloworld</p></slot>
+      <div id="scroller" ref="scroller">
+          <slot><p></p></slot>
     </div>
-    </div>
-</template>
+    </div>  
+    </template>
 
-<script>
+    <script>
 
     import myMixin from "../lib/canScroll.js";
   export default {
@@ -20,22 +22,13 @@
           bottom:0
       };
     },
-      
-    computed:{
-
-    },
-    components:{
-
-    },
-      mixins:[myMixin],
+    mixins:[myMixin],
     mounted() {
         this.setScroll();
     },
-    beforeDestroy() {
-
-    },
-    methods: {
+    methods: {  
         
+//        设置定时器监视是否停止滚动
         setScroll(){
             this.topValue = 0,// 上次滚动条到顶部的距离  
                 this.interval = null;// 定时器  
@@ -66,13 +59,6 @@
               type:Boolean,
               default:true,
               required:true
-          },
-          list:{
-              type:Array,
-              default:()=>{
-                  return [];
-              },
-              required:false
           }
       },
       watch:{
@@ -86,11 +72,8 @@
 
 <style scoped lang="scss">
     #wrapper{
-        background:white;
-        position:absolute;
-        height:100%;
-        width:100%;
-/*        flex:1 1 auto;*/
+        background:rgb(248,248,248);
+        flex:1 1 auto;
         overflow:auto;
     }
     #scroller{

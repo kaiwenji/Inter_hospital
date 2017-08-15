@@ -1,5 +1,9 @@
+<!--问诊帖子列表-->
+
+
 <template>
-<div class="app">
+<div>
+<div class="app" v-show="!showDetail">
     <app-header>
         <div class="left" @click="back">
           <slot name="left">
@@ -17,7 +21,9 @@
         <div v-else>
 
         <pull-up @pullUp="getMore" :list=consultList :flag="flag" v-show="Got">
+            <div class="inner">
             <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)":key="item.consultInfo.id"></my-post>
+    </div>
     </pull-up> 
     </div>
     </div>
@@ -33,6 +39,8 @@
     </div>
     <my-loading class="myLoading" v-show="!Got"></my-loading>
     </div>
+    <router-view @showList="showDetail=false" @showDetail="showDetail=true"></router-view>
+    </div>
 </template>
 
 <script>
@@ -46,12 +54,12 @@
     data() {
       return {
           consultList:[],
-          testList:[1,1,1,1,1,1,1,1,1,1],
           page:1,
           noReply:false,
           nothingMore:false,
           flag:true,
-          Got:false
+          Got:false,
+          showDetail:false
       };
     },
     computed: {},
@@ -70,17 +78,25 @@
       filters:{
           goodTime
       },
+      watch:{
+          showDetail(){
+              if (!this.showDetail&&this.consultList.length==0){
+                  this.getMore();
+              }
+          },
+      },
     methods: {
         back(){
-            this.$router.push("/index/");
+            this.$router.push("/patientIndex");
         },
         getDetail(item){
-//            console.log(item);
             this.$router.push("/Consult/ConsultDetail/"+item.consultInfo.id);
         },
         addConsult(){
             this.$router.push("/Consult/newConsult");
         },
+        
+//        下拉刷新列表
         getMore(){
             if(this.page==-1){
                 this.nothingMore=true;
@@ -96,9 +112,8 @@
                 this.Got=true;
                 this.flag=!this.flag;
                 if(val.succ){
-                    console.log(val);
                     this.consultList.push(...val.list);
-                    if(this.page==val.page.total){
+                    if(this.page==val.page.pages){
                         this.page=-1;
                     }
                     else{
@@ -125,6 +140,9 @@
 font-family: 'iconfont';
 src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
 }
+    .inner,.wrap{
+        background:rgb(248,248,248);
+    }
       span{
     font-family: 'iconfont';
     font-size: 18px;

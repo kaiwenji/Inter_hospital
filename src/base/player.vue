@@ -1,7 +1,7 @@
+
+<!--播放器-->
 <template>
   <div >
-      <p>version1.6</p>
-      <p onClick="window.location.reload()">{{src}}</p>
       <div class="player">
           <div class="player_bd">
               <a @click="on()"><img class="button" ref="button" src="../../static/img/on.png"></a>
@@ -12,36 +12,35 @@
                   <p>{{docInfo.docName}}</p>
                   
                   <div class="weui-slider-box">
-
-                            <div class="weui-slider">
-                                    <p class="right">{{setTimeFormat(currentTime)}}/{{duration}}</p>
-                                <div class="weui-slider__inner" ref="slider">
-                                    <div style="width: 0;" class="weui-slider__track" id="track" ref='track'>
-    
-                                        <div style="left: 0;" class="weui-slider__handler" id="handler" ref="handler">
-                                            <div class="centroid">
+                      <div class="weui-slider">
+                          <p class="right">{{setTimeFormat(currentTime)}}/{{duration}}</p>
+                          <div class="weui-slider__inner" ref="slider">
+                              <div style="width: 0;" class="weui-slider__track" id="track" ref='track'>
+                                  <div style="left: 0;" class="weui-slider__handler" id="handler" ref="handler">
+                                      <div class="centroid">
     </div>
     </div>
-                </div>
-                                </div>
-                            </div>
-                </div> 
+    </div>
+    </div>
+    </div>
+    </div> 
                   
     </div>
     </div>
           <div class="player_ft">
               <p>{{docInfo.snsKnowledge&&docInfo.snsKnowledge.createTime|getMyDay}}</p>
               <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}}人听过</p>
-              <p class="right"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
+              <p class="right" @click="recommand()"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
     </div>
-          <audio ref="music" id="music" :src="docInfo.snsKnowledge&&docInfo.snsKnowledge.knowUrl">
-        </audio>
+          <audio ref="music" id="music" :src="src" @durationchange="setDuration">
+    </audio>
+    </div>  
     </div>
-  </div>
 </template>
 
 <script>
-    import {getMyDay} from "../lib/filter.js"
+    import {getMyDay} from "../lib/filter.js";
+    import Api from "../lib/api.js";
   export default {
     data() {
       return {
@@ -50,7 +49,7 @@
           intervalId:'',
           direction:"right",
           target:-1,
-          src:"",
+          src:"http://abv.cn/music/光辉岁月.mp3",
           
       };
     },
@@ -59,9 +58,8 @@
       },
       watch:{
           docInfo(){
-              this.src=this.docInfo.snsKnowledge.knowUrl;
-//              console.log(this.src);
-//              this.audioAutoPlay("music");
+              this.audioAutoPlay("music");
+              this.on();
           }
       },
     props:{
@@ -71,10 +69,8 @@
             required:true
         }
     },
-    components: {},
     mounted() {
         this.initialSlider();
-
     },
     beforeDestroy() {
         this.$refs.music.pause();
@@ -82,6 +78,48 @@
 
     },
     methods: {
+        
+        recommand(){
+            Api("smarthos.sns.knowledge.likes",{
+                knowledgeId:this.docInfo.snsKnowledge.id,
+                token:window.localStorage['token']          
+            })
+            .then((val)=>{
+                if(val.succ){
+                    Api("smarthos.sns.knowledge.info",{
+                        id:this.docInfo.snsKnowledge.id,
+                        token:window.localStorage['token']     
+                    })
+                    .then((val)=>{
+                        console.log(val);
+                        this.docInfo=val.obj;
+                    },
+                         ()=>{
+                        this.$weui.alert("网络错误");
+                    })
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+            },
+                 ()=>{
+                this.$weui.alert("网络错误");
+            })
+        },
+        setDuration(){
+            this.duration=this.setTimeFormat(this.$refs.music.duration);
+            console.log(this.duration);
+        },
+//        自动播放函数
+        audioAutoPlay(id){  
+            var audio = document.getElementById(id);  
+            audio.play();  
+            document.addEventListener("WeixinJSBridgeReady", function () {  
+                    audio.play();  
+            }, false);  
+        },
+        
+//        初始化拖动条函数
         initialSlider(){
             var sliderHandler=document.getElementById("handler");
             var sliderTrack=document.getElementById("track");
@@ -117,8 +155,9 @@
                 this.intervalId=setInterval(this.getCurrentTime,500);
             }
         },
+        
+//        定时器函数，负责获取实时时间，改变滑动块位置，标题滚动
         getCurrentTime(){
-            console.log(this.$refs.music.paused);
             var newVal;
             if(this.$refs.music.ended){
                 this.$refs.music.load();
@@ -129,9 +168,10 @@
                     this.$refs.button.src="./static/img/on.png";
                 }
                 else{
-                    if(this.$refs.music.currentTime!=this.currentTime){
+                    var last=this.$refs.music.currentTime;
+                    setTimeout(()=>{if(this.$refs.music.currentTime!=last){
                         this.$refs.button.src="./static/img/pause.png";
-                    }
+                    }},100)
                 }
                 newVal=(this.$refs.music.currentTime/this.$refs.music.duration)*100;
             }
@@ -139,7 +179,6 @@
                 this.target=this.$refs.shiftBlock.scrollWidth-this.$refs.shiftBlock.offsetWidth;
             }
             this.currentTime=this.$refs.music.currentTime;
-            this.duration=this.setTimeFormat(this.$refs.music.duration);
             this.$refs.track.style.width=newVal+"%";
             this.$refs.handler.style.left=newVal+ "%";
 

@@ -1,16 +1,16 @@
 <template>
   <div class="module vertical">
       <app-header>
+          <div slot="left" @click="back" ref="backBtn"><font><span class="icon">&#xe600;</span></font></div>
           <p>问医生</p>
-          <div slot="left" @click="back" ref="backBtn"><font><span>&#xe600;</span></font></div>
           </app-header>
           <div class="patInfo" v-show='Got'>
               <p class="xl dark">患者资料 {{consultInfo.consulterName}} {{consultInfo.consulterGender|getGender}} {{consultInfo.consulterIdcard|getAge}}岁</p>
     </div>
-      <div class="symptom">
-          <my-post :info="info" v-show="Got"></my-post>
-    </div>
-      <div class="wrap" v-show="Got">
+      
+      
+      <div class="symptom wrap" v-show="Got">
+          <my-post :info="info"></my-post>
           <div class="answer" v-for="item in replyList">
               <div class="img"><img src="../../../static/img/docProfile.png"></div>
               <div class="word">
@@ -29,7 +29,11 @@
                   <p class="m lightBlue">申请成为TA的患者</p>
     </div>
               <div v-else>
+                  
+<!--                  输入框-->
                   <my-battle @output="send"></my-battle>
+                  
+                  
     </div>
     </div>
     
@@ -47,16 +51,16 @@
   export default {
     data() {
       return {
-          testList:[1,1,1,1,1,1],
           isEnded:false,
           consultInfo:{},
           replyList:[],
-          hasPhoto:false,
           info:{},
           Got:false
       };
     },
       created(){
+//        提醒父组件切换
+          this.$emit("showDetail");
       },
     computed: {},
     components: {
@@ -67,6 +71,8 @@
         MyBattle
     },
     mounted() {
+        
+//        获取问诊详情
         Api("smarthos.consult.pic.details",{
             consultId:this.$route.params.id,
             token:window.localStorage['token']
@@ -77,7 +83,6 @@
                 console.log(val.obj);
                 this.info=val.obj;
                 this.consultInfo=val.obj.consultInfo;
-                console.log(this.info);
                 this.replyList=val.obj.consultMessage;
             }
             else{
@@ -89,12 +94,14 @@
             this.$weui.alert("网络错误");
         })
         
+//        屏蔽原有返回键功能
         this.$refs.backBtn.addEventListener("click",(e)=>{
             e.stopPropagation();
         })
 
     },
     beforeDestroy() {
+        this.$emit("showList")
 
     },
       filters:{
@@ -104,9 +111,11 @@
       },
     methods: {
         back(){
-//            window.history.back();
+            this.$emit("showList");
             this.$router.push("/Consult");
         },
+        
+//        回复函数
         send(res){
             var params={
                 token:window.localStorage['token'],
@@ -141,6 +150,12 @@
     font-family: 'iconfont';
     src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
     }
+  span{
+      &.icon{
+        font-family: 'iconfont';
+        font-size: 18px;   
+      }
+  }
     .module{
         position:fixed;
         top:0;

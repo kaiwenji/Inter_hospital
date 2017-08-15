@@ -1,7 +1,6 @@
 <template>
-  <div class="app">
+  <div class="head">
       <app-header id="header">
-          <div slot="left" id="metalBox"></div>
           <p class="headerTitle">名医知道</p>
           <div slot="right" style="position:relative">
               <img src="../../../static/img/envelop.png" class="envelop">
@@ -9,15 +8,10 @@
     </div>
     </app-header>
       
-<!--      <my-metalbox :list="audioList">-->
-      <div v-show="Got"style="position:fixed;top:2.36rem;bottom:2.5rem;left:0;right:0">
-          <my-pullup :list="audioList"@pullUp="loadingMore" :flag="flag">
+          <my-pullup v-show="Got" :list="audioList"@pullUp="loadingMore" :flag="flag">
               <doc-panel :list="audioList"></doc-panel>
 
     </my-pullup>
-    </div>
-          
-<!--    </my-metalbox>-->
       <my-loading v-show="!Got"class="myLoading"></my-loading>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
@@ -25,7 +19,6 @@
             <p class="weui-toast__content">无更多内容</p>
         </div>
     </div>
-      <app-footer index="1"></app-footer>
   </div>
 </template>
 
@@ -55,12 +48,9 @@
         MyPullup,
         MyLoading
     },
+    watch:{
+    },
     mounted() {
-        
-        document.getElementById("metalBox").addEventListener("click",(e)=>{
-            e.stopPropagation();
-            console.log("click");
-        });
         this.getInfo();
     },
     beforeDestroy() {
@@ -76,15 +66,15 @@
                 token:window.localStorage['token']
             })
             .then((val)=>{
+                this.Got=true;
                 if(val.succ)
                 {
-                    this.Got=true;
                     console.log(val);
                     val.list.forEach((item)=>{
                         this.audioList.push(Object.assign({}, item, { on: false,pause:false }));
                     })
                     console.log(this.audioList);
-                    if(this.page==val.page.total){
+                    if(this.page==val.page.pages){
                         this.page=-1;
                     }
                     else{
@@ -118,6 +108,13 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
+    .head{
+        overflow:hidden;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
+    }
     .music{
 /*        display:none;*/
     }
@@ -157,10 +154,6 @@
         width:1.1rem;
         right:1rem;
         top:15px;
-    }
-    #metalBox{
-        width:100%;
-        height:100%
     }
         #toast{
         p{

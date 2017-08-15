@@ -1,7 +1,17 @@
 exports.getDefaultProfile=function(gender,e){
-    e.src=gender=="M"||gender=='m'||gender=='男'?"../../static/img/docProfile.png":"../../static/img/nv.png";
+    console.log("启用默认头像");
+    var src=gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
+    return src;
 }
-
+exports.getProfile=function(docInfo){
+    if(!docInfo.docAvatar||docInfo.docAvatar==""){
+        var gender=docInfo.docGender;
+        return gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
+    }
+    else{
+        return docInfo.docAvatar;
+    }
+}
 exports.getAge=function(id){
     if(!id){
       return "";

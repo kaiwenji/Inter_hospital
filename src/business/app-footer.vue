@@ -1,3 +1,5 @@
+<!--footer组件，使用前先得向该组件传一个index，让该组件知道自己所处的位置-->
+
 <template>
   <footer>
     <div class="app">
@@ -31,6 +33,7 @@
 
     },
     mounted() {
+        console.log(this.index);
         this.setCurrentPage(this.index);
 
     },

@@ -1,3 +1,4 @@
+<!--上拉弹出列表组件-->
 <template>
   <div id="metalBox">
       <transition name="vanish">
@@ -14,9 +15,6 @@
 
 <script>
   export default {
-    data() {
-      return {};
-    },
       props:{
         show:{
             type:Boolean,
@@ -28,12 +26,6 @@
         isShown(){
             return this.show;
         }
-    },
-    components: {},
-    mounted() {
-    },
-    beforeDestroy() {
-
     },
     methods: {
         activate(){

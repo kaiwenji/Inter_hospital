@@ -1,17 +1,13 @@
 <template>
 <!-- 切换就诊人模块-->
-    <my-popup :show="showPat" @activate="close">
-        <div slot="contain" class="contain">
+<my-popup :show="showPat" @activate="close">
+    <div slot="contain" class="contain">
         <div class="title">
             <p class="m light">请选择就诊人</p>
     </div>
         <div class="main">
-        <div v-for="item,index in patList" @click="check(index)">
-            <p class="dark">{{item.commpatName}}</p>
-            <p class="dark">{{item.commpatName}}</p>
-            <p class="dark">{{item.commpatName}}</p>
-            <p class="dark">{{item.commpatName}}</p>
-
+            <div v-for="item,index in patList" @click="check(index)">
+                <p class="dark">{{item.commpatName}}</p>
     </div>
             <p class="lightBlue" @click="addPat()">添加就诊人<span><img src="../../static/img/add.png"></span></p>
     </div>
@@ -23,7 +19,6 @@
 </template>
 <script>
     import MyPopup from "../base/popup.vue";
-
     export default({
         components:{
             MyPopup
@@ -42,7 +37,6 @@
         },
         methods:{
             check(index){
-                console.log(index);
                 this.$emit("activate",index);
             },
             addPat(){
@@ -70,9 +64,11 @@
                 position:relative;
                 border-top:.5px solid silver;
                 @include letter;
+/*
                 &:hover{
                     background-color:silver;
                 }
+*/
                 img{
                     position:absolute;
                     height:1rem;

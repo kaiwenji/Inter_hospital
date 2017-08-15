@@ -174,6 +174,7 @@
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
+                        window.history.back();
                     },1000)
                 }
                 else{

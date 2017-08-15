@@ -5,9 +5,10 @@ export default [
     {
         component:Index,
         path:"/docRadio"
-    },
-    {
+    }
+    ,
+                {
         component:Detail,
         path:"/docRadio/detail/:id"
-    }
+        }  
 ]

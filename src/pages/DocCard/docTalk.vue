@@ -3,13 +3,10 @@
     <app-header>
         <p class="headerTitle">医生说</p>
     </app-header>
-        <div style="position:fixed;top:2.36rem;left:0;right:0;bottom:0">
     <pull-up :list="audioList"@pullUp="loadingMore" :flag="flag">
 
     <doc-panel :list="audioList"></doc-panel>
     </pull-up>
-            
-    </div>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
@@ -44,16 +41,13 @@
         PullUp,
         MyLoading
     },
-//      mixins:[myMixin],
     mounted() {
-
         this.getInfo();
-
-    },
-    beforeDestroy() {
-
     },
     methods: {
+        
+        
+        
         getInfo(){
             Api("smarthos.sns.knowledge.page",{
                 pageNum:this.page,
