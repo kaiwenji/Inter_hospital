@@ -3,11 +3,15 @@
          <v-header @click="goIndex" :title="title" :rightTitle="rightTitle"></v-header>
          <nav-bar :tagNames="tagNames"></nav-bar>
          <router-view></router-view>
+          <div class="bottemFooter">
+            <footers index="1"></footers>
+          </div>
     </div>
 </template>
 <script>
   import header from '../../base/header'
   import navBar from '../../base/navBar'
+  import Footers from '../../business/app-footer'
   export default{
       data(){
         return{
@@ -21,7 +25,8 @@
       },
       components:{
          'VHeader':header,
-          navBar
+          navBar,
+        Footers
       },
     methods:{
       goIndex(){
@@ -30,6 +35,12 @@
     }
   }
 </script>
-<style>
-
+<style >
+  .bottemFooter{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+  }
 </style>

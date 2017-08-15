@@ -38,7 +38,7 @@
   export default{
     data(){
       return{
-        title:'病历详情',
+        title:'添加病历',
         rightTitle:'保存'
       }
     },
@@ -56,7 +56,7 @@
     bottom:0;
     left:0;
     right:0;
-    /*background-color: green;*/
+    background-color: white;
     .wrapTime{
       width:100%;
       height: 90rem/$rem;

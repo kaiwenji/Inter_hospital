@@ -14,6 +14,7 @@ export default [
   {
     path:'/myDoctorChat',
     component:myDoctorChat,
+    redirect:"/myDoctorChat/recentChat",
     children:[
       {
         path:'recentChat',
@@ -30,10 +31,6 @@ export default [
         component:followDoctor
       },
     ]
-  },
-  {
-    path:'/chat',
-    component:chat
   },
   {
     name:"myAddList",

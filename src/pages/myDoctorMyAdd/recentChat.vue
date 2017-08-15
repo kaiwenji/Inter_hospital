@@ -42,6 +42,7 @@
 
         </div>
         <v-mask  v-show="chatList.length == 0"></v-mask>
+
     </div>
 </template>
 <script>
@@ -49,6 +50,7 @@
   import api from '../../lib/api'
   import Loading from '../../base/loading/loading'
   import VMask from '../../base/mask'
+  import Footers from '../../business/app-footer'
   export default{
       data(){
         return{
@@ -87,6 +89,7 @@
       components:{
           Loading,
           "VMask":VMask,
+        Footers
       }
   }
 </script>
@@ -94,6 +97,7 @@
   @import '../../common/public.scss';
   @import '../../common/var.scss';
   @import '../../common/mixin.scss';
+
 .recentChat{
   width:100%;
   position: fixed;
