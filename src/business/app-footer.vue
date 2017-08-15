@@ -23,7 +23,7 @@
     data() {
       return {
         list:[{name:"首页",url:'./static/img/home.png'},{name:"我的医生",url:'./static/img/myDoctor.png'},{name:"我的",url:'./static/img/my.png'}],
-        activeUrl:['./static/img/home_on.png',"./static/img/myDoctor.png","./static/img/my_on.png"]
+        activeUrl:['./static/img/home_on.png',"./static/img/myDoctor_on.png","./static/img/my_on.png"]
       };
     },
     computed:{
@@ -47,6 +47,7 @@
         },
         setCurrentPage(index){
             let i = parseInt(index);
+            console.log(i)
             this.list[i].url=this.activeUrl[i];
         }
     }

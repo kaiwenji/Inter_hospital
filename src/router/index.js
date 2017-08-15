@@ -32,13 +32,6 @@ export default new Router({
         name:"patientIndex",
         path:"/patientIndex",
         component:patientIndex,
-        children:[
-          {
-            path:'my',
-            component:my
-          },
-          ...myDoctorMyAdd,
-        ]
       },
       {
          name:"doctor",
@@ -71,7 +64,7 @@ export default new Router({
       ...DocCard,
       ...DocRadio,
       ...Consult,
-      // ...myDoctorMyAdd,
+      ...myDoctorMyAdd,
       ...repeatConsultAdd,
       ...file,
       ...Book,

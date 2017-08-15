@@ -85,7 +85,6 @@
                </div>
              </div>
          </div>
-         <router-view></router-view>
           <div class="alertArea" v-if="showAlert">
             <div>
               <alert :alertTitle="alertTitle" :alertMsg="alertMsg" @on-set="close"></alert>
@@ -141,7 +140,7 @@
          }
       },
       mounted(){
-          
+
           this.$nextTick(()=>{
               this.tellPath = this.$route.path
           })

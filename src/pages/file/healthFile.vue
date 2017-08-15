@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='fileIndex'>
          <v-header :title="title" :rightTitle="rightTitle"></v-header>
          <div class="healthFile" ref="healthFile">
            <div>
@@ -22,7 +22,7 @@
                  基本情况
                </div>
              </div>
-             <div class="illness">
+             <div class="illness border-1px">
                <div>
                  所患疾病
                  <div>
@@ -30,7 +30,7 @@
                  </div>
                </div>
              </div>
-             <div class="history">
+             <div class="history border-1px">
                <div>
                  既往史
                  <div>
@@ -39,7 +39,7 @@
                  </div>
                </div>
              </div>
-             <div class="family">
+             <div class="family border-1px">
                <div>
                  家族史
                  <div>
@@ -48,7 +48,7 @@
                  </div>
                </div>
              </div>
-             <div class="alergic">
+             <div class="alergic border-1px">
                <div>
                  过敏史
                  <div>
@@ -62,12 +62,63 @@
                  诊疗记录
                </div>
              </div>
-             <div class="recordList">
+             <div class="recordList border-1px">
                <div class="wrapList">
                  <p class="listTime">2017-13-12</p>
                  <p class="listContent">我最近因为经常在晚上看书，光线又十分不明亮的时候看导致最近视力降的很快</p>
                  <div class="recordImg">
-                   <img src="" alt="">
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	
+                 </div>
+               </div>
+             </div>
+                          <div class="recordList">
+               <div class="wrapList">
+                 <p class="listTime">2017-13-12</p>
+                 <p class="listContent">我最近因为经常在晚上看书，光线又十分不明亮的时候看导致最近视力降的很快</p>
+                 <div class="recordImg">
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	<div>
+                 		<img src="../../../static/img/chatOrigin.jpg" alt="">
+                 	</div>
+                 	
                  </div>
                </div>
              </div>
@@ -112,6 +163,13 @@
 </script>
 <style scoped lang="scss">
   @import '../../common/public.scss';
+  .fileIndex{
+  	position: fixed;
+  	top: 0;
+  	bottom: 0;
+    left: 0;
+    right: 0;
+  }
   .healthFile{
     width:100%;
     position: fixed;
@@ -119,7 +177,7 @@
     bottom:0;
     left:0;
     right:0;
-    /*background-color: green;*/
+    background-color: white;
     ul{
       padding:0;
       margin:0 auto;
@@ -174,7 +232,7 @@
     .basic,.illness,.history,.family,.alergic,.record{
       width: 100%;
       height: 90rem/$rem;
-      border-top: 1px solid rgb(205,205,205);
+      /*border-top: 1px solid rgb(205,205,205);*/
       >div{
         width: 690rem/$rem;
         height: 90rem/$rem;
@@ -199,7 +257,7 @@
     }
     .recordList{
       width:100%;
-      border-bottom: 1px solid rgb(205,205,205);
+      /*border-bottom: 1px solid rgb(205,205,205);*/
       .wrapList{
         width: 690rem/$rem;
         margin:0 auto;
@@ -215,11 +273,17 @@
           color: #666666;
         }
         .recordImg{
-          width: 300rem/$rem;
-          height: 300rem/$rem;
-          img{
-            width: 300rem/$rem;
-            height: 300rem/$rem;
+          width: 690rem/$rem;
+          margin: 10px auto;
+          display: flex;
+          flex-wrap: wrap;
+          >div{
+          	width: 25%;
+          	text-align: center;
+          	img{
+            width: 70px;
+            height: 70px;
+          }
           }
         }
       }
