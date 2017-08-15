@@ -22,8 +22,8 @@
           </div>
         </div>
       </div>
-      <div class="btn" @click="login">
-        <a style="background: #30cfd0" href="javascript:;" class="weui-btn weui-btn_primary">登录</a>
+      <div class="btn" @click="login" >
+        <a :class="{active:current==1}" style="background: #30cfd0" href="javascript:;" class="weui-btn weui-btn_primary">登录</a>
       </div>
       <div class="bottom">
         <div class="register" @click="register">注册</div>
@@ -41,7 +41,8 @@
         data(){
             return {
               patMobile:'13522365145',
-              patPassword:'111111'
+              patPassword:'111111',
+                current:''
             }
         },
         mounted(){
@@ -61,6 +62,7 @@
           })
         },
         login(){
+            this.$set(this.$data,'current','1')
           var passWord = sha512(hex_md5(this.patPassword) + this.patPassword );
           api('smarthos.user.pat.login',{
             "patMobile":this.patMobile,
@@ -91,6 +93,9 @@
 </script>
 <style scoped lang='scss'>
     @import '../../common/public.scss';
+    .active{
+        background: gainsboro !important;
+    }
     .btn{
       width: 100%;
       box-sizing: border-box;

@@ -32,7 +32,7 @@
         },
       methods:{
         save(){
-          api("smarthos.medicalinfo.modify",{
+          api("smarthos.medical.info.modify",{
             "presentingComplaint":this.presentingComplaint,
             "pastHistory":"",
             "familyHistory":"",

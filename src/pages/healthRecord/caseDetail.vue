@@ -86,7 +86,7 @@
         this.$set(this.$data,'imgId',value)
       },
       save(){
-        api("smarthos.medicalhistory.modify",{
+        api("smarthos.medical.history.modify",{
           "medicalTime":this.date,
           "medContent":this.caseText,
           "id":this.id,
@@ -121,7 +121,7 @@
         });
       },
       deleteCase(){
-        api("smarthos.medicalhistory.delete",{
+        api("smarthos.medical.history.delete",{
           id:this.id,
           token:this.token
         }).then(res=>{
