@@ -4,6 +4,7 @@ import Department from "./department.vue";
 import Doctor from "./doctor.vue";
 import DoctorInfo from "./doctorInfo.vue";
 import Reserve from "./reserve.vue";
+import Info from "./info.vue";
 export default[
     {
         path:"/book/",
@@ -28,6 +29,10 @@ export default[
             {
                 path:"/book/reserve/:id",
                 component:Reserve
+            },
+            {
+                path:"/book/success",
+                component:Info
             }
         ]
         

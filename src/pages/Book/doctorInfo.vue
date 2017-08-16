@@ -15,7 +15,7 @@
       <myPanel class="weui-cells">
           <img class="figure"slot="picture" :src="doctorInfo.docAvatar">
           <div slot="article">
-              <p>{{doctorInfo.docName}}
+              <p>{{docName}}
                   <span >{{doctorInfo.docTitle}}</span></p>
               <p  class="font-hide" style="width:9rem">{{hospitalName}}</p>
               <p class="small" style="color:#999999">{{deptName}}</p>
@@ -53,7 +53,7 @@
       <div class="weui-cells__title">医生擅长</div>
       <div class="weui-cells">
           <div class="weui-cell">
-              <p>{{doctorInfo.docDescription}}</p>
+              <p>{{docDesc}}</p>
     </div>
     </div>
     </div>
@@ -100,9 +100,11 @@
           doctorInfo:{docName:"医生",hosName:"医院",bookHosId:"123",docTitle:"主任",docDescription:"真是个人才"},
           hospitalName:"",
           deptSchemeList:[
-              {schemeList:[{weekNo:1,schemeAmpm:"am",schemeDate:"2017-1-1",schemeStats:4,bookFee:2,bookSchemeId:"1"}],deptName:"外科",bookSchemeName:"123",bookDeptId:"1"},
-              {schemeList:[{weekNo:2,schemeAmpm:"pm",schemeDate:"2017-2-1",schemeStats:4,bookFee:3,bookSchemeId:"2"}],deptName:"内科",bookSchemeName:"124",bookDeptId:"2"}
+              {schemeList:[{weekNo:1,schemeAmpm:"am",schemeDate:"2017-2-3",schemeStats:4,bookFee:2,bookSchemeId:"1"}],deptName:"外科",bookSchemeName:"123",bookDeptId:"1"},
+              {schemeList:[{weekNo:2,schemeAmpm:"am",schemeDate:"2017-2-3",schemeStats:4,bookFee:3,bookSchemeId:"2"}],deptName:"内科",bookSchemeName:"124",bookDeptId:"2"}
                          ],
+          docDesc:"",
+          docName:"",
           deptName:"",
           deptList:[],
           schemeList:[],
@@ -112,12 +114,12 @@
           isDoctor:false,
           isShown:false,
           chosedItem:{},
-          bookList:[{numTime:"2017-02-03 00:00:00",bookNumId:"123"},
-                   {numTime:"2017-02-03 00:00:00",bookNumId:"123"},
-                   {numTime:"2017-02-03 00:00:00",bookNumId:"123"},
-                   {numTime:"2017-02-03 00:00:00",bookNumId:"123"},
-                   {numTime:"2017-02-03 00:00:00",bookNumId:"123"},
-                   {numTime:"2017-02-03 00:00:00",bookNumId:"123"}],
+          bookList:[{numTime:"2017-02-03 08:00:00",bookNumId:"123"},
+                   {numTime:"2017-02-03 08:30:00",bookNumId:"123"},
+                   {numTime:"2017-02-03 09:00:00",bookNumId:"123"},
+                   {numTime:"2017-02-03 09:30:00",bookNumId:"123"},
+                   {numTime:"2017-02-03 10:00:00",bookNumId:"123"},
+                   {numTime:"2017-02-03 10:30:00",bookNumId:"123"}],
           Got:false,
           failure:false,
           title:""
@@ -195,6 +197,10 @@
         PopUp
     },
     mounted() {
+        this.docName=window.localStorage['docName'];
+        this.hospitalName=window.localStorage['hosName'];
+        this.deptName=window.localStorage['deptName'];
+        this.docDesc=window.localStorage['docDesc']||"";
 
     },
     beforeDestroy() {

@@ -23,10 +23,10 @@
     computed: {},
 
     mounted() {
-        document.getElementById("header").addEventListener("touchmove",this.preventDefault);
+//        document.getElementById("header").addEventListener("touchmove",this.preventDefault);
     },
     beforeDestroy() {
-        document.getElementById("header").removeEventListener("touchmove",this.preventDefault);
+//        document.getElementById("header").removeEventListener("touchmove",this.preventDefault);
     },
 
     methods: {
