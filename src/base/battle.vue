@@ -8,9 +8,9 @@
     </div>
 -->
     <div class="middle">
-        <form action="">
-<input type="text" v-show="type=='text'" v-model="msg" >
-    </form>
+<!--        <form action="">-->
+            <input ref="input" type="text" v-show="type=='text'" v-model="msg" >
+<!--    </form>-->
         <div v-show="type!='text'"  ref="recordButton" class="mask"></div>
         <input type="button" v-show="type!='text'"  class="recordButton s"  value="按住说话">
     </div>
@@ -150,12 +150,12 @@
             this.post();
              this.$refs.recordButton.addEventListener("touchstart",this.startRecord)
             this.$refs.recordButton.addEventListener("touchend",this.stopRecord)
-            document.querySelector('form').addEventListener('submit', (e)=>{
-                e.preventDefault(); // 阻止默认事件
-                window.blur();
-                this.send();
-                console.log("搜索");
-            });
+//            document.querySelector('form').addEventListener('submit', (e)=>{
+//                e.preventDefault(); // 阻止默认事件
+//                this.$refs.input.blur();
+//                this.send();
+//                console.log("搜索");
+//            });
 
             
         }
