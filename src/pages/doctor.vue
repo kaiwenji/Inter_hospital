@@ -54,6 +54,7 @@
           </div>
     </div>
       </div>
+<!--      <div class="sendMsg" ><p>发消息</p></div>-->
       <my-loading class='myLoading'v-show="!Got"></my-loading>
   </div>
 </template>
@@ -488,5 +489,19 @@
 /*    医生姓名*/
     .docName{
         position:relative;
+    }
+    
+    .sendMsg{
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:3rem;
+        p{
+            margin:0 8rem;
+            text-align:center;
+            background:rgb(10,172,233);
+        }
+        
     }
 </style>

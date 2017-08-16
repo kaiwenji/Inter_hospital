@@ -2,16 +2,20 @@
 
 <template>
 <div class="horizontal">
+<!--
     <div>
         <img src="../../static/img/chat.png" @click="setType(this)">
     </div>
+-->
     <div class="middle">
-    <input type="text" v-show="type=='text'" v-model="msg" >
+        <form action="">
+<input type="text" v-show="type=='text'" v-model="msg" >
+    </form>
         <div v-show="type!='text'"  ref="recordButton" class="mask"></div>
         <input type="button" v-show="type!='text'"  class="recordButton s"  value="按住说话">
     </div>
     <div>
-        <img src="../../static/img/聊天界面-添加.png" @click="send">
+        <p class="search" @click="send()">提交</p>
     </div>
 <!--    <div ref="block" class="block"></div>-->
     <div id="toast" v-show="isRecord">
@@ -146,6 +150,12 @@
             this.post();
              this.$refs.recordButton.addEventListener("touchstart",this.startRecord)
             this.$refs.recordButton.addEventListener("touchend",this.stopRecord)
+            document.querySelector('form').addEventListener('submit', function(e){
+                e.preventDefault(); // 阻止默认事件
+                window.blur();
+                this.send();
+                console.log("搜索");
+            });
 
             
         }
@@ -158,7 +168,7 @@
         flex:0 0 auto;
         div{
             flex:0 0 auto;
-/*            width:3.14rem;*/
+            width:3.5rem;
 
             &.middle{
                 padding:0.26rem 0 ;
@@ -166,7 +176,7 @@
                     font-size:15px;
                     padding:.1rem;
                     border:0px solid transparent;
-                    width:13.7rem;
+                    width:13.8rem;
                     height:1.8rem;
                     background:$bgColor;
                     border-radius:10px;
@@ -200,5 +210,14 @@
         bottom:3rem;
         z-index:1001;
         background:transparent;
+    }
+    .search{
+        background:rgb(10,172,233);
+        color:white;
+        width:2.6rem;
+        height:1.5rem;
+        border-radius:.2rem;
+        padding-bottom:.1rem;
+        margin-top:.5rem;
     }
 </style>

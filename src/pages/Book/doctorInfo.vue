@@ -1,3 +1,5 @@
+<!--book组件中localStorage的作用就是为了弥补接口的缺失，如果有接口连入，可把几乎所有localstorage删除-->
+
 <template>
   <div class="view app">
  <app-header>
@@ -198,6 +200,9 @@
     },
     mounted() {
         this.docName=window.localStorage['docName'];
+        if(this.docName=="普通号"){
+            this.isDoctor=false;
+        }
         this.hospitalName=window.localStorage['hosName'];
         this.deptName=window.localStorage['deptName'];
         this.docDesc=window.localStorage['docDesc']||"";
@@ -244,7 +249,8 @@
             this.chosedDeptName=val;
         },
         anotherDept(item){
-            this.$router.push("/service/book/doctor/"+item.bookDeptId);
+            window.localStorage['deptName']=item.deptName;
+            this.$router.push("/book/doctor/"+item.bookDeptId);
         },
         getData(val,bookDeptId){
 //                this.doctorInfo=val.obj;

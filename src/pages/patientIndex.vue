@@ -140,7 +140,6 @@
          }
       },
       mounted(){
-
           this.$nextTick(()=>{
               this.tellPath = this.$route.path
           })
