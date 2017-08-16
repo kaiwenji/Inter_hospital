@@ -14,6 +14,7 @@ import editUser from "../patient/editUser.vue";
 import editPhone from "../patient/editPhone.vue";
 // import index from "../homePage/index.vue";
 import my from "../my/index.vue";
+import myRegistration from "../my/myRegistration.vue";
 import patientGround from "../my/patientGround.vue";
 import login from "../login/index.vue";
 import forgetPassword from "../login/forgetPassword.vue";
@@ -161,6 +162,10 @@ export default[
     path: '/eyeInjuryDetail',
     name: 'eyeInjuryDetail',
     component: eyeInjuryDetail
+  }, {
+    path: '/myRegistration',
+    name: 'myRegistration',
+    component: myRegistration
   }
   // },{
   //   path: '/',

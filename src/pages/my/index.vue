@@ -25,7 +25,7 @@
             </div>
             <div class="weui-cell__ft"></div>
           </a>
-          <a class="weui-cell weui-cell_access" href="javascript:;">
+          <a @click="goRegistration" class="weui-cell weui-cell_access" href="javascript:;">
             <div class="weui-cell__hd"><img src="../../../static/img/guahao.png" alt="" style="width:25px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
               <p class="bf">&nbsp;&nbsp;我的挂号</p>
@@ -117,6 +117,11 @@
 //          this.getData()
         },
       methods:{
+        goRegistration(){
+          this.$router.push({
+            name:"myRegistration"
+          })
+        },
         getData(){
           api("smarthos.user.pat.infomation.modify",{
             token:this.token,
