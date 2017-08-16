@@ -150,7 +150,7 @@
             this.post();
              this.$refs.recordButton.addEventListener("touchstart",this.startRecord)
             this.$refs.recordButton.addEventListener("touchend",this.stopRecord)
-            document.querySelector('form').addEventListener('submit', function(e){
+            document.querySelector('form').addEventListener('submit', (e)=>{
                 e.preventDefault(); // 阻止默认事件
                 window.blur();
                 this.send();

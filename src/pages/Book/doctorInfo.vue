@@ -14,22 +14,21 @@
     </div>
       <div class="app overflow"v-show="Got&&!failure">
       <div>
-      <myPanel class="weui-cells">
+      <myPanel class="weui-cells" hasArrow="false">
           <img class="figure"slot="picture" :src="doctorInfo.docAvatar">
           <div slot="article">
               <p>{{docName}}
-                  <span >{{doctorInfo.docTitle}}</span></p>
+                  <span v-show="isDoctor">{{doctorInfo.docTitle}}</span></p>
               <p  class="font-hide" style="width:9rem">{{hospitalName}}</p>
               <p class="small" style="color:#999999">{{deptName}}</p>
               
 
     </div>
-    <span slot="ft">在线问诊</span>
     </myPanel>
           
     </div>
       <div class="weui-cells">
-          <MySelect :options="deptList" @update="update" v-show="deptList&&deptList.length>0"></MySelect>
+          <MySelect :options="deptList" @update="update" v-show="deptList&&deptList.length>0&&isDoctor"></MySelect>
           <div class="weui-cell" style="display:flex;flex-direction:row" v-for="scheme in filteredSchemeList">
               <div style="flex:1 1 auto">
                     {{scheme.time|getMyDay}}
@@ -258,7 +257,7 @@
                     this.doctorInfo.docAvatar=require("../../../static/img/docProfile.png");
                 }
                 this.hospitalName=this.doctorInfo.hosName;
-                this.title=this.doctorInfo.docName;
+                this.title=window.localStorage['docName'];
 //                this.deptSchemeList=val.obj.deptSchemeList.filter((item)=>{
 //                    return item.deptName!=this.deptName;
 //                });

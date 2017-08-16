@@ -174,7 +174,7 @@
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
-                     this.$router.push("/")
+                        window.history.back();
                     },1000)
                 }
                 else{

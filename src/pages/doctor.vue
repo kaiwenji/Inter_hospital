@@ -54,7 +54,7 @@
           </div>
     </div>
       </div>
-<!--      <div class="sendMsg" ><p>发消息</p></div>-->
+      <div class="sendMsg" v-show="isFollow" @click="sendMsg"><p class="xxl">发消息</p></div>
       <my-loading class='myLoading'v-show="!Got"></my-loading>
   </div>
 </template>
@@ -77,7 +77,8 @@
           nothingMore:false,
           showDocTalk:false,
           Got:false,
-          isFollow:false
+          isFollow:false,
+          followId:""
       };
     },
     computed: {
@@ -105,7 +106,6 @@
       
       
     mounted() {
-        this.docId=this.$route.params.id;
         this.rem=window.screen.width/20;
         
 //        设置滚动动画效果
@@ -117,26 +117,7 @@
         }
 
 //获取医生信息        
-        Api("smarthos.user.doc.card.get",{
-            "docId":this.docId,
-            token:window.localStorage['token']
-        })
-        .then((val)=>{
-            if(val.succ){
-                this.docInfo=val.obj.doc;
-                this.isFollow=val.obj.hasFollow||false;
-                this.list[0].desc=this.docInfo.docSkill;
-                this.list[1].desc=this.docInfo.docResume;
-            }
-            else{
-                this.$weui.alert(val.msg);
-            }
-            this.Got=true;
-
-        },
-                      ()=>{
-                    this.$weui.alert("网络错误");
-                })
+        this.getDocInfo();
         
 //        获取医生说列表
         Api("smarthos.sns.knowledge.page",{
@@ -167,6 +148,38 @@
 
             },
     methods: {
+        getDocInfo(){
+            
+            this.docId=this.$route.params.id;
+            Api("smarthos.user.doc.card.get",{
+                "docId":this.docId,
+                token:window.localStorage['token']
+            })
+            .then((val)=>{
+                if(val.succ){
+                    this.docInfo=val.obj.doc;
+                    console.log(val);
+                    this.isFollow=val.obj.followDocpat?true:false;
+                    if(this.isFollow)
+                        {
+                            this.followId=val.obj.followDocpat.id;
+                        }
+                    this.list[0].desc=this.docInfo.docSkill;
+                    this.list[1].desc=this.docInfo.docResume;
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+                this.Got=true;
+
+            },
+                          ()=>{
+                        this.$weui.alert("网络错误");
+                    })
+        },
+        sendMsg(){
+//            this.$router.push({path:'/chat',query:{docAvatar:this.docInfo.docAvatar,docName:this.docInfo.docName,followId:this.followId}});
+        },
         getProfile(docInfo){
             if(!docInfo.docAvatar||docInfo.docAvatar==""){
                 var gender=docInfo.docGender;
@@ -213,6 +226,7 @@
                 })
                 .then((val)=>{
                     if(val.succ){
+                        console.log(val);
                         this.isFollow=false;
                     }
                     else{
@@ -233,6 +247,8 @@
                 .then((val)=>{
                     if(val.succ){
                         this.isFollow=true;
+                        this.getDocInfo();
+                        console.log(val);
                     }
                     else{
                         this.$weui.alert(val.msg);
@@ -497,10 +513,12 @@
         left:0;
         right:0;
         height:3rem;
+        background:rgb(10,172,233);
         p{
-            margin:0 8rem;
+            margin-top:.8rem;
+/*            margin:0 8rem;*/
             text-align:center;
-            background:rgb(10,172,233);
+            color:white;
         }
         
     }
