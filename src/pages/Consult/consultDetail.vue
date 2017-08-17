@@ -12,7 +12,7 @@
       <div class="symptom wrap" v-show="Got">
           <my-post :info="info"></my-post>
           <div class="answer" v-for="item in replyList">
-              <div class="img"><img src="../../../static/img/docProfile.png"></div>
+              <div class="img"><img :src="getProfile(item.userDocVo)"></div>
               <div class="word">
                   <p class="xl darker">{{item.userDocVo&&item.userDocVo.docName}}<span class="m light"> &nbsp;&nbsp;{{item.userDocVo&&item.userDocVo.hosName}} &nbsp;&nbsp;|&nbsp;&nbsp; {{item.userDocVo&&item.userDocVo.deptName}}</span></p>
                   <p class="m light">{{item.userDocVo&&item.userDocVo.createTime|goodTime}}</p>
@@ -48,6 +48,7 @@
     import MyPost from "../../business/post.vue";
     import MyLoading from "../../base/loading/loading.vue";
     import MyBattle from "../../base/battle.vue";
+    import myMixin from "../../lib/public.js";
   export default {
     data() {
       return {
@@ -80,7 +81,6 @@
         .then((val)=>{
             this.Got=true;
             if(val.succ){
-                console.log(val.obj);
                 this.info=val.obj;
                 this.consultInfo=val.obj.consultInfo;
                 this.replyList=val.obj.consultMessage;
@@ -104,6 +104,7 @@
         this.$emit("showList")
 
     },
+    mixins:[myMixin],
       filters:{
           getAge,
           getGender,
@@ -130,7 +131,6 @@
             Api("smarthos.consult.pic.reply",params)
             .then((val)=>{
                 if(val.succ){
-                    console.log(val);
                 }
                 else{
                     this.$weui.alert(val.msg);
@@ -207,6 +207,7 @@
     
     .symptom{
         padding-top:0.8rem;
+        background:rgb(248,248,248);
     }
     .bubble{
         margin-top:0.8rem;

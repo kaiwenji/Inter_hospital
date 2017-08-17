@@ -8,10 +8,6 @@ export default[
         path:"/Consult",
         children:[
             {
-                component:ConsultList,
-                path:"/"
-            },
-            {
             component:ConsultDetail,
             path:"/Consult/ConsultDetail/:id"
         }

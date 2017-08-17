@@ -52,7 +52,6 @@
               this.$router.push("/myRegistration/");
           },
           check(){
-              console.log("click get");
           },
           changeRoute(id,name){
               this.hosName=name;

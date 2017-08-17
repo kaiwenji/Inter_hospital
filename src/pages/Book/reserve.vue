@@ -128,7 +128,6 @@
         Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
         .then((val)=>{
             if(val.succ){
-                console.log(val.list);
                 this.patList=val.list;
                 if(this.patList.length>0){
                     this.patInfo=this.patList[0];
@@ -158,7 +157,6 @@
             this.showPat=true;
         },
         bind(){
-//            console.log(this.patInfo);
             this.$router.push({path:"/service/bind/"+this.patInfo.compatId,query:{key:this.key}});
         },
         updateVal(val){

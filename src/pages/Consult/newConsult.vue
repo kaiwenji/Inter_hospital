@@ -12,8 +12,8 @@
             <img src="../../../static/img/docProfile.png">
     </div>
         <div class="word">
-        <p class="s light">加号已拒绝</p>
-        <p class="s light" >拒绝理由：医生近期停诊，请留意时间后再申请加号</p>
+        <p class="s light">医生工作繁忙，请务必保证填写资料的真实、详细；</p>
+        <p class="s light" >如资料不全，医生可能不予回答</p>
     </div>
     </div>
     <div class="sub">
@@ -110,7 +110,6 @@
         .then((val)=>{
             this.Got=true;
             if(val.succ){
-                console.log(val.list);
                 this.patList=val.list;
             }
             else{
@@ -142,11 +141,14 @@
             this.showPat=true;
         },
         check(item){
-            console.log(item);
             this.showPat=false;
             this.chosedIndex=item;            
         },
         addNew(){
+            if(this.content=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
+                this.$weui.alert("请填写复诊需求描述");
+                return;
+            }
             this.showLoading=true;
             Api("smarthos.consult.pic.issue",{
                 consulterName:this.patInfo.commpatName,
@@ -157,7 +159,6 @@
                 attaIdList:this.attaList
             })
             .then((val)=>{
-                console.log(val);
                 this.showLoading=false;
                 this.addSuccess(val.obj.consultInfo.id);
             })

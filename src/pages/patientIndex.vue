@@ -126,7 +126,7 @@
            clickTime:[],
            a:0,
            temp:'',
-           scanImg:"../../static/img/扫一扫.png",
+           scanImg:"",
            clickLikes:0,
            showAlert:false,
            alertTitle:"温馨提示",

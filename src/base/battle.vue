@@ -15,7 +15,7 @@
         <input type="button" v-show="type!='text'"  class="recordButton s"  value="按住说话">
     </div>
     <div>
-        <p class="search" @click="send()">提交</p>
+        <p class="search" @click="send()">回复</p>
     </div>
 <!--    <div ref="block" class="block"></div>-->
     <div id="toast" v-show="isRecord">

@@ -72,10 +72,11 @@
 
 <style scoped lang="scss">
     #wrapper{
-        background:rgb(248,248,248);
+        background:transparent;
         flex:1 1 auto;
         overflow:auto;
     }
     #scroller{
+        background:rgb(248,248,248);
     }
 </style>

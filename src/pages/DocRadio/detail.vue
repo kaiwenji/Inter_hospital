@@ -33,6 +33,7 @@
     import MyPlayer from "../../base/player.vue";
     import Api from "../../lib/api.js";
     import Reload from "../../lib/reload.js";
+    import myMixin from "../../lib/public.js";
   export default {
     data() {
       return {
@@ -54,7 +55,6 @@
             this.Got=true;
             if(val.succ){
                 this.docInfo=val.obj;
-                console.log(this.docInfo);
             }
             else{
                 this.$weui.alert(val.msg);
@@ -64,17 +64,8 @@
             this.$weui.alert("网络错误");
         })
     },
-    mixins:[Reload],
+    mixins:[Reload,myMixin],
     methods: {
-        getProfile(docInfo){
-            if(!docInfo.docAvatar||docInfo.docAvatar==""){
-                var gender=docInfo.docGender;
-                return !gender||gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
-            }
-            else{
-                return docInfo.docAvatar;
-            }
-        },
         goDoc(){
             this.$router.push("/doctor/"+this.docInfo.snsKnowledge.docId);
         }

@@ -2,8 +2,8 @@
 
 
 <template>
-<div>
-<div class="app" v-show="!showDetail">
+<div class="vertical app">
+<div  v-show="!showDetail" class="vertical app">
     <app-header>
         <div class="left" @click="back">
           <slot name="left">
@@ -13,20 +13,16 @@
         <p class="headerTitle">问医生</p>
     </app-header>
 
-    <div class="main">
-        <div class="nothing" v-if="consultList.length==0&&Got">
+        <div class="main nothing" v-if="consultList.length==0&&Got">
             <p class="xxl darker" >你还没有回答任何问题</p>
             <p class="m lightBlue">点击右下角按钮立即提问</p>
     </div>    
-        <div v-else>
 
-        <pull-up @pullUp="getMore" :list=consultList :flag="flag" v-show="Got">
+        <pull-up  class="main"@pullUp="getMore" :list=consultList :flag="flag" v-show="Got" v-else>
             <div class="inner">
             <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)":key="item.consultInfo.id"></my-post>
     </div>
-    </pull-up> 
-    </div>
-    </div>
+    </pull-up>
     <div class="button" @click="addConsult">
         <p>立即</p>
         <p>询问</p>
@@ -50,6 +46,7 @@
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
     import MyLoading from "../../base/loading/loading.vue";
+    import CanScroll from "../../lib/canScroll.js";
   export default {
     data() {
       return {
@@ -126,7 +123,6 @@
                 
             },
                  ()=>{
-                console.log(this.consultList.length);
                 this.$weui.alert("网络错误");
             })
         }
@@ -152,13 +148,18 @@ src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
     }
 
     header{
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
         border-bottom:1px solid silver
     }
-    .app{
-        @include vertical;
-    }
     .main{
-        @include wrap;
+        position:fixed;
+        top:2.34rem;
+        left:0;
+        right:0;
+        bottom:0;
         padding-top:0.8rem;
     }
     .nothing{

@@ -111,7 +111,6 @@
             if (res.length>0){
                 this.noInfo1=false;
             }
-            console.log(res);
             return res;
             
         },
@@ -152,7 +151,6 @@
         },
         check(item)
         {
-            console.log(item.event.target);
         },
 //        update(){
 //            let weekList=["无","停诊","已满","即将","预约"];
@@ -243,7 +241,6 @@
 //            if(val.list[0]){
 //                this.hosName=val.list[0].hosName;
 //            }
-//            console.log(val);
 //            this.res=val.list;
 //            this.update();
 //        },

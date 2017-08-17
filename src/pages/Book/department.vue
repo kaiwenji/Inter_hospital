@@ -64,7 +64,6 @@
       },
       methods:{
           changeDepartment(index){
-              console.log(index);
               let item=this.department[index];
               this.subDepartment=item.deptList;
               this.isChosed=index;

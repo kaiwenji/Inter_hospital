@@ -64,7 +64,7 @@
     import DocPanel from "../business/docPanel.vue";
     import AppHeader from "../business/app-header.vue";
     import Api from "../lib/api.js";
-    import {getProfile} from "../lib/public.js";
+    import myMixin from "../lib/public.js";
   export default {
     data() {
       return {
@@ -104,7 +104,7 @@
         }
     },
       
-      
+    mixins:[myMixin],  
     mounted() {
         this.rem=window.screen.width/20;
         
@@ -158,7 +158,6 @@
             .then((val)=>{
                 if(val.succ){
                     this.docInfo=val.obj.doc;
-                    console.log(val);
                     this.isFollow=val.obj.followDocpat?true:false;
                     if(this.isFollow)
                         {
@@ -178,20 +177,10 @@
                     })
         },
         sendMsg(){
-//            this.$router.push({path:'/chat',query:{docAvatar:this.docInfo.docAvatar,docName:this.docInfo.docName,followId:this.followId}});
-        },
-        getProfile(docInfo){
-            if(!docInfo.docAvatar||docInfo.docAvatar==""){
-                var gender=docInfo.docGender;
-                return gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
-            }
-            else{
-                return docInfo.docAvatar;
-            }
+            this.$router.push({path:'/chat',query:{docAvatar:this.docInfo.docAvatar,docName:this.docInfo.docName,followId:this.followId}});
         },
 //        切换路由
         To(path){
-            console.log(path);
             if(path=='book'){
                 this.$router.push("/book/");
             }
@@ -226,7 +215,6 @@
                 })
                 .then((val)=>{
                     if(val.succ){
-                        console.log(val);
                         this.isFollow=false;
                     }
                     else{
@@ -248,7 +236,6 @@
                     if(val.succ){
                         this.isFollow=true;
                         this.getDocInfo();
-                        console.log(val);
                     }
                     else{
                         this.$weui.alert(val.msg);

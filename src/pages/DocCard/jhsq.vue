@@ -58,6 +58,7 @@
     import MyToast from "../../base/toast.vue";
     import MyUpload from "../../business/upload.vue";
     import MyLoading from "../../base/loading/loading.vue";
+    import myMixin from "../../lib/public.js";
   export default {
     data() {
       return {
@@ -83,24 +84,6 @@
             return this.patList[this.chosedIndex];
         }
     },
-      filters:{
-          
-          /*获取年龄*/
-          getAge(id){
-              if(!id){
-                  return "";
-              }
-              var year;
-              if(id.length==18){
-                  year=parseInt(id.substring(6,10));
-              }
-              else{
-                  year=1900+parseInt(id.substring(7,9));
-              }
-              var date=new Date();
-              return date.getFullYear()-year; 
-          }
-      },
     components: {
         AppHeader,
         MyToast,
@@ -116,7 +99,6 @@
         .then((val)=>{
             this.docGot=true;
             if(val.succ){
-//                console.log(val);
                 this.docInfo=val.obj.doc;
             }
             else{
@@ -145,9 +127,7 @@
         })
 
     },
-    beforeDestroy() {
-
-    },
+      mixins:[myMixin],
     methods: {
 
         getAttaIdsList(item){
@@ -156,7 +136,7 @@
         /**提交预约**/
         appoint(){
             let desc=this.isBlank(this.description);
-            console.log(desc);
+            
             this.showLoading=true;
             Api("smarthos.appiontment.add",{
                 patId:this.patInfo.patId,
@@ -168,7 +148,7 @@
             })
             .then((val)=>{
                 this.showLoading=false;
-                console.log(val);
+                
                 if(val.succ){
                     
                     this.showSuccess=true;

@@ -7,7 +7,7 @@
             <img :src="item.attaFileUrl" v-for="item,index in info.attaList" :class="{'last':index%4==3}">
         </div>
         <div class="ft">
-            <p class="lightBlue l" v-show="info.userDocVo"><img src="../../static/img/docProfile.png" class="icon">{{info.userDocVo&&info.userDocVo.docName}}<span class="l light">回答</span></p>
+            <p class="lightBlue l" v-show="info.userDocVo"><img :src="getProfile(info.userDocVo)" class="icon">{{info.userDocVo&&info.userDocVo.docName}}<span class="l light">回答</span></p>
             <p class="middle m light">{{consultInfo.createTime|goodTime}}创建  &nbsp;|</p>
             <p class="right m light">{{consultInfo.replyCount||0}}条评论</p>
         </div>
@@ -16,6 +16,7 @@
 
 <script>
     import {goodTime} from "../lib/filter.js";
+    import myMixin from "../lib/public.js";
     export default({
         props:{
             info:{
@@ -42,6 +43,7 @@
                 }
             }
         },
+        mixins:[myMixin],
         filters:{
             goodTime
         },
