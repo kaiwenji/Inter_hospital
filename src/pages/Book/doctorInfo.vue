@@ -36,7 +36,7 @@
                       {{scheme.week}}
     </div>
               <div v-if="scheme.status=='预约'">
-                  <a class="weui-btn weui-btn_mini weui-btn_default" style="background:white" @click="next(scheme)"><p>{{scheme.status}} {{scheme.bookFee}}.0元</p></a>
+                  <a class="weui-btn weui-btn_mini weui-btn_default" style="background:white;color:rgb(15,189,255)" @click="next(scheme)"><p>{{scheme.status}} {{scheme.bookFee}}.0元</p></a>
     </div>
               <div v-if="scheme.status!='预约'" style="width:3rem">
               <span  class="font-warn">{{scheme.status}}</span>
@@ -138,30 +138,7 @@
             let bookDeptId=tempList[1];
             this.deptName="外科";
             this.getData({},this.bookDeptId);
-//            api("nethos.book.doc.scheme.list",{bookDocId:this.bookDocId})
-//            .then((val)=>{
-//                this.getData(val,bookDeptId);
-//            },
-//                 ()=>{
-//                console.log("failed");
-//                this.failure=true;
-//                this.Got=true;
-//            });
         }
-//        else{
-//            var id=tempList[1];
-//            let bookDeptId=tempList[2];
-//            this.deptName=decodeURI(tempList[3]);
-//            api("nethos.book.doc.normal.scheme.list",{bookDeptId:id})
-//            .then((val)=>{
-//                this.getData(val,bookDeptId);
-//            },
-//                 ()=>{
-//                this.failure=true;
-//                this.Got=true;
-//                console.log("failed");
-//            })
-//        }
         
     },
     computed:{
@@ -216,33 +193,19 @@
             this.isShown=true;
             this.chosedItem=item;
             this.Got=false;
-//            api("nethos.book.num.list",{bookSchemeId:item.bookSchemeId})
-//            .then((val)=>{
-                let storage=window.localStorage;
-                storage['hosName']=this.hospitalName;
-                storage['deptName']=this.deptName;
-                storage['bookFee']=item.bookFee;
-                storage['date']=item.time;
-                storage['Ampm']=item.Ampm;
-                storage['name']=this.doctorInfo.docName;
-//                this.bookList=val.list;
-                this.Got=true;
-//            },
-//                 ()=>{
-//                this.failure=true;
-//            })
+            let storage=window.localStorage;
+            storage['hosName']=this.hospitalName;
+            storage['deptName']=this.deptName;
+            storage['bookFee']=item.bookFee;
+            storage['date']=item.time;
+            storage['Ampm']=item.Ampm;
+            storage['name']=this.doctorInfo.docName;
+            this.Got=true;
         },
         reserve(item){
             window.localStorage['time']= item.hour+':'+item.minute+'-'+item.newHour+':'+item.newMinute;
             window.localStorage['last']="/service/book/doctorInfo/"+this.$route.params.id;
             this.$router.push({path:"/book/reserve/"+item.bookNumId+"&"+this.doctorInfo.bookHosId,query:{key:this.key}});
-        },
-        getTime(str){
-            let date=new Date(str);
-            let month= ("0" + (date.getMonth() + 1)).slice(-2);
-            let day=("0" + (date.getDate())).slice(-2);
-            let year=date.getFullYear();
-            return year+"-"+month+"-"+day;
         },
         update(val){
             this.chosedDeptName=val;
@@ -252,15 +215,11 @@
             this.$router.push("/book/doctor/"+item.bookDeptId);
         },
         getData(val,bookDeptId){
-//                this.doctorInfo=val.obj;
                 if(!this.doctorInfo.docAvatar){
                     this.doctorInfo.docAvatar=require("../../../static/img/docProfile.png");
                 }
                 this.hospitalName=this.doctorInfo.hosName;
                 this.title=window.localStorage['docName'];
-//                this.deptSchemeList=val.obj.deptSchemeList.filter((item)=>{
-//                    return item.deptName!=this.deptName;
-//                });
                 var weekList=["周一","周二","周三","周四","周五","周六","周日"];
                 var statusList=["无","停诊","已满","即将","预约"];
                 for(let i=0;i<this.deptSchemeList.length;i++){

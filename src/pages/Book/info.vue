@@ -9,7 +9,8 @@
     </div>
     <div class="weui-msg__opr-area">
         <p class="weui-btn-area">
-            <a class="weui-btn weui-btn_default" @click="check">查看预约记录</a>
+            <a class="weui-btn weui-btn_default" @click="to('/myRegistration')">查看预约记录</a>
+            <a class="weui-btn weui-btn_default" @click="to('/patientIndex')">返回</a>
         </p>
     </div>
 
@@ -40,8 +41,8 @@
         this.password=this.$route.params.id;
     },
     methods: {
-        check(){    
-            this.$router.push("/patientIndex");
+        to(path){    
+            this.$router.push(path);
         },
         setHeight(){
             let screenHeight=document.documentElement.clientHeight;

@@ -71,16 +71,6 @@
             </div>
         </div>
     </div>
-    <div  v-show="recordDis">
-        <div class="weui-mask" style="background-color:#666666"></div>
-        <div class="weui-dialog">
-            <div class="weui-dialog__hd">该就诊人没有绑定病案号，无法查询</div>
-            <div class="weui-dialog__ft">
-                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default" @click="recordDis=false">取消</a>
-                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary" @click="bind">去绑卡</a>
-            </div>
-        </div>
-    </div>
   </div>
       <set-pat @activate="check" :patList="patList" :showPat="showPat" @close="showPat=false"></set-pat>
     </div>
@@ -100,10 +90,8 @@
           bookHosId:"",
           bookNumId:"",
           token:"",
-          imgSrc:"",
           auVal:"",
           isShown:false,
-          recordDis:false,
           msg:"",
           Got:true,
           failure:false,
@@ -111,12 +99,6 @@
           showPat:false,
           patList:[]
       };
-    },
-    computed:{
-        key(){
-            return (new Date()).valueOf();  
-        }
-
     },
     components:{
         MyNav,
@@ -156,9 +138,6 @@
         setPat(){
             this.showPat=true;
         },
-        bind(){
-            this.$router.push({path:"/service/bind/"+this.patInfo.compatId,query:{key:this.key}});
-        },
         updateVal(val){
             this.auVal=val;
         },
@@ -168,59 +147,12 @@
                 this.isShown=true;
                 return;
             }
-//            else if(this.patInfo.compatRecord=="暂未绑定病案号"){
-//                this.recordDis=true;
-//            }
-//            else{
-//                let command="nethos.book.order.register";
-//                api(command,{bookNumId:this.bookNumId,bookHosId:this.bookHosId,compatId:this.patInfo.compatId,captcha:this.auVal,token:this.token})
-//                .then((val)=>{
-//                    console.log(val);
-//                    if(val.msg){
-//                        this.msg=val.msg;
-//                        this.isShown=true;
-//                    }
-//                    if(val.succ){
-                    this.$router.push("/book/success");
-//                    }
-//                },
-//                     ()=>{
-//                    this.failure=true;
-//                })
-//            }
-        },
-        getPat(name,id,phone,compatRecord,compatId){
-            var pat=new Object();
-            pat.name=name;
-            pat.id=id;
-            pat.phone=phone;
-            pat.compatRecord=compatRecord||"暂未绑定病案号";
-            pat.compatId=compatId;
-            this.patInfo=pat;
-        }
-        ,
-        setHeight(){
-            let screenHeight=document.documentElement.clientHeight;
-            this.$refs.main.style.height=screenHeight-45 + 'px';
-        },
-        generateQR(){
-//              api("nethos.book.captcha.generate",{
-//                  compatId:this.patInfo.compatId,
-//                  bookHosId:this.bookHosId,
-//                  bookNumId:this.bookNumId,
-//                  token:this.token
-//                                                 })
-//              .then((val)=>{
-                  this.Got=true;
-//                  this.imgSrc=val.obj.captcha;
-//                  this.imgSrc.replace(/[\r\n]/g,"");
-//                  document.getElementById('au').setAttribute("src","data:image/png;base64,"+this.imgSrc);
-//                  console.log(val.obj);
-//              },
-//                   ()=>{
-//                  this.failure=true;
-//                  this.Got=true;
-//              })
+            if(this.auVal!="2907"){
+                this.msg="输入验证码有误";
+                this.isShown=true;
+                return;
+            }
+            this.$router.push("/book/success");
         }
 
     },
@@ -232,7 +164,6 @@
           var temp=new Object();
           if(!storage['hosName']||!storage['deptName']||!storage['name']||!storage['date']||!storage['date']||!storage['time']||!storage['Ampm'] ||!storage['bookFee']){
               alert("填写内容不完整，请重新填写");
-//              this.$router.push({path:"/service/book",query:{key:this.key}});
           }
           temp.hosName=storage["hosName"];
           temp.deptName=storage['deptName'];
@@ -245,26 +176,8 @@
           this.reserveInfo=temp;
           var backSrc=storage['last']||"/";
           this.token=window.localStorage['token'];
-          var item={}
-//          if(window.localStorage['compatInfo']!=undefined){
-//              item=JSON.parse(window.localStorage['compatInfo']);
-//              this.getPat(item.compatName,item.compatIdcard,item.compatMobile,item.compatRecord,item.compatId);
-//              this.generateQR();              
-//          }
-//          else{
-//              api("nethos.pat.compat.list",{token:this.token})
-//              .then((val)=>{
-                  this.Got=true;
-//                  this.patList=val.list;
-//                  var item=val.list[0];
-//                  this.getPat(item.compatName,item.compatIdcard,item.compatMobile,item.compatRecord,item.compatId);
-//                  this.generateQR();
-//              },
-//                   ()=>{
-//                  this.failure=true;
-//                  this.Got=true;
-//              })
-//          }
+          var item={};
+          this.Got=true;
           
       }
   };

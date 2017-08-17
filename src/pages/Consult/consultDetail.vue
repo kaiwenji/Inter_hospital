@@ -156,6 +156,7 @@
         font-size: 18px;   
       }
   }
+    $wordPadding:0.8rem;
     .module{
         position:fixed;
         top:0;
@@ -170,7 +171,7 @@
         height:2.4rem;
         background:$mainColor;
         p{
-            padding:0.8rem;
+            padding:$wordPadding;
         }
     }
     header{
@@ -182,10 +183,10 @@
     
     .answer{
         border-radius:10px;
-        padding:0.8rem;
-        margin-bottom:0.8rem;
-        margin-right:0.8rem;
-        margin-left:0.8rem;
+        padding:$wordPadding;
+        margin-bottom:$wordPadding;
+        margin-right:$wordPadding;
+        margin-left:$wordPadding;
         height:6.61rem;
         background:$mainColor;
         @include horizontal;
@@ -206,11 +207,11 @@
     }
     
     .symptom{
-        padding-top:0.8rem;
+        padding-top:$wordPadding;
         background:rgb(248,248,248);
     }
     .bubble{
-        margin-top:0.8rem;
+        margin-top:$wordPadding;
     }
     
     
@@ -219,9 +220,8 @@
         bottom:0px;
         width:100%;
         text-align:center;
-/*        padding-bottom:0.8rem;*/
         p{
-            padding-left:0.8rem;
+            padding-left:$wordPadding;
         }
     }
 </style>

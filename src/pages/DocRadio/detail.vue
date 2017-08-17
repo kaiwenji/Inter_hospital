@@ -18,7 +18,7 @@
     </my-panel>
       <div class="main" v-show="Got">
           <div>
-          <p class="dark m" style="padding:0.8rem">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大</p>
+          <p class="dark m" style="padding:0.8rem">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大）</p>
     </div>
           <my-player :docInfo="docInfo"></my-player>
     </div>
@@ -75,13 +75,8 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
-    @mixin flex{
-        display:flex;
-        flex-direction:column;
-    }
     .app{
-        display:flex;
-        flex-direction:column;
+        @include vertical
         flex:1 1 auto;
     }
     header{
@@ -107,11 +102,5 @@
         div{
             padding:0 auto;
         }
-/*
-        p{
-            margin:0 auto;
-            padding:1rem;
-        }
-*/
     }
 </style>

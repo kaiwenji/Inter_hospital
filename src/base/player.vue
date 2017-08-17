@@ -49,7 +49,7 @@
           intervalId:'',
           direction:"right",
           target:-1,
-          src:"http://abv.cn/music/光辉岁月.mp3",
+          src:"",
           
       };
     },
@@ -58,6 +58,7 @@
       },
       watch:{
           docInfo(){
+              this.src=this.docInfo.snsKnowledge.knowUrl;
               this.audioAutoPlay("music");
               this.on();
           }
@@ -115,7 +116,8 @@
             var audio = document.getElementById(id);  
             audio.play();  
             document.addEventListener("WeixinJSBridgeReady", function () {  
-                    audio.play();  
+                    audio.play();
+                setTimeout(()=>{audio.pause()},500);
             }, false);  
         },
         

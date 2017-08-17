@@ -3,7 +3,7 @@
     
     
     <app-header>
-        <p class="headerTitle">患者报到</p>
+        <p >患者报到</p>
         <p slot="right" class="headerWord" @click="appoint()">提交</p>
     </app-header>
     
@@ -229,7 +229,6 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
-
     .headerWord{
         color:#0fbdff;
     }
@@ -247,8 +246,7 @@
     .app{
         background-color:white;
         flex:1 1 auto;
-        display:flex;
-        flex-direction:column;
+        @include vertical;
     }
     .inter{
         margin:0 auto;
@@ -259,8 +257,7 @@
         padding:$wordPadding;
         div{
             width:100%;
-            display:flex;
-            flex-direction:row;
+            @include horizontal;
             p{
                 flex:1 1 auto;
             }
@@ -276,29 +273,25 @@
     }
     .docInfo{
         height:5.4rem;
-        display:flex;
-        flex-direction:row;
+        @include horizontal;
         img{
             height:3.7rem;
             display:block;
-            padding:0.8rem;
+            padding:$wordPadding;
             flex:0 0 auto;
         }
         div{
             flex:1 1 auto;
             .title{
-                padding-top:0.8rem;
-                padding-right:0.8rem;
+                padding-top:$wordPadding;
+                padding-right:$wordPadding;
             }
         }
     }
     .patInfo{
         div{
-            padding:0.8rem;
+            padding:$wordPadding;
         }
-    }
-    .wrap{
-        overflow:auto;
     }
     textarea{
         height:5rem;
@@ -311,12 +304,12 @@
 
     .dateChoose{
         p{
-            padding:0.8rem;
+            padding:$wordPadding;
         }
     }
     
     .picture{
-        padding-left:0.8rem;
+        padding-left:$wordPadding;
     }
     .stand{
         overflow:hidden;

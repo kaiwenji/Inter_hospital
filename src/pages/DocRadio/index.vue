@@ -96,7 +96,8 @@
             else{
                 this.nothingMore=true;
                 setTimeout(()=>{
-                    this.nothingMore=false
+                    this.nothingMore=false;
+                    this.flag=!this.flag;
                 },1000);
             }
             

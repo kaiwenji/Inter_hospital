@@ -6,7 +6,7 @@
                  <div class="carsoul" v-if="adImg != '' ">
                      <carousel>
                        <div v-for="item in adImg">
-                         <a href="">
+                         <a href="javascript:;">
                            <img :src="item.adUrl" alt="">
                          </a>
                        </div>
@@ -15,11 +15,15 @@
                 <div class="wholeArea">
                  <div class="funArea">
                    <div class="bookNumer" @click="appoint()">
-                     <img src="../../static/img/red.png" alt="">
+                     <img src="../../static/img/main_red.png" alt="">
                      <span>预约挂号</span>
+                   </div>                   
+                     <div class="bookNumer" onClick="window.location.href='http://test-ddys-wechat.hztywl.cn:6060/WeChat/JKBK-test/#/Home'">
+                     <img src="../../static/img/main_green.png"  alt="">
+                     <span>健康百科</span>
                    </div>
                    <div class="askDoctor"  @click="askDoc">
-                     <img src="../../static/img/myDoc.png" alt="">
+                     <img src="../../static/img/main_blue.png" alt="">
                        <span>问医生</span>
                    </div>
                  </div>
@@ -384,7 +388,6 @@
               justify-content: center;
               span{
                 font-size: 32rem/$rem;
-                font-weight: bold;
                 font-family: PingFangSC;
                 color: #333333;
               }
@@ -415,7 +418,6 @@
                 font-size: 32rem/$rem;
                 color: #333333;
                 font-family: PingFangSC;
-                font-weight: bold;
               }
               img{
                 width:100rem/$rem;

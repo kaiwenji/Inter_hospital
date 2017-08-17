@@ -1,7 +1,7 @@
 <template>
 <div class="app">
     <app-header>
-        <p class="headerTitle">加号申请</p>
+        <p>加号申请</p>
         <p slot="right" class="headerWord" @click="appoint">申请加号</p>
     </app-header>
     <div class="wrap" v-show="docGot&&patGot" :class="{'stand':showPat}">
@@ -63,7 +63,7 @@
     data() {
       return {
           docInfo:{},
-          name:"李董良",
+          name:"",
           date:"请选择你的就诊日期>",
           showPat:false,
           patList:[],
@@ -201,7 +201,7 @@
 
 <style scoped lang="scss">
 @import "../../common/var.scss";
-
+    $wordPadding:0.8rem;
     .headerWord{
         color:#0fbdff;
     }
@@ -218,8 +218,7 @@
     .app{
         background-color:white;
         flex:1 1 auto;
-        display:flex;
-        flex-direction:column;
+        @include  vertical;
     }
     .inter{
         margin:0 auto;
@@ -227,11 +226,10 @@
         background-color:rgb(238,250,254);
     }
     .sub{
-        padding:0.8rem;
+        padding:$wordPadding;
         div{
             width:100%;
-            display:flex;
-            flex-direction:row;
+            @include horizontal;
             p{
                 flex:1 1 auto;
             }
@@ -247,25 +245,24 @@
     }
     .docInfo{
         height:5.4rem;
-        display:flex;
-        flex-direction:row;
+        @include horizontal;
         img{
             height:3.7rem;
             display:block;
-            padding:0.8rem;
+            padding:$wordPadding;
             flex:0 0 auto;
         }
         div{
             flex:1 1 auto;
             .title{
-                padding-top:0.8rem;
-                padding-right:0.8rem;
+                padding-top:$wordPadding;
+                padding-right:$wordPadding;
             }
         }
     }
     .patInfo{
         div{
-            padding:0.8rem;
+            padding:$wordPadding;
         }
     }
     .wrap{
@@ -280,7 +277,7 @@
         padding:1rem;
     }
     .picture{
-        padding-left:0.8rem;
+        padding-left:$wordPadding;
     }
     .stand{
         overflow:hidden;

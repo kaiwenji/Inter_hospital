@@ -3,9 +3,9 @@
 <!--医生名片页面-->
 <template>
   <div class="wrap" ref="wrap">
-      <app-header style="border:1px solid transparent"class="test" ref="header" id="header"> 
+      <app-header style="border:1px solid transparent" class="header"  id="header"> 
           <p  class="l">{{title}}</p>
-          <div slot="right" ref="followButton" style="flex:0 0 auto" class="followButton" @click="follow">
+          <div slot="right" ref="followButton"  class="followButton" @click="follow">
               <p  class="l ft" ><img ref="heart"src="../../static/img/follow.png">{{followWord}}</p>
           </div>
       </app-header>
@@ -34,8 +34,8 @@
                    <p class="title">{{item.title}}</p>
                    <p class="font-hide":id="item.title">{{item.desc}}</p>
               </div>
-              <div class="button" style="display:flex;flex-direction:column" @click="getDetail(item,this,index)">
-                  <img src="../../static/img/pullDown.png" class=""style="padding:2.2rem 1rem;width:1rem;">
+              <div class="button vertical" @click="getDetail(item,this,index)">
+                  <img src="../../static/img/pullDown.png">
               </div>
           </div>
           <div class="docAudio"v-show="showDocTalk" >
@@ -49,7 +49,7 @@
           <div class="QR">
               <div>
                 <p>扫一扫二维码，关注我</p>
-                <img :src="docInfo.docQrcode">
+                <img :src="docInfo.docQrcode" >
               </div>
           </div>
     </div>
@@ -305,13 +305,10 @@
             line-height:0.85rem;
         }
     }
-    header{
-        border:none;
-    }
     .wrap{
         background:rgb(248,248,248);
     }
-    .test{
+    .header{
         position:fixed;
         width:20rem;
         background-color:rgba(255,255,255,0);
@@ -326,7 +323,7 @@
         background-image:url(../../static/img/background.png);
         background-size:cover;
         div{
-            padding-top:45px;
+            padding-top:2.34rem;
             text-align:center;
             img{
                 width:4rem;
@@ -340,8 +337,7 @@
         .tab{
             height:4.2rem;
             background-color:white;
-            display:flex;
-            flex-direction:column;
+            @include vertical;
             .tab_shadow{
                 flex:1 1 auto;
                 background-image:linear-gradient(to top,lightgrey,white);
@@ -349,15 +345,12 @@
             }
             .tab_contain{
                 height:3.9rem;
-                display:flex;
-                flex-direction:row;
+                @include horizontal;
                 div{
-                    display:flex;
-                    flex-direction:column;
+                    @include vertical;
                     align-items:center;
                     div{
-                        display:flex;
-                        flex-direction:column;
+                        @include vertical
                         img{
                             padding-bottom:0.8rem;
                             height:1.86rem;
@@ -369,23 +362,25 @@
             }
             &.tab_fixed{
             position:fixed;
-            top:45px;
+            top:2.4rem;
             width:20rem;
                 z-index:30;
             }
         }
     .speciality{
-/*        height:5.86rem;*/
         width:20rem;
         background-color:white;
-        display:flex;
-        flex-direction:row;
+        @include horizontal;
         align-items:center;
         margin-bottom:1rem;
         div{
             &.button{
                 padding:0;
                 flex:0 0 auto;
+                img{
+                    padding:2.2rem 1rem;
+                    width:1rem;
+                }
                 div{
                     margin:auto 0;
                 }

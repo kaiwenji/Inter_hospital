@@ -1,7 +1,7 @@
 <template>
 <div class="app">
     <app-header>
-        <p class="headerTitle">医生说</p>
+        <p>医生说</p>
     </app-header>
     <pull-up :list="audioList"@pullUp="loadingMore" :flag="flag">
 
@@ -23,7 +23,6 @@
     import AppHeader from "../../business/app-header.vue";
     import DocPanel from "../../business/docPanel.vue";
     import Api from "../../lib/api.js";
-    import myMixin from "../../lib/canScroll.js"
   export default {
     data() {
       return {
@@ -62,7 +61,7 @@
                         this.audioList.push(Object.assign({}, item, { on: false }));
                     })
                     this.audioList=val.list;
-                    if(this.page==val.page.total){
+                    if(this.page==val.page.pages){
                         this.page=-1;
                     }
                     else{
@@ -86,7 +85,8 @@
             else{
                 this.nothingMore=true;
                 setTimeout(()=>{
-                    this.nothingMore=false
+                    this.nothingMore=false;
+                    this.flag=!this.flag;
                 },1000);
             }
             
@@ -98,7 +98,7 @@
 <style scoped lang="scss">
 @import "../../common/var.scss";
     header{
-        border-bottom:1px solid lightgrey;
+        border-bottom:1px solid silver;
     }
     .app{
         flex:1 1 auto;

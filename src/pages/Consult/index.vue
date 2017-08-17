@@ -46,7 +46,6 @@
     import Api from "../../lib/api.js";
     import AppHeader from "../../business/app-header.vue";
     import MyLoading from "../../base/loading/loading.vue";
-    import CanScroll from "../../lib/canScroll.js";
   export default {
     data() {
       return {
@@ -97,7 +96,10 @@
         getMore(){
             if(this.page==-1){
                 this.nothingMore=true;
-                setTimeout(()=>{this.nothingMore=false},1000);
+                setTimeout(()=>{
+                    this.nothingMore=false;
+                    this.flag=!this.flag;
+                },1000);
                 return;
             }
             Api("smarthos.consult.pic.list.page",{

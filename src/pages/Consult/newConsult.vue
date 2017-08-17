@@ -19,7 +19,7 @@
     <div class="sub">
         <div>
         <p class="l">就诊人信息</p>
-        <p style="color:#0fbdff" class="right l" @click="setPat()">切换就诊人></p>
+        <p style="color:rgb(248,198,19)" class="right l" @click="setPat()">切换就诊人></p>
     </div>
         
     </div>
@@ -44,7 +44,7 @@
     </div>
         
 <!-- 切换就诊人模块-->
-        <set-pat @activate="check" :patList="patList" :showPat="showPat"></set-pat>
+        <set-pat @activate="check" :patList="patList" :showPat="showPat" @close="showPat=false"></set-pat>
     <div v-show="showSuccess">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
