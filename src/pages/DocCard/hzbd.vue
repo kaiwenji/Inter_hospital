@@ -69,6 +69,7 @@
     import MyToast from "../../base/toast.vue";
     import MyUpload from "../../business/upload.vue";
     import MyLoading from "../../base/loading/loading.vue";
+    import myMixin from "../../lib/public.js";
   export default {
      data() {
       return {
@@ -93,24 +94,6 @@
             return this.patList[this.chosedIndex];
         }
     },
-      filters:{
-          
-          /*获取年龄*/
-          getAge(id){
-              if(!id){
-                  return "";
-              }
-              var year;
-              if(id.length==18){
-                  year=parseInt(id.substring(6,10));
-              }
-              else{
-                  year=1900+parseInt(id.substring(7,9));
-              }
-              var date=new Date();
-              return date.getFullYear()-year; 
-          }
-      },
     components: {
         AppHeader,
         SetPat,
@@ -118,6 +101,7 @@
         MyUpload,
         MyLoading
     },
+    mixins:[myMixin],
     mounted() {
         /**
         获取医生信息
@@ -174,7 +158,7 @@
                     this.showSuccess=true;
                     setTimeout(()=>{
                         this.showSuccess=false;
-                     this.$router.push("/")
+                        window.history.back();
                     },1000)
                 }
                 else{
@@ -234,7 +218,6 @@
                     _this.date=result[0].label+result[1].label+result[2].label;
                 },
                onChange:function(result){
-                   console.log(result);
                },
                 id: 'ma_expect_date',
                 className: 'ma_expect_date_picker'

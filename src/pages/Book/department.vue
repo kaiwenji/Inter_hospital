@@ -1,3 +1,5 @@
+<!--book组件中localStorage的作用就是为了弥补接口的缺失，如果有接口连入，可把几乎所有localstorage删除-->
+
 <template>
 <div class="app">
       <app-header>
@@ -62,7 +64,6 @@
       },
       methods:{
           changeDepartment(index){
-              console.log(index);
               let item=this.department[index];
               this.subDepartment=item.deptList;
               this.isChosed=index;

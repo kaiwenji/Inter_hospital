@@ -1,6 +1,6 @@
 <template>
   <div style="background-color:white;">
-    <a class="weui-cell" :class="{'weui-cell_access':arrow}" href="javascript:;" @click="update">
+    <a class="weui-cell" :class="{'weui-cell_access':hasArrow=='true'}" href="javascript:;" @click="update">
         <div class="weui-cell__hd">
             <slot name="picture"><img src="../../static/img/docProfile.png" class="figure"></slot>
     </div>
@@ -25,7 +25,6 @@
       },
     data() {
       return {
-          arrow:true
 
       };
     },
@@ -36,9 +35,6 @@
 
     },
       watch:{
-          hasArrow(){
-              this.arrow=eval(this.hasArrow);
-          }
       },
     mounted() {
 
@@ -56,6 +52,8 @@
 </script>
 
 <style scoped lang="scss">
-
+    p{
+        color:black;
+    }
 
 </style>

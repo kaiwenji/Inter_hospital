@@ -35,7 +35,7 @@
       data()
       {
          return{
-             hospital:[{hosPic:"https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=b3f641ba03f79052fb124f6c6d9abcaf/0823dd54564e9258425bb4479682d158ccbf4e2f.jpg",hosName:"浙一医院",hosLevel:"三甲医院",hosAddress:"庆春路79号",bookHosId:"123"},{hosPic:"https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268/sign=90b07595d843ad4ba62e41c6ba025a89/8718367adab44aed67f036d4ba1c8701a18bfb40.jpg",hosName:"省中医院",hosLevel:"三甲医院",hosAddress:"邮电路54号",bookHosId:"123"},{hosPic:"https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike92%2C5%2C5%2C92%2C30/sign=96f70615c1ef7609280691cd4fb4c8a9/50da81cb39dbb6fdc865e7ae0324ab18972b377f.jpg",hosName:"省人民医院",hosLevel:"三甲医院",hosAddress:"浙江省杭州市朝晖院区上塘路158号",bookHosId:"123"}],
+             hospital:[{hosPic:"https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=c3f1eb200c33874488c8272e3066b29c/a9d3fd1f4134970a059ba55f95cad1c8a6865dd1.jpg",hosName:"浙二医院",hosLevel:"三甲医院",hosAddress:"浙江杭州市解放路88号",bookHosId:"123"},{hosPic:"https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=3334a1bda144ad343ab28fd5b1cb6791/1ad5ad6eddc451da23dc0fbbb6fd5266d01632b3.jpg",hosName:"杭州市第一人民医院",hosLevel:"三甲医院",hosAddress:"杭州市浣纱路261号",bookHosId:"123"}],
              isShown:false,
              hospitalId:"1234",
              hosName:'test',
@@ -49,10 +49,9 @@
       methods:
       {
           getMyScheme(){
-//              this.$router.push("/myRegistration/"+window.localStorage["myId"]);
+              this.$router.push("/myRegistration/");
           },
           check(){
-              console.log("click get");
           },
           changeRoute(id,name){
               this.hosName=name;

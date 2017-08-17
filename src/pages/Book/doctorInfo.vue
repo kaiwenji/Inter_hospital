@@ -1,3 +1,5 @@
+<!--book组件中localStorage的作用就是为了弥补接口的缺失，如果有接口连入，可把几乎所有localstorage删除-->
+
 <template>
   <div class="view app">
  <app-header>
@@ -10,24 +12,23 @@
       <div class="weui-loadmore weui-loadmore_line" v-show="failure">
           <span class="weui-loadmore__tips">网络错误</span>
     </div>
-      <div class="app overflow"v-show="Got&&!failure">
+      <div class="wrap"v-show="Got&&!failure">
       <div>
-      <myPanel class="weui-cells">
+      <myPanel class="weui-cells" hasArrow="false">
           <img class="figure"slot="picture" :src="doctorInfo.docAvatar">
           <div slot="article">
               <p>{{docName}}
-                  <span >{{doctorInfo.docTitle}}</span></p>
+                  <span v-show="isDoctor">{{doctorInfo.docTitle}}</span></p>
               <p  class="font-hide" style="width:9rem">{{hospitalName}}</p>
               <p class="small" style="color:#999999">{{deptName}}</p>
               
 
     </div>
-    <span slot="ft">在线问诊</span>
     </myPanel>
           
     </div>
       <div class="weui-cells">
-          <MySelect :options="deptList" @update="update" v-show="deptList&&deptList.length>0"></MySelect>
+          <MySelect :options="deptList" @update="update" v-show="deptList&&deptList.length>0&&isDoctor"></MySelect>
           <div class="weui-cell" style="display:flex;flex-direction:row" v-for="scheme in filteredSchemeList">
               <div style="flex:1 1 auto">
                     {{scheme.time|getMyDay}}
@@ -198,6 +199,9 @@
     },
     mounted() {
         this.docName=window.localStorage['docName'];
+        if(this.docName=="普通号"){
+            this.isDoctor=false;
+        }
         this.hospitalName=window.localStorage['hosName'];
         this.deptName=window.localStorage['deptName'];
         this.docDesc=window.localStorage['docDesc']||"";
@@ -244,7 +248,8 @@
             this.chosedDeptName=val;
         },
         anotherDept(item){
-            this.$router.push("/service/book/doctor/"+item.bookDeptId);
+            window.localStorage['deptName']=item.deptName;
+            this.$router.push("/book/doctor/"+item.bookDeptId);
         },
         getData(val,bookDeptId){
 //                this.doctorInfo=val.obj;
@@ -252,7 +257,7 @@
                     this.doctorInfo.docAvatar=require("../../../static/img/docProfile.png");
                 }
                 this.hospitalName=this.doctorInfo.hosName;
-                this.title=this.doctorInfo.docName;
+                this.title=window.localStorage['docName'];
 //                this.deptSchemeList=val.obj.deptSchemeList.filter((item)=>{
 //                    return item.deptName!=this.deptName;
 //                });

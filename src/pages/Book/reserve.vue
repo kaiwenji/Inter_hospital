@@ -1,3 +1,5 @@
+<!--book组件中localStorage的作用就是为了弥补接口的缺失，如果有接口连入，可把几乎所有localstorage删除-->
+
 <template>
   <div ref="main" class="app">
           <app-header>
@@ -126,7 +128,6 @@
         Api("smarthos.user.commpat.list",{token:window.localStorage['token']})
         .then((val)=>{
             if(val.succ){
-                console.log(val.list);
                 this.patList=val.list;
                 if(this.patList.length>0){
                     this.patInfo=this.patList[0];
@@ -156,7 +157,6 @@
             this.showPat=true;
         },
         bind(){
-//            console.log(this.patInfo);
             this.$router.push({path:"/service/bind/"+this.patInfo.compatId,query:{key:this.key}});
         },
         updateVal(val){

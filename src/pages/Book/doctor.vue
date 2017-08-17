@@ -1,3 +1,5 @@
+<!--book组件中localStorage的作用就是为了弥补接口的缺失，如果有接口连入，可把几乎所有localstorage删除-->
+
 <template>
 <div class="view app">
       <app-header>
@@ -82,8 +84,8 @@
           isDoc:false,
           data:[{name:"普通号",hospital:this.hosName,deptName:this.deptName,status:"预约",bookFee:10},
                 {name:"普通号",hospital:"test",deptName:"test",status:"已满",bookFee:10},
-                {name:"宋康",pic:"https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=6e3a5360590fd9f9a017526f1d16b317/d31b0ef41bd5ad6e580618f689cb39dbb6fd3c2a.jpg",hospital:"test",title:"正高级",description:"主要从事中医内科和中西医结合呼吸专业工作，对中医药理论及现代医学有较深入研究，开展临床、教学和科研工作，掌握本学科发展的前沿动态，对呼吸系疾病有较深入的研究和丰富的临床经验，尤其在哮喘、慢阻肺、呼吸衰竭、纤维气管镜技术、肺功能等方面有独到之处。",status:"停诊"},
-                {name:"王会仍",pic:"https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=96e935e9c3fdfc03e578e4beec04e0a9/242dd42a2834349b5d2ead92c9ea15ce36d3bef9.jpg",hospital:"test",title:"正高级",description:"多年来从事于中西医结合防治慢性阻塞性肺病等呼吸系疾病及肺功能的研究工作。曾被聘为《现代应用药学》及《中医临床与保健》等杂志的特约编委",status:"即将"},
+                {name:"宋康",pic:"https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=6e3a5360590fd9f9a017526f1d16b317/d31b0ef41bd5ad6e580618f689cb39dbb6fd3c2a.jpg",hospital:"test",title:"正高级",description:"主要从事中医内科和中西医结合呼吸专业工作，对中医药理论及现代医学有较深入研究，开展临床、教学和科研工作，掌握本学科发展的前沿动态，对呼吸系疾病有较深入的研究和丰富的临床经验，尤其在哮喘、慢阻肺、呼吸衰竭、纤维气管镜技术、肺功能等方面有独到之处。",status:"预约"},
+                {name:"王会仍",pic:"https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=96e935e9c3fdfc03e578e4beec04e0a9/242dd42a2834349b5d2ead92c9ea15ce36d3bef9.jpg",hospital:"test",title:"正高级",description:"多年来从事于中西医结合防治慢性阻塞性肺病等呼吸系疾病及肺功能的研究工作。曾被聘为《现代应用药学》及《中医临床与保健》等杂志的特约编委",status:"预约"},
                 {name:"王新华",hospital:"test",title:"正高级",description:"主任医师、硕士研究生导师，浙江中西结合呼吸病学会会员，全国名老中医艺术继承人，全国卫生系统先进工作者。",status:"预约",bookFee:10},
                 {name:"朱渊红",hospital:"test",title:"正高级",description:"中国中西医结合学会呼吸分会青年委员、浙江省中西医结合呼吸专业青年委员会副主任委员。从事专业时间15年，专业特长为对慢性咳嗽、哮喘、慢性阻塞性肺病、肺癌等常见病的中西医结合治疗及呼吸衰竭危重症抢救，肺癌的诊治，支气管镜及胸腔镜检查；专科专病治疗优势为慢性阻塞性肺病、支气管哮喘、肺癌、慢性咳嗽",status:"预约",bookFee:15}],
           filterChoice:"",
@@ -109,7 +111,6 @@
             if (res.length>0){
                 this.noInfo1=false;
             }
-            console.log(res);
             return res;
             
         },
@@ -150,7 +151,6 @@
         },
         check(item)
         {
-            console.log(item.event.target);
         },
 //        update(){
 //            let weekList=["无","停诊","已满","即将","预约"];
@@ -241,7 +241,6 @@
 //            if(val.list[0]){
 //                this.hosName=val.list[0].hosName;
 //            }
-//            console.log(val);
 //            this.res=val.list;
 //            this.update();
 //        },

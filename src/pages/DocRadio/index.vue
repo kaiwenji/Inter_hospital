@@ -2,10 +2,12 @@
   <div class="head">
       <app-header id="header">
           <p class="headerTitle">名医知道</p>
+<!--
           <div slot="right" style="position:relative">
               <img src="../../../static/img/envelop.png" class="envelop">
               <span class="weui-badge badge">8</span>
     </div>
+-->
     </app-header>
       
           <my-pullup v-show="Got" :list="audioList"@pullUp="loadingMore" :flag="flag">
@@ -69,11 +71,9 @@
                 this.Got=true;
                 if(val.succ)
                 {
-                    console.log(val);
                     val.list.forEach((item)=>{
                         this.audioList.push(Object.assign({}, item, { on: false,pause:false }));
                     })
-                    console.log(this.audioList);
                     if(this.page==val.page.pages){
                         this.page=-1;
                     }
@@ -82,7 +82,6 @@
                         this.flag=!this.flag;
                         this.page++;
                     }
-                    console.log(this.page);
                 }
                 else{
                     this.$weui.alert(val.msg);

@@ -54,6 +54,7 @@
           </div>
     </div>
       </div>
+      <div class="sendMsg" v-show="isFollow" @click="sendMsg"><p class="xxl">发消息</p></div>
       <my-loading class='myLoading'v-show="!Got"></my-loading>
   </div>
 </template>
@@ -63,7 +64,7 @@
     import DocPanel from "../business/docPanel.vue";
     import AppHeader from "../business/app-header.vue";
     import Api from "../lib/api.js";
-    import {getProfile} from "../lib/public.js";
+    import myMixin from "../lib/public.js";
   export default {
     data() {
       return {
@@ -76,7 +77,8 @@
           nothingMore:false,
           showDocTalk:false,
           Got:false,
-          isFollow:false
+          isFollow:false,
+          followId:""
       };
     },
     computed: {
@@ -102,9 +104,8 @@
         }
     },
       
-      
+    mixins:[myMixin],  
     mounted() {
-        this.docId=this.$route.params.id;
         this.rem=window.screen.width/20;
         
 //        设置滚动动画效果
@@ -116,26 +117,7 @@
         }
 
 //获取医生信息        
-        Api("smarthos.user.doc.card.get",{
-            "docId":this.docId,
-            token:window.localStorage['token']
-        })
-        .then((val)=>{
-            if(val.succ){
-                this.docInfo=val.obj.doc;
-                this.isFollow=val.obj.hasFollow||false;
-                this.list[0].desc=this.docInfo.docSkill;
-                this.list[1].desc=this.docInfo.docResume;
-            }
-            else{
-                this.$weui.alert(val.msg);
-            }
-            this.Got=true;
-
-        },
-                      ()=>{
-                    this.$weui.alert("网络错误");
-                })
+        this.getDocInfo();
         
 //        获取医生说列表
         Api("smarthos.sns.knowledge.page",{
@@ -166,18 +148,39 @@
 
             },
     methods: {
-        getProfile(docInfo){
-            if(!docInfo.docAvatar||docInfo.docAvatar==""){
-                var gender=docInfo.docGender;
-                return gender=="M"||gender=='m'||gender=='男'?"./static/img/docProfile.png":"./static/img/nv.png";
-            }
-            else{
-                return docInfo.docAvatar;
-            }
+        getDocInfo(){
+            
+            this.docId=this.$route.params.id;
+            Api("smarthos.user.doc.card.get",{
+                "docId":this.docId,
+                token:window.localStorage['token']
+            })
+            .then((val)=>{
+                if(val.succ){
+                    this.docInfo=val.obj.doc;
+                    this.isFollow=val.obj.followDocpat?true:false;
+                    if(this.isFollow)
+                        {
+                            this.followId=val.obj.followDocpat.id;
+                        }
+                    this.list[0].desc=this.docInfo.docSkill;
+                    this.list[1].desc=this.docInfo.docResume;
+                }
+                else{
+                    this.$weui.alert(val.msg);
+                }
+                this.Got=true;
+
+            },
+                          ()=>{
+                        this.$weui.alert("网络错误");
+                    })
+        },
+        sendMsg(){
+            this.$router.push({path:'/chat',query:{docAvatar:this.docInfo.docAvatar,docName:this.docInfo.docName,followId:this.followId}});
         },
 //        切换路由
         To(path){
-            console.log(path);
             if(path=='book'){
                 this.$router.push("/book/");
             }
@@ -232,6 +235,7 @@
                 .then((val)=>{
                     if(val.succ){
                         this.isFollow=true;
+                        this.getDocInfo();
                     }
                     else{
                         this.$weui.alert(val.msg);
@@ -488,5 +492,21 @@
 /*    医生姓名*/
     .docName{
         position:relative;
+    }
+    
+    .sendMsg{
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:3rem;
+        background:rgb(10,172,233);
+        p{
+            margin-top:.8rem;
+/*            margin:0 8rem;*/
+            text-align:center;
+            color:white;
+        }
+        
     }
 </style>

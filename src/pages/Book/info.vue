@@ -9,7 +9,7 @@
     </div>
     <div class="weui-msg__opr-area">
         <p class="weui-btn-area">
-            <a href="javascript:history.back();" class="weui-btn weui-btn_default" @click="check">查看预约记录</a>
+            <a class="weui-btn weui-btn_default" @click="check">查看预约记录</a>
         </p>
     </div>
 
@@ -41,7 +41,7 @@
     },
     methods: {
         check(){    
-            this.$router.push("/");
+            this.$router.push("/patientIndex");
         },
         setHeight(){
             let screenHeight=document.documentElement.clientHeight;
