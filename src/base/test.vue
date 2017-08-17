@@ -25,7 +25,6 @@
         flag(){
           console.log('触发')
           setTimeout(()=>{
-            console.log('会是他么')
             this.$slider = this.$refs.slider;
             this.$content = this.$refs.content;
             this.init();

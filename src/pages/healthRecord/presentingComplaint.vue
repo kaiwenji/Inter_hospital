@@ -40,7 +40,10 @@
             "token":this.token
           }).then(res=>{
             if(res.succ){
-              console.log(res)
+              console.log(res);
+                this.$router.push({
+                    name:"healthRecord"
+                })
             }else {
               this.$weui.alert(res.msg)
             }
