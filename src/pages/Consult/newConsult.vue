@@ -125,7 +125,9 @@
     },
     methods: {
         getAttaIdsList(item){
+            console.log(item);
             this.attaList=item;
+            console.log(this.attaList);
         },
         text_fade(){
             if(this.content=="请务必填写你的病史、主诉、症状、指标、治疗经过，相关的检查请拍照上传。"){
@@ -159,6 +161,7 @@
                 attaIdList:this.attaList
             })
             .then((val)=>{
+                console.log(val);
                 this.showLoading=false;
                 this.addSuccess(val.obj.consultInfo.id);
             })

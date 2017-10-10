@@ -111,6 +111,7 @@
                 this.Got=true;
                 this.flag=!this.flag;
                 if(val.succ){
+                    console.log(val);
                     this.consultList.push(...val.list);
                     if(this.page==val.page.pages){
                         this.page=-1;

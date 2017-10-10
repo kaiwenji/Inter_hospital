@@ -5,7 +5,7 @@
  * Created by Administrator on 2017/6/1 0001.
  */
 
-let url = "//api-z2eye.hztywl.cn:6060/app";
+let url = "//api-smarthos-ty.hztywl.cn/app";
 let base = {
   "channel": "23",
   "format": "JSON",
