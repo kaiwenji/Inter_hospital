@@ -7,7 +7,7 @@
                      <carousel>
                        <div v-for="item in adImg">
                          <a href="javascript:;">
-                           <img :src="item.adUrl" alt="">
+                           <img :src="item" alt="">
                          </a>
                        </div>
                      </carousel>
@@ -16,15 +16,15 @@
                  <div class="funArea">
                    <div class="bookNumer" @click="appoint()">
                      <img src="../../static/img/main_red.png" alt="">
-                     <span>预约挂号</span>
+                     <span>Reservation</span>
                    </div>                   
                      <div class="bookNumer" onClick="window.location.href='http://test-ddys-wechat.hztywl.cn:6060/WeChat/JKBK-test/#/Home'">
                      <img src="../../static/img/main_green.png"  alt="">
-                     <span>健康百科</span>
+                     <span>Encyclopedia</span>
                    </div>
                    <div class="askDoctor"  @click="askDoc">
                      <img src="../../static/img/main_blue.png" alt="">
-                       <span>问医生</span>
+                       <span>Query</span>
                    </div>
                  </div>
                  <div class="blankLine">
@@ -33,15 +33,15 @@
                  <div class="three">
                    <div class="eyeSick border-1px-right" @click="eyeIllness">
                      <img src="../../static/img/eye.png" alt="">
-                     <span>眼底病</span>
+                     <span>Fundus</span>
                    </div>
                    <div class="eyeOut border-1px-right"  @click="eyeInjury">
                      <img src="../../static/img/home_eye_trauma.png" alt="">
-                     <span>眼外伤</span>
+                     <span>Ocular trauma</span>
                    </div>
                    <div class="repeatSee" @click="repeat">
                      <img src="../../static/img/home_pat_ill.png" alt="">
-                     <span>复诊</span>
+                     <span>Referral</span>
                    </div>
                  </div>
                  <div class="blankLine">
@@ -49,8 +49,8 @@
                  </div>
                  <div class="doctorKnow border-1px">
                    <div class="left30">
-                     <span>名医知道</span>
-                     <span @click="moreKnow()" class="doctorMore">更多></span>
+                     <span>Doctor's posts</span>
+                     <span @click="moreKnow()" class="doctorMore">more></span>
                    </div>
                  </div>
                  <div class="knowCard border-1px" v-for="(item,index) in knowDetail">
@@ -73,8 +73,8 @@
                        </div>
                        <div class="knowTime">
                          <span class="timeDetail">{{ time[index] }}</span>
-                         <span class="hasListened" v-if="clickTime[index] != ''">{{ clickTime[index] }}人听过</span>
-                         <span class="hasListened" v-else>{{ item.snsKnowledge.readNum }}人听过</span>
+                         <span class="hasListened" v-if="clickTime[index] != ''">{{ clickTime[index] }}listened</span>
+                         <span class="hasListened" v-else>{{ item.snsKnowledge.readNum }}listened</span>
                          <span class="thumb" v-if="item.snsKnowledge.likes > clickLikes">
                            <img src="../../static/img/rec_off.png" alt="" @click="praise(index)">{{ item.snsKnowledge.likes }}
                          </span>
@@ -97,15 +97,6 @@
       <div class="bottemFooter">
         <footers index="0"></footers>
       </div>
-         <!--<div class="footer">-->
-             <!--<router-link tag="div" :to="item.tabLink" v-for="item in tagNames" :key="item.id" :class="tellPath == '/myDoctorChat/followDoctor'? 'followBlue':''">-->
-               <!--<img v-if="tellPath == '/patientIndex'" :src="item.imgLinkIndexOn">-->
-               <!--<img v-else-if="tellPath == '/myDoctorChat/recentChat'" :src="item.imgLinkOn">-->
-               <!--<img v-else-if="tellPath == '/myDoctorChat/followDoctor'" :src="item.imgLinkOn">-->
-               <!--<img v-else-if="tellPath == '/patientIndex/my'" :src="item.imgLinkMyOn">-->
-               <!--<span >{{item.title}}</span>-->
-             <!--</router-link>-->
-         <!--</div>-->
 
     </div>
 </template>
@@ -124,7 +115,7 @@
            title:"首页",
            rightTitle:"",
            adImg:[],
-           knowDetail:{},
+           knowDetail:[{docAvatar:"../../static/img/main_blue.png",snsKnowledge:{},docName:"kaiwenji"},{docAvatar:"../../static/img/main_blue.png",snsKnowledge:{},docName:"kaiwenji"},{docAvatar:"../../static/img/main_blue.png",snsKnowledge:{},docName:"kaiwenji"}],
            playTime:[],
            time:[],
            clickTime:[],
@@ -151,19 +142,19 @@
       },
       created(){
          let that = this
-        api("smarthos.user.pat.index",{
-            token:localStorage.getItem("token")
-        }).then((data)=>{
-             if(data.code == 0){
-               that.adImg = data.obj.adsettings
-               for(var j=0;j<data.obj.knowledge.length;j++){
-                 that.time.push(formatDate(new Date(data.obj.knowledge[j].snsKnowledge.createTime)))
-                 that.clickTime.push("")
-               }
-               that.knowDetail = data.obj.knowledge
-             }
-
-        })
+//        api("smarthos.user.pat.index",{
+//            token:localStorage.getItem("token")
+//        }).then((data)=>{
+//             if(data.code == 0){
+//               that.adImg = data.obj.adsettings
+//               for(var j=0;j<data.obj.knowledge.length;j++){
+//                 that.time.push(formatDate(new Date(data.obj.knowledge[j].snsKnowledge.createTime)))
+//                 that.clickTime.push("")
+//               }
+//               that.knowDetail = data.obj.knowledge
+//             }
+//
+//        })
       },
       methods:{
           appoint(){
@@ -174,43 +165,45 @@
               this.$router.push("/Consult/")
           },
         eyeIllness(){
-          api('smarthos.appointment.oculartrauma.detail',{
-            token:token
-          }).then(res=>{
-            if(res.succ){
-              if(res.obj){
-                this.$router.push({
-                  name:"orderDetail"
-                })
-              }else {
-                this.$router.push({
-                  name:"eyeIllness"
-                })
-              }
-            }else {
-              this.$weui.alert(res.msg)
-            }
-          })
+            alert("sorry, this is not my part");
+//          api('smarthos.appointment.oculartrauma.detail',{
+//            token:token
+//          }).then(res=>{
+//            if(res.succ){
+//              if(res.obj){
+//                this.$router.push({
+//                  name:"orderDetail"
+//                })
+//              }else {
+//                this.$router.push({
+//                  name:"eyeIllness"
+//                })
+//              }
+//            }else {
+//              this.$weui.alert(res.msg)
+//            }
+//          })
 
         },
         eyeInjury(){
-          api('smarthos.appointment.fundus.detail',{
-            token:token
-          }).then(res=>{
-            if(res.succ){
-              if(res.obj){
-                this.$router.push({
-                  name:"eyeInjuryDetail"
-                })
-              }else {
-                this.$router.push({
-                  name:"eyeInjury"
-                })
-              }
-            }else {
-              this.$weui.alert(res.msg)
-            }
-          })
+            alert("sorry, this is not my part");
+//          api('smarthos.appointment.fundus.detail',{
+//            token:token
+//          }).then(res=>{
+//            if(res.succ){
+//              if(res.obj){
+//                this.$router.push({
+//                  name:"eyeInjuryDetail"
+//                })
+//              }else {
+//                this.$router.push({
+//                  name:"eyeInjury"
+//                })
+//              }
+//            }else {
+//              this.$weui.alert(res.msg)
+//            }
+//          })
         },
         repeat(){
            console.log("12234132")

@@ -2,7 +2,7 @@
     <div class="wrap">
       <top>
           <div slot="left"></div>
-        <div>首页</div>
+        <div>Main</div>
       </top>
         <div v-show="!showLoading" class="title">
           <lunbo :imgList="imgList">
@@ -12,7 +12,7 @@
         <div class="contain">
           <div class="registration">
             <img src="../../../static/img/home_registration.png" alt="">
-            <span class="bf"> 预约挂号</span>
+            <span class="bf"> make a reservation</span>
           </div>
           <div class="inquiry">
             <img class="myDocImg" src="../../../static/img/myDoc.png" alt="">
@@ -25,13 +25,13 @@
           <div class="eyeIllness" @click="eyeIllness">
             <div>
               <p  class="eyeImg"><img src="../../../static/img/eye.png" alt=""></p>
-              <p class="bf">眼底病</p>
+              <p class="bf">Fundus</p>
             </div>
           </div>
           <div class="eyeInquiry" @click="eyeInjury">
             <div>
               <p  class="eyeImg"><img src="../../../static/img/home_eye_trauma.png" alt=""></p>
-              <p class="bf">眼外伤</p>
+              <p class="bf">Ocular trauma</p>
             </div>
           </div>
           <div class="visit">
