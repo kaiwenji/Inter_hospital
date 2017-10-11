@@ -136,7 +136,7 @@
       
     mixins:[myMixin],  
     mounted() {
-        this.rem=window.screen.width/20;
+        this.rem=250/20;
         
 //        设置滚动动画效果
         this.$refs.wrap.onscroll=()=>{
@@ -342,8 +342,8 @@
         background:rgb(248,248,248);
     }
     .header{
-        position:fixed;
-        width:20rem;
+        position:absolute;
+        width:19.8rem;
         background-color:rgba(255,255,255,0);
         color:white;
 
@@ -394,7 +394,7 @@
                 }
             }
             &.tab_fixed{
-            position:fixed;
+            position:absolute;
             top:2.4rem;
             width:20rem;
                 z-index:30;

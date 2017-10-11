@@ -10,32 +10,31 @@
             <font><span>&#xe600;</span></font>
           </slot>
          </div>
-        <p class="headerTitle">问医生</p>
+        <p class="headerTitle">Query List</p>
     </app-header>
 
         <div class="main nothing" v-if="consultList.length==0&&Got">
-            <p class="xxl darker" >你还没有回答任何问题</p>
-            <p class="m lightBlue">点击右下角按钮立即提问</p>
+            <p class="xxl darker" >you do not have any question</p>
+            <p class="m lightBlue">click button to ask!</p>
     </div>    
 
-        <pull-up  class="main"@pullUp="getMore" :list=consultList :flag="flag" v-show="Got" v-else>
+        <pull-up class="main" @pullUp="getMore" :list=consultList :flag="flag" v-show="Got" v-else>
             <div class="inner">
             <my-post v-for="item in consultList" :info="item" @activate="getDetail(item)":key="item.consultInfo.id"></my-post>
     </div>
     </pull-up>
     <div class="button" @click="addConsult">
-        <p>立即</p>
-        <p>询问</p>
+        <p>Query</p>
     </div>
     <div id="toast" v-show="nothingMore">
         <div class="weui-mask_transparent"></div>
         <div class="weui-toast">
-            <p class="weui-toast__content">无更多内容</p>
+            <p class="weui-toast__content">nothing more</p>
         </div>
     </div>
-    <my-loading class="myLoading" v-show="!Got"></my-loading>
+<!--    <my-loading class="myLoading" v-show="!Got"></my-loading>-->
     </div>
-    <router-view @showList="showDetail=false" @showDetail="showDetail=true"></router-view>
+<!--    <router-view @showList="showDetail=false" @showDetail="showDetail=true"></router-view>-->
     </div>
 </template>
 
@@ -49,7 +48,44 @@
   export default {
     data() {
       return {
-          consultList:[],
+          consultList:[{
+              consultInfo:{
+                  createTime:Date.parse( new Date()),
+                  id:1,
+                  hasAtta:true,
+                  consultContent:"Views of Monument Valley"
+              },
+              attaList:[{
+                  attaFileUrl:"../../../static/img/monument/test.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_1.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_1.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_2.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_3.jpg"
+              }],
+              docName:"kaiwenji"
+          },{
+              consultInfo:{
+                  id:2,
+                  hasAtta:true,
+                  consultContent:"Monument again!",
+                  createTime:Date.parse(new Date())-1000000000   //to make the simulation dtime eariler 
+              },
+              attaList:[{
+                  attaFileUrl:"../../../static/img/monument/test.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_4.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_5.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_6.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_7.jpg"
+              }]
+          }],
           page:1,
           noReply:false,
           nothingMore:false,
@@ -92,7 +128,7 @@
             this.$router.push("/Consult/newConsult");
         },
         
-//        下拉刷新列表
+//        pull-down freshing 
         getMore(){
             if(this.page==-1){
                 this.nothingMore=true;
@@ -102,32 +138,34 @@
                 },1000);
                 return;
             }
-            Api("smarthos.consult.pic.list.page",{
-                pageSize:10,
-                pageNum:this.page,
-                token:window.localStorage['token']
-            })
-            .then((val)=>{
-                this.Got=true;
-                this.flag=!this.flag;
-                if(val.succ){
-                    console.log(val);
-                    this.consultList.push(...val.list);
-                    if(this.page==val.page.pages){
-                        this.page=-1;
-                    }
-                    else{
-                        this.page++;
-                    }
-                }
-                else{
-                    this.$weui.alert(val.msg);
-                }
-                
-            },
-                 ()=>{
-                this.$weui.alert("网络错误");
-            })
+            this.Got=true;
+            this.flag=!this.flag;
+//            Api("smarthos.consult.pic.list.page",{
+//                pageSize:10,
+//                pageNum:this.page,
+//                token:window.localStorage['token']
+//            })
+//            .then((val)=>{
+//                this.Got=true;
+//                this.flag=!this.flag;
+//                if(val.succ){
+//                    console.log(val);
+//                    this.consultList.push(...val.list);
+//                    if(this.page==val.page.pages){
+//                        this.page=-1;
+//                    }
+//                    else{
+//                        this.page++;
+//                    }
+//                }
+//                else{
+//                    this.$weui.alert(val.msg);
+//                }
+//                
+//            },
+//                 ()=>{
+//                this.$weui.alert("网络错误");
+//            })
         }
     }
   };
@@ -151,16 +189,17 @@ src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
     }
 
     header{
-        position:fixed;
+        position:absolute;
         top:0;
-        left:0;
+        left:20rem;
         right:0;
-        border-bottom:1px solid silver
+        border-bottom:1px solid silver;
+        width:20rem;
     }
     .main{
-        position:fixed;
+        position:absolute;
         top:2.34rem;
-        left:0;
+        left:20rem;
         right:0;
         bottom:0;
         padding-top:0.8rem;
@@ -175,7 +214,7 @@ src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
     
     
     .button{
-        position:fixed;
+        position:absolute;
         z-index:1000;
         bottom:0.8rem;
         right:0.8rem;
@@ -186,8 +225,8 @@ src: url('//at.alicdn.com/t/font_33qiq29sp5y7gb9.woff') format('woff'),
         color:white;
         p{
             position:relative;
-            left:0.7rem;
-            top:.4rem;
+            left:0.4rem;
+            top:1rem;
             line-height:1.4em;
             font-size:0.8rem;
         }

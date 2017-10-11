@@ -1,4 +1,5 @@
 import Vue from "vue";
+import index from "../pages/index.vue";
 import Router from "vue-router";
 import chat from '../pages/myDoctorMyAdd/chat'
 import accountAbout from "../pages/myCenter/accountAbout.vue";
@@ -38,29 +39,14 @@ export default new Router({
          path:"/doctor/:id",
          component:doctor
       },
-    //   {
-    //   path: '/changePhone',
-    //   name:'changePhone',
-    //   component: changePhone
-    // },{
-    //   path: '/confrimPhone',
-    //   name:'confrimPhone',
-    //   component: confrimPhone
-    // },{
-    //   path: '/changePhoneSucc',
-    //   name:'changePhoneSucc',
-    //   component: changePhoneSucc
-    // },{
-    //   path: '/changePassword',
-    //   name:'changePassword',
-    //   component: changePassword
-    // },{
-    //   path: '/modificationPassword',
-    //   name:'modificationPassword',
-    //   component: modificationPassword
-    // },
+      {
+          name:"index",
+          path:"/",
+          component:index
+      },
 
-      ...Home,
+
+//      ...Home,
       ...DocCard,
       ...DocRadio,
       ...Consult,

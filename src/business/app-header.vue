@@ -49,7 +49,7 @@
   }
   span{
     font-family: 'iconfont';
-    font-size: 18px;
+    font-size: 1rem;
   }
 
   $w:4.5rem;
@@ -71,17 +71,17 @@
 .left{
   position: absolute;
   top:0px;
-  left: 10px;
-  height: 45px;
-  line-height: 45px;
+  left: 0.8rem;
+  height: 2rem;
+  line-height: 2rem;
   z-index: 911;
 }
   .right{
     position: absolute;
-    top: 0px;
-    right: 15px;
-    height: 45px;
-    line-height: 45px;
+    top: 0;
+    right: 1rem;
+    height: 2rem;
+    line-height: 2rem;
     z-index: 911;
   }
 

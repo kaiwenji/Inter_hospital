@@ -30,10 +30,10 @@ if (/micromessenger/.test(UA)) {
  * 移动端rem布局
  * width:20rem
  * */
-if (window.device == "iphone" || window.device == "android") {
-  let w = window.innerWidth;
+//if (window.device == "iphone" || window.device == "android") {
+  let w = 200;
   document.querySelector('html').style.fontSize = `${w/ 20}px`;
-}
+//}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
