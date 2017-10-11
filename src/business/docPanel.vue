@@ -17,7 +17,7 @@
     </div>
               <div class="ft">
                   <p class="s light">{{audioInfo.snsKnowledge.createTime|getMyDay}}</p>
-                  <p class="right s light">{{audioInfo.snsKnowledge.readNum}}人听过</p>
+                  <p class="right s light">{{audioInfo.snsKnowledge.readNum}} listened</p>
                   <p class="s last light" ref="thumb" @click="setColor(audioInfo)"><span class="icon" :class="{'recommanded':audioInfo.islikes}"></span>{{audioInfo.snsKnowledge.likes}}</p>
     </div>
     </div>
@@ -117,7 +117,8 @@
         
         
         play(audioInfo,index){
-            var url=audioInfo.snsKnowledge.knowUrl
+            var url=audioInfo.snsKnowledge.knowUrl;
+            console.log("url:"+url);
             if(index==this.nowPlaying){
                 return ;
             }
@@ -142,31 +143,31 @@
         
 //        点赞接口
         setColor(item){
-            Api("smarthos.sns.knowledge.likes",{
-                knowledgeId:item.snsKnowledge.id,
-                token:window.localStorage['token']          
-            })
-            .then((val)=>{
-                if(val.succ){
-                    Api("smarthos.sns.knowledge.info",{
-                        id:item.snsKnowledge.id,
-                        token:window.localStorage['token']     
-                    })
-                    .then((val)=>{
-                        console.log(val);
-                        item=val.obj;
-                    },
-                         ()=>{
-                        this.$weui.alert("网络错误");
-                    })
-                }
-                else{
-                    this.$weui.alert(val.msg);
-                }
-            },
-                 ()=>{
-                this.$weui.alert("网络错误");
-            })
+//            Api("smarthos.sns.knowledge.likes",{
+//                knowledgeId:item.snsKnowledge.id,
+//                token:window.localStorage['token']          
+//            })
+//            .then((val)=>{
+//                if(val.succ){
+//                    Api("smarthos.sns.knowledge.info",{
+//                        id:item.snsKnowledge.id,
+//                        token:window.localStorage['token']     
+//                    })
+//                    .then((val)=>{
+//                        console.log(val);
+//                        item=val.obj;
+//                    },
+//                         ()=>{
+//                        this.$weui.alert("网络错误");
+//                    })
+//                }
+//                else{
+//                    this.$weui.alert(val.msg);
+//                }
+//            },
+//                 ()=>{
+//                this.$weui.alert("网络错误");
+//            })
         },
         activate(item){
             this.$router.push("/docRadio/detail/"+item.snsKnowledge.id);

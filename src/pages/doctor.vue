@@ -13,7 +13,7 @@
           <div class="info">
               <div>
                   <img :src="getProfile(docInfo)">
-                  <p class="l docName">{{docInfo.docName}}<span v-show="docInfo.famous" class="icon s">名医</span></p>
+                  <p class="l docName">{{docInfo.docName}}<span v-show="docInfo.famous" class="icon s">famous</span></p>
                   <p class="m">{{docInfo.deptName}}<span style="padding:0 1rem"></span>{{docInfo.docTitle}}</p>
                   <p>{{docInfo.hosName}}</p>
              </div>
@@ -21,9 +21,9 @@
           <div class="app">
           <div class="tab" ref="tab">
               <div class="tab_contain">
-                  <div><div @click="To('book')"><img src="../../static/img/red.png"><p class="m red">预约挂号</p></div></div>
-                  <div><div @click="To('jhsq')"><img src="../../static/img/green.png"><p class="m green">加号申请</p></div></div>
-                  <div><div @click="To('hzbd')"><img src="../../static/img/blue.png"><p class="m blue">患者报到</p></div></div>
+                  <div><div @click="To('book')"><img src="../../static/img/red.png"><p class="m red">Reserve</p></div></div>
+                  <div><div @click="To('jhsq')"><img src="../../static/img/green.png"><p class="m green">Application</p></div></div>
+                  <div><div @click="To('hzbd')"><img src="../../static/img/blue.png"><p class="m blue">Patients</p></div></div>
               </div>
               <div class="tab_shadow">
                </div>
@@ -40,7 +40,7 @@
           </div>
           <div class="docAudio"v-show="showDocTalk" >
               <div class="title">
-                  <p class="l">医生说</p>
+                  <p class="l">Doctor's post</p>
                   <div><p @click="getMoreAudio()" v-show="!nothingMore"><img src="../../static/img/getMore.png"></p></div>
     </div>
               <doc-panel :list="audioList"></doc-panel>
@@ -48,7 +48,7 @@
     </div>
           <div class="QR">
               <div>
-                <p>扫一扫二维码，关注我</p>
+                <p>FOLLOW ME</p>
                 <img :src="docInfo.docQrcode" >
               </div>
           </div>
@@ -65,14 +65,44 @@
     import AppHeader from "../business/app-header.vue";
     import Api from "../lib/api.js";
     import myMixin from "../lib/public.js";
+    
   export default {
     data() {
       return {
           docId:"",
-          docInfo:{},
-          title:"我的名片",
-          list:[{title:"医生擅长",desc:""},{title:"医生介绍",desc:""}],
-          audioList:[],
+          docInfo:{
+              docName:"kaiwenji",
+              docAvatar:"../static/img/docProfile.png",
+              deptName:"Pediatrics",
+              hosName:"XX Hospital",
+              docTitle:"Director"
+              
+          },
+          title:"my business card",
+          list:[{title:"speciality",
+                 desc:"test word for the speciality: major in Computer Science and focus on Front end development"
+                },
+                {title:"description",
+                 desc:"test word for the description: a cool gay whose favorite soccer team is Real Madird in Spain."
+                }],
+          audioList:[
+              {
+                  docName:"kaiwenji",
+                  snsKnowledge:{
+                      knowUrl:"",
+                      createTime:Date.parse( new Date()),
+                      readNum:3
+                  }
+              },
+              {
+                  docName:"kaiwenji",
+                  snsKnowledge:{
+                      knowUrl:"",
+                      createTime:Date.parse( new Date()),
+                      readNum:3
+                  }
+              }
+          ],
           rem:16,
           nothingMore:false,
           showDocTalk:false,
@@ -83,7 +113,7 @@
     },
     computed: {
         followWord(){
-            return this.isFollow?"已关注":"关注";
+            return this.isFollow?"followed":"follow";
         }
     },
     components: {
@@ -118,75 +148,77 @@
 
 //获取医生信息        
         this.getDocInfo();
-        
+        this.showDocTalk=true;
 //        获取医生说列表
-        Api("smarthos.sns.knowledge.page",{
-            docId:this.docId,
-            pageNum:1,
-            pageSize:3,
-            token:window.localStorage['token']
-
-        })
-        .then((val)=>{
-            if(!val.succ||!val.list||val.list.length==0){
-                this.showDocTalk=false;
-            }
-            else{
-                this.showDocTalk=true;
-            }
-            val.list.forEach((item)=>{
-                this.audioList.push(Object.assign({}, item, { on: false }));
-            })
-            this.audioList=val.list;
-            if (val.page.total==1){
-                this.nothingMore=true;
-            }
-        },
-             ()=>{
-            this.$weui.alert("网络错误");
-        })
+//        Api("smarthos.sns.knowledge.page",{
+//            docId:this.docId,
+//            pageNum:1,
+//            pageSize:3,
+//            token:window.localStorage['token']
+//
+//        })
+//        .then((val)=>{
+//            if(!val.succ||!val.list||val.list.length==0){
+//                this.showDocTalk=false;
+//            }
+//            else{
+//                this.showDocTalk=true;
+//            }
+//            val.list.forEach((item)=>{
+//                this.audioList.push(Object.assign({}, item, { on: false }));
+//            })
+//            this.audioList=val.list;
+//            if (val.page.total==1){
+//                this.nothingMore=true;
+//            }
+//        },
+//             ()=>{
+//            this.$weui.alert("network error");
+//        })
 
             },
     methods: {
         getDocInfo(){
             
-            this.docId=this.$route.params.id;
-            Api("smarthos.user.doc.card.get",{
-                "docId":this.docId,
-                token:window.localStorage['token']
-            })
-            .then((val)=>{
-                if(val.succ){
-                    this.docInfo=val.obj.doc;
-                    this.isFollow=val.obj.followDocpat?true:false;
-                    if(this.isFollow)
-                        {
-                            this.followId=val.obj.followDocpat.id;
-                        }
-                    this.list[0].desc=this.docInfo.docSkill;
-                    this.list[1].desc=this.docInfo.docResume;
-                }
-                else{
-                    this.$weui.alert(val.msg);
-                }
-                this.Got=true;
-
-            },
-                          ()=>{
-                        this.$weui.alert("网络错误");
-                    })
+            this.Got = true;
+//            this.docId=this.$route.params.id;
+//            Api("smarthos.user.doc.card.get",{
+//                "docId":this.docId,
+//                token:window.localStorage['token']
+//            })
+//            .then((val)=>{
+//                if(val.succ){
+//                    this.docInfo=val.obj.doc;
+//                    this.isFollow=val.obj.followDocpat?true:false;
+//                    if(this.isFollow)
+//                        {
+//                            this.followId=val.obj.followDocpat.id;
+//                        }
+//                    this.list[0].desc=this.docInfo.docSkill;
+//                    this.list[1].desc=this.docInfo.docResume;
+//                }
+//                else{
+//                    this.$weui.alert(val.msg);
+//                }
+//                this.Got=true;
+//
+//            },
+//                          ()=>{
+//                        this.$weui.alert("网络错误");
+//                    })
         },
         sendMsg(){
             this.$router.push({path:'/chat',query:{docAvatar:this.docInfo.docAvatar,docName:this.docInfo.docName,followId:this.followId}});
         },
 //        切换路由
         To(path){
-            if(path=='book'){
-                this.$router.push("/book/");
-            }
-            else{
-                this.$router.push("/"+path+"/"+this.docId);
-            }
+            this.$weui.alert("I am sorry but this function is not available because of no api.")
+//            if(path=='book'){
+//                this.$router.push("/book/");
+//            }
+//            else{
+//                this.$router.push("/"+path+"/"+this.docId);
+//            }
         },
         
         
@@ -202,7 +234,8 @@
         
         
         getMoreAudio(){
-            this.$router.push("/docTalk/"+this.docId);
+            this.$weui.alert("it is not available now");
+//            this.$router.push("/docTalk/"+this.docId);
         },
         
         
@@ -222,7 +255,7 @@
                     }
                 },
                       ()=>{
-                    this.$weui.alert("网络错误");
+                    this.$weui.alert("network error");
                 }
                       )
 
@@ -242,7 +275,7 @@
                     }
                 },
                      ()=>{
-                    this.$weui.alert("网络错误");
+                    this.$weui.alert("network error");
                 })
             }
         },
@@ -258,7 +291,7 @@
                 document.getElementById("header").style.color="black";
             }
             if(opacity<0.8){
-                this.title="我的名片";
+                this.title="my business card";
                 document.getElementById("header").style.color="white";
             }
         },

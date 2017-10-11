@@ -1,7 +1,7 @@
 <template>
   <div class="app">
       <app-header v-show="Got">
-          <p class="headerTitle">名医知道</p>
+          <p class="headerTitle">Doctors' posts</p>
     </app-header>
       <my-panel @activate="goDoc" v-show="Got">
           <div slot="picture">
@@ -18,11 +18,12 @@
     </my-panel>
       <div class="main" v-show="Got">
           <div>
-          <p class="dark m" style="padding:0.8rem">眼底病患者术后需要知道的250个注意事项（推荐所有我的患者都务必收听一下，帮助非常大）</p>
+          <p class="dark m" style="padding:0.8rem"></p>
     </div>
           <my-player :docInfo="docInfo"></my-player>
+          <p style = "padding:1rem">all of these pages are examples with no api connected and with some fixed example data</p>
     </div>
-      <my-loading class="myLoading"v-show="!Got&&checkIfRefresh()"></my-loading>
+      <my-loading class="myLoading"v-show="!Got"></my-loading>
   </div>
 </template>
 
@@ -37,7 +38,15 @@
   export default {
     data() {
       return {
-          docInfo:{},
+          docInfo:{
+              snsKnowledge:{
+                knowTitle:"title",
+                readNum:3,
+                createTime:Date.parse( new Date()),
+                knowUrl:"../../../static/music/test.mp3"
+              },
+                docName:"kaiwenji"
+          },
           Got:false
       };
     },
@@ -48,23 +57,24 @@
         MyLoading
     },
     mounted() {
-        Api("smarthos.sns.knowledge.info",{
-            id:this.$route.params.id
-        })
-        .then((val)=>{
-            this.Got=true;
-            if(val.succ){
-                this.docInfo=val.obj;
-            }
-            else{
-                this.$weui.alert(val.msg);
-            }
-        },
-             ()=>{
-            this.$weui.alert("网络错误");
-        })
+        this.Got = true;
+//        Api("smarthos.sns.knowledge.info",{
+//            id:this.$route.params.id
+//        })
+//        .then((val)=>{
+//            this.Got=true;
+//            if(val.succ){
+//                this.docInfo=val.obj;
+//            }
+//            else{
+//                this.$weui.alert(val.msg);
+//            }
+//        },
+//             ()=>{
+//            this.$weui.alert("网络错误");
+//        })
     },
-    mixins:[Reload,myMixin],
+    mixins:[myMixin],
     methods: {
         goDoc(){
             this.$router.push("/doctor/"+this.docInfo.snsKnowledge.docId);

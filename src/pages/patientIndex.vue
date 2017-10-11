@@ -18,7 +18,7 @@
                      <img src="../../static/img/main_red.png" alt="">
                      <span>Reservation</span>
                    </div>                   
-                     <div class="bookNumer" onClick="window.location.href='http://test-ddys-wechat.hztywl.cn:6060/WeChat/JKBK-test/#/Home'">
+                     <div class="bookNumer" onClick="javascript:alert('functions not available');">
                      <img src="../../static/img/main_green.png"  alt="">
                      <span>Encyclopedia</span>
                    </div>
@@ -53,7 +53,7 @@
                      <span @click="moreKnow()" class="doctorMore">more></span>
                    </div>
                  </div>
-                 <div class="knowCard border-1px" v-for="(item,index) in knowDetail">
+                 <div class="knowCard border-1px" @click="getDetail()"v-for="(item,index) in knowDetail">
                    <div class="autoCenter">
                      <div class="knowLeft">
                        <img :src="item.docAvatar" alt="">
@@ -73,13 +73,13 @@
                        </div>
                        <div class="knowTime">
                          <span class="timeDetail">{{ time[index] }}</span>
-                         <span class="hasListened" v-if="clickTime[index] != ''">{{ clickTime[index] }}listened</span>
+                         <span class="hasListened" v-if="clickTime[index] != ''">{{ clickTime[index] }} listened</span>
                          <span class="hasListened" v-else>{{ item.snsKnowledge.readNum }}listened</span>
                          <span class="thumb" v-if="item.snsKnowledge.likes > clickLikes">
-                           <img src="../../static/img/rec_off.png" alt="" @click="praise(index)">{{ item.snsKnowledge.likes }}
+                           <img src="../../static/img/rec_off.png" alt="" @click="recommend(index)">{{ item.snsKnowledge.likes }}
                          </span>
                          <span class="thumb" v-else>
-                           <img src="../../static/img/rec_off.png" alt="" @click="praise(index)">{{ clickLikes }}
+                           <img src="../../static/img/rec_off.png" alt="" @click="recommend(index)">{{ clickLikes }}
                          </span>
                        </div>
                      </div>
@@ -112,20 +112,20 @@
   export default{
       data(){
          return{
-           title:"首页",
+           title:"Main Page",
            rightTitle:"",
            adImg:[],
            knowDetail:[{docAvatar:"../../static/img/main_blue.png",snsKnowledge:{},docName:"kaiwenji"},{docAvatar:"../../static/img/main_blue.png",snsKnowledge:{},docName:"kaiwenji"},{docAvatar:"../../static/img/main_blue.png",snsKnowledge:{},docName:"kaiwenji"}],
            playTime:[],
            time:[],
-           clickTime:[],
+           clickTime:[1,2,3],
            a:0,
            temp:'',
            scanImg:"",
            clickLikes:0,
            showAlert:false,
-           alertTitle:"温馨提示",
-           alertMsg:"请勿重复点赞哦",
+           alertTitle:"Notice",
+           alertMsg:"this function is not supported beacuse of no api",
            tagNames:[
              {title:'首页',tabLink:"/patientIndex",imgLinkIndexOn:"../../static/img/home_on.png",imgLinkOn:"../../static/img/home.png",imgLinkMyOn:"../../static/img/home.png"},
              {title:'我的医生',tabLink:"/myDoctorChat/recentChat",imgLinkIndexOn:"../../static/img/myDoctorBottom.png",imgLinkOn:"../../static/img/myDoctor_on.png",imgLinkMyOn:"../../static/img/myDoctorBottom.png"},
@@ -157,12 +157,17 @@
 //        })
       },
       methods:{
+          getDetail(){
+            this.$router.push('./docRadio/detail/1');  
+          },
           appoint(){
-              this.$router.push("/book/");
+              alert("functions not available");
+//              this.$router.push("/book/");
           },
           askDoc(){
-              console.log("ask doc");
-              this.$router.push("/Consult/")
+              alert("functions not available");
+//              console.log("ask doc");
+//              this.$router.push("/Consult/")
           },
         eyeIllness(){
             alert("sorry, this is not my part");
@@ -206,10 +211,10 @@
 //          })
         },
         repeat(){
-           console.log("12234132")
-          this.$router.push({
-            name:"addList"
-          })
+            alert("this is not my function");
+//          this.$router.push({
+//            name:"addList"
+//          })
         },
         _initKnowScroll(){
             this.knowScroll = new BScroll(this.$refs.wholeScroll,{
@@ -218,82 +223,83 @@
           console.log(this.knowScroll,9999)
         },
         play(index){
-              if(this.temp === ''){
-                let that =this
-                if(this.$refs.playaudio[index].paused){
-                  this.$refs.playaudio[index].currentTime = 0
-                  this.$refs.playaudio[index].play()
-                  this.$refs.animate[index].style.animationName = "voicePlay"
-                  this.$refs.playaudio[index].onended = function(){
-                    this.$refs.animate[index].style.animationName = " cc"
-                  }
-                  api("smarthos.sns.knowledge.readnum",{
-                    id:this.knowDetail[index].snsKnowledge.id
-                  }).then((data)=>{
-                    that.clickTime.splice(index,1,data.obj.readNum)
-                  })
-                }else{
-                  this.$refs.playaudio[index].pause()
-                  this.$refs.animate[index].style.animationName = " cc"
-                  this.$refs.playaudio[index].currentTime = 0
-                }
-                this.temp = index
-              }else if(this.temp >= 0 && this.temp != index){
-                for(var i =0;i<this.$refs.playaudio.length;i++){
-                  this.$refs.playaudio[i].pause()
-                }
-                this.$refs.playaudio[this.temp].pause()
-                this.$refs.animate[this.temp].style.animationName = "cc"
-                this.$refs.animate[index].style.animationName = "cc"
-                let that =this
-                if(this.$refs.playaudio[index].paused){
-                  this.$refs.playaudio[index].currentTime = 0
-                  this.$refs.playaudio[index].play()
-                  this.$refs.animate[index].style.animationName = "voicePlay"
-                  api("smarthos.sns.knowledge.readnum",{
-                    id:this.knowDetail[index].snsKnowledge.id
-                  }).then((data)=>{
-                    that.clickTime.splice(index,1,data.obj.readNum)
-                  })
-                }else{
-                  this.$refs.playaudio[index].pause()
-                  this.$refs.animate[index].style.animationName = " cc"
-                  this.$refs.playaudio[index].currentTime = 0
-                }
-                this.temp = index
-              }else{
-                let that =this
-                if(this.$refs.playaudio[index].paused){
-                  this.$refs.playaudio[index].currentTime = 0
-                  this.$refs.playaudio[index].play()
-                  this.$refs.animate[index].style.animationName = "voicePlay"
-                  api("smarthos.sns.knowledge.readnum",{
-                    id:this.knowDetail[index].snsKnowledge.id
-                  }).then((data)=>{
-                    that.clickTime.splice(index,1,data.obj.readNum)
-                  })
-                }else{
-                  this.$refs.playaudio[index].pause()
-                  this.$refs.animate[index].style.animationName = " cc"
-                  this.$refs.playaudio[index].currentTime = 0
-                }
-                this.temp = index
-              }
+//              if(this.temp === ''){
+//                let that =this
+//                if(this.$refs.playaudio[index].paused){
+//                  this.$refs.playaudio[index].currentTime = 0
+//                  this.$refs.playaudio[index].play()
+//                  this.$refs.animate[index].style.animationName = "voicePlay"
+//                  this.$refs.playaudio[index].onended = function(){
+//                    this.$refs.animate[index].style.animationName = " cc"
+//                  }
+//                  api("smarthos.sns.knowledge.readnum",{
+//                    id:this.knowDetail[index].snsKnowledge.id
+//                  }).then((data)=>{
+//                    that.clickTime.splice(index,1,data.obj.readNum)
+//                  })
+//                }else{
+//                  this.$refs.playaudio[index].pause()
+//                  this.$refs.animate[index].style.animationName = " cc"
+//                  this.$refs.playaudio[index].currentTime = 0
+//                }
+//                this.temp = index
+//              }else if(this.temp >= 0 && this.temp != index){
+//                for(var i =0;i<this.$refs.playaudio.length;i++){
+//                  this.$refs.playaudio[i].pause()
+//                }
+//                this.$refs.playaudio[this.temp].pause()
+//                this.$refs.animate[this.temp].style.animationName = "cc"
+//                this.$refs.animate[index].style.animationName = "cc"
+//                let that =this
+//                if(this.$refs.playaudio[index].paused){
+//                  this.$refs.playaudio[index].currentTime = 0
+//                  this.$refs.playaudio[index].play()
+//                  this.$refs.animate[index].style.animationName = "voicePlay"
+//                  api("smarthos.sns.knowledge.readnum",{
+//                    id:this.knowDetail[index].snsKnowledge.id
+//                  }).then((data)=>{
+//                    that.clickTime.splice(index,1,data.obj.readNum)
+//                  })
+//                }else{
+//                  this.$refs.playaudio[index].pause()
+//                  this.$refs.animate[index].style.animationName = " cc"
+//                  this.$refs.playaudio[index].currentTime = 0
+//                }
+//                this.temp = index
+//              }else{
+//                let that =this
+//                if(this.$refs.playaudio[index].paused){
+//                  this.$refs.playaudio[index].currentTime = 0
+//                  this.$refs.playaudio[index].play()
+//                  this.$refs.animate[index].style.animationName = "voicePlay"
+//                  api("smarthos.sns.knowledge.readnum",{
+//                    id:this.knowDetail[index].snsKnowledge.id
+//                  }).then((data)=>{
+//                    that.clickTime.splice(index,1,data.obj.readNum)
+//                  })
+//                }else{
+//                  this.$refs.playaudio[index].pause()
+//                  this.$refs.animate[index].style.animationName = " cc"
+//                  this.$refs.playaudio[index].currentTime = 0
+//                }
+//                this.temp = index
+//              }
 
 
         },
-        praise(index){
-            let that = this
-            api("smarthos.sns.knowledge.likes",{
-                knowledgeId:this.knowDetail[index].snsKnowledge.id,
-                token:localStorage.getItem("token")
-            }).then((data)=>{
-                if(data.code == 0){
-                  that.clickLikes = data.obj + 1
-                }else{
-                   that.showAlert = true
-                }
-            })
+        recommend(index){
+            let that = this;
+            this.showAlert = true;
+//            api("smarthos.sns.knowledge.likes",{
+//                knowledgeId:this.knowDetail[index].snsKnowledge.id,
+//                token:localStorage.getItem("token")
+//            }).then((data)=>{
+//                if(data.code == 0){
+//                  that.clickLikes = data.obj + 1
+//                }else{
+//                   that.showAlert = true
+//                }
+//            })
         },
         moreKnow(){
           this.$router.push("/docRadio")
@@ -351,8 +357,7 @@
       bottom: 98rem/$rem;
       left:0;
       right:0;
-      /*z-index:201;*/
-      overflow: hidden;
+      overflow: scroll;
       background-color: white;
       >div{
         .carsoul{

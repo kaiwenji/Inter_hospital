@@ -1,13 +1,7 @@
 <template>
   <div class="head">
       <app-header id="header">
-          <p class="headerTitle">名医知道</p>
-<!--
-          <div slot="right" style="position:relative">
-              <img src="../../../static/img/envelop.png" class="envelop">
-              <span class="weui-badge badge">8</span>
-    </div>
--->
+          <p class="headerTitle">Doctors' posts</p>
     </app-header>
       
           <my-pullup v-show="Got" :list="audioList"@pullUp="loadingMore" :flag="flag">
@@ -34,7 +28,16 @@
   export default {
     data() {
       return {
-          audioList:[],
+          audioList:[{docName:"kaiwenji",
+                      snsKnowledge:{
+                          description:"test for fun",
+                          id:"1",
+                          knowTitle:"title",
+                          createTime:Date.parse( new Date()),
+                          readNum:3
+                      },
+                      docAvatar:"../../../static/img/docProfile.png"
+                     }],
           page:1,
           nothingMore:false,
           docId:"595d05b0f19b9c898a58cc00",
@@ -61,33 +64,34 @@
     },
     methods: {
         getInfo(){
-            Api("smarthos.sns.knowledge.page",{
-                pageNum:this.page,
-                pageSize:10,
-                docId:this.$route.params.id,
-                token:window.localStorage['token']
-            })
-            .then((val)=>{
-                this.Got=true;
-                if(val.succ)
-                {
-                    val.list.forEach((item)=>{
-                        this.audioList.push(Object.assign({}, item, { on: false,pause:false }));
-                    })
-                    if(this.page==val.page.pages){
-                        this.page=-1;
-                    }
-                    else{
-                        
-                        this.flag=!this.flag;
-                        this.page++;
-                    }
-                }
-                else{
-                    this.$weui.alert(val.msg);
-                }
-                
-            })
+            this.Got = true; //pretend we have got the data :D
+//            Api("smarthos.sns.knowledge.page",{
+//                pageNum:this.page,
+//                pageSize:10,
+//                docId:this.$route.params.id,
+//                token:window.localStorage['token']
+//            })
+//            .then((val)=>{
+//                this.Got=true;
+//                if(val.succ)
+//                {
+//                    val.list.forEach((item)=>{
+//                        this.audioList.push(Object.assign({}, item, { on: false,pause:false }));
+//                    })
+//                    if(this.page==val.page.pages){
+//                        this.page=-1;
+//                    }
+//                    else{
+//                        
+//                        this.flag=!this.flag;
+//                        this.page++;
+//                    }
+//                }
+//                else{
+//                    this.$weui.alert(val.msg);
+//                }
+//                
+//            })
         },
         loadingMore(){
             if (this.page!=-1){

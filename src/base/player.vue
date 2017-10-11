@@ -29,7 +29,7 @@
     </div>
           <div class="player_ft">
               <p>{{docInfo.snsKnowledge&&docInfo.snsKnowledge.createTime|getMyDay}}</p>
-              <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}}人听过</p>
+              <p class="right">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.readNum}} listened</p>
               <p class="right" @click="recommand()"><img class="icon" src="../../static/img/thumb.png">{{docInfo.snsKnowledge&&docInfo.snsKnowledge.likes}}</p>
     </div>
           <audio ref="music" id="music" :src="src" @durationchange="setDuration">
@@ -59,6 +59,7 @@
       watch:{
           docInfo(){
               this.src=this.docInfo.snsKnowledge.knowUrl;
+              console.log(this.src);
               this.audioAutoPlay("music");
               this.on();
           }
@@ -71,6 +72,11 @@
         }
     },
     mounted() {
+        console.log(this.docInfo);
+        this.src=this.docInfo.snsKnowledge.knowUrl;
+        console.log(this.src);
+//        this.audioAutoPlay("music");
+//        this.on();
         this.initialSlider();
     },
     beforeDestroy() {
