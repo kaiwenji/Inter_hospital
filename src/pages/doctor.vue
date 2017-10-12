@@ -54,7 +54,7 @@
           </div>
     </div>
       </div>
-      <div class="sendMsg" v-show="isFollow" @click="sendMsg"><p class="xxl">发消息</p></div>
+      <div class="sendMsg" v-show="isFollow" @click="sendMsg"><p class="xxl">text</p></div>
       <my-loading class='myLoading'v-show="!Got"></my-loading>
   </div>
 </template>
@@ -138,7 +138,7 @@
     mounted() {
         this.rem=250/20;
         
-//        设置滚动动画效果
+//        set the scrolling animation
         this.$refs.wrap.onscroll=()=>{
 
             var top=this.$refs.wrap.scrollTop;
@@ -146,10 +146,10 @@
             this.setTabClass(top);
         }
 
-//获取医生信息        
+//get the doctor's information      
         this.getDocInfo();
         this.showDocTalk=true;
-//        获取医生说列表
+//        get the list of doctors' posts
 //        Api("smarthos.sns.knowledge.page",{
 //            docId:this.docId,
 //            pageNum:1,
@@ -208,11 +208,12 @@
 //                    })
         },
         sendMsg(){
-            this.$router.push({path:'/chat',query:{docAvatar:this.docInfo.docAvatar,docName:this.docInfo.docName,followId:this.followId}});
+            alert("send message");
+//            this.$router.push({path:'/chat',query:{docAvatar:this.docInfo.docAvatar,docName:this.docInfo.docName,followId:this.followId}});
         },
-//        切换路由
+//        change route
         To(path){
-            this.$weui.alert("I am sorry but this function is not available because of no api.")
+            alert("I am sorry but this function is not available because of no api.")
 //            if(path=='book'){
 //                this.$router.push("/book/");
 //            }
@@ -234,53 +235,55 @@
         
         
         getMoreAudio(){
-            this.$weui.alert("it is not available now");
+            alert("get more audio");
 //            this.$router.push("/docTalk/"+this.docId);
         },
         
         
-        /* 关注按键函数*/
+        //follow function
         follow(){
-            if (this.isFollow){
-                Api("smarthos.follow.docpat.delete",{
-                    docId:this.docInfo.id,
-                    token:window.localStorage['token']
-                })
-                .then((val)=>{
-                    if(val.succ){
-                        this.isFollow=false;
-                    }
-                    else{
-                        this.$weui.alert(val.msg);
-                    }
-                },
-                      ()=>{
-                    this.$weui.alert("network error");
-                }
-                      )
-
-            }
-            else{
-                Api("smarthos.follow.docpat.add",{
-                    docId:this.docInfo.id,
-                    token:window.localStorage['token']
-                })
-                .then((val)=>{
-                    if(val.succ){
-                        this.isFollow=true;
-                        this.getDocInfo();
-                    }
-                    else{
-                        this.$weui.alert(val.msg);
-                    }
-                },
-                     ()=>{
-                    this.$weui.alert("network error");
-                })
-            }
+            alert("follow function");
+            this.isFollow=!this.isFollow;
+//            if (this.isFollow){
+//                Api("smarthos.follow.docpat.delete",{
+//                    docId:this.docInfo.id,
+//                    token:window.localStorage['token']
+//                })
+//                .then((val)=>{
+//                    if(val.succ){
+//                        this.isFollow=false;
+//                    }
+//                    else{
+//                        this.$weui.alert(val.msg);
+//                    }
+//                },
+//                      ()=>{
+//                    this.$weui.alert("network error");
+//                }
+//                      )
+//
+//            }
+//            else{
+//                Api("smarthos.follow.docpat.add",{
+//                    docId:this.docInfo.id,
+//                    token:window.localStorage['token']
+//                })
+//                .then((val)=>{
+//                    if(val.succ){
+//                        this.isFollow=true;
+//                        this.getDocInfo();
+//                    }
+//                    else{
+//                        this.$weui.alert(val.msg);
+//                    }
+//                },
+//                     ()=>{
+//                    this.$weui.alert("network error");
+//                })
+//            }
         },
 
-//        标题透明度变化
+//        set the transpanrency of the header
         setHeaderColor(top){
             var limit=5*this.rem;
             var opacity=top-limit>0?top-limit:0;
@@ -296,7 +299,7 @@
             }
         },
         
-//        tab固定or滚动
+//        set the tab fixed or moved
         setTabClass(top){
             if(top>14*this.rem-45){
                 if(this.$refs.tab.className!="tab tab_fixed"){
@@ -523,11 +526,11 @@
     }
     
     .sendMsg{
-        position:fixed;
+        position:absolute;
         bottom:0;
         left:0;
-        right:0;
         height:3rem;
+        width:20rem;
         background:rgb(10,172,233);
         p{
             margin-top:.8rem;

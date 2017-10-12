@@ -7,7 +7,7 @@
             <img :src="item.attaFileUrl" v-for="item,index in info.attaList" :class="{'last':index%4==3}">
         </div>
         <div class="ft">
-            <p class="lightBlue l" v-show="info.userDocVo"><img :src="getProfile(info.userDocVo)" class="icon">{{info.docName}}<span class="l light">answered</span></p>
+            <p class="lightBlue l" v-show="info.userDocVo"><img :src="getProfile(info.userDocVo)" class="icon">{{info.docName}}<span class="l light"> answered</span></p>
             <p class="middle m light">{{consultInfo.createTime|goodTime}}  &nbsp;|</p>
             <p class="right m light">{{consultInfo.replyCount||0}} reviews</p>
         </div>
@@ -58,7 +58,7 @@
 <style scoped lang="scss">
     @import "../common/var.scss";
    .panel{
-        padding:0.8rem;
+        padding-left:0.2rem;
 /*       padding-bottom:0;*/
         margin-bottom:0.8rem;
         margin-left:0.8rem;

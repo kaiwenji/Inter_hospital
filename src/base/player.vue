@@ -164,7 +164,7 @@
             }
         },
         
-//        定时器函数，负责获取实时时间，改变滑动块位置，标题滚动
+//        timer function
         getCurrentTime(){
             var newVal;
             if(this.$refs.music.ended){
@@ -189,7 +189,7 @@
             this.currentTime=this.$refs.music.currentTime;
             this.$refs.track.style.width=newVal+"%";
             this.$refs.handler.style.left=newVal+ "%";
-
+            console.log(this.$refs.shiftBlock.scrollLeft,this.target,this.duration);
             if(this.direction=="left"&&this.duration!=""){
                 this.$refs.shiftBlock.scrollLeft-=1;
                 if(this.$refs.shiftBlock.scrollLeft==0){
@@ -198,7 +198,7 @@
             }
             if(this.direction=="right"&&this.duration!=""){
                 this.$refs.shiftBlock.scrollLeft+=1;
-                if(this.$refs.shiftBlock.scrollLeft==this.target){
+                if(this.$refs.shiftBlock.scrollLeft>this.target-1){
                     this.direction="left";
                 }
             }

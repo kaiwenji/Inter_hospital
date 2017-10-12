@@ -23,12 +23,10 @@
           <my-player :docInfo="docInfo"></my-player>
           <p style = "padding:1rem">all of these pages are examples with no api connected and with some fixed example data</p>
     </div>
-      <my-loading class="myLoading"v-show="!Got"></my-loading>
   </div>
 </template>
 
 <script>
-    import MyLoading from "../../base/loading/loading.vue";
     import MyPanel from "../../base/panel.vue";
     import AppHeader from "../../business/app-header.vue";
     import MyPlayer from "../../base/player.vue";
@@ -40,7 +38,7 @@
       return {
           docInfo:{
               snsKnowledge:{
-                knowTitle:"title",
+                knowTitle:"My favorite Chinese Song of the 80's",
                 readNum:3,
                 createTime:Date.parse( new Date()),
                 knowUrl:"../../../static/music/test.mp3"
@@ -53,8 +51,7 @@
     components: {
         AppHeader,
         MyPlayer,
-        MyPanel,
-        MyLoading
+        MyPanel
     },
     mounted() {
         this.Got = true;
@@ -77,7 +74,8 @@
     mixins:[myMixin],
     methods: {
         goDoc(){
-            this.$router.push("/doctor/"+this.docInfo.snsKnowledge.docId);
+            alert("go to the doctor's main page");
+//            this.$router.push("/doctor/"+this.docInfo.snsKnowledge.docId);
         }
     }
   };

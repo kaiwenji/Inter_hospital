@@ -7,7 +7,7 @@
     <app-header>
         <div class="left" @click="back">
           <slot name="left">
-            <font><span>&#xe600;</span></font>
+<!--            <font><span>&#xe600;</span></font>-->
           </slot>
          </div>
         <p class="headerTitle">Query List</p>
@@ -68,6 +68,28 @@
               }],
               docName:"kaiwenji"
           },{
+              
+              docName:"kaiwenji",
+              consultInfo:{
+                  id:2,
+                  hasAtta:true,
+                  consultContent:"Monument again!",
+                  createTime:Date.parse(new Date())-1000000000   //to make the simulation dtime eariler 
+              },
+              userDocVo:{
+              },
+              attaList:[{
+                  attaFileUrl:"../../../static/img/monument/test.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_4.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_5.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_6.jpg"
+              },{
+                  attaFileUrl:"../../../static/img/monument/test_7.jpg"
+              }]
+          },{
               consultInfo:{
                   id:2,
                   hasAtta:true,
@@ -84,8 +106,7 @@
                   attaFileUrl:"../../../static/img/monument/test_6.jpg"
               },{
                   attaFileUrl:"../../../static/img/monument/test_7.jpg"
-              }]
-          }],
+              }]          }],
           page:1,
           noReply:false,
           nothingMore:false,
@@ -119,13 +140,16 @@
       },
     methods: {
         back(){
-            this.$router.push("/patientIndex");
+            alert("back to home page");
+//            this.$router.push("/patientIndex");
         },
         getDetail(item){
-            this.$router.push("/Consult/ConsultDetail/"+item.consultInfo.id);
+            alert("go to the detail of the query");
+//            this.$router.push("/Consult/ConsultDetail/"+item.consultInfo.id);
         },
         addConsult(){
-            this.$router.push("/Consult/newConsult");
+            alert("create a new query");
+//            this.$router.push("/Consult/newConsult");
         },
         
 //        pull-down freshing 
