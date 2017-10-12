@@ -170,7 +170,8 @@
 //            })
         },
         activate(item){
-            this.$router.push("/docRadio/detail/"+item.snsKnowledge.id);
+            alert("go to radio detail page");
+//            this.$router.push("/docRadio/detail/"+item.snsKnowledge.id);
         }
     }
   };
