@@ -23,11 +23,13 @@
             <img class="arrow right" src="../../static/img/arrow.gif">
             <p class="right">./src/pages/Consult/index.vue</p>
         </div>
+<!--
         <div class="module sec">
             <img class="arrow right" src="../../static/img/arrow.gif">
             <p class="right">not available now, Sorry</p>
             <img src="../../static/img/underconstruction.jpg">
         </div>
+-->
         
     </div>
     </div>
@@ -76,7 +78,7 @@
             padding-right:0rem;
             padding-left:20rem;
         }
-        height:300px;
+        height:30rem;
         width:20rem;
         &.doctorPage{
             background:yellow;

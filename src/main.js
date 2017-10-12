@@ -31,7 +31,7 @@ if (/micromessenger/.test(UA)) {
  * width:20rem
  * */
 //if (window.device == "iphone" || window.device == "android") {
-  let w = 200;
+  let w = 250;
   document.querySelector('html').style.fontSize = `${w/ 20}px`;
 //}
 /* eslint-disable no-new */

@@ -56,15 +56,15 @@
                   consultContent:"Views of Monument Valley"
               },
               attaList:[{
-                  attaFileUrl:"../../../static/img/monument/test.jpg"
+                  attaFileUrl:"./static/img/monument/test.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_1.jpg"
+                  attaFileUrl:"./static/img/monument/test_1.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_1.jpg"
+                  attaFileUrl:"./static/img/monument/test_1.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_2.jpg"
+                  attaFileUrl:"./static/img/monument/test_2.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_3.jpg"
+                  attaFileUrl:"./static/img/monument/test_3.jpg"
               }],
               docName:"kaiwenji"
           },{
@@ -79,15 +79,15 @@
               userDocVo:{
               },
               attaList:[{
-                  attaFileUrl:"../../../static/img/monument/test.jpg"
+                  attaFileUrl:"./static/img/monument/test.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_4.jpg"
+                  attaFileUrl:"./static/img/monument/test_4.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_5.jpg"
+                  attaFileUrl:"./static/img/monument/test_5.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_6.jpg"
+                  attaFileUrl:"./static/img/monument/test_6.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_7.jpg"
+                  attaFileUrl:"./static/img/monument/test_7.jpg"
               }]
           },{
               consultInfo:{
@@ -97,15 +97,15 @@
                   createTime:Date.parse(new Date())-1000000000   //to make the simulation dtime eariler 
               },
               attaList:[{
-                  attaFileUrl:"../../../static/img/monument/test.jpg"
+                  attaFileUrl:"./static/img/monument/test.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_4.jpg"
+                  attaFileUrl:"./static/img/monument/test_4.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_5.jpg"
+                  attaFileUrl:"./static/img/monument/test_5.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_6.jpg"
+                  attaFileUrl:"./static/img/monument/test_6.jpg"
               },{
-                  attaFileUrl:"../../../static/img/monument/test_7.jpg"
+                  attaFileUrl:"./static/img/monument/test_7.jpg"
               }]          }],
           page:1,
           noReply:false,

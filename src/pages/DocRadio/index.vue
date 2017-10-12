@@ -36,7 +36,7 @@
                           createTime:Date.parse( new Date()),
                           readNum:3
                       },
-                      docAvatar:"../../../static/img/docProfile.png"
+                      docAvatar:"./static/img/docProfile.png"
                      }],
           page:1,
           nothingMore:false,
